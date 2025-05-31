@@ -92,6 +92,51 @@ export type Database = {
         }
         Relationships: []
       }
+      family_connections: {
+        Row: {
+          approved_at: string | null
+          created_at: string | null
+          family_code: string
+          id: string
+          parent_id: string | null
+          role: Database["public"]["Enums"]["family_role"]
+          teen_id: string | null
+        }
+        Insert: {
+          approved_at?: string | null
+          created_at?: string | null
+          family_code: string
+          id?: string
+          parent_id?: string | null
+          role: Database["public"]["Enums"]["family_role"]
+          teen_id?: string | null
+        }
+        Update: {
+          approved_at?: string | null
+          created_at?: string | null
+          family_code?: string
+          id?: string
+          parent_id?: string | null
+          role?: Database["public"]["Enums"]["family_role"]
+          teen_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "family_connections_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "family_connections_teen_id_fkey"
+            columns: ["teen_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       metrics: {
         Row: {
           event: string
@@ -116,41 +161,157 @@ export type Database = {
         }
         Relationships: []
       }
+      monthly_boxes: {
+        Row: {
+          box_theme: string
+          created_at: string | null
+          customization_notes: string | null
+          id: string
+          products: Json
+          rating: number | null
+          received_at: string | null
+          shipped_at: string | null
+          teen_id: string | null
+        }
+        Insert: {
+          box_theme: string
+          created_at?: string | null
+          customization_notes?: string | null
+          id?: string
+          products?: Json
+          rating?: number | null
+          received_at?: string | null
+          shipped_at?: string | null
+          teen_id?: string | null
+        }
+        Update: {
+          box_theme?: string
+          created_at?: string | null
+          customization_notes?: string | null
+          id?: string
+          products?: Json
+          rating?: number | null
+          received_at?: string | null
+          shipped_at?: string | null
+          teen_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "monthly_boxes_teen_id_fkey"
+            columns: ["teen_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      parent_checkins: {
+        Row: {
+          communication_quality: number | null
+          concern_level: number | null
+          created_at: string | null
+          date: string
+          id: string
+          notes: string | null
+          parent_id: string | null
+          support_feeling: number | null
+          teen_id: string | null
+        }
+        Insert: {
+          communication_quality?: number | null
+          concern_level?: number | null
+          created_at?: string | null
+          date?: string
+          id?: string
+          notes?: string | null
+          parent_id?: string | null
+          support_feeling?: number | null
+          teen_id?: string | null
+        }
+        Update: {
+          communication_quality?: number | null
+          concern_level?: number | null
+          created_at?: string | null
+          date?: string
+          id?: string
+          notes?: string | null
+          parent_id?: string | null
+          support_feeling?: number | null
+          teen_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "parent_checkins_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "parent_checkins_teen_id_fkey"
+            columns: ["teen_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           account_type: Database["public"]["Enums"]["account_type"]
+          age: number | null
+          avatar_url: string | null
           company_size: string | null
           created_at: string | null
           email: string
           entreprise: string | null
+          family_code: string | null
           full_name: string | null
           id: string
           industry: string | null
+          preferred_name: string | null
           role: string
+          subscription_plan:
+            | Database["public"]["Enums"]["subscription_plan"]
+            | null
           subscription_status: string | null
         }
         Insert: {
           account_type: Database["public"]["Enums"]["account_type"]
+          age?: number | null
+          avatar_url?: string | null
           company_size?: string | null
           created_at?: string | null
           email: string
           entreprise?: string | null
+          family_code?: string | null
           full_name?: string | null
           id: string
           industry?: string | null
+          preferred_name?: string | null
           role: string
+          subscription_plan?:
+            | Database["public"]["Enums"]["subscription_plan"]
+            | null
           subscription_status?: string | null
         }
         Update: {
           account_type?: Database["public"]["Enums"]["account_type"]
+          age?: number | null
+          avatar_url?: string | null
           company_size?: string | null
           created_at?: string | null
           email?: string
           entreprise?: string | null
+          family_code?: string | null
           full_name?: string | null
           id?: string
           industry?: string | null
+          preferred_name?: string | null
           role?: string
+          subscription_plan?:
+            | Database["public"]["Enums"]["subscription_plan"]
+            | null
           subscription_status?: string | null
         }
         Relationships: []
@@ -224,6 +385,139 @@ export type Database = {
         }
         Relationships: []
       }
+      teen_alerts: {
+        Row: {
+          alert_type: Database["public"]["Enums"]["alert_type"]
+          created_at: string | null
+          id: string
+          is_read: boolean | null
+          location: string | null
+          message: string | null
+          parent_id: string | null
+          teen_id: string | null
+        }
+        Insert: {
+          alert_type: Database["public"]["Enums"]["alert_type"]
+          created_at?: string | null
+          id?: string
+          is_read?: boolean | null
+          location?: string | null
+          message?: string | null
+          parent_id?: string | null
+          teen_id?: string | null
+        }
+        Update: {
+          alert_type?: Database["public"]["Enums"]["alert_type"]
+          created_at?: string | null
+          id?: string
+          is_read?: boolean | null
+          location?: string | null
+          message?: string | null
+          parent_id?: string | null
+          teen_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "teen_alerts_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "teen_alerts_teen_id_fkey"
+            columns: ["teen_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      teen_checkins: {
+        Row: {
+          academic_pressure: number | null
+          created_at: string | null
+          date: string
+          family_relationship: number | null
+          id: string
+          mood: Database["public"]["Enums"]["teen_mood"]
+          personal_notes: string | null
+          sleep_quality: number | null
+          social_interaction: number | null
+          stress_level: number | null
+          teen_id: string | null
+        }
+        Insert: {
+          academic_pressure?: number | null
+          created_at?: string | null
+          date?: string
+          family_relationship?: number | null
+          id?: string
+          mood: Database["public"]["Enums"]["teen_mood"]
+          personal_notes?: string | null
+          sleep_quality?: number | null
+          social_interaction?: number | null
+          stress_level?: number | null
+          teen_id?: string | null
+        }
+        Update: {
+          academic_pressure?: number | null
+          created_at?: string | null
+          date?: string
+          family_relationship?: number | null
+          id?: string
+          mood?: Database["public"]["Enums"]["teen_mood"]
+          personal_notes?: string | null
+          sleep_quality?: number | null
+          social_interaction?: number | null
+          stress_level?: number | null
+          teen_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "teen_checkins_teen_id_fkey"
+            columns: ["teen_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      teen_rewards: {
+        Row: {
+          description: string | null
+          earned_at: string | null
+          id: string
+          points: number
+          reward_type: string
+          teen_id: string | null
+        }
+        Insert: {
+          description?: string | null
+          earned_at?: string | null
+          id?: string
+          points?: number
+          reward_type: string
+          teen_id?: string | null
+        }
+        Update: {
+          description?: string | null
+          earned_at?: string | null
+          id?: string
+          points?: number
+          reward_type?: string
+          teen_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "teen_rewards_teen_id_fkey"
+            columns: ["teen_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_feedback: {
         Row: {
           burnout_risk: string | null
@@ -272,6 +566,51 @@ export type Database = {
         }
         Relationships: []
       }
+      virtual_gifts: {
+        Row: {
+          created_at: string | null
+          gift_image_url: string | null
+          gift_name: string
+          id: string
+          message: string | null
+          receiver_id: string | null
+          sender_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          gift_image_url?: string | null
+          gift_name: string
+          id?: string
+          message?: string | null
+          receiver_id?: string | null
+          sender_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          gift_image_url?: string | null
+          gift_name?: string
+          id?: string
+          message?: string | null
+          receiver_id?: string | null
+          sender_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "virtual_gifts_receiver_id_fkey"
+            columns: ["receiver_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "virtual_gifts_sender_id_fkey"
+            columns: ["sender_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -303,6 +642,24 @@ export type Database = {
         | "abonne_salarie"
         | "administrateur_entreprise"
         | "particulier_travailleur"
+      alert_type:
+        | "party"
+        | "drinking"
+        | "danger"
+        | "lost"
+        | "happy"
+        | "with_friends"
+        | "need_help"
+      family_role: "parent" | "teen" | "sibling"
+      subscription_plan: "basic" | "premium" | "family"
+      teen_mood:
+        | "very_happy"
+        | "happy"
+        | "neutral"
+        | "sad"
+        | "very_sad"
+        | "anxious"
+        | "stressed"
       user_role: "admin" | "user"
     }
     CompositeTypes: {
@@ -423,6 +780,26 @@ export const Constants = {
         "abonne_salarie",
         "administrateur_entreprise",
         "particulier_travailleur",
+      ],
+      alert_type: [
+        "party",
+        "drinking",
+        "danger",
+        "lost",
+        "happy",
+        "with_friends",
+        "need_help",
+      ],
+      family_role: ["parent", "teen", "sibling"],
+      subscription_plan: ["basic", "premium", "family"],
+      teen_mood: [
+        "very_happy",
+        "happy",
+        "neutral",
+        "sad",
+        "very_sad",
+        "anxious",
+        "stressed",
       ],
       user_role: ["admin", "user"],
     },
