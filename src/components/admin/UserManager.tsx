@@ -16,16 +16,16 @@ interface User {
 
 interface UserManagerProps {
   users: User[];
-  onUpdateRole: (userId: string, role: string) => Promise<void>;
+  onUpdateUserRole: (userId: string, role: string) => Promise<void>;
   loading: boolean;
 }
 
-const UserManager: React.FC<UserManagerProps> = ({ users, onUpdateRole, loading }) => {
+const UserManager: React.FC<UserManagerProps> = ({ users, onUpdateUserRole, loading }) => {
   const { toast } = useToast();
 
   const handleRoleChange = async (userId: string, newRole: string) => {
     try {
-      await onUpdateRole(userId, newRole);
+      await onUpdateUserRole(userId, newRole);
       toast({
         title: "Succès",
         description: "Rôle utilisateur mis à jour avec succès.",

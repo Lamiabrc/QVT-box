@@ -19,22 +19,36 @@ interface ContentItem {
 }
 
 interface ContentEditorProps {
-  item: ContentItem;
-  onUpdate: (id: string, updates: Partial<ContentItem>) => Promise<void>;
-  onDelete: (id: string) => Promise<void>;
+  content: ContentItem[];
+  onUpdateContent: (id: string, updates: Partial<ContentItem>) => Promise<void>;
+  onDeleteContent: (id: string) => Promise<void>;
 }
 
-const ContentEditor: React.FC<ContentEditorProps> = ({ item, onUpdate, onDelete }) => {
-  const [editing, setEditing] = useState(false);
-  const [editData, setEditData] = useState(item);
+const ContentEditor: React.FC<ContentEditorProps> = ({ content, onUpdateContent, onDeleteContent }) => {
+  const [editingItems, setEditingItems] = useState<{[key: string]: boolean}>({});
+  const [editData, setEditData] = useState<{[key: string]: ContentItem}>({});
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
-  const handleSave = async () => {
+  const startEdit = (item: ContentItem) => {
+    setEditingItems(prev => ({ ...prev, [item.id]: true }));
+    setEditData(prev => ({ ...prev, [item.id]: item }));
+  };
+
+  const cancelEdit = (itemId: string) => {
+    setEditingItems(prev => ({ ...prev, [itemId]: false }));
+    setEditData(prev => {
+      const newData = { ...prev };
+      delete newData[itemId];
+      return newData;
+    });
+  };
+
+  const handleSave = async (itemId: string) => {
     try {
       setLoading(true);
-      await onUpdate(item.id, editData);
-      setEditing(false);
+      await onUpdateContent(itemId, editData[itemId]);
+      setEditingItems(prev => ({ ...prev, [itemId]: false }));
       toast({
         title: "Succès",
         description: "Contenu mis à jour avec succès.",
@@ -50,11 +64,11 @@ const ContentEditor: React.FC<ContentEditorProps> = ({ item, onUpdate, onDelete 
     }
   };
 
-  const handleDelete = async () => {
+  const handleDelete = async (itemId: string) => {
     if (confirm('Êtes-vous sûr de vouloir supprimer cet élément ?')) {
       try {
         setLoading(true);
-        await onDelete(item.id);
+        await onDeleteContent(itemId);
         toast({
           title: "Supprimé",
           description: "Contenu supprimé avec succès.",
@@ -72,81 +86,111 @@ const ContentEditor: React.FC<ContentEditorProps> = ({ item, onUpdate, onDelete 
   };
 
   return (
-    <Card className="mb-4">
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium">{item.key}</CardTitle>
-        <div className="flex space-x-2">
-          {editing ? (
-            <>
-              <Button size="sm" onClick={handleSave} disabled={loading}>
-                <Save className="h-4 w-4" />
-              </Button>
-              <Button size="sm" variant="outline" onClick={() => setEditing(false)}>
-                <X className="h-4 w-4" />
-              </Button>
-            </>
-          ) : (
-            <>
-              <Button size="sm" variant="outline" onClick={() => setEditing(true)}>
-                <Edit className="h-4 w-4" />
-              </Button>
-              <Button size="sm" variant="destructive" onClick={handleDelete} disabled={loading}>
-                <Trash2 className="h-4 w-4" />
-              </Button>
-            </>
-          )}
-        </div>
+    <Card>
+      <CardHeader>
+        <CardTitle>Contenu existant ({content.length})</CardTitle>
       </CardHeader>
       <CardContent>
-        {editing ? (
-          <div className="space-y-4">
-            <div>
-              <label className="text-sm font-medium">Clé</label>
-              <Input
-                value={editData.key}
-                onChange={(e) => setEditData({...editData, key: e.target.value})}
-              />
-            </div>
-            <div>
-              <label className="text-sm font-medium">Type</label>
-              <Select value={editData.type} onValueChange={(value) => setEditData({...editData, type: value})}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="text">Texte</SelectItem>
-                  <SelectItem value="html">HTML</SelectItem>
-                  <SelectItem value="json">JSON</SelectItem>
-                  <SelectItem value="image">Image</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-              <label className="text-sm font-medium">Valeur</label>
-              <Textarea
-                value={typeof editData.value === 'string' ? editData.value : JSON.stringify(editData.value)}
-                onChange={(e) => setEditData({...editData, value: e.target.value})}
-                rows={3}
-              />
-            </div>
-            <div>
-              <label className="text-sm font-medium">Description</label>
-              <Input
-                value={editData.description || ''}
-                onChange={(e) => setEditData({...editData, description: e.target.value})}
-              />
-            </div>
-          </div>
-        ) : (
-          <div className="space-y-2">
-            <p className="text-sm text-gray-600">{item.description}</p>
-            <div className="bg-gray-100 p-2 rounded text-sm">
-              <strong>Type:</strong> {item.type}<br />
-              <strong>Page:</strong> {item.page}<br />
-              <strong>Valeur:</strong> {typeof item.value === 'string' ? item.value : JSON.stringify(item.value)}
-            </div>
-          </div>
-        )}
+        <div className="space-y-4">
+          {content.length === 0 ? (
+            <p className="text-center text-gray-500">Aucun contenu trouvé</p>
+          ) : (
+            content.map((item) => (
+              <Card key={item.id} className="mb-4">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">{item.key}</CardTitle>
+                  <div className="flex space-x-2">
+                    {editingItems[item.id] ? (
+                      <>
+                        <Button size="sm" onClick={() => handleSave(item.id)} disabled={loading}>
+                          <Save className="h-4 w-4" />
+                        </Button>
+                        <Button size="sm" variant="outline" onClick={() => cancelEdit(item.id)}>
+                          <X className="h-4 w-4" />
+                        </Button>
+                      </>
+                    ) : (
+                      <>
+                        <Button size="sm" variant="outline" onClick={() => startEdit(item)}>
+                          <Edit className="h-4 w-4" />
+                        </Button>
+                        <Button size="sm" variant="destructive" onClick={() => handleDelete(item.id)} disabled={loading}>
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </>
+                    )}
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  {editingItems[item.id] ? (
+                    <div className="space-y-4">
+                      <div>
+                        <label className="text-sm font-medium">Clé</label>
+                        <Input
+                          value={editData[item.id]?.key || ''}
+                          onChange={(e) => setEditData(prev => ({
+                            ...prev,
+                            [item.id]: { ...prev[item.id], key: e.target.value }
+                          }))}
+                        />
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium">Type</label>
+                        <Select 
+                          value={editData[item.id]?.type || ''} 
+                          onValueChange={(value) => setEditData(prev => ({
+                            ...prev,
+                            [item.id]: { ...prev[item.id], type: value }
+                          }))}
+                        >
+                          <SelectTrigger>
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="text">Texte</SelectItem>
+                            <SelectItem value="html">HTML</SelectItem>
+                            <SelectItem value="json">JSON</SelectItem>
+                            <SelectItem value="image">Image</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium">Valeur</label>
+                        <Textarea
+                          value={typeof editData[item.id]?.value === 'string' ? editData[item.id].value : JSON.stringify(editData[item.id]?.value)}
+                          onChange={(e) => setEditData(prev => ({
+                            ...prev,
+                            [item.id]: { ...prev[item.id], value: e.target.value }
+                          }))}
+                          rows={3}
+                        />
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium">Description</label>
+                        <Input
+                          value={editData[item.id]?.description || ''}
+                          onChange={(e) => setEditData(prev => ({
+                            ...prev,
+                            [item.id]: { ...prev[item.id], description: e.target.value }
+                          }))}
+                        />
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="space-y-2">
+                      <p className="text-sm text-gray-600">{item.description}</p>
+                      <div className="bg-gray-100 p-2 rounded text-sm">
+                        <strong>Type:</strong> {item.type}<br />
+                        <strong>Page:</strong> {item.page}<br />
+                        <strong>Valeur:</strong> {typeof item.value === 'string' ? item.value : JSON.stringify(item.value)}
+                      </div>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            ))
+          )}
+        </div>
       </CardContent>
     </Card>
   );

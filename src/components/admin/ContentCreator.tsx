@@ -9,10 +9,10 @@ import { Plus } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface ContentCreatorProps {
-  onCreate: (content: any) => Promise<void>;
+  onCreateContent: (content: any) => Promise<void>;
 }
 
-const ContentCreator: React.FC<ContentCreatorProps> = ({ onCreate }) => {
+const ContentCreator: React.FC<ContentCreatorProps> = ({ onCreateContent }) => {
   const [formData, setFormData] = useState({
     key: '',
     type: 'text',
@@ -38,7 +38,7 @@ const ContentCreator: React.FC<ContentCreatorProps> = ({ onCreate }) => {
 
     try {
       setLoading(true);
-      await onCreate(formData);
+      await onCreateContent(formData);
       setFormData({
         key: '',
         type: 'text',

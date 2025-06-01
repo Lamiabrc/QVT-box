@@ -37,7 +37,7 @@ const AdminContentManager = () => {
     createContent, 
     updateContent, 
     deleteContent,
-    fetchContent 
+    refetch 
   } = useAdminContent();
   const { users, loading: usersLoading, updateUserRole } = useUserRoles();
   const [activeTab, setActiveTab] = useState('content');
@@ -45,7 +45,7 @@ const AdminContentManager = () => {
   useEffect(() => {
     if (!authLoading && user) {
       if (isAdmin) {
-        fetchContent();
+        refetch();
       } else {
         toast({
           variant: "destructive",
