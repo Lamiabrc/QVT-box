@@ -12,7 +12,7 @@ import ContentCreator from '@/components/admin/ContentCreator';
 import UserManager from '@/components/admin/UserManager';
 import { useAdminContent } from '@/hooks/useAdminContent';
 import { useUserRoles } from '@/hooks/useUserRoles';
-import { Settings, FileText, Users, Search, Filter } from 'lucide-react';
+import { Settings, FileText, Users, Search } from 'lucide-react';
 
 const AdminContentManager = () => {
   const { content, loading: contentLoading, updateContent, createContent, deleteContent } = useAdminContent();
@@ -116,7 +116,7 @@ const AdminContentManager = () => {
                             <SelectContent>
                               <SelectItem value="">Toutes les pages</SelectItem>
                               {uniquePages.map(page => (
-                                <SelectItem key={page} value={page || ''}>{page}</SelectItem>
+                                <SelectItem key={page || 'empty'} value={page || ''}>{page}</SelectItem>
                               ))}
                             </SelectContent>
                           </Select>
