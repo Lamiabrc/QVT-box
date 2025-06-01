@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -7,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Progress } from "@/components/ui/progress";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, CheckCircle, Clock, Users, Target } from "lucide-react";
+import { ArrowLeft, CheckCircle, Clock, Target } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const EntrepriseQuestionnaire = () => {
@@ -117,7 +116,7 @@ const EntrepriseQuestionnaire = () => {
     if (numericResponses.length === 0) return 0;
     
     const average = numericResponses.reduce((sum, val) => sum + val, 0) / numericResponses.length;
-    return Math.round((6 - average) * 3); // Convert to 1-15 scale, inverted (lower stress = higher score)
+    return Math.round((6 - average) * 3);
   };
 
   const getScoreInterpretation = (score: number) => {
@@ -149,7 +148,6 @@ const EntrepriseQuestionnaire = () => {
       description: `Votre score QVT: ${score}/15`,
     });
 
-    // Simulate saving data
     console.log("Responses:", responses);
     console.log("QVT Score:", score);
   };
