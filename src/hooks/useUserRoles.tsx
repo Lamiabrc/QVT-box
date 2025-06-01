@@ -40,8 +40,8 @@ export const useUserRoles = () => {
   const updateUserRole = async (userId: string, role: string): Promise<void> => {
     try {
       // Validate role
-      if (role !== 'admin' && role !== 'user') {
-        throw new Error('Invalid role. Must be "admin" or "user"');
+      if (!['admin', 'user', 'moderator'].includes(role)) {
+        throw new Error('Invalid role. Must be "admin", "user", or "moderator"');
       }
 
       // Mise à jour dans la table profiles
