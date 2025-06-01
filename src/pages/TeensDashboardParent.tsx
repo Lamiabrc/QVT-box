@@ -29,7 +29,7 @@ const TeensDashboardParent = () => {
   const recentActivities = [
     {
       date: "2024-05-25",
-      activity: "Questionnaire bien-être complété",
+      activity: "Check-in quotidien complété",
       score: "9.0/15",
       mood: "😊",
       status: "positive"
@@ -43,10 +43,10 @@ const TeensDashboardParent = () => {
     },
     {
       date: "2024-05-15",
-      activity: "Période de stress détectée",
-      note: "Examens approchants",
-      mood: "😰",
-      status: "attention"
+      activity: "Signal envoyé",
+      note: "En soirée chez Emma",
+      mood: "🎉",
+      status: "info"
     }
   ];
 
@@ -65,8 +65,8 @@ const TeensDashboardParent = () => {
               <span>Retour à l'espace Teens</span>
             </Button>
             <div className="flex items-center space-x-3">
-              <Users className="w-5 h-5 text-secondary" />
-              <h1 className="text-xl font-bold text-secondary">Dashboard Parent</h1>
+              <Heart className="w-5 h-5 text-pink-500" />
+              <h1 className="text-xl font-bold text-secondary">Suivi Bien-être - Alex</h1>
             </div>
           </div>
         </div>
@@ -76,15 +76,15 @@ const TeensDashboardParent = () => {
         {/* Introduction & Privacy Notice */}
         <div className="text-center mb-8 animate-fade-in">
           <h1 className="text-3xl font-bold text-foreground mb-4">
-            👨‍👩‍👧‍👦 Suivi du Bien-être de votre Enfant
+            💝 Bien-être de votre Ado
           </h1>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto mb-4">
             Cette vue d'ensemble respecte l'intimité de votre adolescent tout en vous donnant 
-            les informations essentielles pour l'accompagner au mieux.
+            les informations essentielles pour l'accompagner avec bienveillance.
           </p>
           <div className="inline-flex items-center space-x-2 bg-secondary/10 rounded-2xl px-4 py-2">
             <Shield className="w-4 h-4 text-secondary" />
-            <span className="text-sm text-secondary">Données anonymisées et consentement respecté</span>
+            <span className="text-sm text-secondary">Données partagées avec consentement mutuel</span>
           </div>
         </div>
 
@@ -93,10 +93,10 @@ const TeensDashboardParent = () => {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Bien-être Global</CardTitle>
-              <Heart className="h-4 w-4 text-secondary" />
+              <Heart className="h-4 w-4 text-pink-500" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-secondary">9.0/15</div>
+              <div className="text-2xl font-bold text-pink-600">9.0/15</div>
               <p className="text-xs text-muted-foreground">
                 📈 +1.5 ce mois-ci
               </p>
@@ -109,7 +109,7 @@ const TeensDashboardParent = () => {
               <span className="text-2xl">😊</span>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-green-600">Positive</div>
+              <div className="text-2xl font-bold text-green-600">Épanouie</div>
               <p className="text-xs text-muted-foreground">
                 75% de bonnes journées
               </p>
@@ -118,26 +118,26 @@ const TeensDashboardParent = () => {
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Dernière Évaluation</CardTitle>
+              <CardTitle className="text-sm font-medium">Dernier Check-in</CardTitle>
               <Calendar className="h-4 w-4 text-primary" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-primary">Il y a 3j</div>
+              <div className="text-2xl font-bold text-primary">Hier</div>
               <p className="text-xs text-muted-foreground">
-                Questionnaire complété
+                Régularité excellente
               </p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Alertes</CardTitle>
-              <AlertTriangle className="h-4 w-4 text-orange-500" />
+              <CardTitle className="text-sm font-medium">Communication</CardTitle>
+              <AlertTriangle className="h-4 w-4 text-green-500" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-green-600">0</div>
+              <div className="text-2xl font-bold text-green-600">Fluide</div>
               <p className="text-xs text-muted-foreground">
-                Aucune préoccupation
+                3 signaux cette semaine
               </p>
             </CardContent>
           </Card>
@@ -157,7 +157,7 @@ const TeensDashboardParent = () => {
                   <XAxis dataKey="month" />
                   <YAxis domain={[5, 12]} />
                   <Tooltip />
-                  <Line type="monotone" dataKey="score" stroke="#78A085" strokeWidth={3} />
+                  <Line type="monotone" dataKey="score" stroke="#ec4899" strokeWidth={3} />
                 </LineChart>
               </ResponsiveContainer>
             </CardContent>
@@ -208,22 +208,24 @@ const TeensDashboardParent = () => {
                         {new Date(activity.date).toLocaleDateString('fr-FR')}
                       </p>
                       {activity.score && (
-                        <p className="text-sm text-secondary font-medium">Score: {activity.score}</p>
+                        <p className="text-sm text-pink-600 font-medium">Score: {activity.score}</p>
                       )}
                       {activity.feedback && (
                         <p className="text-sm text-muted-foreground italic">"{activity.feedback}"</p>
                       )}
                       {activity.note && (
-                        <p className="text-sm text-orange-600">Note: {activity.note}</p>
+                        <p className="text-sm text-blue-600">Note: {activity.note}</p>
                       )}
                     </div>
                   </div>
                   <Badge className={
                     activity.status === 'positive' 
                       ? 'bg-green-100 text-green-800' 
+                      : activity.status === 'info'
+                      ? 'bg-blue-100 text-blue-800'
                       : 'bg-orange-100 text-orange-800'
                   }>
-                    {activity.status === 'positive' ? 'Positif' : 'Attention'}
+                    {activity.status === 'positive' ? 'Positif' : activity.status === 'info' ? 'Info' : 'Attention'}
                   </Badge>
                 </div>
               ))}
@@ -234,41 +236,41 @@ const TeensDashboardParent = () => {
         {/* Recommendations for Parents */}
         <Card className="mb-8">
           <CardHeader>
-            <CardTitle>Conseils pour Vous</CardTitle>
+            <CardTitle>Conseils Personnalisés</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-4">
-                <h4 className="font-semibold text-secondary">Points Positifs à Encourager ✅</h4>
+                <h4 className="font-semibold text-green-600">Points Positifs à Encourager ✅</h4>
                 <ul className="space-y-2 text-sm">
                   <li className="flex items-start space-x-2">
                     <span className="text-green-600">•</span>
-                    <span>Votre ado s'exprime bien sur ses émotions</span>
+                    <span>Alex communique très bien ses émotions</span>
                   </li>
                   <li className="flex items-start space-x-2">
                     <span className="text-green-600">•</span>
-                    <span>Participation active aux questionnaires</span>
+                    <span>Excellent engagement avec les check-ins quotidiens</span>
                   </li>
                   <li className="flex items-start space-x-2">
                     <span className="text-green-600">•</span>
-                    <span>Amélioration constante du bien-être</span>
+                    <span>Progrès constant dans la gestion du stress</span>
                   </li>
                 </ul>
               </div>
               <div className="space-y-4">
-                <h4 className="font-semibold text-orange-600">Points d'Attention 👀</h4>
+                <h4 className="font-semibold text-blue-600">Suggestions d'Accompagnement 💡</h4>
                 <ul className="space-y-2 text-sm">
                   <li className="flex items-start space-x-2">
-                    <span className="text-orange-600">•</span>
-                    <span>Stress lié aux examens à surveiller</span>
+                    <span className="text-blue-600">•</span>
+                    <span>Continuez les moments en famille créatifs</span>
                   </li>
                   <li className="flex items-start space-x-2">
-                    <span className="text-orange-600">•</span>
-                    <span>Maintenir la communication ouverte</span>
+                    <span className="text-blue-600">•</span>
+                    <span>Encouragez les activités artistiques</span>
                   </li>
                   <li className="flex items-start space-x-2">
-                    <span className="text-orange-600">•</span>
-                    <span>Encourager les activités relaxantes</span>
+                    <span className="text-blue-600">•</span>
+                    <span>Maintenez la communication ouverte et positive</span>
                   </li>
                 </ul>
               </div>
@@ -280,26 +282,26 @@ const TeensDashboardParent = () => {
         <div className="text-center space-y-4">
           <h3 className="text-xl font-semibold mb-6">Actions Disponibles</h3>
           <div className="flex flex-wrap justify-center gap-4">
-            <Button onClick={() => navigate('/recommandations')} className="rounded-2xl bg-secondary">
-              Voir les recommandations familiales
+            <Button onClick={() => navigate('/teens/family-space')} className="rounded-2xl bg-pink-500 hover:bg-pink-600">
+              Espace famille
+            </Button>
+            <Button onClick={() => navigate('/recommandations')} variant="outline" className="rounded-2xl">
+              Voir les recommandations
             </Button>
             <Button onClick={() => navigate('/historique')} variant="outline" className="rounded-2xl">
               Consulter l'historique
             </Button>
-            <Button onClick={() => navigate('/profil')} variant="outline" className="rounded-2xl">
-              Gérer les paramètres
-            </Button>
           </div>
           
           <div className="mt-8 max-w-2xl mx-auto">
-            <Card className="bg-secondary/10 border-secondary/20">
+            <Card className="bg-blue-50 border-blue-200">
               <CardContent className="pt-6 text-center">
-                <Shield className="w-8 h-8 text-secondary mx-auto mb-4" />
-                <h4 className="font-semibold mb-2">Respect de la Vie Privée</h4>
+                <Heart className="w-8 h-8 text-pink-500 mx-auto mb-4" />
+                <h4 className="font-semibold mb-2">Accompagnement Bienveillant</h4>
                 <p className="text-sm text-muted-foreground">
-                  Ce dashboard ne montre que les informations essentielles. Les détails des réponses 
-                  et commentaires personnels de votre adolescent restent confidentiels, conformément 
-                  à nos engagements de respect de la vie privée des mineurs.
+                  Ce dashboard partage uniquement les informations qu'Alex a choisi de partager. 
+                  L'objectif est de favoriser la communication et le soutien mutuel dans le respect 
+                  de son intimité et de son autonomie.
                 </p>
               </CardContent>
             </Card>

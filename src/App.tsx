@@ -12,6 +12,11 @@ import EntrepriseDashboard from "./pages/EntrepriseDashboard";
 import EntrepriseQuestionnaire from "./pages/EntrepriseQuestionnaire";
 import TeensQuestionnaire from "./pages/TeensQuestionnaire";
 import TeensDashboardParent from "./pages/TeensDashboardParent";
+import TeensFamilySpace from "./pages/TeensFamilySpace";
+import TeensPersonalSpace from "./pages/TeensPersonalSpace";
+import TeensCheckIn from "./pages/TeensCheckIn";
+import TeensQuickAlert from "./pages/TeensQuickAlert";
+import TeensParentalAccess from "./pages/TeensParentalAccess";
 import Recommandations from "./pages/Recommandations";
 import Historique from "./pages/Historique";
 import Profil from "./pages/Profil";
@@ -32,6 +37,11 @@ const App = () => (
           <Route path="/entreprise/questionnaire" element={<EntrepriseQuestionnaire />} />
           <Route path="/teens/questionnaire" element={<TeensQuestionnaire />} />
           <Route path="/teens/dashboard-parent" element={<TeensDashboardParent />} />
+          <Route path="/teens/family-space" element={<TeensFamilySpace />} />
+          <Route path="/teens/personal-space" element={<TeensPersonalSpace />} />
+          <Route path="/teens/check-in" element={<TeensCheckIn />} />
+          <Route path="/teens/quick-alert" element={<TeensQuickAlert />} />
+          <Route path="/teens/parental-access" element={<TeensParentalAccess />} />
           <Route path="/recommandations" element={<Recommandations />} />
           <Route path="/historique" element={<Historique />} />
           <Route path="/profil" element={<Profil />} />

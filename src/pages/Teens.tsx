@@ -2,7 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Zap, Gift, Heart, Shield, MessageCircle, Calendar, Star } from "lucide-react";
+import { ArrowLeft, Zap, Gift, Heart, Shield, MessageCircle, Calendar, Star, User, Users } from "lucide-react";
 
 const Teens = () => {
   const navigate = useNavigate();
@@ -74,91 +74,67 @@ const Teens = () => {
 
         {/* Quick Actions - Street Art Cards */}
         <div className="grid md:grid-cols-2 gap-8 mb-16">
-          {/* Teen Access */}
-          <Card className="group relative overflow-hidden bg-gradient-to-br from-pink-500/10 to-purple-600/10 border-2 border-pink-400/30 hover:border-pink-400/60 transition-all duration-300 cursor-pointer transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-pink-500/20">
+          {/* Teen Daily Check-in */}
+          <Card className="group relative overflow-hidden bg-gradient-to-br from-pink-500/10 to-purple-600/10 border-2 border-pink-400/30 hover:border-pink-400/60 transition-all duration-300 cursor-pointer transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-pink-500/20"
+                onClick={() => navigate('/teens/check-in')}>
             <div className="absolute top-0 right-0 w-32 h-32 bg-pink-500/10 rounded-full -translate-y-16 translate-x-16"></div>
             <CardContent className="p-8 relative z-10">
               <div className="text-center">
                 <div className="w-24 h-24 bg-gradient-to-r from-pink-500 to-purple-600 rounded-3xl mx-auto mb-6 flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg shadow-pink-500/30">
-                  <Zap className="w-12 h-12 text-white" />
+                  <Heart className="w-12 h-12 text-white" />
                 </div>
-                <h3 className="text-3xl font-black text-white mb-4">🔥 MODE ADO</h3>
+                <h3 className="text-3xl font-black text-white mb-4">💝 CHECK-IN QUOTIDIEN</h3>
                 <p className="text-gray-300 mb-6 text-lg">
-                  Accède à ton check-in quotidien, envoie des alertes rapides, 
-                  exprime-toi et reçois tes récompenses !
+                  Prends 2 minutes pour faire le point sur ta journée, tes émotions et ton bien-être !
                 </p>
-                <div className="space-y-2 mb-8 text-left">
-                  <div className="flex items-center space-x-3 text-pink-300">
-                    <Calendar className="w-5 h-5" />
-                    <span>Check-in quotidien fun</span>
-                  </div>
-                  <div className="flex items-center space-x-3 text-purple-300">
-                    <MessageCircle className="w-5 h-5" />
-                    <span>Alertes rapides parents</span>
-                  </div>
-                  <div className="flex items-center space-x-3 text-cyan-300">
-                    <Star className="w-5 h-5" />
-                    <span>Récompenses & cadeaux</span>
-                  </div>
-                  <div className="flex items-center space-x-3 text-yellow-300">
-                    <Gift className="w-5 h-5" />
-                    <span>Ta box mensuelle</span>
-                  </div>
-                </div>
-                <Button 
-                  className="w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white rounded-2xl py-6 text-xl font-bold shadow-lg shadow-pink-500/30"
-                  onClick={() => navigate('/teens/questionnaire')}
-                >
-                  LET'S GO! 🚀
+                <Button className="w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white rounded-2xl py-6 text-xl font-bold shadow-lg shadow-pink-500/30">
+                  C'EST PARTI! 🚀
                 </Button>
               </div>
             </CardContent>
           </Card>
 
-          {/* Parent Access */}
-          <Card className="group relative overflow-hidden bg-gradient-to-br from-cyan-500/10 to-blue-600/10 border-2 border-cyan-400/30 hover:border-cyan-400/60 transition-all duration-300 cursor-pointer transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-cyan-500/20">
+          {/* Family Connection */}
+          <Card className="group relative overflow-hidden bg-gradient-to-br from-cyan-500/10 to-blue-600/10 border-2 border-cyan-400/30 hover:border-cyan-400/60 transition-all duration-300 cursor-pointer transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-cyan-500/20"
+                onClick={() => navigate('/teens/family-space')}>
             <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 rounded-full -translate-y-16 translate-x-16"></div>
             <CardContent className="p-8 relative z-10">
               <div className="text-center">
                 <div className="w-24 h-24 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-3xl mx-auto mb-6 flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg shadow-cyan-500/30">
-                  <Shield className="w-12 h-12 text-white" />
+                  <Users className="w-12 h-12 text-white" />
                 </div>
-                <h3 className="text-3xl font-black text-white mb-4">👨‍👩‍👧‍👦 ESPACE PARENT</h3>
+                <h3 className="text-3xl font-black text-white mb-4">👨‍👩‍👧‍👦 ESPACE FAMILLE</h3>
                 <p className="text-gray-300 mb-6 text-lg">
-                  Suivez le bien-être de votre ado, recevez des alertes 
-                  et accompagnez-le avec bienveillance.
+                  Reste connecté avec ta famille, partage tes moments et communique en toute confiance !
                 </p>
-                <div className="space-y-2 mb-8 text-left">
-                  <div className="flex items-center space-x-3 text-cyan-300">
-                    <Heart className="w-5 h-5" />
-                    <span>Dashboard bien-être</span>
-                  </div>
-                  <div className="flex items-center space-x-3 text-blue-300">
-                    <MessageCircle className="w-5 h-5" />
-                    <span>Alertes en temps réel</span>
-                  </div>
-                  <div className="flex items-center space-x-3 text-purple-300">
-                    <Calendar className="w-5 h-5" />
-                    <span>Check-in parental</span>
-                  </div>
-                  <div className="flex items-center space-x-3 text-green-300">
-                    <Gift className="w-5 h-5" />
-                    <span>Suggestions cadeaux</span>
-                  </div>
-                </div>
-                <Button 
-                  className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white rounded-2xl py-6 text-xl font-bold shadow-lg shadow-cyan-500/30"
-                  onClick={() => navigate('/teens/dashboard-parent')}
-                >
-                  ACCÉDER AU DASHBOARD
+                <Button className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white rounded-2xl py-6 text-xl font-bold shadow-lg shadow-cyan-500/30">
+                  REJOINDRE LA TRIBU! 👑
                 </Button>
               </div>
             </CardContent>
           </Card>
         </div>
 
-        {/* Features Grid with street art style */}
-        <div className="grid md:grid-cols-3 gap-6 mb-16">
+        {/* Navigation Grid */}
+        <div className="grid md:grid-cols-4 gap-6 mb-16">
+          <Card className="group bg-gradient-to-br from-purple-500/10 to-indigo-600/10 border-2 border-purple-400/30 hover:border-purple-400/60 transition-all duration-300 cursor-pointer transform hover:-translate-y-1 hover:shadow-xl hover:shadow-purple-500/20"
+                onClick={() => navigate('/teens/personal-space')}>
+            <CardHeader className="text-center pb-4">
+              <div className="w-20 h-20 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-2xl mx-auto mb-4 flex items-center justify-center group-hover:rotate-6 transition-transform shadow-lg shadow-purple-500/30">
+                <User className="w-10 h-10 text-white" />
+              </div>
+              <CardTitle className="text-xl text-white font-bold">🦄 MON ESPACE</CardTitle>
+            </CardHeader>
+            <CardContent className="text-center pt-0">
+              <p className="text-gray-300 text-sm mb-4">
+                Ton profil, tes achievements, ta personnalité et tes customisations !
+              </p>
+              <Button className="w-full bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white rounded-2xl font-bold">
+                EXPLORER 🎨
+              </Button>
+            </CardContent>
+          </Card>
+
           <Card className="group bg-gradient-to-br from-yellow-500/10 to-orange-600/10 border-2 border-yellow-400/30 hover:border-yellow-400/60 transition-all duration-300 cursor-pointer transform hover:-translate-y-1 hover:shadow-xl hover:shadow-yellow-500/20"
                 onClick={() => navigate('/recommandations')}>
             <CardHeader className="text-center pb-4">
@@ -195,20 +171,20 @@ const Teens = () => {
             </CardContent>
           </Card>
 
-          <Card className="group bg-gradient-to-br from-purple-500/10 to-indigo-600/10 border-2 border-purple-400/30 hover:border-purple-400/60 transition-all duration-300 cursor-pointer transform hover:-translate-y-1 hover:shadow-xl hover:shadow-purple-500/20"
-                onClick={() => navigate('/profil')}>
+          <Card className="group bg-gradient-to-br from-blue-500/10 to-cyan-600/10 border-2 border-blue-400/30 hover:border-blue-400/60 transition-all duration-300 cursor-pointer transform hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/20"
+                onClick={() => navigate('/teens/parental-access')}>
             <CardHeader className="text-center pb-4">
-              <div className="w-20 h-20 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-2xl mx-auto mb-4 flex items-center justify-center group-hover:rotate-6 transition-transform shadow-lg shadow-purple-500/30">
-                <Heart className="w-10 h-10 text-white" />
+              <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl mx-auto mb-4 flex items-center justify-center group-hover:rotate-6 transition-transform shadow-lg shadow-blue-500/30">
+                <Shield className="w-10 h-10 text-white" />
               </div>
-              <CardTitle className="text-xl text-white font-bold">⚙️ MON PROFIL</CardTitle>
+              <CardTitle className="text-xl text-white font-bold">🔗 ACCÈS PARENTS</CardTitle>
             </CardHeader>
             <CardContent className="text-center pt-0">
               <p className="text-gray-300 text-sm mb-4">
-                Personnalise ton avatar, tes préférences et ta confidentialité.
+                Connecte tes parents de manière sécurisée et transparente.
               </p>
-              <Button className="w-full bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white rounded-2xl font-bold">
-                CUSTOMISER 🎨
+              <Button className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white rounded-2xl font-bold">
+                CONNECTER 🔐
               </Button>
             </CardContent>
           </Card>
