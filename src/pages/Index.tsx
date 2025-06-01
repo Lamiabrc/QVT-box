@@ -79,9 +79,9 @@ const Index = () => {
               <div className="absolute inset-0 bg-gradient-to-br from-cyan-200/60 to-blue-300/60 rounded-full animate-pulse shadow-2xl border-4 border-white/50"></div>
               <div className="absolute inset-2 bg-gradient-to-br from-white/80 to-cyan-100/80 rounded-full animate-bounce shadow-inner"></div>
               
-              {/* Character emerging */}
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl animate-bounce">
-                👋
+              {/* Character emerging - replacing emoji with simple shape */}
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <div className="w-8 h-8 bg-gradient-to-br from-primary to-red-400 rounded-full animate-bounce shadow-lg"></div>
               </div>
               
               {/* Bubble pop effect with red accent */}
@@ -266,7 +266,7 @@ const Index = () => {
             <p className="text-gray-500">&copy; 2024 QVT Box - Intelligence Artificielle française pour la Qualité de Vie</p>
           </div>
         </div>
-      </div>
+      </footer>
     </div>
   );
 };
