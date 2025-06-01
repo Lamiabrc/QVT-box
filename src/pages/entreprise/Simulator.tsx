@@ -1,8 +1,9 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, BarChart3, TrendingUp, Users, Target, LogIn } from "lucide-react";
+import { ArrowLeft, BarChart3, TrendingUp, Users, Target, LogIn, Save, ShoppingCart } from "lucide-react";
 import { useState, useEffect } from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from "recharts";
 import { useToast } from "@/hooks/use-toast";
@@ -17,7 +18,7 @@ const Simulator = () => {
   const [teamSize, setTeamSize] = useState([20]);
   const [frequency, setFrequency] = useState([2]);
 
-  // Check auth status without forcing login
+  // Check auth status silently (no redirect)
   useEffect(() => {
     const checkUser = async () => {
       const { data: { session } } = await supabase.auth.getSession();
@@ -50,7 +51,7 @@ const Simulator = () => {
   const handleSaveSimulation = () => {
     if (!user) {
       toast({
-        title: "Connexion requise",
+        title: "Connexion requise pour sauvegarder",
         description: "Connectez-vous pour sauvegarder votre simulation.",
         variant: "destructive"
       });
@@ -67,8 +68,8 @@ const Simulator = () => {
   const handleLaunchConfiguration = () => {
     if (!user) {
       toast({
-        title: "Connexion requise",
-        description: "Connectez-vous pour lancer cette configuration.",
+        title: "Connexion requise pour commander",
+        description: "Connectez-vous pour lancer cette configuration et passer commande.",
         variant: "destructive"
       });
       navigate('/entreprise/login');
@@ -86,13 +87,13 @@ const Simulator = () => {
           <div className="flex items-center justify-between">
             <Button 
               variant="ghost" 
-              onClick={() => navigate('/entreprise')}
+              onClick={() => navigate('/')}
               className="flex items-center space-x-2"
             >
               <ArrowLeft className="w-4 h-4" />
-              <span>Retour</span>
+              <span>Retour à l'accueil</span>
             </Button>
-            <h1 className="text-2xl font-bold text-primary">Simulateur QVT</h1>
+            <h1 className="text-2xl font-bold text-primary">Simulateur QVT - Gratuit</h1>
             {!user && (
               <Button 
                 onClick={() => navigate('/entreprise/login')}
@@ -110,7 +111,7 @@ const Simulator = () => {
         {!user && (
           <div className="mb-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
             <p className="text-blue-800 text-center">
-              💡 <strong>Mode démo</strong> - Connectez-vous pour sauvegarder vos simulations et lancer des configurations
+              💡 <strong>Simulateur gratuit</strong> - Testez toutes les fonctionnalités. Connectez-vous uniquement pour sauvegarder ou commander.
             </p>
           </div>
         )}
@@ -268,11 +269,11 @@ const Simulator = () => {
 
             <div className="flex gap-4">
               <Button className="flex-1" onClick={handleLaunchConfiguration}>
-                <Target className="w-4 h-4 mr-2" />
-                {user ? "Lancer cette configuration" : "Se connecter pour commander"}
+                <ShoppingCart className="w-4 h-4 mr-2" />
+                {user ? "Commander cette configuration" : "Se connecter pour commander"}
               </Button>
               <Button variant="outline" className="flex-1" onClick={handleSaveSimulation}>
-                <BarChart3 className="w-4 h-4 mr-2" />
+                <Save className="w-4 h-4 mr-2" />
                 {user ? "Sauvegarder simulation" : "Se connecter pour sauvegarder"}
               </Button>
             </div>
