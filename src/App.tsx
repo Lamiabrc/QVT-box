@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -20,6 +19,11 @@ import TeensParentalAccess from "./pages/TeensParentalAccess";
 import Recommandations from "./pages/Recommandations";
 import Historique from "./pages/Historique";
 import Profil from "./pages/Profil";
+import Auth from "./pages/Auth";
+import TeensIntimacySpace from "./pages/TeensIntimacySpace";
+import TeensMetaverse from "./pages/TeensMetaverse";
+import TeensShop from "./pages/TeensShop";
+import TeensCalendar from "./pages/TeensCalendar";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +35,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/auth" element={<Auth />} />
           <Route path="/entreprise" element={<Entreprise />} />
           <Route path="/teens" element={<Teens />} />
           <Route path="/entreprise/dashboard" element={<EntrepriseDashboard />} />
@@ -39,6 +44,10 @@ const App = () => (
           <Route path="/teens/dashboard-parent" element={<TeensDashboardParent />} />
           <Route path="/teens/family-space" element={<TeensFamilySpace />} />
           <Route path="/teens/personal-space" element={<TeensPersonalSpace />} />
+          <Route path="/teens/intimacy-space" element={<TeensIntimacySpace />} />
+          <Route path="/teens/metaverse" element={<TeensMetaverse />} />
+          <Route path="/teens/shop" element={<TeensShop />} />
+          <Route path="/teens/calendar" element={<TeensCalendar />} />
           <Route path="/teens/check-in" element={<TeensCheckIn />} />
           <Route path="/teens/quick-alert" element={<TeensQuickAlert />} />
           <Route path="/teens/parental-access" element={<TeensParentalAccess />} />

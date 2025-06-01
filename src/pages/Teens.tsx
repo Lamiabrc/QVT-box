@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
@@ -6,6 +5,81 @@ import { ArrowLeft, Zap, Gift, Heart, Shield, MessageCircle, Calendar, Star, Use
 
 const Teens = () => {
   const navigate = useNavigate();
+
+  const features = [
+    {
+      icon: "🏠",
+      title: "Espace Famille",
+      subtitle: "Connecte-toi avec tes parents",
+      description: "Partage tes moments, envoie des signaux et renforce vos liens",
+      color: "from-blue-500 to-cyan-500",
+      path: "/teens/family-space"
+    },
+    {
+      icon: "🌸",
+      title: "Mon Espace Personnel",
+      subtitle: "Ton univers privé",
+      description: "Journal, customisation et suivi de ton évolution perso",
+      color: "from-pink-500 to-purple-500",
+      path: "/teens/personal-space"
+    },
+    {
+      icon: "🔒",
+      title: "Espace Intimité",
+      subtitle: "Safe space 100% confidentiel",
+      description: "Conseils ados, corps, relations, études dans un espace sécurisé",
+      color: "from-purple-500 to-indigo-500",
+      path: "/teens/intimacy-space"
+    },
+    {
+      icon: "🌌",
+      title: "Métaverse",
+      subtitle: "Explore, joue, apprends",
+      description: "Espaces virtuels pour te connecter et grandir avec d'autres ados",
+      color: "from-cyan-500 to-blue-500",
+      path: "/teens/metaverse"
+    },
+    {
+      icon: "🛍️",
+      title: "Boutique",
+      subtitle: "Personnalise ton expérience",
+      description: "Dépense tes points bien-être pour des récompenses cool",
+      color: "from-yellow-500 to-orange-500",
+      path: "/teens/shop"
+    },
+    {
+      icon: "📅",
+      title: "Mon Calendrier",
+      subtitle: "Organise tes activités",
+      description: "Check-ins, ateliers, événements et rappels bien-être",
+      color: "from-green-500 to-emerald-500",
+      path: "/teens/calendar"
+    }
+  ];
+
+  const quickActions = [
+    {
+      icon: "💚",
+      title: "Check-in Quotidien",
+      description: "Comment tu te sens aujourd'hui ?",
+      color: "from-green-500 to-emerald-500",
+      path: "/teens/check-in"
+    },
+    {
+      icon: "🚨",
+      title: "Alerte Rapide",
+      description: "Signale où tu es à tes parents",
+      color: "from-red-500 to-pink-500",
+      path: "/teens/quick-alert"
+    },
+    {
+      icon: "👨‍👩‍👧‍👦",
+      title: "Connexion Parents",
+      description: "Gérer l'accès de tes parents",
+      color: "from-blue-500 to-indigo-500",
+      path: "/teens/parental-access"
+    }
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-900 via-indigo-900 to-cyan-900 relative overflow-hidden">
@@ -72,47 +146,52 @@ const Teens = () => {
           </div>
         </div>
 
-        {/* Quick Actions - Street Art Cards */}
-        <div className="grid md:grid-cols-2 gap-8 mb-16">
-          {/* Teen Daily Check-in */}
-          <Card className="group relative overflow-hidden bg-gradient-to-br from-pink-500/10 to-purple-600/10 border-2 border-pink-400/30 hover:border-pink-400/60 transition-all duration-300 cursor-pointer transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-pink-500/20"
-                onClick={() => navigate('/teens/check-in')}>
-            <div className="absolute top-0 right-0 w-32 h-32 bg-pink-500/10 rounded-full -translate-y-16 translate-x-16"></div>
-            <CardContent className="p-8 relative z-10">
-              <div className="text-center">
-                <div className="w-24 h-24 bg-gradient-to-r from-pink-500 to-purple-600 rounded-3xl mx-auto mb-6 flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg shadow-pink-500/30">
-                  <Heart className="w-12 h-12 text-white" />
-                </div>
-                <h3 className="text-3xl font-black text-white mb-4">💝 CHECK-IN QUOTIDIEN</h3>
-                <p className="text-gray-300 mb-6 text-lg">
-                  Prends 2 minutes pour faire le point sur ta journée, tes émotions et ton bien-être !
-                </p>
-                <Button className="w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white rounded-2xl py-6 text-xl font-bold shadow-lg shadow-pink-500/30">
-                  C'EST PARTI! 🚀
+        {/* Features Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+          {features.map((feature, index) => (
+            <Card 
+              key={index} 
+              className={`group bg-gradient-to-br ${feature.color}/10 border-2 border-white/20 hover:border-white/40 transition-all duration-300 transform hover:-translate-y-2 cursor-pointer`}
+              onClick={() => navigate(feature.path)}
+            >
+              <CardHeader>
+                <div className="text-4xl mb-4">{feature.icon}</div>
+                <CardTitle className="text-xl font-bold text-white">
+                  {feature.title}
+                </CardTitle>
+                <p className="text-sm text-gray-300">{feature.subtitle}</p>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-300 mb-4">{feature.description}</p>
+                <Button className="w-full bg-white/10 hover:bg-white/20 text-white border-0 rounded-2xl">
+                  Explorer
                 </Button>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
 
-          {/* Family Connection */}
-          <Card className="group relative overflow-hidden bg-gradient-to-br from-cyan-500/10 to-blue-600/10 border-2 border-cyan-400/30 hover:border-cyan-400/60 transition-all duration-300 cursor-pointer transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-cyan-500/20"
-                onClick={() => navigate('/teens/family-space')}>
-            <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 rounded-full -translate-y-16 translate-x-16"></div>
-            <CardContent className="p-8 relative z-10">
-              <div className="text-center">
-                <div className="w-24 h-24 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-3xl mx-auto mb-6 flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg shadow-cyan-500/30">
-                  <Users className="w-12 h-12 text-white" />
-                </div>
-                <h3 className="text-3xl font-black text-white mb-4">👨‍👩‍👧‍👦 ESPACE FAMILLE</h3>
-                <p className="text-gray-300 mb-6 text-lg">
-                  Reste connecté avec ta famille, partage tes moments et communique en toute confiance !
-                </p>
-                <Button className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white rounded-2xl py-6 text-xl font-bold shadow-lg shadow-cyan-500/30">
-                  REJOINDRE LA TRIBU! 👑
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+        {/* Quick Actions */}
+        <div className="mb-16">
+          <h2 className="text-3xl font-bold text-white text-center mb-8">⚡ Actions Rapides</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            {quickActions.map((action, index) => (
+              <Card 
+                key={index} 
+                className={`group bg-gradient-to-br ${action.color}/10 border-2 border-white/20 hover:border-white/40 transition-all duration-300 cursor-pointer`}
+                onClick={() => navigate(action.path)}
+              >
+                <CardContent className="p-6 text-center">
+                  <div className="text-3xl mb-3">{action.icon}</div>
+                  <h3 className="text-lg font-bold text-white mb-2">{action.title}</h3>
+                  <p className="text-gray-300 text-sm mb-4">{action.description}</p>
+                  <Button className="w-full bg-white/10 hover:bg-white/20 text-white rounded-2xl">
+                    Go !
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
 
         {/* Navigation Grid */}
