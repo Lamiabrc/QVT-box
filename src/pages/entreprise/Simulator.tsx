@@ -1,22 +1,38 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, BarChart3, TrendingUp, Users, Target, LogIn } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from "recharts";
-import { useSecureAuth } from "@/hooks/useSecureAuth";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const Simulator = () => {
   const navigate = useNavigate();
-  const { user } = useSecureAuth();
   const { toast } = useToast();
+  const [user, setUser] = useState(null);
   
   const [budgetPerEmployee, setBudgetPerEmployee] = useState([100]);
   const [teamSize, setTeamSize] = useState([20]);
   const [frequency, setFrequency] = useState([2]);
+
+  // Check auth status without forcing login
+  useEffect(() => {
+    const checkUser = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setUser(session?.user || null);
+    };
+    checkUser();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        setUser(session?.user || null);
+      }
+    );
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   const simulatedData = [
     { month: 'Mois 1', qvt: 6.5, productivity: 75, satisfaction: 68 },
