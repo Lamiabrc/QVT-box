@@ -24,6 +24,16 @@ import TeensIntimacySpace from "./pages/TeensIntimacySpace";
 import TeensMetaverse from "./pages/TeensMetaverse";
 import TeensShop from "./pages/TeensShop";
 import TeensCalendar from "./pages/TeensCalendar";
+import EntrepriseLogin from "./pages/EntrepriseLogin";
+import EntrepriseRegister from "./pages/EntrepriseRegister";
+import EntrepriseForgotPassword from "./pages/EntrepriseForgotPassword";
+import EntrepriseResetPassword from "./pages/EntrepriseResetPassword";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminContentManager from "./pages/AdminContentManager";
+import Simulator from "./pages/Simulator";
+import Orders from "./pages/Orders";
+import EntrepriseShop from "./pages/EntrepriseShop";
+import Unboxing from "./pages/Unboxing";
 
 const queryClient = new QueryClient();
 
@@ -36,10 +46,25 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/auth" element={<Auth />} />
+          
+          {/* Enterprise Routes */}
           <Route path="/entreprise" element={<Entreprise />} />
-          <Route path="/teens" element={<Teens />} />
+          <Route path="/entreprise/login" element={<EntrepriseLogin />} />
+          <Route path="/entreprise/register" element={<EntrepriseRegister />} />
+          <Route path="/entreprise/forgot-password" element={<EntrepriseForgotPassword />} />
+          <Route path="/entreprise/reset-password" element={<EntrepriseResetPassword />} />
           <Route path="/entreprise/dashboard" element={<EntrepriseDashboard />} />
+          <Route path="/entreprise/admin-dashboard" element={<AdminDashboard />} />
+          <Route path="/entreprise/admin-content" element={<AdminContentManager />} />
           <Route path="/entreprise/questionnaire" element={<EntrepriseQuestionnaire />} />
+          <Route path="/entreprise/simulator" element={<Simulator />} />
+          <Route path="/entreprise/orders" element={<Orders />} />
+          <Route path="/entreprise/shop" element={<EntrepriseShop />} />
+          <Route path="/entreprise/unboxing" element={<Unboxing />} />
+          
+          {/* Teens Routes */}
+          <Route path="/teens" element={<Teens />} />
+          <Route path="/teens/login" element={<TeensLogin />} />
           <Route path="/teens/questionnaire" element={<TeensQuestionnaire />} />
           <Route path="/teens/dashboard-parent" element={<TeensDashboardParent />} />
           <Route path="/teens/family-space" element={<TeensFamilySpace />} />
@@ -51,9 +76,12 @@ const App = () => (
           <Route path="/teens/check-in" element={<TeensCheckIn />} />
           <Route path="/teens/quick-alert" element={<TeensQuickAlert />} />
           <Route path="/teens/parental-access" element={<TeensParentalAccess />} />
+          
+          {/* Shared Routes */}
           <Route path="/recommandations" element={<Recommandations />} />
           <Route path="/historique" element={<Historique />} />
           <Route path="/profil" element={<Profil />} />
+          
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
