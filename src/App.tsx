@@ -59,14 +59,12 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/auth" element={<Auth />} />
           
-          {/* Enterprise Routes */}
+          {/* PUBLIC Enterprise Routes - No auth required */}
           <Route path="/entreprise" element={<Entreprise />} />
           <Route path="/entreprise/login" element={<EntrepriseLogin />} />
           <Route path="/entreprise/register" element={<EntrepriseRegister />} />
           <Route path="/entreprise/forgot-password" element={<EntrepriseForgotPassword />} />
           <Route path="/entreprise/reset-password" element={<EntrepriseResetPassword />} />
-          
-          {/* Public Enterprise Routes - No auth required */}
           <Route path="/entreprise/simulator" element={<Simulator />} />
           
           {/* Protected Enterprise Routes */}
@@ -135,12 +133,10 @@ const App = () => (
             } 
           />
           
-          {/* Teens Routes */}
+          {/* PUBLIC Teens Routes - No auth required */}
           <Route path="/teens" element={<Teens />} />
           <Route path="/teens/login" element={<TeensLogin />} />
           <Route path="/teens/register" element={<TeensRegister />} />
-          
-          {/* Public Teens Routes - No auth required */}
           <Route path="/teens/family-simulator" element={<FamilySimulator />} />
           
           {/* Protected Teens Routes */}
