@@ -1,53 +1,90 @@
 
 import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { useNavigate } from 'react-router-dom';
+import { Building2, Users, User, LogOut } from 'lucide-react';
+import { useSecureAuth } from '@/hooks/useSecureAuth';
 import { supabase } from '@/integrations/supabase/client';
-import { useToast } from '@/hooks/use-toast';
-import { LogOut, User } from 'lucide-react';
 
 const Header = () => {
+  const { user, isAdmin } = useSecureAuth();
   const navigate = useNavigate();
-  const { toast } = useToast();
 
   const handleLogout = async () => {
-    try {
-      await supabase.auth.signOut();
-      toast({
-        title: "Déconnecté",
-        description: "Vous avez été déconnecté avec succès.",
-      });
-      navigate('/');
-    } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Erreur",
-        description: "Impossible de se déconnecter.",
-      });
-    }
+    await supabase.auth.signOut();
+    navigate('/');
   };
 
   return (
-    <header className="border-b bg-white shadow-sm">
+    <header className="bg-white border-b border-gray-200 shadow-sm">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
+          {/* Logo */}
+          <Link to="/" className="flex items-center space-x-3">
             <img 
               src="/lovable-uploads/1398cdff-61cf-4c6c-a073-6f67536dd04b.png" 
               alt="QVT Box Logo" 
               className="h-12 w-auto"
             />
-            <h1 className="text-2xl font-bold text-primary">QVT Box</h1>
-          </div>
+            <div>
+              <h1 className="text-2xl font-bold text-primary">QVT Box</h1>
+              <p className="text-sm text-gray-600">Qualité de Vie au Travail</p>
+            </div>
+          </Link>
+
+          {/* Navigation */}
+          <nav className="hidden md:flex items-center space-x-6">
+            <Link 
+              to="/entreprise" 
+              className="flex items-center space-x-2 text-gray-700 hover:text-primary transition-colors"
+            >
+              <Building2 className="h-4 w-4" />
+              <span>Entreprise</span>
+            </Link>
+            <Link 
+              to="/teens" 
+              className="flex items-center space-x-2 text-gray-700 hover:text-primary transition-colors"
+            >
+              <Users className="h-4 w-4" />
+              <span>Famille</span>
+            </Link>
+          </nav>
+
+          {/* User Actions */}
           <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="sm">
-              <User className="w-4 h-4 mr-2" />
-              Mon Profil
-            </Button>
-            <Button variant="outline" size="sm" onClick={handleLogout}>
-              <LogOut className="w-4 h-4 mr-2" />
-              Déconnexion
-            </Button>
+            {user ? (
+              <div className="flex items-center space-x-4">
+                {isAdmin && (
+                  <Link to="/entreprise/admin-dashboard">
+                    <Button variant="outline" size="sm">
+                      Admin
+                    </Button>
+                  </Link>
+                )}
+                <Button 
+                  variant="ghost" 
+                  size="sm"
+                  onClick={handleLogout}
+                  className="flex items-center space-x-2"
+                >
+                  <LogOut className="h-4 w-4" />
+                  <span>Déconnexion</span>
+                </Button>
+              </div>
+            ) : (
+              <div className="flex items-center space-x-3">
+                <Link to="/entreprise/login">
+                  <Button variant="outline" size="sm">
+                    Connexion
+                  </Button>
+                </Link>
+                <Link to="/entreprise/register">
+                  <Button size="sm">
+                    S'inscrire
+                  </Button>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -4,6 +4,9 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ProtectedRoute from "./components/ProtectedRoute";
+
+// Pages
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Entreprise from "./pages/Entreprise";
@@ -25,6 +28,8 @@ import TeensIntimacySpace from "./pages/TeensIntimacySpace";
 import TeensMetaverse from "./pages/TeensMetaverse";
 import TeensShop from "./pages/TeensShop";
 import TeensCalendar from "./pages/TeensCalendar";
+
+// Enterprise Pages
 import EntrepriseLogin from "./pages/entreprise/Login";
 import EntrepriseRegister from "./pages/entreprise/Register";
 import EntrepriseForgotPassword from "./pages/entreprise/ForgotPassword";
@@ -36,6 +41,8 @@ import Orders from "./pages/entreprise/Orders";
 import EntrepriseShop from "./pages/entreprise/Shop";
 import Unboxing from "./pages/entreprise/Unboxing";
 import EntrepriseDashboardNew from "./pages/entreprise/Dashboard";
+
+// Teens Pages
 import TeensLogin from "./pages/teens/Login";
 import TeensRegister from "./pages/teens/Register";
 
@@ -57,38 +64,203 @@ const App = () => (
           <Route path="/entreprise/register" element={<EntrepriseRegister />} />
           <Route path="/entreprise/forgot-password" element={<EntrepriseForgotPassword />} />
           <Route path="/entreprise/reset-password" element={<EntrepriseResetPassword />} />
-          <Route path="/entreprise/dashboard" element={<EntrepriseDashboard />} />
-          <Route path="/entreprise/mon-dashboard" element={<EntrepriseDashboardNew />} />
-          <Route path="/entreprise/admin-dashboard" element={<AdminDashboard />} />
-          <Route path="/entreprise/admin-content" element={<AdminContentManager />} />
-          <Route path="/entreprise/questionnaire" element={<EntrepriseQuestionnaire />} />
-          <Route path="/entreprise/simulator" element={<Simulator />} />
-          <Route path="/entreprise/orders" element={<Orders />} />
-          <Route path="/entreprise/shop" element={<EntrepriseShop />} />
-          <Route path="/entreprise/unboxing" element={<Unboxing />} />
+          
+          {/* Protected Enterprise Routes */}
+          <Route 
+            path="/entreprise/dashboard" 
+            element={
+              <ProtectedRoute requireAuth={true}>
+                <EntrepriseDashboard />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/entreprise/mon-dashboard" 
+            element={
+              <ProtectedRoute requireAuth={true}>
+                <EntrepriseDashboardNew />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/entreprise/admin-dashboard" 
+            element={
+              <ProtectedRoute requireAuth={true} requireAdmin={true}>
+                <AdminDashboard />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/entreprise/admin-content" 
+            element={
+              <ProtectedRoute requireAuth={true} requireAdmin={true}>
+                <AdminContentManager />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/entreprise/questionnaire" 
+            element={
+              <ProtectedRoute requireAuth={true}>
+                <EntrepriseQuestionnaire />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/entreprise/simulator" 
+            element={
+              <ProtectedRoute requireAuth={true}>
+                <Simulator />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/entreprise/orders" 
+            element={
+              <ProtectedRoute requireAuth={true}>
+                <Orders />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/entreprise/shop" 
+            element={
+              <ProtectedRoute requireAuth={true}>
+                <EntrepriseShop />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/entreprise/unboxing" 
+            element={
+              <ProtectedRoute requireAuth={true}>
+                <Unboxing />
+              </ProtectedRoute>
+            } 
+          />
           
           {/* Teens Routes */}
           <Route path="/teens" element={<Teens />} />
           <Route path="/teens/login" element={<TeensLogin />} />
           <Route path="/teens/register" element={<TeensRegister />} />
-          <Route path="/teens/questionnaire" element={<TeensQuestionnaire />} />
-          <Route path="/teens/dashboard-parent" element={<TeensDashboardParent />} />
-          <Route path="/teens/family-space" element={<TeensFamilySpace />} />
-          <Route path="/teens/personal-space" element={<TeensPersonalSpace />} />
-          <Route path="/teens/intimacy-space" element={<TeensIntimacySpace />} />
-          <Route path="/teens/metaverse" element={<TeensMetaverse />} />
-          <Route path="/teens/shop" element={<TeensShop />} />
-          <Route path="/teens/calendar" element={<TeensCalendar />} />
-          <Route path="/teens/check-in" element={<TeensCheckIn />} />
-          <Route path="/teens/quick-alert" element={<TeensQuickAlert />} />
-          <Route path="/teens/parental-access" element={<TeensParentalAccess />} />
           
-          {/* Shared Routes */}
-          <Route path="/recommandations" element={<Recommandations />} />
-          <Route path="/historique" element={<Historique />} />
-          <Route path="/profil" element={<Profil />} />
+          {/* Protected Teens Routes */}
+          <Route 
+            path="/teens/questionnaire" 
+            element={
+              <ProtectedRoute requireAuth={true}>
+                <TeensQuestionnaire />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/teens/dashboard-parent" 
+            element={
+              <ProtectedRoute requireAuth={true}>
+                <TeensDashboardParent />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/teens/family-space" 
+            element={
+              <ProtectedRoute requireAuth={true}>
+                <TeensFamilySpace />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/teens/personal-space" 
+            element={
+              <ProtectedRoute requireAuth={true}>
+                <TeensPersonalSpace />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/teens/intimacy-space" 
+            element={
+              <ProtectedRoute requireAuth={true}>
+                <TeensIntimacySpace />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/teens/metaverse" 
+            element={
+              <ProtectedRoute requireAuth={true}>
+                <TeensMetaverse />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/teens/shop" 
+            element={
+              <ProtectedRoute requireAuth={true}>
+                <TeensShop />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/teens/calendar" 
+            element={
+              <ProtectedRoute requireAuth={true}>
+                <TeensCalendar />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/teens/check-in" 
+            element={
+              <ProtectedRoute requireAuth={true}>
+                <TeensCheckIn />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/teens/quick-alert" 
+            element={
+              <ProtectedRoute requireAuth={true}>
+                <TeensQuickAlert />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/teens/parental-access" 
+            element={
+              <ProtectedRoute requireAuth={true}>
+                <TeensParentalAccess />
+              </ProtectedRoute>
+            } 
+          />
           
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          {/* Shared Protected Routes */}
+          <Route 
+            path="/recommandations" 
+            element={
+              <ProtectedRoute requireAuth={true}>
+                <Recommandations />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/historique" 
+            element={
+              <ProtectedRoute requireAuth={true}>
+                <Historique />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/profil" 
+            element={
+              <ProtectedRoute requireAuth={true}>
+                <Profil />
+              </ProtectedRoute>
+            } 
+          />
+          
+          {/* Catch all route */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
