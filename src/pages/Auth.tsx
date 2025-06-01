@@ -69,15 +69,9 @@ const Auth = () => {
                 <div className="grid grid-cols-1 gap-3">
                   <Button 
                     className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 text-lg rounded-2xl"
-                    onClick={() => navigate('/entreprise/login?role=employee')}
+                    onClick={() => navigate('/entreprise')}
                   >
-                    👤 Je suis Salarié
-                  </Button>
-                  <Button 
-                    className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-4 text-lg rounded-2xl"
-                    onClick={() => navigate('/entreprise/login?role=qvt-manager')}
-                  >
-                    🎯 Je suis Responsable QVT
+                    🏢 Découvrir l'espace Entreprise
                   </Button>
                 </div>
               </div>
@@ -103,15 +97,9 @@ const Auth = () => {
                 <div className="grid grid-cols-1 gap-3">
                   <Button 
                     className="w-full bg-pink-600 hover:bg-pink-700 text-white py-4 text-lg rounded-2xl"
-                    onClick={() => navigate('/teens/login?role=teen')}
+                    onClick={() => navigate('/teens')}
                   >
-                    🧑‍🎓 Je suis Adolescent
-                  </Button>
-                  <Button 
-                    className="w-full bg-purple-600 hover:bg-purple-700 text-white py-4 text-lg rounded-2xl"
-                    onClick={() => navigate('/teens/login?role=parent')}
-                  >
-                    👨‍👩‍👧‍👦 Je suis Parent
+                    👨‍👩‍👧‍👦 Découvrir l'espace Famille
                   </Button>
                 </div>
               </div>
@@ -129,7 +117,7 @@ const Auth = () => {
               <li>📦 Gestion des box bien-être</li>
               <li>🎯 Recommandations IA personnalisées</li>
               <li>👥 Gestion d'équipes et budgets</li>
-              <li>💰 Allocation ressources QVT</li>
+              <li>💰 Simulateur ROI</li>
             </ul>
           </div>
           <div className="bg-black/20 backdrop-blur-sm rounded-3xl p-8 border border-white/10">
@@ -140,7 +128,7 @@ const Auth = () => {
               <li>🎮 Métaverse interactif</li>
               <li>🛍️ Boutique personnalisée</li>
               <li>📅 Calendrier familial partagé</li>
-              <li>🚨 Alertes bien-être temps réel</li>
+              <li>🚨 Simulateur bien-être famille</li>
             </ul>
           </div>
         </div>

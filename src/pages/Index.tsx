@@ -13,86 +13,105 @@ import {
   Heart, 
   Package, 
   ArrowRight,
-  CheckCircle
+  CheckCircle,
+  Sparkles,
+  Target
 } from 'lucide-react';
 
 const Index = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 to-white">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 via-white to-purple-50">
       <Header />
       
       <main className="flex-1">
         <section className="container mx-auto px-4 py-16">
-          {/* Hero Section */}
-          <div className="text-center mb-16">
-            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-              L'IA au service de votre{' '}
-              <span className="text-primary">Qualité de Vie</span>
-            </h1>
-            
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-              Solution phygitale innovante qui allie intelligence artificielle et objets bien-être 
-              pour améliorer votre qualité de vie au travail et en famille.
-            </p>
+          {/* Hero Section avec images */}
+          <div className="text-center mb-16 relative">
+            {/* Images d'arrière-plan décoratives */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+              <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-br from-blue-400 to-cyan-400 rounded-full opacity-20 animate-pulse"></div>
+              <div className="absolute top-20 right-20 w-24 h-24 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full opacity-20 animate-bounce"></div>
+              <div className="absolute bottom-10 left-1/4 w-40 h-40 bg-gradient-to-br from-green-400 to-teal-400 rounded-full opacity-20 animate-ping"></div>
+            </div>
 
-            <div className="flex flex-wrap justify-center gap-4 mb-12">
-              <div className="flex items-center space-x-2 bg-white px-4 py-2 rounded-full shadow-sm">
-                <Package className="h-5 w-5 text-primary" />
-                <span className="text-sm font-medium">Box française</span>
+            <div className="relative z-10">
+              <div className="flex justify-center mb-8">
+                <div className="w-24 h-24 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center shadow-lg">
+                  <Sparkles className="w-12 h-12 text-white" />
+                </div>
               </div>
-              <div className="flex items-center space-x-2 bg-white px-4 py-2 rounded-full shadow-sm">
-                <Brain className="h-5 w-5 text-primary" />
-                <span className="text-sm font-medium">IA avancée</span>
-              </div>
-              <div className="flex items-center space-x-2 bg-white px-4 py-2 rounded-full shadow-sm">
-                <Shield className="h-5 w-5 text-primary" />
-                <span className="text-sm font-medium">RGPD sécurisé</span>
+
+              <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+                L'IA au service de votre{' '}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+                  Qualité de Vie
+                </span>
+              </h1>
+              
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8 leading-relaxed">
+                Solution phygitale innovante qui allie intelligence artificielle et objets bien-être 
+                pour améliorer votre qualité de vie au travail et en famille.
+              </p>
+
+              <div className="flex flex-wrap justify-center gap-4 mb-12">
+                <div className="flex items-center space-x-2 bg-white px-6 py-3 rounded-full shadow-md border-l-4 border-blue-500">
+                  <Package className="h-5 w-5 text-primary" />
+                  <span className="text-sm font-medium">Box française 🇫🇷</span>
+                </div>
+                <div className="flex items-center space-x-2 bg-white px-6 py-3 rounded-full shadow-md border-l-4 border-purple-500">
+                  <Brain className="h-5 w-5 text-primary" />
+                  <span className="text-sm font-medium">IA avancée 🤖</span>
+                </div>
+                <div className="flex items-center space-x-2 bg-white px-6 py-3 rounded-full shadow-md border-l-4 border-green-500">
+                  <Shield className="h-5 w-5 text-primary" />
+                  <span className="text-sm font-medium">RGPD sécurisé 🛡️</span>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Solutions Cards */}
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-16">
+          {/* Solutions Cards avec plus de couleurs */}
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-16">
             {/* Entreprise Card */}
-            <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/50">
+            <Card className="group hover:shadow-2xl transition-all duration-500 cursor-pointer border-2 hover:border-primary/50 bg-gradient-to-br from-blue-50 to-indigo-50 hover:from-blue-100 hover:to-indigo-100">
               <CardContent className="p-8">
                 <div className="text-center">
-                  <div className="w-16 h-16 bg-primary/10 rounded-full mx-auto mb-6 flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <Building2 className="w-8 h-8 text-primary" />
+                  <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl mx-auto mb-6 flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
+                    <Building2 className="w-10 h-10 text-white" />
                   </div>
                   
                   <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                    Espace Entreprise
+                    🏢 Espace Entreprise
                   </h3>
                   
-                  <p className="text-gray-600 mb-6">
+                  <p className="text-gray-600 mb-6 leading-relaxed">
                     Solution complète pour les RH, managers et salariés. 
                     Mesurez et améliorez la QVT grâce à l'IA.
                   </p>
 
-                  <ul className="text-sm text-gray-600 space-y-2 mb-8 text-left">
-                    <li className="flex items-center space-x-2">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span>Dashboard RH avec analytics</span>
+                  <ul className="text-sm text-gray-600 space-y-3 mb-8 text-left">
+                    <li className="flex items-center space-x-3">
+                      <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+                      <span>📊 Dashboard RH avec analytics</span>
                     </li>
-                    <li className="flex items-center space-x-2">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span>Questionnaires QVT intelligents</span>
+                    <li className="flex items-center space-x-3">
+                      <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+                      <span>📝 Questionnaires QVT intelligents</span>
                     </li>
-                    <li className="flex items-center space-x-2">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span>Recommandations IA personnalisées</span>
+                    <li className="flex items-center space-x-3">
+                      <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+                      <span>🎯 Recommandations IA personnalisées</span>
                     </li>
-                    <li className="flex items-center space-x-2">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span>Box bien-être françaises</span>
+                    <li className="flex items-center space-x-3">
+                      <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+                      <span>📦 Box bien-être françaises</span>
                     </li>
                   </ul>
 
                   <Button 
-                    className="w-full" 
+                    className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-3 rounded-xl shadow-lg" 
                     onClick={() => navigate('/entreprise')}
                   >
                     Découvrir l'espace Entreprise
@@ -103,44 +122,43 @@ const Index = () => {
             </Card>
 
             {/* Famille Card */}
-            <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-secondary/50">
+            <Card className="group hover:shadow-2xl transition-all duration-500 cursor-pointer border-2 hover:border-secondary/50 bg-gradient-to-br from-pink-50 to-purple-50 hover:from-pink-100 hover:to-purple-100">
               <CardContent className="p-8">
                 <div className="text-center">
-                  <div className="w-16 h-16 bg-secondary/10 rounded-full mx-auto mb-6 flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <Users className="w-8 h-8 text-secondary" />
+                  <div className="w-20 h-20 bg-gradient-to-br from-pink-500 to-purple-600 rounded-2xl mx-auto mb-6 flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
+                    <Users className="w-10 h-10 text-white" />
                   </div>
                   
                   <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                    Espace Famille
+                    👨‍👩‍👧‍👦 Espace Famille
                   </h3>
                   
-                  <p className="text-gray-600 mb-6">
+                  <p className="text-gray-600 mb-6 leading-relaxed">
                     Accompagnement des adolescents et de leurs parents 
                     vers un meilleur bien-être familial.
                   </p>
 
-                  <ul className="text-sm text-gray-600 space-y-2 mb-8 text-left">
-                    <li className="flex items-center space-x-2">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span>Interface ludique pour ados</span>
+                  <ul className="text-sm text-gray-600 space-y-3 mb-8 text-left">
+                    <li className="flex items-center space-x-3">
+                      <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+                      <span>🎮 Interface ludique pour ados</span>
                     </li>
-                    <li className="flex items-center space-x-2">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span>Dashboard parent sécurisé</span>
+                    <li className="flex items-center space-x-3">
+                      <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+                      <span>🛡️ Dashboard parent sécurisé</span>
                     </li>
-                    <li className="flex items-center space-x-2">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span>Box familiales adaptées</span>
+                    <li className="flex items-center space-x-3">
+                      <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+                      <span>📦 Box familiales adaptées</span>
                     </li>
-                    <li className="flex items-center space-x-2">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span>Respect total de la vie privée</span>
+                    <li className="flex items-center space-x-3">
+                      <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+                      <span>🔒 Respect total de la vie privée</span>
                     </li>
                   </ul>
 
                   <Button 
-                    variant="secondary" 
-                    className="w-full"
+                    className="w-full bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white py-3 rounded-xl shadow-lg"
                     onClick={() => navigate('/teens')}
                   >
                     Découvrir l'espace Famille
@@ -151,50 +169,78 @@ const Index = () => {
             </Card>
           </div>
 
-          {/* Features Section */}
-          <section className="text-center">
-            <h2 className="text-3xl font-bold text-gray-900 mb-12">
-              Pourquoi choisir QVT Box ?
-            </h2>
-            
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-blue-100 rounded-full mx-auto mb-4 flex items-center justify-center">
-                  <Shield className="w-8 h-8 text-blue-600" />
+          {/* Features Section avec plus de couleurs */}
+          <section className="text-center relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 rounded-3xl opacity-30"></div>
+            <div className="relative z-10 py-16">
+              <h2 className="text-3xl font-bold text-gray-900 mb-12">
+                ✨ Pourquoi choisir QVT Box ?
+              </h2>
+              
+              <div className="grid md:grid-cols-3 gap-8">
+                <div className="text-center bg-white p-8 rounded-2xl shadow-lg border-t-4 border-blue-500 hover:shadow-xl transition-shadow">
+                  <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full mx-auto mb-4 flex items-center justify-center shadow-lg">
+                    <Shield className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                    🛡️ Sécurité & Confidentialité
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    Données hébergées en France, RGPD compliant, 
+                    consentement parental sécurisé.
+                  </p>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  Sécurité & Confidentialité
-                </h3>
-                <p className="text-gray-600">
-                  Données hébergées en France, RGPD compliant, 
-                  consentement parental sécurisé.
-                </p>
+
+                <div className="text-center bg-white p-8 rounded-2xl shadow-lg border-t-4 border-green-500 hover:shadow-xl transition-shadow">
+                  <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-full mx-auto mb-4 flex items-center justify-center shadow-lg">
+                    <Brain className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                    🤖 IA Française Avancée
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    Algorithmes développés en France pour des recommandations 
+                    précises et culturellement adaptées.
+                  </p>
+                </div>
+
+                <div className="text-center bg-white p-8 rounded-2xl shadow-lg border-t-4 border-red-500 hover:shadow-xl transition-shadow">
+                  <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-full mx-auto mb-4 flex items-center justify-center shadow-lg">
+                    <Heart className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                    ❤️ Approche Bienveillante
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    Prévention du mal-être avec des solutions concrètes, 
+                    éthiques et humaines.
+                  </p>
+                </div>
               </div>
 
-              <div className="text-center">
-                <div className="w-16 h-16 bg-green-100 rounded-full mx-auto mb-4 flex items-center justify-center">
-                  <Brain className="w-8 h-8 text-green-600" />
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  IA Française Avancée
+              {/* CTA Section */}
+              <div className="mt-16">
+                <h3 className="text-2xl font-bold text-gray-900 mb-6">
+                  🚀 Prêt à améliorer votre qualité de vie ?
                 </h3>
-                <p className="text-gray-600">
-                  Algorithmes développés en France pour des recommandations 
-                  précises et culturellement adaptées.
-                </p>
-              </div>
-
-              <div className="text-center">
-                <div className="w-16 h-16 bg-red-100 rounded-full mx-auto mb-4 flex items-center justify-center">
-                  <Heart className="w-8 h-8 text-red-600" />
+                <div className="flex flex-wrap justify-center gap-4">
+                  <Button 
+                    size="lg"
+                    className="bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-white px-8 py-4 rounded-xl shadow-lg"
+                    onClick={() => navigate('/auth')}
+                  >
+                    <Target className="w-5 h-5 mr-2" />
+                    Commencer maintenant
+                  </Button>
+                  <Button 
+                    variant="outline"
+                    size="lg"
+                    className="border-2 border-primary text-primary hover:bg-primary hover:text-white px-8 py-4 rounded-xl"
+                    onClick={() => navigate('/entreprise')}
+                  >
+                    En savoir plus
+                  </Button>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  Approche Bienveillante
-                </h3>
-                <p className="text-gray-600">
-                  Prévention du mal-être avec des solutions concrètes, 
-                  éthiques et humaines.
-                </p>
               </div>
             </div>
           </section>
