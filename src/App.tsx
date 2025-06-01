@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -24,16 +25,17 @@ import TeensIntimacySpace from "./pages/TeensIntimacySpace";
 import TeensMetaverse from "./pages/TeensMetaverse";
 import TeensShop from "./pages/TeensShop";
 import TeensCalendar from "./pages/TeensCalendar";
-import EntrepriseLogin from "./pages/EntrepriseLogin";
-import EntrepriseRegister from "./pages/EntrepriseRegister";
-import EntrepriseForgotPassword from "./pages/EntrepriseForgotPassword";
-import EntrepriseResetPassword from "./pages/EntrepriseResetPassword";
-import AdminDashboard from "./pages/AdminDashboard";
-import AdminContentManager from "./pages/AdminContentManager";
-import Simulator from "./pages/Simulator";
-import Orders from "./pages/Orders";
-import EntrepriseShop from "./pages/EntrepriseShop";
-import Unboxing from "./pages/Unboxing";
+import EntrepriseLogin from "./pages/entreprise/Login";
+import EntrepriseRegister from "./pages/entreprise/Register";
+import EntrepriseForgotPassword from "./pages/entreprise/ForgotPassword";
+import EntrepriseResetPassword from "./pages/entreprise/ResetPassword";
+import AdminDashboard from "./pages/entreprise/AdminDashboard";
+import AdminContentManager from "./pages/entreprise/AdminContentManager";
+import Simulator from "./pages/entreprise/Simulator";
+import Orders from "./pages/entreprise/Orders";
+import EntrepriseShop from "./pages/entreprise/Shop";
+import Unboxing from "./pages/entreprise/Unboxing";
+import TeensLogin from "./pages/teens/Login";
 
 const queryClient = new QueryClient();
 
