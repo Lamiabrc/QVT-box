@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -34,6 +35,7 @@ import Simulator from "./pages/entreprise/Simulator";
 import Orders from "./pages/entreprise/Orders";
 import EntrepriseShop from "./pages/entreprise/Shop";
 import Unboxing from "./pages/entreprise/Unboxing";
+import EntrepriseDashboardNew from "./pages/entreprise/Dashboard";
 import TeensLogin from "./pages/teens/Login";
 import TeensRegister from "./pages/teens/Register";
 
@@ -56,6 +58,7 @@ const App = () => (
           <Route path="/entreprise/forgot-password" element={<EntrepriseForgotPassword />} />
           <Route path="/entreprise/reset-password" element={<EntrepriseResetPassword />} />
           <Route path="/entreprise/dashboard" element={<EntrepriseDashboard />} />
+          <Route path="/entreprise/mon-dashboard" element={<EntrepriseDashboardNew />} />
           <Route path="/entreprise/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/entreprise/admin-content" element={<AdminContentManager />} />
           <Route path="/entreprise/questionnaire" element={<EntrepriseQuestionnaire />} />
