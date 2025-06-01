@@ -50,9 +50,8 @@ const Auth = () => {
 
         {/* Universe Selection */}
         <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
-          {/* QVTBox Enterprise */}
-          <Card className="group bg-gradient-to-br from-blue-500/10 to-indigo-600/10 border-2 border-blue-400/30 hover:border-blue-400/60 transition-all duration-300 cursor-pointer transform hover:-translate-y-4"
-                onClick={() => navigate('/entreprise/login')}>
+          {/* QVT BOX - Espace Entreprise */}
+          <Card className="group bg-gradient-to-br from-blue-500/10 to-indigo-600/10 border-2 border-blue-400/30 hover:border-blue-400/60 transition-all duration-300 cursor-pointer transform hover:-translate-y-4">
             <CardHeader className="text-center pb-6">
               <div className="w-24 h-24 bg-blue-500/20 rounded-3xl mx-auto mb-6 flex items-center justify-center group-hover:bg-blue-500/30 transition-colors">
                 <Building2 className="w-12 h-12 text-blue-400" />
@@ -60,40 +59,33 @@ const Auth = () => {
               <CardTitle className="text-3xl font-bold text-white mb-4">
                 QVT BOX 💼
               </CardTitle>
-              <p className="text-lg text-gray-300">
+              <p className="text-lg text-gray-300 mb-6">
                 L'univers professionnel pour les entreprises et leurs équipes
               </p>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-4">
-                <h4 className="text-xl font-semibold text-white">Qui peut accéder ?</h4>
+                <h4 className="text-xl font-semibold text-white text-center">Accéder à l'espace entreprise</h4>
                 <div className="grid grid-cols-1 gap-3">
                   <Button 
                     className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 text-lg rounded-2xl"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      navigate('/entreprise/login?role=employee');
-                    }}
+                    onClick={() => navigate('/entreprise/login?role=employee')}
                   >
-                    👤 Salarié
+                    👤 Je suis Salarié
                   </Button>
                   <Button 
                     className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-4 text-lg rounded-2xl"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      navigate('/entreprise/login?role=qvt-manager');
-                    }}
+                    onClick={() => navigate('/entreprise/login?role=qvt-manager')}
                   >
-                    🎯 Responsable QVT
+                    🎯 Je suis Responsable QVT
                   </Button>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          {/* QVTeenBox Family */}
-          <Card className="group bg-gradient-to-br from-pink-500/10 to-purple-600/10 border-2 border-pink-400/30 hover:border-pink-400/60 transition-all duration-300 cursor-pointer transform hover:-translate-y-4"
-                onClick={() => navigate('/teens/login')}>
+          {/* QV TEEN BOX - Espace Famille */}
+          <Card className="group bg-gradient-to-br from-pink-500/10 to-purple-600/10 border-2 border-pink-400/30 hover:border-pink-400/60 transition-all duration-300 cursor-pointer transform hover:-translate-y-4">
             <CardHeader className="text-center pb-6">
               <div className="w-24 h-24 bg-pink-500/20 rounded-3xl mx-auto mb-6 flex items-center justify-center group-hover:bg-pink-500/30 transition-colors">
                 <Users className="w-12 h-12 text-pink-400" />
@@ -101,31 +93,25 @@ const Auth = () => {
               <CardTitle className="text-3xl font-bold text-white mb-4">
                 QV TEEN BOX 👨‍👩‍👧‍👦
               </CardTitle>
-              <p className="text-lg text-gray-300">
+              <p className="text-lg text-gray-300 mb-6">
                 L'univers familial pour les ados et leurs parents
               </p>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-4">
-                <h4 className="text-xl font-semibold text-white">Qui peut accéder ?</h4>
+                <h4 className="text-xl font-semibold text-white text-center">Accéder à l'espace famille</h4>
                 <div className="grid grid-cols-1 gap-3">
                   <Button 
                     className="w-full bg-pink-600 hover:bg-pink-700 text-white py-4 text-lg rounded-2xl"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      navigate('/teens/login?role=teen');
-                    }}
+                    onClick={() => navigate('/teens/login?role=teen')}
                   >
-                    🧑‍🎓 Adolescent
+                    🧑‍🎓 Je suis Adolescent
                   </Button>
                   <Button 
                     className="w-full bg-purple-600 hover:bg-purple-700 text-white py-4 text-lg rounded-2xl"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      navigate('/teens/login?role=parent');
-                    }}
+                    onClick={() => navigate('/teens/login?role=parent')}
                   >
-                    👨‍👩‍👧‍👦 Parent
+                    👨‍👩‍👧‍👦 Je suis Parent
                   </Button>
                 </div>
               </div>
@@ -136,25 +122,25 @@ const Auth = () => {
         {/* Features Comparison */}
         <div className="mt-20 grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
           <div className="bg-black/20 backdrop-blur-sm rounded-3xl p-8 border border-white/10">
-            <h3 className="text-2xl font-bold text-blue-400 mb-6">QVT BOX Features</h3>
+            <h3 className="text-2xl font-bold text-blue-400 mb-6">🏢 ESPACE ENTREPRISE</h3>
             <ul className="space-y-3 text-gray-300">
               <li>📊 Dashboard RH avancé</li>
               <li>📝 Questionnaires QVT intelligents</li>
               <li>📦 Gestion des box bien-être</li>
-              <li>🎯 Recommandations IA</li>
-              <li>👥 Gestion d'équipes</li>
-              <li>💰 Budget et allocation</li>
+              <li>🎯 Recommandations IA personnalisées</li>
+              <li>👥 Gestion d'équipes et budgets</li>
+              <li>💰 Allocation ressources QVT</li>
             </ul>
           </div>
           <div className="bg-black/20 backdrop-blur-sm rounded-3xl p-8 border border-white/10">
-            <h3 className="text-2xl font-bold text-pink-400 mb-6">QV TEEN BOX Features</h3>
+            <h3 className="text-2xl font-bold text-pink-400 mb-6">👨‍👩‍👧‍👦 ESPACE FAMILLE</h3>
             <ul className="space-y-3 text-gray-300">
               <li>🏠 Espace famille connecté</li>
-              <li>🛡️ Espace intimité sécurisé</li>
+              <li>🛡️ Espace intimité sécurisé ados</li>
               <li>🎮 Métaverse interactif</li>
               <li>🛍️ Boutique personnalisée</li>
-              <li>📅 Calendrier familial</li>
-              <li>🚨 Alertes bien-être</li>
+              <li>📅 Calendrier familial partagé</li>
+              <li>🚨 Alertes bien-être temps réel</li>
             </ul>
           </div>
         </div>
