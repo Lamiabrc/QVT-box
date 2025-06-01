@@ -3,12 +3,17 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, BarChart3, TrendingUp, Users, Target } from "lucide-react";
+import { ArrowLeft, BarChart3, TrendingUp, Users, Target, LogIn } from "lucide-react";
 import { useState } from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from "recharts";
+import { useSecureAuth } from "@/hooks/useSecureAuth";
+import { useToast } from "@/hooks/use-toast";
 
 const Simulator = () => {
   const navigate = useNavigate();
+  const { user } = useSecureAuth();
+  const { toast } = useToast();
+  
   const [budgetPerEmployee, setBudgetPerEmployee] = useState([100]);
   const [teamSize, setTeamSize] = useState([20]);
   const [frequency, setFrequency] = useState([2]);
@@ -26,6 +31,37 @@ const Simulator = () => {
   const annualBudget = monthlyBudget * 12;
   const projectedROI = (budgetPerEmployee[0] * 0.35 * teamSize[0] * 12);
 
+  const handleSaveSimulation = () => {
+    if (!user) {
+      toast({
+        title: "Connexion requise",
+        description: "Connectez-vous pour sauvegarder votre simulation.",
+        variant: "destructive"
+      });
+      navigate('/entreprise/login');
+      return;
+    }
+    
+    toast({
+      title: "Simulation sauvegardée",
+      description: "Votre configuration a été enregistrée avec succès.",
+    });
+  };
+
+  const handleLaunchConfiguration = () => {
+    if (!user) {
+      toast({
+        title: "Connexion requise",
+        description: "Connectez-vous pour lancer cette configuration.",
+        variant: "destructive"
+      });
+      navigate('/entreprise/login');
+      return;
+    }
+    
+    navigate('/entreprise/orders');
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-muted via-background to-primary/5">
       {/* Header */}
@@ -41,11 +77,28 @@ const Simulator = () => {
               <span>Retour</span>
             </Button>
             <h1 className="text-2xl font-bold text-primary">Simulateur QVT</h1>
+            {!user && (
+              <Button 
+                onClick={() => navigate('/entreprise/login')}
+                className="flex items-center space-x-2"
+              >
+                <LogIn className="w-4 h-4" />
+                <span>Se connecter</span>
+              </Button>
+            )}
           </div>
         </div>
       </header>
 
       <div className="container mx-auto px-4 py-8">
+        {!user && (
+          <div className="mb-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <p className="text-blue-800 text-center">
+              💡 <strong>Mode démo</strong> - Connectez-vous pour sauvegarder vos simulations et lancer des configurations
+            </p>
+          </div>
+        )}
+
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Controls */}
           <div className="space-y-6">
@@ -198,13 +251,13 @@ const Simulator = () => {
             </Card>
 
             <div className="flex gap-4">
-              <Button className="flex-1" onClick={() => navigate('/entreprise/orders')}>
+              <Button className="flex-1" onClick={handleLaunchConfiguration}>
                 <Target className="w-4 h-4 mr-2" />
-                Lancer cette configuration
+                {user ? "Lancer cette configuration" : "Se connecter pour commander"}
               </Button>
-              <Button variant="outline" className="flex-1">
+              <Button variant="outline" className="flex-1" onClick={handleSaveSimulation}>
                 <BarChart3 className="w-4 h-4 mr-2" />
-                Sauvegarder simulation
+                {user ? "Sauvegarder simulation" : "Se connecter pour sauvegarder"}
               </Button>
             </div>
           </div>

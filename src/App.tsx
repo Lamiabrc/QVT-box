@@ -45,6 +45,7 @@ import EntrepriseDashboardNew from "./pages/entreprise/Dashboard";
 // Teens Pages
 import TeensLogin from "./pages/teens/Login";
 import TeensRegister from "./pages/teens/Register";
+import FamilySimulator from "./pages/teens/FamilySimulator";
 
 const queryClient = new QueryClient();
 
@@ -64,6 +65,9 @@ const App = () => (
           <Route path="/entreprise/register" element={<EntrepriseRegister />} />
           <Route path="/entreprise/forgot-password" element={<EntrepriseForgotPassword />} />
           <Route path="/entreprise/reset-password" element={<EntrepriseResetPassword />} />
+          
+          {/* Public Enterprise Routes - No auth required */}
+          <Route path="/entreprise/simulator" element={<Simulator />} />
           
           {/* Protected Enterprise Routes */}
           <Route 
@@ -107,14 +111,6 @@ const App = () => (
             } 
           />
           <Route 
-            path="/entreprise/simulator" 
-            element={
-              <ProtectedRoute requireAuth={true}>
-                <Simulator />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
             path="/entreprise/orders" 
             element={
               <ProtectedRoute requireAuth={true}>
@@ -143,6 +139,9 @@ const App = () => (
           <Route path="/teens" element={<Teens />} />
           <Route path="/teens/login" element={<TeensLogin />} />
           <Route path="/teens/register" element={<TeensRegister />} />
+          
+          {/* Public Teens Routes - No auth required */}
+          <Route path="/teens/family-simulator" element={<FamilySimulator />} />
           
           {/* Protected Teens Routes */}
           <Route 
