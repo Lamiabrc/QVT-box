@@ -37,8 +37,13 @@ export const useUserRoles = () => {
     }
   };
 
-  const updateUserRole = async (userId: string, role: string) => {
+  const updateUserRole = async (userId: string, role: string): Promise<void> => {
     try {
+      // Validate role
+      if (role !== 'admin' && role !== 'user') {
+        throw new Error('Invalid role. Must be "admin" or "user"');
+      }
+
       // Mise à jour dans la table profiles
       const { error: profileError } = await supabase
         .from('profiles')
@@ -47,10 +52,15 @@ export const useUserRoles = () => {
 
       if (profileError) throw profileError;
 
-      // Mise à jour ou insertion dans user_roles
+      // Mise à jour ou insertion dans user_roles avec la bonne structure
       const { error: roleError } = await supabase
         .from('user_roles')
-        .upsert({ user_id: userId, role }, { onConflict: 'user_id' });
+        .upsert({ 
+          user_id: userId, 
+          role: role as 'admin' | 'user'
+        }, { 
+          onConflict: 'user_id' 
+        });
 
       if (roleError) throw roleError;
 
@@ -59,9 +69,17 @@ export const useUserRoles = () => {
         user.id === userId ? { ...user, role } : user
       ));
 
-      return true;
+      toast({
+        title: "Succès",
+        description: "Rôle utilisateur mis à jour avec succès.",
+      });
     } catch (error) {
       console.error('Error updating user role:', error);
+      toast({
+        variant: "destructive",
+        title: "Erreur",
+        description: "Impossible de mettre à jour le rôle.",
+      });
       throw error;
     }
   };
