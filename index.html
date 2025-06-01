@@ -1,170 +1,19 @@
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Link } from "react-router-dom";
-import { ArrowRight, Building2, Package, Smartphone, Users, Zap } from "lucide-react";
-
-const Index = () => {
-  return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-qvt-light to-white">
-      {/* Section principale avec hero et explication rapide */}
-      <main className="flex-1 flex items-center justify-center px-4">
-        <div className="container mx-auto">
-          {/* Hero section avec image et titre accrocheur */}
-          <div className="text-center mb-12">
-            <div className="relative mb-8">
-              <img
-                src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=1200&h=400&q=80"
-                alt="QVT Box - Solution pour le bien-être au travail et en Famille"
-                className="w-full max-w-5xl mx-auto rounded-2xl shadow-2xl object-cover h-80"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-qvt-dark/60 to-transparent rounded-2xl"></div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-white text-center">
-                  <div className="flex items-center justify-center mb-4">
-                    <Package className="h-12 w-12 mr-3" />
-                    <Smartphone className="h-10 w-10" />
-                  </div>
-                  <h2 className="text-2xl md:text-3xl font-bold mb-2">Solution Phygitale Innovante</h2>
-                  <p className="text-lg opacity-90">Box physique + Intelligence Artificielle = Bien-être optimal</p>
-                </div>
-              </div>
-            </div>
-            
-            <h1 className="text-4xl md:text-6xl font-bold text-qvt-primary leading-tight mb-6 font-montserrat">
-              QVT Box - L'IA qui <span className="text-qvt-secondary">optimise</span> votre bien-être professionnel et personnel
-            </h1>
-            <div className="max-w-4xl mx-auto mb-8">
-              <p className="text-xl text-qvt-text mb-4 font-medium">
-                <strong className="text-qvt-primary">Concept révolutionnaire :</strong> Une solution phygitale qui améliore concrètement la qualité de vie au travail
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-                <div className="bg-white/90 rounded-lg p-4 qvt-shadow border border-qvt-primary/10">
-                  <Zap className="h-8 w-8 text-qvt-accent mx-auto mb-2" />
-                  <p className="font-semibold text-qvt-primary">Stimulation Physique</p>
-                  <p className="text-sm text-qvt-muted">Box avec objets bien-être fabriqués en France</p>
-                </div>
-                <div className="bg-white/90 rounded-lg p-4 qvt-shadow border border-qvt-primary/10">
-                  <Smartphone className="h-8 w-8 text-qvt-primary mx-auto mb-2" />
-                  <p className="font-semibold text-qvt-primary">Intelligence Artificielle</p>
-                  <p className="text-sm text-qvt-muted">Analyses et conseils personnalisés</p>
-                </div>
-                <div className="bg-white/90 rounded-lg p-4 qvt-shadow border border-qvt-primary/10">
-                  <Package className="h-8 w-8 text-qvt-secondary mx-auto mb-2" />
-                  <p className="font-semibold text-qvt-primary">Résultats Mesurables</p>
-                  <p className="text-sm text-qvt-muted">Impact concret et durable</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Deux versions principales */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-16">
-            <Card className="border-2 border-qvt-primary/20 hover:border-qvt-primary transition-all duration-300 cursor-pointer group qvt-hover qvt-shadow">
-              <CardContent className="pt-8 pb-6">
-                <div className="relative mb-6">
-                  <img
-                    src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=500&h=200&q=80"
-                    alt="QVT Box Pro pour entreprises et travailleurs"
-                    className="w-full h-32 object-cover rounded-lg"
-                  />
-                  <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2">
-                    <div className="rounded-full qvt-gradient w-12 h-12 flex items-center justify-center group-hover:scale-110 transition-transform qvt-shadow">
-                      <Building2 className="h-6 w-6 text-white" />
-                    </div>
-                  </div>
-                </div>
-                <div className="text-center pt-2">
-                  <h3 className="text-2xl font-bold text-qvt-primary mb-3">QVT Box Pro</h3>
-                  <p className="text-qvt-text mb-4 text-sm">
-                    <strong>Pour les entreprises et professionnels</strong><br/>
-                    Solution complète pour réduire le stress au travail, améliorer la productivité et créer un environnement de bien-être durable.
-                  </p>
-                  <div className="flex items-center justify-center text-xs text-qvt-muted mb-4">
-                    <Package className="h-4 w-4 mr-1" />
-                    <span>Objets bien-être + Application professionnelle</span>
-                  </div>
-                  <Button asChild className="qvt-gradient text-white qvt-hover w-full">
-                    <Link to="/login">Découvrir QVT Pro <ArrowRight className="ml-2 h-4 w-4" /></Link>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="border-2 border-qvt-secondary/20 hover:border-qvt-secondary transition-all duration-300 cursor-pointer group qvt-hover qvt-shadow">
-              <CardContent className="pt-8 pb-6">
-                <div className="relative mb-6">
-                  <img
-                    src="https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?auto=format&fit=crop&w=500&h=200&q=80"
-                    alt="QVTeens Box pour familles et adolescents"
-                    className="w-full h-32 object-cover rounded-lg"
-                  />
-                  <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2">
-                    <div className="rounded-full bg-qvt-secondary w-12 h-12 flex items-center justify-center group-hover:scale-110 transition-transform qvt-shadow">
-                      <Users className="h-6 w-6 text-white" />
-                    </div>
-                  </div>
-                </div>
-                <div className="text-center pt-2">
-                  <h3 className="text-2xl font-bold text-qvt-primary mb-3">QVTeens Box</h3>
-                  <p className="text-qvt-text mb-4 text-sm">
-                    <strong>Pour les familles et adolescents</strong><br/>
-                    Solution dédiée pour accompagner l'épanouissement des jeunes et renforcer les liens familiaux dans un monde professionnel.
-                  </p>
-                  <div className="flex items-center justify-center text-xs text-qvt-muted mb-4">
-                    <Users className="h-4 w-4 mr-1" />
-                    <span>Activités famille + Application dédiée</span>
-                  </div>
-                  <Button asChild className="bg-qvt-secondary hover:bg-qvt-secondary/90 text-white w-full">
-                    <Link to="/qvteens">Découvrir QVTeens <ArrowRight className="ml-2 h-4 w-4" /></Link>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Section explicative avec images */}
-          <div className="bg-white/80 rounded-2xl p-8 mb-8 qvt-shadow border border-qvt-primary/10">
-            <h2 className="text-3xl font-bold text-center text-qvt-primary mb-8 font-montserrat">Comment fonctionne notre solution ?</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <img
-                  src="https://images.unsplash.com/photo-1493962853295-0fd70327578a?auto=format&fit=crop&w=400&h=250&q=80"
-                  alt="Box physique avec objets bien-être professionnels"
-                  className="w-full rounded-lg qvt-shadow mb-4 h-48 object-cover"
-                />
-                <div className="qvt-gradient text-white rounded-full w-8 h-8 flex items-center justify-center mx-auto mb-3 font-bold">1</div>
-                <h4 className="font-semibold text-qvt-primary mb-2">Recevez votre Box personnalisée</h4>
-                <p className="text-sm text-qvt-text">Objets physiques sélectionnés par IA selon votre profil professionnel et vos besoins de bien-être</p>
-              </div>
-              
-              <div className="text-center">
-                <img
-                  src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=400&h=250&q=80"
-                  alt="Utilisation quotidienne avec application IA"
-                  className="w-full rounded-lg qvt-shadow mb-4 h-48 object-cover"
-                />
-                <div className="bg-qvt-secondary text-white rounded-full w-8 h-8 flex items-center justify-center mx-auto mb-3 font-bold">2</div>
-                <h4 className="font-semibold text-qvt-primary mb-2">Utilisez avec l'Application IA</h4>
-                <p className="text-sm text-qvt-text">L'intelligence artificielle analyse votre utilisation et adapte les recommandations en temps réel</p>
-              </div>
-              
-              <div className="text-center">
-                <img
-                  src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=400&h=250&q=80"
-                  alt="Résultats mesurables du bien-être professionnel"
-                  className="w-full rounded-lg qvt-shadow mb-4 h-48 object-cover"
-                />
-                <div className="bg-qvt-accent text-white rounded-full w-8 h-8 flex items-center justify-center mx-auto mb-3 font-bold">3</div>
-                <h4 className="font-semibold text-qvt-primary mb-2">Mesurez vos progrès</h4>
-                <p className="text-sm text-qvt-text">Tableaux de bord personnalisés et suivi de l'évolution de votre bien-être professionnel</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </main>
-    </div>
-  );
-};
-
-export default Index;
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QVT Box - Qualité de Vie au Travail</title>
+    <meta name="description" content="L'IA française au service de votre qualité de vie au travail et en famille" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

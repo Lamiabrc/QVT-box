@@ -11,9 +11,7 @@ import {
   Shield, 
   Brain, 
   Heart, 
-  Star, 
   Package, 
-  Smartphone,
   ArrowRight,
   CheckCircle
 } from 'lucide-react';
@@ -25,9 +23,9 @@ const Index = () => {
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 to-white">
       <Header />
       
-      {/* Hero Section */}
       <main className="flex-1">
         <section className="container mx-auto px-4 py-16">
+          {/* Hero Section */}
           <div className="text-center mb-16">
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
               L'IA au service de votre{' '}
