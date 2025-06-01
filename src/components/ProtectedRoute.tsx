@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { useSecureAuth } from '@/hooks/useSecureAuth';
 
 interface ProtectedRouteProps {
@@ -17,6 +17,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   requireSimulator = false
 }) => {
   const { user, loading, isAdmin } = useSecureAuth();
+  const location = useLocation();
 
   if (loading) {
     return (
@@ -26,19 +27,32 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     );
   }
 
+  // Determine the correct login redirect based on the current path
+  const getLoginRedirect = () => {
+    const path = location.pathname;
+    if (path.startsWith('/teens')) {
+      return '/teens/login';
+    } else if (path.startsWith('/entreprise')) {
+      return '/entreprise/login';
+    } else {
+      return '/auth'; // Default fallback
+    }
+  };
+
   // Check auth requirement
   if (requireAuth && !user) {
-    return <Navigate to="/entreprise/login" replace />;
+    return <Navigate to={getLoginRedirect()} replace />;
   }
 
   // Check admin requirement
   if (requireAdmin && !isAdmin) {
-    return <Navigate to="/entreprise" replace />;
+    const redirectPath = location.pathname.startsWith('/teens') ? '/teens' : '/entreprise';
+    return <Navigate to={redirectPath} replace />;
   }
 
   // For simulator requirement, just continue for now
   if (requireSimulator && !user) {
-    return <Navigate to="/entreprise/login" replace />;
+    return <Navigate to={getLoginRedirect()} replace />;
   }
 
   return <>{children}</>;
