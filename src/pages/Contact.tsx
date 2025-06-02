@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
@@ -8,7 +7,6 @@ import { Textarea } from '@/components/ui/textarea';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { ArrowLeft, Mail, Phone, MapPin, Send, Clock } from 'lucide-react';
-
 const Contact = () => {
   const [formData, setFormData] = useState({
     nom: '',
@@ -17,22 +15,18 @@ const Contact = () => {
     sujet: '',
     message: ''
   });
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Formulaire soumis:', formData);
     // Ici, vous ajouteriez la logique d'envoi
   };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
   };
-
-  return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 via-white to-purple-50">
+  return <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 via-white to-purple-50">
       <Header />
       
       <main className="flex-1">
@@ -66,29 +60,13 @@ const Contact = () => {
                         <label htmlFor="nom" className="block text-sm font-medium text-gray-700 mb-2">
                           Nom complet *
                         </label>
-                        <Input
-                          id="nom"
-                          name="nom"
-                          type="text"
-                          required
-                          value={formData.nom}
-                          onChange={handleChange}
-                          placeholder="Votre nom"
-                        />
+                        <Input id="nom" name="nom" type="text" required value={formData.nom} onChange={handleChange} placeholder="Votre nom" />
                       </div>
                       <div>
                         <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                           Email *
                         </label>
-                        <Input
-                          id="email"
-                          name="email"
-                          type="email"
-                          required
-                          value={formData.email}
-                          onChange={handleChange}
-                          placeholder="votre@email.com"
-                        />
+                        <Input id="email" name="email" type="email" required value={formData.email} onChange={handleChange} placeholder="votre@email.com" />
                       </div>
                     </div>
                     
@@ -96,50 +74,24 @@ const Contact = () => {
                       <label htmlFor="entreprise" className="block text-sm font-medium text-gray-700 mb-2">
                         Entreprise / Organisation
                       </label>
-                      <Input
-                        id="entreprise"
-                        name="entreprise"
-                        type="text"
-                        value={formData.entreprise}
-                        onChange={handleChange}
-                        placeholder="Nom de votre entreprise"
-                      />
+                      <Input id="entreprise" name="entreprise" type="text" value={formData.entreprise} onChange={handleChange} placeholder="Nom de votre entreprise" />
                     </div>
 
                     <div>
                       <label htmlFor="sujet" className="block text-sm font-medium text-gray-700 mb-2">
                         Sujet *
                       </label>
-                      <Input
-                        id="sujet"
-                        name="sujet"
-                        type="text"
-                        required
-                        value={formData.sujet}
-                        onChange={handleChange}
-                        placeholder="Objet de votre demande"
-                      />
+                      <Input id="sujet" name="sujet" type="text" required value={formData.sujet} onChange={handleChange} placeholder="Objet de votre demande" />
                     </div>
 
                     <div>
                       <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
                         Message *
                       </label>
-                      <Textarea
-                        id="message"
-                        name="message"
-                        required
-                        value={formData.message}
-                        onChange={handleChange}
-                        placeholder="Décrivez votre projet ou votre question..."
-                        rows={6}
-                      />
+                      <Textarea id="message" name="message" required value={formData.message} onChange={handleChange} placeholder="Décrivez votre projet ou votre question..." rows={6} />
                     </div>
 
-                    <Button 
-                      type="submit"
-                      className="w-full bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-white py-3 rounded-xl shadow-lg"
-                    >
+                    <Button type="submit" className="w-full bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-white py-3 rounded-xl shadow-lg">
                       <Send className="w-4 h-4 mr-2" />
                       Envoyer le message
                     </Button>
@@ -173,9 +125,7 @@ const Contact = () => {
                         </div>
                         <div>
                           <p className="font-medium text-gray-900">Téléphone</p>
-                          <a href="tel:+33123456789" className="text-primary hover:text-primary/80">
-                            +33 1 23 45 67 89
-                          </a>
+                          <a href="tel:+33123456789" className="text-primary hover:text-primary/80">+33 676435551</a>
                         </div>
                       </div>
 
@@ -228,10 +178,7 @@ const Contact = () => {
                       Consultez notre FAQ ou nos guides d'utilisation pour trouver 
                       rapidement les réponses à vos questions.
                     </p>
-                    <Button 
-                      variant="outline"
-                      className="border-2 border-primary text-primary hover:bg-primary hover:text-white"
-                    >
+                    <Button variant="outline" className="border-2 border-primary text-primary hover:bg-primary hover:text-white">
                       Voir la FAQ
                     </Button>
                   </CardContent>
@@ -243,8 +190,6 @@ const Contact = () => {
       </main>
 
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default Contact;
