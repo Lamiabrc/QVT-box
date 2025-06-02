@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
@@ -41,8 +40,8 @@ const NosValeurs = () => {
     },
     {
       icon: <Award className="w-8 h-8 text-white" />,
-      title: "🏆 Excellence",
-      description: "Engagement pour la qualité dans chaque produit, service et interaction avec nos utilisateurs.",
+      title: "🏆 Excellence Française",
+      description: "Engagement éthique local avec du 100% fabriqué en France, partenariat avec des fabricants et fournisseurs français engagés et éthiques.",
       gradient: "from-indigo-500 to-indigo-600"
     }
   ];
