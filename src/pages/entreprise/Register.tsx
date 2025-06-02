@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 import { useAuthOperations } from '@/hooks/useAuthOperations';
-import { EntrepriseHeader } from '@/components/entreprise/EntrepriseHeader';
+import EntrepriseHeader from '@/components/entreprise/EntrepriseHeader';
 
 const Register = () => {
   const navigate = useNavigate();

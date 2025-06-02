@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useAuthOperations } from '@/hooks/useAuthOperations';
 import { useSecureAuth } from '@/hooks/useSecureAuth';
-import { EntrepriseHeader } from '@/components/entreprise/EntrepriseHeader';
+import EntrepriseHeader from '@/components/entreprise/EntrepriseHeader';
 
 const Login = () => {
   const navigate = useNavigate();
