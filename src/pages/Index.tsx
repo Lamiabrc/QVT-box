@@ -201,13 +201,7 @@ const Index = () => {
                     <h3 className="text-2xl font-bold text-gray-900 mb-4">
                       💬 Un message personnel de votre fondatrice
                     </h3>
-                    <p className="text-gray-700 leading-relaxed text-lg italic">
-                      "Après 15 ans d'expérience en entreprise, j'ai créé QVT Box pour répondre 
-                      à un besoin essentiel : allier performance et bien-être. Notre mission est 
-                      de vous accompagner, vous et vos équipes, vers un équilibre durable entre 
-                      vie professionnelle et personnelle. Ensemble, construisons un avenir où 
-                      chacun peut s'épanouir pleinement."
-                    </p>
+                    <p className="text-gray-700 leading-relaxed text-lg italic">"Après 15 ans d'expérience en entreprise, j'ai créé QVT Box pour répondre à un besoin essentiel : allier performance et bien-être. Notre mission est de vous accompagner, vous et votre famille , vers un équilibre durable entre vie professionnelle et personnelle. Ensemble, construisons un avenir où chacun peut s'épanouir pleinement."</p>
                     <p className="text-primary font-semibold mt-4">
                       — Lamia Brechet, Fondatrice & CEO
                     </p>
