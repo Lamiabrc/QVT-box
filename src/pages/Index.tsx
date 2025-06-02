@@ -37,39 +37,80 @@ const Index = () => {
             </div>
 
             <div className="relative z-10">
+              {/* Image chaleureuse de patronne accueillante */}
               <div className="flex justify-center mb-8">
-                <div className="w-24 h-24 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center shadow-lg">
-                  <Sparkles className="w-12 h-12 text-white" />
+                <div className="relative">
+                  <img 
+                    src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=200&h=200&fit=crop&crop=face&auto=format&q=80" 
+                    alt="Patronne accueillante" 
+                    className="w-32 h-32 rounded-full object-cover shadow-2xl border-4 border-white animate-fade-in"
+                  />
+                  <div className="absolute -bottom-2 -right-2 w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center shadow-lg animate-bounce">
+                    <Sparkles className="w-5 h-5 text-white" />
+                  </div>
                 </div>
               </div>
 
-              <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-                L'IA au service de votre{' '}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
-                  Qualité de Vie
-                </span>
-              </h1>
-              
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8 leading-relaxed">
-                Solution phygitale innovante qui allie intelligence artificielle et objets bien-être 
-                pour améliorer votre qualité de vie au travail et en famille.
-              </p>
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 max-w-4xl mx-auto shadow-xl border border-white/50">
+                <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+                  Bienvenue dans l'univers de votre{' '}
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+                    Qualité de Vie
+                  </span>
+                </h1>
+                
+                <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8 leading-relaxed">
+                  Je suis ravie de vous accueillir dans notre solution phygitale innovante qui allie 
+                  intelligence artificielle et objets bien-être pour transformer votre quotidien 
+                  professionnel et familial.
+                </p>
 
-              <div className="flex flex-wrap justify-center gap-4 mb-12">
-                <div className="flex items-center space-x-2 bg-white px-6 py-3 rounded-full shadow-md border-l-4 border-blue-500">
-                  <Package className="h-5 w-5 text-primary" />
-                  <span className="text-sm font-medium">Box française 🇫🇷</span>
-                </div>
-                <div className="flex items-center space-x-2 bg-white px-6 py-3 rounded-full shadow-md border-l-4 border-purple-500">
-                  <Brain className="h-5 w-5 text-primary" />
-                  <span className="text-sm font-medium">IA avancée 🤖</span>
-                </div>
-                <div className="flex items-center space-x-2 bg-white px-6 py-3 rounded-full shadow-md border-l-4 border-green-500">
-                  <Shield className="h-5 w-5 text-primary" />
-                  <span className="text-sm font-medium">RGPD sécurisé 🛡️</span>
+                <div className="flex flex-wrap justify-center gap-4 mb-8">
+                  <div className="flex items-center space-x-2 bg-white px-6 py-3 rounded-full shadow-md border-l-4 border-blue-500">
+                    <Package className="h-5 w-5 text-primary" />
+                    <span className="text-sm font-medium">Box française 🇫🇷</span>
+                  </div>
+                  <div className="flex items-center space-x-2 bg-white px-6 py-3 rounded-full shadow-md border-l-4 border-purple-500">
+                    <Brain className="h-5 w-5 text-primary" />
+                    <span className="text-sm font-medium">IA avancée 🤖</span>
+                  </div>
+                  <div className="flex items-center space-x-2 bg-white px-6 py-3 rounded-full shadow-md border-l-4 border-green-500">
+                    <Shield className="h-5 w-5 text-primary" />
+                    <span className="text-sm font-medium">RGPD sécurisé 🛡️</span>
+                  </div>
                 </div>
               </div>
             </div>
+          </div>
+
+          {/* Message personnalisé de la patronne */}
+          <div className="max-w-4xl mx-auto mb-16">
+            <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200/50 shadow-lg">
+              <CardContent className="p-8">
+                <div className="flex items-start space-x-6">
+                  <img 
+                    src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=120&h=120&fit=crop&crop=face&auto=format&q=80" 
+                    alt="Message de la fondatrice" 
+                    className="w-20 h-20 rounded-full object-cover border-3 border-white shadow-lg flex-shrink-0"
+                  />
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                      💬 Un message personnel pour vous
+                    </h3>
+                    <p className="text-gray-700 leading-relaxed text-lg italic">
+                      "Après 15 ans d'expérience en entreprise, j'ai créé QVT Box pour répondre 
+                      à un besoin essentiel : allier performance et bien-être. Notre mission est 
+                      de vous accompagner, vous et vos équipes, vers un équilibre durable entre 
+                      vie professionnelle et personnelle. Ensemble, construisons un avenir où 
+                      chacun peut s'épanouir pleinement."
+                    </p>
+                    <p className="text-primary font-semibold mt-4">
+                      — Marie Dubois, Fondatrice & CEO
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
 
           {/* Solutions Cards avec plus de couleurs */}
