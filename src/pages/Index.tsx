@@ -196,7 +196,7 @@ const Index = () => {
             <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200/50 shadow-lg">
               <CardContent className="p-8">
                 <div className="flex items-start space-x-6">
-                  <img src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=120&h=120&fit=crop&crop=face&auto=format&q=80" alt="Lamia Brechet - Message de la fondatrice" className="w-20 h-20 rounded-full object-cover border-3 border-white shadow-lg flex-shrink-0" />
+                  <img alt="Lamia Brechet - Message de la fondatrice" className="w-20 h-20 rounded-full object-cover border-3 border-white shadow-lg flex-shrink-0" src="/lovable-uploads/a4ecdc7a-c850-42e1-b650-f1c34a951345.png" />
                   <div className="flex-1">
                     <h3 className="text-2xl font-bold text-gray-900 mb-4">
                       💬 Un message personnel de votre fondatrice
