@@ -1,231 +1,310 @@
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useState } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Navigation from "@/components/Navigation";
+import { Heart, Users, Gift, MessageCircle, Star, Crown, Shield } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Heart, Users, MessageCircle, Gift, Calendar, Star, Camera } from "lucide-react";
 
 const TeensFamilySpace = () => {
   const navigate = useNavigate();
+  const [selectedGift, setSelectedGift] = useState<string | null>(null);
 
   const familyMembers = [
     {
-      name: "Maman 💖",
-      avatar: "👩‍💼",
-      status: "en ligne",
+      name: "Léa",
+      role: "Grande sœur",
+      age: 17,
+      avatar: "👩‍🦱",
       mood: "😊",
-      lastActivity: "Il y a 2h"
+      points: 1432,
+      streak: 7,
+      status: "En ligne",
+      approved: true
     },
     {
-      name: "Papa 🧔",
-      avatar: "👨‍💼", 
-      status: "occupé",
-      mood: "😴",
-      lastActivity: "Il y a 5h"
+      name: "Jules",
+      role: "Petit frère",
+      age: 14,
+      avatar: "👦",
+      mood: "😎",
+      points: 892,
+      streak: 3,
+      status: "Hors ligne",
+      approved: true
     },
     {
-      name: "Ma sœur 👧",
-      avatar: "👧",
-      status: "en ligne",
-      mood: "🎮",
-      lastActivity: "Il y a 30min"
+      name: "Papa",
+      role: "Parent",
+      age: 45,
+      avatar: "👨",
+      mood: "😌",
+      points: 234,
+      streak: 12,
+      status: "En ligne",
+      approved: true
+    },
+    {
+      name: "Maman",
+      role: "Parent",
+      age: 43,
+      avatar: "👩",
+      mood: "💕",
+      points: 567,
+      streak: 15,
+      status: "En ligne",
+      approved: true
     }
   ];
 
-  const familyMessages = [
+  const virtualGifts = [
+    { id: "hug", name: "Câlin virtuel", emoji: "🤗", cost: 50, description: "Envoie de l'amour !" },
+    { id: "highfive", name: "High Five", emoji: "🙏", cost: 25, description: "Pour féliciter !" },
+    { id: "cookie", name: "Cookie virtuel", emoji: "🍪", cost: 75, description: "Pour faire plaisir" },
+    { id: "flower", name: "Bouquet", emoji: "💐", cost: 100, description: "Pour dire merci" },
+    { id: "trophy", name: "Trophée", emoji: "🏆", cost: 150, description: "Tu es le/la meilleur(e) !" },
+    { id: "rainbow", name: "Arc-en-ciel", emoji: "🌈", cost: 200, description: "Pour illuminer sa journée" }
+  ];
+
+  const familyChallenges = [
     {
-      from: "Maman",
-      message: "Tu rentres à quelle heure ce soir ? 🏠",
-      time: "14:30",
-      type: "question"
+      title: "Défi Famille Zen",
+      description: "Méditer ensemble 10 minutes",
+      participants: ["Léa", "Jules", "Papa"],
+      reward: "100 points chacun + Soirée ciné",
+      status: "En cours",
+      emoji: "🧘‍♀️"
     },
     {
-      from: "Papa",
-      message: "Super fier de tes notes ! 🎉",
-      time: "12:15",
-      type: "encouragement"
+      title: "Week-end Digital Detox",
+      description: "Passer le samedi sans écrans",
+      participants: ["Toute la famille"],
+      reward: "Sortie parc d'attractions",
+      status: "Bientôt",
+      emoji: "📱❌"
     },
     {
-      from: "Ma sœur",
-      message: "On fait une partie plus tard ? 🎮",
-      time: "11:45",
-      type: "fun"
+      title: "Gratitude Challenge",
+      description: "Partager 3 choses positives par jour",
+      participants: ["Léa", "Maman"],
+      reward: "Badge spécial famille",
+      status: "Terminé",
+      emoji: "🙏"
     }
   ];
+
+  const sendGift = (gift: typeof virtualGifts[0], recipient: string) => {
+    setSelectedGift(gift.id);
+    setTimeout(() => setSelectedGift(null), 2000);
+    alert(`🎁 "${gift.name}" envoyé à ${recipient} !\n\n${gift.description}\n\n💎 -${gift.cost} points`);
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-indigo-900 to-cyan-900 relative overflow-hidden">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-20 left-10 w-20 h-20 bg-pink-500 rounded-full animate-pulse"></div>
-        <div className="absolute top-40 right-20 w-16 h-16 bg-yellow-400 rounded-full animate-bounce"></div>
-        <div className="absolute bottom-20 left-1/4 w-24 h-24 bg-green-400 rounded-full animate-ping"></div>
-        <div className="absolute bottom-40 right-10 w-12 h-12 bg-orange-500 rounded-full animate-pulse"></div>
-      </div>
-
-      {/* Header */}
-      <header className="relative z-10 border-b border-white/20 bg-black/30 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Button 
-              variant="ghost" 
-              onClick={() => navigate('/teens')}
-              className="flex items-center space-x-2 text-white hover:bg-white/20"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              <span>Retour</span>
-            </Button>
-            <div className="flex items-center space-x-3">
-              <Users className="w-6 h-6 text-pink-400" />
-              <h1 className="text-2xl font-black text-white">ESPACE FAMILLE</h1>
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50">
+      <Navigation userType="teen" onBack={() => navigate('/teens')} />
+      
+      <div className="container mx-auto px-4 py-8">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-black bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
+            ESPACE FAMILLE PRIVÉ 👨‍👩‍👧‍👦
+          </h1>
+          <div className="bg-green-100 p-4 rounded-xl border-4 border-green-300 mb-4">
+            <div className="flex items-center justify-center gap-2 text-green-800">
+              <Shield className="h-6 w-6" />
+              <span className="font-black">ESPACE 100% SÉCURISÉ & PRIVÉ</span>
+              <Shield className="h-6 w-6" />
             </div>
+            <p className="text-sm text-green-700 mt-2">
+              Seuls les membres approuvés par tes parents peuvent accéder à cet espace
+            </p>
           </div>
         </div>
-      </header>
 
-      <div className="container mx-auto px-4 py-8 relative z-10">
-        {/* Hero Section */}
-        <div className="text-center mb-12">
-          <h1 className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-500 to-cyan-400 mb-6">
-            👨‍👩‍👧‍👦 MA TRIBU
-          </h1>
-          <p className="text-xl text-white mb-8">
-            Ton espace safe pour rester connecté avec ta famille 💕
-          </p>
-        </div>
+        <Tabs defaultValue="family" className="w-full">
+          <TabsList className="grid w-full grid-cols-3 mb-8">
+            <TabsTrigger value="family" className="font-bold">👥 MA FAMILLE</TabsTrigger>
+            <TabsTrigger value="gifts" className="font-bold">🎁 CADEAUX</TabsTrigger>
+            <TabsTrigger value="challenges" className="font-bold">🏆 DÉFIS FAMILLE</TabsTrigger>
+          </TabsList>
 
-        {/* Family Members Grid */}
-        <div className="grid md:grid-cols-3 gap-6 mb-12">
-          {familyMembers.map((member, index) => (
-            <Card key={index} className="group bg-gradient-to-br from-pink-500/10 to-purple-600/10 border-2 border-pink-400/30 hover:border-pink-400/60 transition-all duration-300 cursor-pointer transform hover:-translate-y-2">
-              <CardContent className="p-6 text-center">
-                <div className="text-6xl mb-4">{member.avatar}</div>
-                <h3 className="text-xl font-bold text-white mb-2">{member.name}</h3>
-                <div className="flex items-center justify-center space-x-2 mb-3">
-                  <Badge className={member.status === 'en ligne' ? 'bg-green-500/20 text-green-300' : 'bg-orange-500/20 text-orange-300'}>
-                    {member.status}
-                  </Badge>
-                  <span className="text-2xl">{member.mood}</span>
-                </div>
-                <p className="text-sm text-gray-300 mb-4">{member.lastActivity}</p>
-                <div className="flex space-x-2">
-                  <Button size="sm" className="bg-pink-500 hover:bg-pink-600 flex-1">
-                    <MessageCircle className="w-4 h-4 mr-2" />
-                    Chat
-                  </Button>
-                  <Button size="sm" variant="outline" className="border-purple-400 text-purple-400 hover:bg-purple-400/10">
-                    <Gift className="w-4 h-4" />
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {/* Recent Family Messages */}
-        <Card className="mb-8 bg-black/40 backdrop-blur-sm border-2 border-white/20">
-          <CardHeader>
-            <CardTitle className="text-2xl font-bold text-white flex items-center">
-              <MessageCircle className="w-6 h-6 mr-3 text-cyan-400" />
-              Messages Famille 💬
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {familyMessages.map((msg, index) => (
-                <div key={index} className="flex items-start space-x-4 p-4 bg-white/5 rounded-2xl">
-                  <div className="w-10 h-10 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
-                    {msg.from[0]}
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center space-x-2 mb-1">
-                      <span className="font-semibold text-white">{msg.from}</span>
-                      <span className="text-xs text-gray-400">{msg.time}</span>
-                      <Badge className={
-                        msg.type === 'encouragement' ? 'bg-green-500/20 text-green-300' :
-                        msg.type === 'question' ? 'bg-blue-500/20 text-blue-300' :
-                        'bg-purple-500/20 text-purple-300'
-                      }>
-                        {msg.type}
+          <TabsContent value="family">
+            <div className="grid md:grid-cols-2 gap-6">
+              {familyMembers.map((member, index) => (
+                <Card key={index} className="border-4 border-purple-200 bg-gradient-to-br from-white to-purple-50">
+                  <CardHeader className="text-center">
+                    <div className="text-6xl mb-2">{member.avatar}</div>
+                    <CardTitle className="text-2xl font-black text-purple-800">
+                      {member.name}
+                    </CardTitle>
+                    <CardDescription className="text-lg font-medium text-purple-600">
+                      {member.role} • {member.age} ans
+                    </CardDescription>
+                    <div className="flex justify-center gap-2 mt-2">
+                      <Badge className={`${member.status === 'En ligne' ? 'bg-green-400' : 'bg-gray-400'} text-white font-bold`}>
+                        {member.status}
+                      </Badge>
+                      <Badge className="bg-yellow-400 text-black font-bold">
+                        {member.points} pts
+                      </Badge>
+                      <Badge className="bg-green-400 text-white font-bold">
+                        ✓ Approuvé
                       </Badge>
                     </div>
-                    <p className="text-gray-200">{msg.message}</p>
-                  </div>
-                </div>
+                  </CardHeader>
+                  <CardContent className="text-center space-y-4">
+                    <div className="flex justify-around">
+                      <div>
+                        <div className="text-3xl">{member.mood}</div>
+                        <p className="text-sm font-medium text-gray-600">Mood</p>
+                      </div>
+                      <div>
+                        <div className="text-2xl font-black text-orange-500">{member.streak}</div>
+                        <p className="text-sm font-medium text-gray-600">Jours de suite</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex gap-2">
+                      <Button className="flex-1 bg-blue-500 hover:bg-blue-600 font-bold">
+                        <MessageCircle className="mr-2 h-4 w-4" />
+                        Message
+                      </Button>
+                      <Button 
+                        variant="outline" 
+                        className="flex-1 font-bold"
+                        onClick={() => sendGift(virtualGifts[0], member.name)}
+                      >
+                        <Gift className="mr-2 h-4 w-4" />
+                        Cadeau
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
               ))}
             </div>
-            <Button className="w-full mt-6 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white rounded-2xl py-3">
-              <MessageCircle className="w-5 h-5 mr-2" />
-              Envoyer un message à la famille
-            </Button>
-          </CardContent>
-        </Card>
+          </TabsContent>
 
-        {/* Family Activities */}
-        <div className="grid md:grid-cols-2 gap-8">
-          <Card className="bg-gradient-to-br from-green-500/10 to-emerald-600/10 border-2 border-green-400/30 hover:border-green-400/60 transition-all duration-300">
-            <CardHeader>
-              <CardTitle className="text-xl font-bold text-white flex items-center">
-                <Calendar className="w-6 h-6 mr-3 text-green-400" />
-                Activités Famille 🎯
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between p-3 bg-white/5 rounded-xl">
-                  <span className="text-white">🎬 Soirée film - Vendredi</span>
-                  <Badge className="bg-green-500/20 text-green-300">Confirmé</Badge>
-                </div>
-                <div className="flex items-center justify-between p-3 bg-white/5 rounded-xl">
-                  <span className="text-white">🍕 Pizza dimanche midi</span>
-                  <Badge className="bg-yellow-500/20 text-yellow-300">En attente</Badge>
-                </div>
-                <div className="flex items-center justify-between p-3 bg-white/5 rounded-xl">
-                  <span className="text-white">🎮 Tournoi jeux vidéo</span>
-                  <Badge className="bg-purple-500/20 text-purple-300">Proposé</Badge>
-                </div>
-              </div>
-              <Button className="w-full mt-4 bg-green-500 hover:bg-green-600 rounded-2xl">
-                Proposer une activité
-              </Button>
-            </CardContent>
-          </Card>
+          <TabsContent value="gifts">
+            <div className="grid md:grid-cols-2 gap-8">
+              <Card className="border-4 border-yellow-200 bg-gradient-to-br from-yellow-50 to-orange-50">
+                <CardHeader>
+                  <CardTitle className="text-2xl font-black text-yellow-800 flex items-center gap-2">
+                    <Gift className="h-8 w-8" />
+                    CADEAUX VIRTUELS FAMILLE
+                  </CardTitle>
+                  <CardDescription className="text-yellow-700 font-medium">
+                    Offre des cadeaux virtuels avec tes points à ta famille !
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-2 gap-3">
+                    {virtualGifts.map((gift) => (
+                      <Button
+                        key={gift.id}
+                        variant="outline"
+                        className="h-20 flex-col bg-white hover:bg-yellow-100 border-2 border-yellow-300"
+                        onClick={() => sendGift(gift, "Léa")}
+                      >
+                        <span className="text-2xl mb-1">{gift.emoji}</span>
+                        <span className="text-xs font-bold">{gift.name}</span>
+                        <Badge className="bg-yellow-400 text-black text-xs">
+                          {gift.cost} pts
+                        </Badge>
+                      </Button>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
 
-          <Card className="bg-gradient-to-br from-orange-500/10 to-red-600/10 border-2 border-orange-400/30 hover:border-orange-400/60 transition-all duration-300">
-            <CardHeader>
-              <CardTitle className="text-xl font-bold text-white flex items-center">
-                <Camera className="w-6 h-6 mr-3 text-orange-400" />
-                Souvenirs Famille 📸
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-3 gap-2 mb-4">
-                <div className="aspect-square bg-gradient-to-br from-pink-500 to-purple-600 rounded-xl flex items-center justify-center text-white text-2xl">
-                  📷
-                </div>
-                <div className="aspect-square bg-gradient-to-br from-blue-500 to-cyan-600 rounded-xl flex items-center justify-center text-white text-2xl">
-                  🎂
-                </div>
-                <div className="aspect-square bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center text-white text-2xl">
-                  🏖️
-                </div>
-                <div className="aspect-square bg-gradient-to-br from-orange-500 to-red-600 rounded-xl flex items-center justify-center text-white text-2xl">
-                  🎄
-                </div>
-                <div className="aspect-square bg-gradient-to-br from-purple-500 to-indigo-600 rounded-xl flex items-center justify-center text-white text-2xl">
-                  🍰
-                </div>
-                <div className="aspect-square bg-gradient-to-br from-yellow-500 to-orange-600 rounded-xl flex items-center justify-center text-white text-2xl">
-                  ➕
-                </div>
-              </div>
-              <Button className="w-full bg-orange-500 hover:bg-orange-600 rounded-2xl">
-                <Camera className="w-4 h-4 mr-2" />
-                Ajouter une photo
-              </Button>
-            </CardContent>
-          </Card>
-        </div>
+              <Card className="border-4 border-green-200 bg-gradient-to-br from-green-50 to-emerald-50">
+                <CardHeader>
+                  <CardTitle className="text-2xl font-black text-green-800 flex items-center gap-2">
+                    <Crown className="h-8 w-8" />
+                    SUGGESTIONS PARENTS
+                  </CardTitle>
+                  <CardDescription className="text-green-700 font-medium">
+                    Ce que tes parents peuvent t'offrir
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="bg-white p-4 rounded-xl border-2 border-green-300">
+                    <h4 className="font-bold text-green-800 mb-2">🎮 Récompenses Suggérées</h4>
+                    <ul className="text-sm space-y-1 text-green-700">
+                      <li>• 1h de jeu en plus le week-end</li>
+                      <li>• Sortie au cinéma en famille</li>
+                      <li>• Argent de poche bonus</li>
+                      <li>• Soirée pizza en famille</li>
+                      <li>• Nouveau livre/manga</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="bg-white p-4 rounded-xl border-2 border-green-300">
+                    <h4 className="font-bold text-green-800 mb-2">💝 Objets de Soutien</h4>
+                    <ul className="text-sm space-y-1 text-green-700">
+                      <li>• Kit de relaxation (bougies, thé)</li>
+                      <li>• Carnet de gratitude personnalisé</li>
+                      <li>• Playlist détente partagée</li>
+                      <li>• Cours de yoga/méditation</li>
+                      <li>• Box surprise bien-être</li>
+                    </ul>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="challenges">
+            <div className="space-y-6">
+              {familyChallenges.map((challenge, index) => (
+                <Card key={index} className="border-4 border-blue-200 bg-gradient-to-r from-blue-50 to-cyan-50">
+                  <CardHeader>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <span className="text-4xl">{challenge.emoji}</span>
+                        <div>
+                          <CardTitle className="text-xl font-black text-blue-800">
+                            {challenge.title}
+                          </CardTitle>
+                          <CardDescription className="text-blue-600 font-medium">
+                            {challenge.description}
+                          </CardDescription>
+                        </div>
+                      </div>
+                      <Badge 
+                        className={`font-bold ${
+                          challenge.status === 'En cours' ? 'bg-orange-400' :
+                          challenge.status === 'Terminé' ? 'bg-green-400' : 'bg-blue-400'
+                        } text-white`}
+                      >
+                        {challenge.status}
+                      </Badge>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <p className="text-sm font-medium text-blue-700 mb-1">
+                          Participants: {challenge.participants.join(", ")}
+                        </p>
+                        <p className="text-sm font-bold text-green-600">
+                          Récompense: {challenge.reward}
+                        </p>
+                      </div>
+                      <Button 
+                        className="bg-blue-500 hover:bg-blue-600 font-bold"
+                        disabled={challenge.status === 'Terminé'}
+                      >
+                        {challenge.status === 'En cours' ? 'Continuer' :
+                         challenge.status === 'Terminé' ? 'Terminé ✓' : 'Rejoindre'}
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );
