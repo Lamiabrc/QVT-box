@@ -1,248 +1,298 @@
 
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
-import { Zap, Play, Star, ArrowLeft } from "lucide-react";
+import { ArrowLeft, Gamepad2, Brain, Heart, Star, Zap, Target, Trophy, Clock, Users } from "lucide-react";
 import TeensHeader from "@/components/teens/TeensHeader";
 
 const TeensFunSolutions = () => {
   const navigate = useNavigate();
-  const [completedActivities, setCompletedActivities] = useState<string[]>([]);
+  const [selectedGame, setSelectedGame] = useState<string | null>(null);
 
-  const activities = [
+  const funActivities = [
     {
-      id: "breathing",
-      title: "Respiration Magique",
-      description: "Exercice de respiration guidé de 5 minutes",
-      icon: "🌸",
-      category: "Relaxation",
-      duration: "5 min",
-      points: 50,
-      color: "from-pink-400 to-rose-500"
+      icon: "🧠",
+      title: "Brain Training",
+      subtitle: "Entraîne ton cerveau",
+      description: "Mini-jeux pour améliorer concentration et mémoire",
+      difficulty: "Facile",
+      duration: "5-10 min",
+      points: 10,
+      color: "from-purple-500 to-indigo-500",
+      category: "mental"
     },
     {
-      id: "journal",
-      title: "Journal de Gratitude",
-      description: "Note 3 choses positives de ta journée",
-      icon: "📝",
-      category: "Écriture",
-      duration: "10 min",
-      points: 75,
-      color: "from-blue-400 to-cyan-500"
-    },
-    {
-      id: "music",
-      title: "Playlist Bien-être",
-      description: "Crée ta playlist détente personnalisée",
-      icon: "🎵",
-      category: "Musique",
-      duration: "15 min",
-      points: 100,
-      color: "from-purple-400 to-indigo-500"
-    },
-    {
-      id: "art",
-      title: "Art-thérapie Express",
-      description: "Dessine tes émotions librement",
-      icon: "🎨",
-      category: "Créatif",
-      duration: "20 min",
-      points: 125,
-      color: "from-orange-400 to-red-500"
-    },
-    {
-      id: "movement",
-      title: "Yoga Flow",
-      description: "Séance de yoga douce pour débutants",
       icon: "🧘‍♀️",
-      category: "Mouvement",
-      duration: "15 min",
-      points: 100,
-      color: "from-green-400 to-emerald-500"
+      title: "Zen Moment",
+      subtitle: "Relaxation guidée",
+      description: "Exercices de respiration et méditation pour ados",
+      difficulty: "Débutant",
+      duration: "3-15 min",
+      points: 15,
+      color: "from-green-500 to-emerald-500",
+      category: "wellbeing"
     },
     {
-      id: "mindfulness",
-      title: "Méditation Guidée",
-      description: "Méditation avec guide vocal apaisant",
-      icon: "🌙",
-      category: "Méditation",
-      duration: "12 min",
-      points: 90,
-      color: "from-indigo-400 to-purple-500"
+      icon: "🎨",
+      title: "Art Thérapie",
+      subtitle: "Expression créative",
+      description: "Dessine, colorie et exprime tes émotions",
+      difficulty: "Libre",
+      duration: "10-30 min",
+      points: 20,
+      color: "from-pink-500 to-rose-500",
+      category: "creative"
+    },
+    {
+      icon: "🎯",
+      title: "Défi Quotidien",
+      subtitle: "Challenge personnel",
+      description: "Petits défis pour sortir de ta zone de confort",
+      difficulty: "Variable",
+      duration: "Toute la journée",
+      points: 25,
+      color: "from-orange-500 to-red-500",
+      category: "challenge"
+    },
+    {
+      icon: "💭",
+      title: "Thought Bubble",
+      subtitle: "Gestion des pensées",
+      description: "Exercices pour gérer stress et pensées négatives",
+      difficulty: "Moyen",
+      duration: "5-20 min",
+      points: 15,
+      color: "from-blue-500 to-cyan-500",
+      category: "mental"
+    },
+    {
+      icon: "🎪",
+      title: "Mood Booster",
+      subtitle: "Remonte-moral",
+      description: "Activités pour retrouver le sourire instantanément",
+      difficulty: "Facile",
+      duration: "2-10 min",
+      points: 10,
+      color: "from-yellow-500 to-orange-500",
+      category: "mood"
     }
   ];
 
-  const challenges = [
-    {
-      title: "Défi 7 Jours Zen",
-      description: "Médite 5 minutes par jour pendant 7 jours",
-      progress: 3,
-      total: 7,
-      reward: "Badge Maître Zen + 500 points"
-    },
-    {
-      title: "Gratitude Week",
-      description: "Écris dans ton journal chaque jour cette semaine",
-      progress: 5,
-      total: 7,
-      reward: "Accès playlist exclusive + 300 points"
-    }
-  ];
-
-  const startActivity = (activityId: string) => {
-    const activity = activities.find(a => a.id === activityId);
-    if (!activity) return;
-
-    setCompletedActivities(prev => [...prev, activityId]);
-    
-    // Simulation de l'activité
-    alert(`🎯 "${activity.title}" commencée !\n\n${activity.description}\n\n⚡ Tu vas gagner ${activity.points} Energy Points !`);
-    
-    // Retirer de la liste après 2 secondes pour simuler la complétion
-    setTimeout(() => {
-      setCompletedActivities(prev => prev.filter(id => id !== activityId));
-      alert(`✅ "${activity.title}" terminée !\n\n🎉 +${activity.points} Energy Points gagnés !`);
-    }, 2000);
+  const weeklyChallenge = {
+    title: "Challenge de la semaine",
+    description: "Dis 3 compliments sincères à des personnes différentes",
+    progress: 1,
+    total: 3,
+    reward: 50,
+    icon: "🌟"
   };
 
+  const achievements = [
+    { name: "Premier pas", description: "Première activité complétée", unlocked: true },
+    { name: "Zen Master", description: "10 sessions de méditation", unlocked: true },
+    { name: "Artiste en herbe", description: "5 créations artistiques", unlocked: false },
+    { name: "Challenge Hunter", description: "Tous les défis d'une semaine", unlocked: false }
+  ];
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-cyan-50 via-purple-50 to-pink-50">
-      <TeensHeader />
-      
-      <div className="container mx-auto px-4 py-8">
-        <div className="mb-6">
-          <Button
-            variant="ghost"
-            onClick={() => navigate('/teens')}
-            className="text-purple-600 hover:bg-purple-100"
-          >
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Retour au dashboard
-          </Button>
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-indigo-900 to-cyan-900 relative overflow-hidden">
+      {/* Animated background */}
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute top-20 left-10 w-20 h-20 bg-pink-500 rounded-full animate-pulse"></div>
+        <div className="absolute top-40 right-20 w-16 h-16 bg-yellow-400 rounded-full animate-bounce"></div>
+        <div className="absolute bottom-20 left-1/4 w-24 h-24 bg-green-400 rounded-full animate-ping"></div>
+      </div>
 
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-black bg-gradient-to-r from-cyan-600 to-purple-600 bg-clip-text text-transparent mb-4">
-            SOLUTIONS FUN 🎮
+      {/* Header */}
+      <header className="relative z-10 border-b border-white/20 bg-black/30 backdrop-blur-sm">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <Button 
+              variant="ghost" 
+              onClick={() => navigate('/teens')}
+              className="flex items-center space-x-2 text-white hover:bg-white/20"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              <span>Retour</span>
+            </Button>
+            <div className="flex items-center space-x-3">
+              <Gamepad2 className="w-6 h-6 text-pink-400" />
+              <h1 className="text-2xl font-black text-white">SOLUTIONS FUN</h1>
+            </div>
+            <Badge className="bg-yellow-500/20 text-yellow-300 px-4 py-2">
+              <Star className="w-4 h-4 mr-1" />
+              245 pts
+            </Badge>
+          </div>
+        </div>
+      </header>
+
+      <div className="container mx-auto px-4 py-8 relative z-10">
+        {/* Hero Section */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-500 to-cyan-400 mb-6">
+            🎮 Fun & Bien-être
           </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Des activités ludiques pour booster ton bien-être mental !
+          <p className="text-xl text-gray-200 mb-8">
+            Améliore ton bien-être en t'amusant ! Jeux, défis et activités pensés pour toi
           </p>
-          <div className="flex justify-center gap-2 mt-4">
-            <Badge className="bg-cyan-100 text-cyan-700">
-              <Zap className="h-3 w-3 mr-1" />
-              Gagne des Energy Points
-            </Badge>
-            <Badge className="bg-purple-100 text-purple-700">
-              <Star className="h-3 w-3 mr-1" />
-              Débloque des récompenses
-            </Badge>
-          </div>
         </div>
 
-        {/* Défis en cours */}
-        <div className="mb-12">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
-            🏆 Tes Défis en Cours
-          </h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            {challenges.map((challenge, index) => (
-              <Card key={index} className="border-4 border-yellow-200 bg-gradient-to-br from-yellow-50 to-orange-50">
-                <CardHeader>
-                  <CardTitle className="text-xl font-black text-yellow-800">
-                    {challenge.title}
-                  </CardTitle>
-                  <CardDescription className="text-yellow-700 font-medium">
-                    {challenge.description}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="mb-4">
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="text-sm font-bold text-gray-700">Progression</span>
-                      <span className="text-sm font-bold text-gray-700">{challenge.progress}/{challenge.total}</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-3">
-                      <div 
-                        className="bg-gradient-to-r from-yellow-400 to-orange-500 h-3 rounded-full transition-all"
-                        style={{ width: `${(challenge.progress / challenge.total) * 100}%` }}
-                      ></div>
-                    </div>
-                  </div>
-                  <div className="bg-white p-3 rounded-lg border-2 border-yellow-300">
-                    <p className="text-sm font-bold text-yellow-800">🎁 Récompense</p>
-                    <p className="text-sm text-yellow-700">{challenge.reward}</p>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+        {/* Weekly Challenge */}
+        <Card className="bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border-2 border-yellow-400/30 mb-12">
+          <CardHeader>
+            <CardTitle className="text-white flex items-center justify-between">
+              <span className="flex items-center gap-3">
+                <span className="text-3xl">{weeklyChallenge.icon}</span>
+                {weeklyChallenge.title}
+              </span>
+              <Badge className="bg-yellow-500/20 text-yellow-300">
+                {weeklyChallenge.reward} pts
+              </Badge>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-gray-200 mb-4">{weeklyChallenge.description}</p>
+            <div className="flex items-center gap-4">
+              <div className="flex-1 bg-gray-700 rounded-full h-3">
+                <div 
+                  className="bg-gradient-to-r from-yellow-400 to-orange-500 h-3 rounded-full transition-all"
+                  style={{ width: `${(weeklyChallenge.progress / weeklyChallenge.total) * 100}%` }}
+                ></div>
+              </div>
+              <span className="text-white font-semibold">
+                {weeklyChallenge.progress}/{weeklyChallenge.total}
+              </span>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Activities Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          {funActivities.map((activity, index) => (
+            <Card 
+              key={index} 
+              className={`group bg-gradient-to-br ${activity.color}/10 border-2 border-white/20 hover:border-white/40 transition-all duration-300 transform hover:-translate-y-2 cursor-pointer`}
+              onClick={() => setSelectedGame(activity.title)}
+            >
+              <CardHeader>
+                <div className="text-4xl mb-4">{activity.icon}</div>
+                <CardTitle className="text-xl font-bold text-white">
+                  {activity.title}
+                </CardTitle>
+                <p className="text-sm text-gray-300">{activity.subtitle}</p>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-300 mb-4">{activity.description}</p>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  <Badge variant="outline" className="text-xs">
+                    <Clock className="w-3 h-3 mr-1" />
+                    {activity.duration}
+                  </Badge>
+                  <Badge variant="outline" className="text-xs">
+                    <Target className="w-3 h-3 mr-1" />
+                    {activity.difficulty}
+                  </Badge>
+                  <Badge variant="outline" className="text-xs">
+                    <Star className="w-3 h-3 mr-1" />
+                    {activity.points} pts
+                  </Badge>
+                </div>
+                <Button className="w-full bg-white/10 hover:bg-white/20 text-white border-0 rounded-2xl">
+                  Commencer
+                </Button>
+              </CardContent>
+            </Card>
+          ))}
         </div>
 
-        {/* Activités disponibles */}
-        <div>
-          <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
-            🌟 Activités Bien-être
-          </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {activities.map((activity) => {
-              const isCompleted = completedActivities.includes(activity.id);
-              
-              return (
-                <Card 
-                  key={activity.id}
-                  className={`border-4 border-gray-200 hover:border-gray-300 transition-all ${
-                    isCompleted ? 'opacity-50' : 'hover:scale-105'
+        {/* Achievements Section */}
+        <Card className="bg-black/30 border-2 border-white/20 mb-8">
+          <CardHeader>
+            <CardTitle className="text-white flex items-center gap-3">
+              <Trophy className="w-6 h-6 text-yellow-400" />
+              Mes Achievements
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid md:grid-cols-2 gap-4">
+              {achievements.map((achievement, index) => (
+                <div 
+                  key={index} 
+                  className={`p-4 rounded-xl border-2 ${
+                    achievement.unlocked 
+                      ? 'bg-yellow-500/10 border-yellow-400/30' 
+                      : 'bg-gray-800/50 border-gray-600/30'
                   }`}
                 >
-                  <CardHeader className={`bg-gradient-to-r ${activity.color} text-white text-center`}>
-                    <div className="text-4xl mb-2">{activity.icon}</div>
-                    <CardTitle className="text-xl font-black">{activity.title}</CardTitle>
-                    <CardDescription className="text-white/90 font-medium">
-                      {activity.description}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="p-6">
-                    <div className="flex justify-between items-center mb-4">
-                      <Badge variant="secondary" className="font-bold">
-                        {activity.category}
-                      </Badge>
-                      <Badge className="bg-blue-100 text-blue-700 font-bold">
-                        {activity.duration}
-                      </Badge>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h4 className={`font-semibold ${
+                        achievement.unlocked ? 'text-yellow-300' : 'text-gray-400'
+                      }`}>
+                        {achievement.name}
+                      </h4>
+                      <p className={`text-sm ${
+                        achievement.unlocked ? 'text-yellow-200' : 'text-gray-500'
+                      }`}>
+                        {achievement.description}
+                      </p>
                     </div>
-                    
-                    <div className="flex justify-between items-center mb-4">
-                      <span className="text-sm font-bold text-gray-600">Récompense:</span>
-                      <Badge className="bg-yellow-100 text-yellow-700 font-bold">
-                        <Zap className="h-3 w-3 mr-1" />
-                        {activity.points} pts
-                      </Badge>
+                    <div className={`text-2xl ${
+                      achievement.unlocked ? '' : 'grayscale opacity-50'
+                    }`}>
+                      🏆
                     </div>
-                    
-                    <Button 
-                      className={`w-full font-bold ${
-                        isCompleted ? 'bg-green-500 hover:bg-green-600' : `bg-gradient-to-r ${activity.color} hover:opacity-90`
-                      } text-white`}
-                      onClick={() => startActivity(activity.id)}
-                      disabled={isCompleted}
-                    >
-                      {isCompleted ? (
-                        <>✓ En cours...</>
-                      ) : (
-                        <>
-                          <Play className="mr-2 h-4 w-4" />
-                          Commencer
-                        </>
-                      )}
-                    </Button>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Social Features */}
+        <div className="grid md:grid-cols-2 gap-8">
+          <Card className="bg-gradient-to-br from-blue-500/10 to-purple-500/10 border-2 border-blue-400/30">
+            <CardHeader>
+              <CardTitle className="text-white flex items-center gap-3">
+                <Users className="w-6 h-6 text-blue-400" />
+                Activités en Famille
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-300 mb-4">
+                Découvre des activités à faire avec tes parents pour renforcer vos liens !
+              </p>
+              <Button 
+                className="w-full bg-blue-500/20 hover:bg-blue-500/40 text-blue-200 border-blue-400"
+                onClick={() => navigate('/teens/family-space')}
+              >
+                Explorer activités famille
+              </Button>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-green-500/10 to-emerald-500/10 border-2 border-green-400/30">
+            <CardHeader>
+              <CardTitle className="text-white flex items-center gap-3">
+                <Brain className="w-6 h-6 text-green-400" />
+                Suivi Progrès
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-300 mb-4">
+                Vois ton évolution et tes améliorations au fil du temps
+              </p>
+              <Button 
+                className="w-full bg-green-500/20 hover:bg-green-500/40 text-green-200 border-green-400"
+                onClick={() => navigate('/teens/personal-space')}
+              >
+                Voir mes statistiques
+              </Button>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>

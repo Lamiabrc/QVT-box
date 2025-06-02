@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useNavigate } from "react-router-dom";
-import { Heart, MessageCircle, Shield, AlertTriangle, Users, Lock, ArrowLeft } from "lucide-react";
+import { Heart, MessageCircle, Shield, Users, Lock, ArrowLeft, Star, Settings, Palette, Camera, Music, Calendar, Award } from "lucide-react";
 import TeensHeader from "@/components/teens/TeensHeader";
 
 const TeensPersonalSpace = () => {
@@ -14,21 +14,20 @@ const TeensPersonalSpace = () => {
   const [personalThoughts, setPersonalThoughts] = useState("");
   const [parentMessage, setParentMessage] = useState("");
 
-  const intimateTopics = [
-    { icon: "💕", title: "Relations & Amour", description: "Questions sur les relations amoureuses" },
-    { icon: "🌡️", title: "Changements Corps", description: "Comprendre les transformations" },
-    { icon: "😰", title: "Pression Sociale", description: "Gérer la pression des autres" },
-    { icon: "🚫", title: "Dire Non", description: "Apprendre à poser des limites" },
-    { icon: "🧠", title: "Santé Mentale", description: "Anxiété, dépression, stress" },
-    { icon: "🎭", title: "Identité", description: "Qui suis-je vraiment ?" }
+  const personalFeatures = [
+    { icon: "📔", title: "Mon Journal", description: "Écris tes pensées quotidiennes", path: "/teens/journal" },
+    { icon: "🎨", title: "Customisation", description: "Personnalise ton espace", path: "/teens/customization" },
+    { icon: "🎵", title: "Ma Playlist", description: "Musiques qui te font du bien", path: "/teens/playlist" },
+    { icon: "🏆", title: "Mes Achievements", description: "Tes réussites et progrès", path: "/teens/achievements" },
+    { icon: "📸", title: "Mes Souvenirs", description: "Photos et moments importants", path: "/teens/memories" },
+    { icon: "⚙️", title: "Paramètres Privés", description: "Confidentialité et sécurité", path: "/teens/privacy-settings" }
   ];
 
-  const alertSituations = [
-    { level: "attention", icon: "⚠️", title: "Pression pour essayer des substances", urgent: false },
-    { level: "urgent", icon: "🚨", title: "Pensées d'automutilation", urgent: true },
-    { level: "attention", icon: "😰", title: "Anxiété intense récurrente", urgent: false },
-    { level: "urgent", icon: "💔", title: "Harcèlement ou violence", urgent: true },
-    { level: "attention", icon: "🌙", title: "Troubles du sommeil", urgent: false }
+  const quickStats = [
+    { label: "Check-ins cette semaine", value: "5/7", color: "text-green-600" },
+    { label: "Points bien-être", value: "245", color: "text-purple-600" },
+    { label: "Jours de journaling", value: "12", color: "text-blue-600" },
+    { label: "Humeur moyenne", value: "😊", color: "text-yellow-600" }
   ];
 
   return (
@@ -51,25 +50,37 @@ const TeensPersonalSpace = () => {
           <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
             Mon Espace Personnel 🌸
           </h1>
-          <p className="text-gray-600">Ton safe space pour parler de tout, même ce qui te préoccupe</p>
+          <p className="text-gray-600">Ton univers privé, tes outils de bien-être et tes réussites</p>
           <div className="flex justify-center gap-2 mt-3">
             <Badge className="bg-green-100 text-green-700">
               <Shield className="h-3 w-3 mr-1" />
-              100% Confidentiel
+              100% Privé
             </Badge>
             <Badge className="bg-blue-100 text-blue-700">
-              <Heart className="h-3 w-3 mr-1" />
-              Sans jugement
+              <Star className="h-3 w-3 mr-1" />
+              Tes réussites
             </Badge>
           </div>
+        </div>
+
+        {/* Quick Stats */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          {quickStats.map((stat, index) => (
+            <Card key={index} className="text-center">
+              <CardContent className="p-4">
+                <div className={`text-2xl font-bold ${stat.color}`}>{stat.value}</div>
+                <div className="text-sm text-gray-600">{stat.label}</div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
 
         <Tabs defaultValue="journal" className="space-y-6">
           <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="journal">Journal Perso</TabsTrigger>
-            <TabsTrigger value="intimate">Vie Intime</TabsTrigger>
-            <TabsTrigger value="alerts">Alertes</TabsTrigger>
-            <TabsTrigger value="parents">Avec Parents</TabsTrigger>
+            <TabsTrigger value="features">Mes Outils</TabsTrigger>
+            <TabsTrigger value="achievements">Réussites</TabsTrigger>
+            <TabsTrigger value="parents">Communication</TabsTrigger>
           </TabsList>
 
           <TabsContent value="journal" className="space-y-6">
@@ -96,26 +107,29 @@ const TeensPersonalSpace = () => {
                     <Badge variant="outline">#feelings</Badge>
                     <Badge variant="outline">#dreams</Badge>
                   </div>
-                  <Button>Sauvegarder</Button>
+                  <Button onClick={() => navigate('/teens/journal')}>
+                    Ouvrir mon journal complet
+                  </Button>
                 </div>
               </CardContent>
             </Card>
           </TabsContent>
 
-          <TabsContent value="intimate" className="space-y-6">
+          <TabsContent value="features" className="space-y-6">
             <div className="grid md:grid-cols-2 gap-4">
-              {intimateTopics.map((topic, index) => (
-                <Card key={index} className="hover:shadow-lg transition-shadow cursor-pointer">
+              {personalFeatures.map((feature, index) => (
+                <Card key={index} className="hover:shadow-lg transition-shadow cursor-pointer"
+                      onClick={() => navigate(feature.path)}>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-3 text-lg">
-                      <span className="text-2xl">{topic.icon}</span>
-                      {topic.title}
+                      <span className="text-2xl">{feature.icon}</span>
+                      {feature.title}
                     </CardTitle>
-                    <CardDescription>{topic.description}</CardDescription>
+                    <CardDescription>{feature.description}</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <Button variant="outline" className="w-full">
-                      Parler en toute sécurité
+                      Accéder
                     </Button>
                   </CardContent>
                 </Card>
@@ -123,36 +137,36 @@ const TeensPersonalSpace = () => {
             </div>
           </TabsContent>
 
-          <TabsContent value="alerts" className="space-y-6">
-            <Card className="border-orange-200 bg-orange-50">
+          <TabsContent value="achievements" className="space-y-6">
+            <Card>
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-orange-700">
-                  <AlertTriangle className="h-5 w-5" />
-                  Situations qui m'inquiètent
+                <CardTitle className="flex items-center gap-2">
+                  <Award className="h-5 w-5" />
+                  Mes Réussites et Progrès
                 </CardTitle>
                 <CardDescription>
-                  Si tu vis une de ces situations, on peut alerter tes parents pour t'aider
+                  Célèbre tes accomplissements et ton évolution
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-3">
-                {alertSituations.map((situation, index) => (
-                  <div key={index} className={`p-4 rounded-lg border-l-4 ${
-                    situation.urgent ? 'bg-red-50 border-red-400' : 'bg-yellow-50 border-yellow-400'
-                  }`}>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <span className="text-xl">{situation.icon}</span>
-                        <span className="font-medium">{situation.title}</span>
-                      </div>
-                      <Button 
-                        size="sm" 
-                        variant={situation.urgent ? "destructive" : "outline"}
-                      >
-                        {situation.urgent ? "Alerte Urgente" : "Signaler"}
-                      </Button>
-                    </div>
+              <CardContent>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+                    <h4 className="font-semibold text-green-800 mb-2">🏆 Check-in Champion</h4>
+                    <p className="text-sm text-green-600">5 check-ins consécutifs cette semaine!</p>
                   </div>
-                ))}
+                  <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
+                    <h4 className="font-semibold text-purple-800 mb-2">📝 Écrivain en herbe</h4>
+                    <p className="text-sm text-purple-600">12 jours de journaling ce mois-ci</p>
+                  </div>
+                  <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                    <h4 className="font-semibold text-blue-800 mb-2">💪 Gestion du stress</h4>
+                    <p className="text-sm text-blue-600">Techniques de relaxation maîtrisées</p>
+                  </div>
+                  <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                    <h4 className="font-semibold text-yellow-800 mb-2">🌟 Confiance en soi</h4>
+                    <p className="text-sm text-yellow-600">Progression notable en assertivité</p>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </TabsContent>
@@ -188,7 +202,9 @@ const TeensPersonalSpace = () => {
                         <Lock className="h-4 w-4 mr-1" />
                         Privé
                       </Button>
-                      <Button variant="outline" size="sm">Demander de l'aide</Button>
+                      <Button variant="outline" size="sm" onClick={() => navigate('/teens/family-space')}>
+                        Espace famille
+                      </Button>
                     </div>
                     <Button>Envoyer Message</Button>
                   </div>

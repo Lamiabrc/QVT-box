@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { ArrowLeft, Users, Heart, Shield, UserPlus } from "lucide-react";
 import { useState } from "react";
@@ -21,6 +22,8 @@ const TeensRegister = () => {
     confirmPassword: '',
     firstName: '',
     lastName: '',
+    gender: '',
+    parentConnection: '',
     acceptTerms: false,
     parentalConsent: false
   });
@@ -78,6 +81,15 @@ const TeensRegister = () => {
       toast({
         title: "Erreur",
         description: "Le consentement parental est requis pour les adolescents.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (role === 'teen' && (!formData.gender || !formData.parentConnection)) {
+      toast({
+        title: "Erreur",
+        description: "Veuillez remplir tous les champs obligatoires.",
         variant: "destructive"
       });
       return;
@@ -159,6 +171,40 @@ const TeensRegister = () => {
                     />
                   </div>
                 </div>
+
+                {role === 'teen' && (
+                  <>
+                    <div className="space-y-2">
+                      <Label htmlFor="gender" className="text-white">Genre</Label>
+                      <Select onValueChange={(value) => setFormData({...formData, gender: value})}>
+                        <SelectTrigger className="bg-white/10 border-white/20 text-white">
+                          <SelectValue placeholder="Sélectionne ton genre" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="garcon">Garçon</SelectItem>
+                          <SelectItem value="fille">Fille</SelectItem>
+                          <SelectItem value="autre">Autre</SelectItem>
+                          <SelectItem value="prefere_pas_dire">Je préfère ne pas dire</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="parentConnection" className="text-white">Connexion parentale</Label>
+                      <Select onValueChange={(value) => setFormData({...formData, parentConnection: value})}>
+                        <SelectTrigger className="bg-white/10 border-white/20 text-white">
+                          <SelectValue placeholder="Avec qui veux-tu te connecter ?" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="papa">Papa</SelectItem>
+                          <SelectItem value="maman">Maman</SelectItem>
+                          <SelectItem value="les_deux">Papa et Maman</SelectItem>
+                          <SelectItem value="tuteur">Tuteur/Tutrice</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </>
+                )}
 
                 <div className="space-y-2">
                   <Label htmlFor="email" className="text-white">Email</Label>
