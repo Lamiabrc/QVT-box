@@ -113,9 +113,7 @@ const Contact = () => {
                         </div>
                         <div>
                           <p className="font-medium text-gray-900">Email</p>
-                          <a href="mailto:contact@qvtbox.fr" className="text-primary hover:text-primary/80">
-                            contact@qvtbox.fr
-                          </a>
+                          <a href="mailto:contact@qvtbox.fr" className="text-primary hover:text-primary/80">contact@qvtbox.com</a>
                         </div>
                       </div>
 
@@ -125,7 +123,7 @@ const Contact = () => {
                         </div>
                         <div>
                           <p className="font-medium text-gray-900">Téléphone</p>
-                          <a href="tel:+33123456789" className="text-primary hover:text-primary/80">+33 676435551</a>
+                          <a href="tel:+33123456789" className="text-primary hover:text-primary/80">+33 2 23 24 28 45</a>
                         </div>
                       </div>
 
