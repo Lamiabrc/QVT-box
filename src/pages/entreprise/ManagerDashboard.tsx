@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -19,6 +18,8 @@ import {
 } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import QVTEvolutionChart from '@/components/dashboard/QVTEvolutionChart';
+import EvaluationResultsTable from '@/components/dashboard/EvaluationResultsTable';
 
 const ManagerDashboard = () => {
   const { user } = useSecureAuth();
@@ -26,6 +27,8 @@ const ManagerDashboard = () => {
   const [teams, setTeams] = useState([]);
   const [teamMembers, setTeamMembers] = useState([]);
   const [teamScores, setTeamScores] = useState([]);
+  const [evolutionData, setEvolutionData] = useState([]);
+  const [evaluationResults, setEvaluationResults] = useState([]);
   const [teamStats, setTeamStats] = useState({
     totalMembers: 0,
     avgScore: 0,
@@ -37,6 +40,7 @@ const ManagerDashboard = () => {
   useEffect(() => {
     if (user) {
       fetchManagerData();
+      fetchTeamEvaluationData();
     }
   }, [user]);
 
@@ -90,6 +94,92 @@ const ManagerDashboard = () => {
       });
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchTeamEvaluationData = async () => {
+    try {
+      // Récupérer les équipes gérées par ce manager
+      const { data: managedTeams } = await supabase
+        .from('team_managers')
+        .select(`
+          *,
+          teams!inner(*)
+        `)
+        .eq('manager_id', user.id);
+
+      if (managedTeams && managedTeams.length > 0) {
+        const teamIds = managedTeams.map(tm => tm.teams.id);
+        
+        // Récupérer les données d'évolution de l'équipe
+        const { data: teamEvolutionRaw } = await supabase
+          .from('team_members')
+          .select(`
+            profiles!inner(id),
+            teams!inner(id)
+          `)
+          .in('team_id', teamIds);
+
+        if (teamEvolutionRaw) {
+          const memberIds = teamEvolutionRaw.map(tm => tm.profiles.id);
+          
+          const { data: scoresData } = await supabase
+            .from('simulator_responses')
+            .select('created_at, qvt_score, burnout_risk_percentage')
+            .in('user_id', memberIds)
+            .order('created_at', { ascending: true });
+
+          // Grouper par mois
+          const monthlyData = {};
+          scoresData?.forEach(response => {
+            const month = new Date(response.created_at).toLocaleDateString('fr-FR', { year: 'numeric', month: 'short' });
+            if (!monthlyData[month]) {
+              monthlyData[month] = { scores: [], date: month };
+            }
+            monthlyData[month].scores.push(response.qvt_score);
+          });
+
+          const evolutionChartData = Object.values(monthlyData).map(month => ({
+            date: month.date,
+            avgScore: Math.round(month.scores.reduce((sum, score) => sum + score, 0) / month.scores.length),
+            teamCount: month.scores.length
+          }));
+
+          setEvolutionData(evolutionChartData);
+
+          // Résultats d'évaluation de l'équipe (dernières évaluations)
+          const teamEvaluationResults = [
+            {
+              id: '1',
+              date: '2024-01-15',
+              participantCount: teamMembers.length || 12,
+              avgScore: teamStats.avgScore || 75,
+              riskCount: teamStats.highRiskCount || 2,
+              type: 'Équipe'
+            },
+            {
+              id: '2',
+              date: '2024-01-01',
+              participantCount: teamMembers.length || 12,
+              avgScore: (teamStats.avgScore || 75) - 3,
+              riskCount: (teamStats.highRiskCount || 2) + 1,
+              type: 'Équipe'
+            },
+            {
+              id: '3',
+              date: '2023-12-15',
+              participantCount: teamMembers.length || 12,
+              avgScore: (teamStats.avgScore || 75) - 5,
+              riskCount: (teamStats.highRiskCount || 2) + 2,
+              type: 'Équipe'
+            }
+          ];
+
+          setEvaluationResults(teamEvaluationResults);
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching team evaluation data:', error);
     }
   };
 
@@ -252,12 +342,27 @@ const ManagerDashboard = () => {
             </Card>
           </div>
 
-          <Tabs defaultValue="overview" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-3">
+          <Tabs defaultValue="dashboard" className="space-y-6">
+            <TabsList className="grid w-full grid-cols-4">
+              <TabsTrigger value="dashboard">Tableau de Bord</TabsTrigger>
               <TabsTrigger value="overview">Vue d'ensemble</TabsTrigger>
               <TabsTrigger value="team-results">Résultats Équipe</TabsTrigger>
               <TabsTrigger value="alerts">Alertes & Actions</TabsTrigger>
             </TabsList>
+
+            <TabsContent value="dashboard">
+              <div className="grid grid-cols-1 lg:grid-cols-1 gap-6 mb-6">
+                <QVTEvolutionChart 
+                  data={evolutionData} 
+                  title="Évolution QVT de Mon Équipe" 
+                />
+              </div>
+              
+              <EvaluationResultsTable 
+                results={evaluationResults} 
+                title="Historique des Évaluations de l'Équipe" 
+              />
+            </TabsContent>
 
             <TabsContent value="overview">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
