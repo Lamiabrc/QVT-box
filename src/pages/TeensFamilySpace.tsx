@@ -3,28 +3,23 @@ import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Heart, Shield, Brain, Gamepad2, MessageCircle, Package, Sparkles, User, ChevronRight, Users, ShoppingBag, LogOut, CalendarDays } from "lucide-react";
+import { Heart, Shield, Brain, Gamepad2, MessageCircle, Package, Sparkles, ChevronRight, Users, ShoppingBag, CalendarDays } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/hooks/useAuth";
+import { useSecureAuth } from "@/hooks/useSecureAuth";
 import Navigation from "@/components/Navigation";
-import HeroSection from "@/components/HeroSection";
-import DashboardCard from "@/components/DashboardCard";
-import MetaverseCard from "@/components/MetaverseCard";
 import BoxCatalog from "@/components/BoxCatalog";
-import TeenCharacters from "@/components/TeenCharacters";
-import QuickAlerts from "@/components/QuickAlerts";
-import WelcomeHero from "@/components/WelcomeHero";
 
 const TeensFamilySpace = () => {
   const navigate = useNavigate();
-  const { user, profile, loading, signOut } = useAuth();
+  const { user, session, loading } = useSecureAuth();
   const [userType, setUserType] = useState<"teen" | "parent" | null>(null);
 
   useEffect(() => {
-    if (profile) {
-      setUserType(profile.user_type);
+    // For now, default to teen type when user exists
+    if (user) {
+      setUserType("teen");
     }
-  }, [profile]);
+  }, [user]);
 
   const features = [
     {
@@ -152,48 +147,101 @@ const TeensFamilySpace = () => {
       <Navigation 
         userType={userType} 
         onBack={() => navigate('/teens')}
-        user={profile}
       />
       
       {userType === "teen" ? (
         <div className="container mx-auto px-4 py-8">
-          <WelcomeHero />
+          {/* Welcome Hero Section */}
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
+              Bienvenue dans ton Espace Famille ! 👨‍👩‍👧‍👦
+            </h1>
+            <p className="text-gray-600">
+              Connecte-toi avec ta famille dans un environnement sécurisé
+            </p>
+          </div>
 
+          {/* Quick Alerts */}
           <div className="mb-12">
-            <QuickAlerts />
+            <Card className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white">
+              <CardContent className="p-6">
+                <div className="flex items-center gap-3">
+                  <Heart className="h-6 w-6" />
+                  <div>
+                    <h3 className="font-bold">Message de Papa</h3>
+                    <p className="text-sm">Tu fais du super boulot ! Continue comme ça 💪</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             {features.map((feature, index) => (
-              <DashboardCard 
+              <Card 
                 key={index}
-                icon={feature.icon}
-                title={feature.title}
-                description={feature.description}
-                colorClass={feature.color}
-                route={feature.route}
-              />
+                className="cursor-pointer hover:shadow-lg transition-shadow"
+                onClick={() => navigate(feature.route)}
+              >
+                <CardHeader>
+                  <div className={`w-12 h-12 rounded-lg ${feature.color} flex items-center justify-center mb-3`}>
+                    <feature.icon className="h-6 w-6" />
+                  </div>
+                  <CardTitle className="text-lg">{feature.title}</CardTitle>
+                  <CardDescription>{feature.description}</CardDescription>
+                </CardHeader>
+              </Card>
             ))}
             
-            <DashboardCard 
-              icon={Users}
-              title="Espace Famille"
-              description="Connecte-toi avec tes parents et tes frères/sœurs"
-              colorClass="bg-emerald-100 text-emerald-600"
-              route="/teens/family-space"
-            />
+            <Card 
+              className="cursor-pointer hover:shadow-lg transition-shadow"
+              onClick={() => navigate('/teens/family-space')}
+            >
+              <CardHeader>
+                <div className="w-12 h-12 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center mb-3">
+                  <Users className="h-6 w-6" />
+                </div>
+                <CardTitle className="text-lg">Espace Famille</CardTitle>
+                <CardDescription>Connecte-toi avec tes parents et tes frères/sœurs</CardDescription>
+              </CardHeader>
+            </Card>
 
-            <DashboardCard 
-              icon={CalendarDays}
-              title="Agenda Famille"
-              description="Anniversaires, fêtes et activités en famille"
-              colorClass="bg-yellow-100 text-yellow-600"
-              route="/teens/calendar"
-            />
+            <Card 
+              className="cursor-pointer hover:shadow-lg transition-shadow"
+              onClick={() => navigate('/teens/calendar')}
+            >
+              <CardHeader>
+                <div className="w-12 h-12 rounded-lg bg-yellow-100 text-yellow-600 flex items-center justify-center mb-3">
+                  <CalendarDays className="h-6 w-6" />
+                </div>
+                <CardTitle className="text-lg">Agenda Famille</CardTitle>
+                <CardDescription>Anniversaires, fêtes et activités en famille</CardDescription>
+              </CardHeader>
+            </Card>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-8 mb-12">
-            <MetaverseCard />
+            {/* Metaverse Card */}
+            <Card className="bg-gradient-to-r from-purple-100 via-pink-100 to-blue-100 border-2 border-purple-300">
+              <CardHeader>
+                <CardTitle className="text-center flex items-center justify-center gap-2">
+                  <Sparkles className="h-6 w-6 text-purple-600" />
+                  🌌 Métaverse Famille ✨
+                </CardTitle>
+                <CardDescription className="text-center text-gray-700">
+                  Explore des mondes virtuels apaisants avec ta famille
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="text-center">
+                <Button 
+                  className="bg-purple-600 hover:bg-purple-700 text-white font-bold"
+                  onClick={() => navigate('/teens/metaverse')}
+                >
+                  🚀 Explorer le Métaverse
+                </Button>
+              </CardContent>
+            </Card>
+            
             <BoxCatalog />
           </div>
         </div>
