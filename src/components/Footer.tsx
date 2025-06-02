@@ -1,13 +1,13 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Shield, Heart } from 'lucide-react';
+import { MapPin, Shield, Heart, Mail, Users, Star } from 'lucide-react';
 
 const Footer = () => {
   return (
     <footer className="bg-gray-50 border-t border-gray-200">
       <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Logo et description */}
           <div>
             <div className="flex items-center space-x-2 mb-4">
@@ -23,7 +23,7 @@ const Footer = () => {
             </p>
           </div>
 
-          {/* Liens rapides */}
+          {/* Solutions */}
           <div>
             <h4 className="font-semibold text-gray-900 mb-4">Solutions</h4>
             <ul className="space-y-2">
@@ -37,12 +37,47 @@ const Footer = () => {
                   Espace Famille
                 </Link>
               </li>
+              <li>
+                <Link to="/entreprise/shop" className="text-gray-600 hover:text-primary text-sm transition-colors">
+                  Boutique Entreprise
+                </Link>
+              </li>
+              <li>
+                <Link to="/teens/shop" className="text-gray-600 hover:text-primary text-sm transition-colors">
+                  Boutique Famille
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* À propos */}
+          <div>
+            <h4 className="font-semibold text-gray-900 mb-4">À propos</h4>
+            <ul className="space-y-2">
+              <li>
+                <Link to="/qui-sommes-nous" className="text-gray-600 hover:text-primary text-sm transition-colors flex items-center space-x-1">
+                  <Users className="h-3 w-3" />
+                  <span>Qui sommes-nous</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/nos-valeurs" className="text-gray-600 hover:text-primary text-sm transition-colors flex items-center space-x-1">
+                  <Star className="h-3 w-3" />
+                  <span>Nos valeurs</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="text-gray-600 hover:text-primary text-sm transition-colors flex items-center space-x-1">
+                  <Mail className="h-3 w-3" />
+                  <span>Contact</span>
+                </Link>
+              </li>
             </ul>
           </div>
 
           {/* Valeurs */}
           <div>
-            <h4 className="font-semibold text-gray-900 mb-4">Nos Valeurs</h4>
+            <h4 className="font-semibold text-gray-900 mb-4">Nos engagements</h4>
             <ul className="space-y-3">
               <li className="flex items-center space-x-2 text-sm">
                 <MapPin className="h-4 w-4 text-primary" />

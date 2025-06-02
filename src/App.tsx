@@ -9,6 +9,9 @@ import Profil from '@/pages/Profil';
 import Recommandations from '@/pages/Recommandations';
 import Historique from '@/pages/Historique';
 import NotFound from '@/pages/NotFound';
+import QuiSommesNous from '@/pages/QuiSommesNous';
+import NosValeurs from '@/pages/NosValeurs';
+import Contact from '@/pages/Contact';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import AdminPanel from '@/pages/AdminPanel';
 import TeensLogin from '@/pages/teens/Login';
@@ -62,6 +65,11 @@ function App() {
           <Route path="/profil" element={<ProtectedRoute requireAuth={true}><Profil /></ProtectedRoute>} />
           <Route path="/recommandations" element={<ProtectedRoute requireAuth={true}><Recommandations /></ProtectedRoute>} />
           <Route path="/historique" element={<ProtectedRoute requireAuth={true}><Historique /></ProtectedRoute>} />
+          
+          {/* Pages footer */}
+          <Route path="/qui-sommes-nous" element={<QuiSommesNous />} />
+          <Route path="/nos-valeurs" element={<NosValeurs />} />
+          <Route path="/contact" element={<Contact />} />
           
           {/* Admin Route */}
           <Route path="/admin" element={<ProtectedRoute requireAuth={true}><AdminPanel /></ProtectedRoute>} />
