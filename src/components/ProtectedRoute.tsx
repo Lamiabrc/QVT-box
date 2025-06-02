@@ -16,13 +16,16 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   requireAdmin = false,
   requireSimulator = false
 }) => {
-  const { user, loading, isAdmin } = useSecureAuth();
+  const { user, session, loading, isAdmin } = useSecureAuth();
   const location = useLocation();
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-white mx-auto mb-4"></div>
+          <p className="text-white text-lg">Chargement...</p>
+        </div>
       </div>
     );
   }
@@ -39,8 +42,9 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     }
   };
 
-  // Check auth requirement
-  if (requireAuth && !user) {
+  // Check auth requirement - check both user AND session for better persistence
+  if (requireAuth && (!user || !session)) {
+    console.log('Auth required but no user/session, redirecting to:', getLoginRedirect());
     return <Navigate to={getLoginRedirect()} replace />;
   }
 
@@ -51,7 +55,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   }
 
   // For simulator requirement, just continue for now
-  if (requireSimulator && !user) {
+  if (requireSimulator && (!user || !session)) {
     return <Navigate to={getLoginRedirect()} replace />;
   }
 

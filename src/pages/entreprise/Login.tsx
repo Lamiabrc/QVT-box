@@ -5,8 +5,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { ArrowLeft, Building2, UserCheck, Settings } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const EntrepriseLogin = () => {
   const navigate = useNavigate();
@@ -18,6 +19,18 @@ const EntrepriseLogin = () => {
     email: '',
     password: ''
   });
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Check if user is already logged in
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        navigate(getRoleInfo().redirectPath);
+      }
+    };
+    checkAuth();
+  }, []);
 
   const getRoleInfo = () => {
     switch (role) {
@@ -47,16 +60,45 @@ const EntrepriseLogin = () => {
 
   const roleInfo = getRoleInfo();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     
-    // Simulate login
-    toast({
-      title: "Connexion réussie",
-      description: `Bienvenue dans votre espace ${role === 'employee' ? 'salarié' : 'responsable QVT'}`,
-    });
-    
-    navigate(roleInfo.redirectPath);
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: formData.email,
+        password: formData.password,
+      });
+
+      if (error) {
+        toast({
+          title: "Erreur de connexion",
+          description: error.message,
+          variant: "destructive"
+        });
+        return;
+      }
+
+      if (data.user && data.session) {
+        toast({
+          title: "Connexion réussie",
+          description: `Bienvenue dans votre espace ${role === 'employee' ? 'salarié' : 'responsable QVT'}`,
+        });
+        
+        // Wait a bit for session to be properly set
+        setTimeout(() => {
+          navigate(roleInfo.redirectPath);
+        }, 100);
+      }
+    } catch (error) {
+      toast({
+        title: "Erreur",
+        description: "Une erreur inattendue s'est produite",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -105,6 +147,7 @@ const EntrepriseLogin = () => {
                     className="bg-white/10 border-white/20 text-white placeholder:text-gray-400"
                     placeholder="votre@entreprise.com"
                     required
+                    disabled={isLoading}
                   />
                 </div>
                 
@@ -118,11 +161,16 @@ const EntrepriseLogin = () => {
                     className="bg-white/10 border-white/20 text-white placeholder:text-gray-400"
                     placeholder="••••••••"
                     required
+                    disabled={isLoading}
                   />
                 </div>
 
-                <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-2xl">
-                  Se connecter
+                <Button 
+                  type="submit" 
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-2xl"
+                  disabled={isLoading}
+                >
+                  {isLoading ? 'Connexion...' : 'Se connecter'}
                 </Button>
 
                 <div className="text-center space-y-2">

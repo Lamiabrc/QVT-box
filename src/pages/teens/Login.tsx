@@ -5,8 +5,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { ArrowLeft, Users, Heart, Shield } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const TeensLogin = () => {
   const navigate = useNavigate();
@@ -18,6 +19,18 @@ const TeensLogin = () => {
     email: '',
     password: ''
   });
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Check if user is already logged in
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        navigate(getRoleInfo().redirectPath);
+      }
+    };
+    checkAuth();
+  }, []);
 
   const getRoleInfo = () => {
     switch (role) {
@@ -47,15 +60,45 @@ const TeensLogin = () => {
 
   const roleInfo = getRoleInfo();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     
-    toast({
-      title: "Connexion réussie",
-      description: `Bienvenue dans ton espace ${role === 'teen' ? 'ado' : 'parent'} !`,
-    });
-    
-    navigate(roleInfo.redirectPath);
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: formData.email,
+        password: formData.password,
+      });
+
+      if (error) {
+        toast({
+          title: "Erreur de connexion",
+          description: error.message,
+          variant: "destructive"
+        });
+        return;
+      }
+
+      if (data.user && data.session) {
+        toast({
+          title: "Connexion réussie",
+          description: `Bienvenue dans ton espace ${role === 'teen' ? 'ado' : 'parent'} !`,
+        });
+        
+        // Wait a bit for session to be properly set
+        setTimeout(() => {
+          navigate(roleInfo.redirectPath);
+        }, 100);
+      }
+    } catch (error) {
+      toast({
+        title: "Erreur",
+        description: "Une erreur inattendue s'est produite",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -110,6 +153,7 @@ const TeensLogin = () => {
                     className="bg-white/10 border-white/20 text-white placeholder:text-gray-400"
                     placeholder="ton@email.com"
                     required
+                    disabled={isLoading}
                   />
                 </div>
                 
@@ -123,11 +167,16 @@ const TeensLogin = () => {
                     className="bg-white/10 border-white/20 text-white placeholder:text-gray-400"
                     placeholder="••••••••"
                     required
+                    disabled={isLoading}
                   />
                 </div>
 
-                <Button type="submit" className="w-full bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white py-3 rounded-2xl">
-                  Se connecter 🚀
+                <Button 
+                  type="submit" 
+                  className="w-full bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white py-3 rounded-2xl"
+                  disabled={isLoading}
+                >
+                  {isLoading ? 'Connexion...' : 'Se connecter 🚀'}
                 </Button>
 
                 <div className="text-center space-y-2">
@@ -141,6 +190,7 @@ const TeensLogin = () => {
                     Pas encore de compte ?{' '}
                     <Button 
                       variant="link" 
+                      onClick={() => navigate(`/teens/register?role=${role}`)}
                       className="text-pink-400 hover:text-pink-300 p-0"
                     >
                       S'inscrire
