@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { ArrowLeft, Mail, Phone, MapPin, Send, Clock } from 'lucide-react';
+
 const Contact = () => {
   const [formData, setFormData] = useState({
     nom: '',
@@ -134,8 +135,8 @@ const Contact = () => {
                         <div>
                           <p className="font-medium text-gray-900">Adresse</p>
                           <p className="text-gray-600">
-                            123 Avenue Innovation<br />
-                            75001 Paris, France
+                            Rue George Sand<br />
+                            35235 Thorigné-Fouillard, France
                           </p>
                         </div>
                       </div>
@@ -190,4 +191,5 @@ const Contact = () => {
       <Footer />
     </div>;
 };
+
 export default Contact;
