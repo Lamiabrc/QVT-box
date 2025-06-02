@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
@@ -18,7 +17,7 @@ import {
   Target,
   Coffee,
   Star,
-  Gift2,
+  Gift,
   Zap,
   Smile
 } from 'lucide-react';
@@ -125,7 +124,7 @@ const Index = () => {
       alt: "Innovation",
       size: "w-17 h-17",
       bgGradient: "from-purple-400 to-violet-400",
-      icon: <Gift2 className="w-2.5 h-2.5 text-white" />,
+      icon: <Gift className="w-2.5 h-2.5 text-white" />,
       position: "top-72 right-20",
       animation: "animate-pulse",
       delay: "1.2s",
