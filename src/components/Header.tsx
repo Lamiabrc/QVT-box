@@ -2,13 +2,16 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Building2, Users, User, LogOut } from 'lucide-react';
+import { Building2, Users, User, LogOut, Shield } from 'lucide-react';
 import { useSecureAuth } from '@/hooks/useSecureAuth';
 import { supabase } from '@/integrations/supabase/client';
 
 const Header = () => {
   const { user, isAdmin } = useSecureAuth();
   const navigate = useNavigate();
+
+  // Vérifier si l'utilisateur est lamia.brechet@outlook.fr
+  const isSuperAdmin = user?.email === 'lamia.brechet@outlook.fr';
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -54,7 +57,15 @@ const Header = () => {
           <div className="flex items-center space-x-4">
             {user ? (
               <div className="flex items-center space-x-4">
-                {isAdmin && (
+                {isSuperAdmin && (
+                  <Link to="/admin">
+                    <Button variant="outline" size="sm" className="bg-purple-50 text-purple-700 border-purple-200 hover:bg-purple-100">
+                      <Shield className="h-4 w-4 mr-2" />
+                      Admin Principal
+                    </Button>
+                  </Link>
+                )}
+                {isAdmin && !isSuperAdmin && (
                   <Link to="/entreprise/admin-dashboard">
                     <Button variant="outline" size="sm">
                       Admin

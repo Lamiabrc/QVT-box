@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -10,6 +9,7 @@ import Recommandations from '@/pages/Recommandations';
 import Historique from '@/pages/Historique';
 import NotFound from '@/pages/NotFound';
 import ProtectedRoute from '@/components/ProtectedRoute';
+import AdminPanel from '@/pages/AdminPanel';
 import TeensLogin from '@/pages/teens/Login';
 import TeensRegister from '@/pages/teens/Register';
 import Teens from '@/pages/Teens';
@@ -58,6 +58,9 @@ function App() {
           <Route path="/profil" element={<ProtectedRoute requireAuth={true}><Profil /></ProtectedRoute>} />
           <Route path="/recommandations" element={<ProtectedRoute requireAuth={true}><Recommandations /></ProtectedRoute>} />
           <Route path="/historique" element={<ProtectedRoute requireAuth={true}><Historique /></ProtectedRoute>} />
+          
+          {/* Admin Route */}
+          <Route path="/admin" element={<ProtectedRoute requireAuth={true}><AdminPanel /></ProtectedRoute>} />
           
           {/* Teens Routes */}
           <Route path="/teens/login" element={<TeensLogin />} />
