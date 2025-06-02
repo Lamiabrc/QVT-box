@@ -7,7 +7,16 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useSecureAuth } from '@/hooks/useSecureAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { Users, TrendingUp, AlertTriangle, BarChart3, UserPlus } from 'lucide-react';
+import { 
+  Users, 
+  TrendingUp, 
+  AlertTriangle, 
+  BarChart3, 
+  MessageCircle,
+  Shield,
+  Activity,
+  Target
+} from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
@@ -17,6 +26,12 @@ const ManagerDashboard = () => {
   const [teams, setTeams] = useState([]);
   const [teamMembers, setTeamMembers] = useState([]);
   const [teamScores, setTeamScores] = useState([]);
+  const [teamStats, setTeamStats] = useState({
+    totalMembers: 0,
+    avgScore: 0,
+    highRiskCount: 0,
+    improvementTrend: 0
+  });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -46,23 +61,24 @@ const ManagerDashboard = () => {
           .from('team_members')
           .select(`
             *,
-            profiles!inner(id, full_name, email),
+            profiles!inner(id, full_name, email, preferred_name),
             teams!inner(name)
           `)
           .in('team_id', teamIds);
 
         setTeamMembers(members || []);
 
-        // Récupérer les scores QVT des membres
+        // Récupérer les scores QVT des membres (données anonymisées)
         if (members && members.length > 0) {
           const memberIds = members.map(m => m.profiles.id);
           const { data: scores } = await supabase
             .from('simulator_responses')
-            .select('*')
+            .select('user_id, qvt_score, burnout_risk_percentage, burnout_risk, created_at')
             .in('user_id', memberIds)
             .order('created_at', { ascending: false });
 
           setTeamScores(scores || []);
+          calculateTeamStats(scores || [], members || []);
         }
       }
     } catch (error) {
@@ -77,189 +93,273 @@ const ManagerDashboard = () => {
     }
   };
 
-  const getTeamAverageScore = (teamId) => {
-    const teamMemberIds = teamMembers
-      .filter(member => member.team_id === teamId)
-      .map(member => member.profiles.id);
+  const calculateTeamStats = (scores, members) => {
+    const totalMembers = members.length;
+    const avgScore = scores.length > 0 ? 
+      Math.round(scores.reduce((sum, score) => sum + score.qvt_score, 0) / scores.length) : 0;
+    const highRiskCount = scores.filter(score => score.burnout_risk_percentage > 70).length;
     
-    const teamScoresData = teamScores.filter(score => 
-      teamMemberIds.includes(score.user_id)
-    );
+    // Calculer la tendance d'amélioration (comparaison avec les scores précédents)
+    const recentScores = scores.slice(0, Math.floor(scores.length / 2));
+    const olderScores = scores.slice(Math.floor(scores.length / 2));
+    const recentAvg = recentScores.length > 0 ? 
+      recentScores.reduce((sum, score) => sum + score.qvt_score, 0) / recentScores.length : 0;
+    const olderAvg = olderScores.length > 0 ? 
+      olderScores.reduce((sum, score) => sum + score.qvt_score, 0) / olderScores.length : 0;
+    const improvementTrend = recentAvg - olderAvg;
 
-    if (teamScoresData.length === 0) return 0;
-    
-    return Math.round(
-      teamScoresData.reduce((sum, score) => sum + score.qvt_score, 0) / teamScoresData.length
-    );
+    setTeamStats({
+      totalMembers,
+      avgScore,
+      highRiskCount,
+      improvementTrend
+    });
   };
 
-  const getHighRiskMembers = (teamId) => {
-    const teamMemberIds = teamMembers
-      .filter(member => member.team_id === teamId)
-      .map(member => member.profiles.id);
-    
-    return teamScores.filter(score => 
-      teamMemberIds.includes(score.user_id) && 
-      score.burnout_risk_percentage > 70
-    );
+  const getAnonymizedTeamMember = (userId, index) => {
+    return `Collaborateur ${index + 1}`;
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-blue-100">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-green-600"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-green-50 via-blue-50 to-indigo-50">
       <Header />
       
-      <main className="flex-1 bg-gray-50 py-8">
+      <main className="flex-1 py-8">
         <div className="container mx-auto px-4 max-w-7xl">
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          <div className="mb-8 text-center">
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent mb-4">
               👔 Espace Manager d'Équipe
             </h1>
-            <p className="text-gray-600">Gérez le bien-être de vos équipes</p>
+            <p className="text-lg text-gray-600">Pilotez le bien-être de vos équipes</p>
           </div>
 
-          {/* Vue d'ensemble */}
+          {/* Statistiques principales */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Équipes Gérées</CardTitle>
-                <Users className="h-4 w-4 text-muted-foreground" />
+            <Card className="bg-gradient-to-br from-blue-500 to-blue-700 text-white">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm opacity-90 flex items-center">
+                  <Users className="h-4 w-4 mr-2" />
+                  Équipe Totale
+                </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{teams.length}</div>
+                <div className="text-3xl font-bold">{teamStats.totalMembers}</div>
+                <p className="text-xs opacity-90">Collaborateurs actifs</p>
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Total Collaborateurs</CardTitle>
-                <UserPlus className="h-4 w-4 text-muted-foreground" />
+            <Card className="bg-gradient-to-br from-green-500 to-green-700 text-white">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm opacity-90 flex items-center">
+                  <TrendingUp className="h-4 w-4 mr-2" />
+                  Score Moyen QVT
+                </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{teamMembers.length}</div>
+                <div className="text-3xl font-bold">{teamStats.avgScore}/100</div>
+                <p className="text-xs opacity-90">Performance globale</p>
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Score Moyen Équipes</CardTitle>
-                <TrendingUp className="h-4 w-4 text-muted-foreground" />
+            <Card className="bg-gradient-to-br from-orange-500 to-orange-700 text-white">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm opacity-90 flex items-center">
+                  <AlertTriangle className="h-4 w-4 mr-2" />
+                  Alertes
+                </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">
-                  {teams.length > 0 
-                    ? Math.round(teams.reduce((sum, team) => sum + getTeamAverageScore(team.teams.id), 0) / teams.length)
-                    : 0
-                  }/100
+                <div className="text-3xl font-bold text-white">{teamStats.highRiskCount}</div>
+                <p className="text-xs opacity-90">Personnes à risque</p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-purple-500 to-purple-700 text-white">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm opacity-90 flex items-center">
+                  <Activity className="h-4 w-4 mr-2" />
+                  Tendance
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-3xl font-bold">
+                  {teamStats.improvementTrend > 0 ? '+' : ''}{Math.round(teamStats.improvementTrend)}
                 </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Alertes Burnout</CardTitle>
-                <AlertTriangle className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold text-red-600">
-                  {teams.reduce((sum, team) => sum + getHighRiskMembers(team.teams.id).length, 0)}
-                </div>
+                <p className="text-xs opacity-90">Évolution récente</p>
               </CardContent>
             </Card>
           </div>
 
-          <Tabs defaultValue="teams" className="space-y-6">
-            <TabsList>
-              <TabsTrigger value="teams">Mes Équipes</TabsTrigger>
-              <TabsTrigger value="members">Collaborateurs</TabsTrigger>
-              <TabsTrigger value="alerts">Alertes</TabsTrigger>
+          {/* Actions rapides */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <Card className="hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 bg-gradient-to-br from-teal-500 to-teal-700 text-white cursor-pointer">
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <MessageCircle className="h-6 w-6 mr-3" />
+                  Chat Équipe
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="mb-4 opacity-90">
+                  Communiquez avec chaque membre individuellement
+                </p>
+                <Button className="w-full bg-white text-teal-700 hover:bg-teal-50">
+                  Accéder aux chats
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 bg-gradient-to-br from-indigo-500 to-indigo-700 text-white cursor-pointer">
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <Shield className="h-6 w-6 mr-3" />
+                  Contact RH
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="mb-4 opacity-90">
+                  Échangez avec les ressources humaines
+                </p>
+                <Button className="w-full bg-white text-indigo-700 hover:bg-indigo-50">
+                  Contacter RH
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 bg-gradient-to-br from-pink-500 to-pink-700 text-white cursor-pointer">
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <Target className="h-6 w-6 mr-3" />
+                  Plans d'Action
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="mb-4 opacity-90">
+                  Créez des plans d'amélioration pour votre équipe
+                </p>
+                <Button className="w-full bg-white text-pink-700 hover:bg-pink-50">
+                  Créer un plan
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+
+          <Tabs defaultValue="overview" className="space-y-6">
+            <TabsList className="grid w-full grid-cols-3">
+              <TabsTrigger value="overview">Vue d'ensemble</TabsTrigger>
+              <TabsTrigger value="team-results">Résultats Équipe</TabsTrigger>
+              <TabsTrigger value="alerts">Alertes & Actions</TabsTrigger>
             </TabsList>
 
-            <TabsContent value="teams">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {teams.map((teamManager) => {
-                  const team = teamManager.teams;
-                  const teamMembersCount = teamMembers.filter(member => member.team_id === team.id).length;
-                  const avgScore = getTeamAverageScore(team.id);
-                  const highRiskCount = getHighRiskMembers(team.id).length;
+            <TabsContent value="overview">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Performance Générale de l'Équipe</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      <div className="flex justify-between items-center">
+                        <span>Score QVT Moyen</span>
+                        <Badge className="bg-green-100 text-green-800">
+                          {teamStats.avgScore}/100
+                        </Badge>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span>Membres en forme</span>
+                        <Badge className="bg-blue-100 text-blue-800">
+                          {teamStats.totalMembers - teamStats.highRiskCount}
+                        </Badge>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span>Personnes à accompagner</span>
+                        <Badge className="bg-orange-100 text-orange-800">
+                          {teamStats.highRiskCount}
+                        </Badge>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
 
-                  return (
-                    <Card key={team.id} className="hover:shadow-lg transition-shadow">
-                      <CardHeader>
-                        <CardTitle className="flex items-center justify-between">
-                          <span>{team.name}</span>
-                          <Badge variant="outline">{teamMembersCount} membres</Badge>
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="space-y-4">
-                          <div className="flex justify-between">
-                            <span className="text-sm text-gray-600">Score moyen QVT</span>
-                            <span className="font-semibold">{avgScore}/100</span>
-                          </div>
-                          
-                          {highRiskCount > 0 && (
-                            <div className="flex items-center justify-between">
-                              <span className="text-sm text-gray-600">Risque élevé</span>
-                              <Badge variant="destructive">{highRiskCount} personne(s)</Badge>
-                            </div>
-                          )}
-                          
-                          <Button className="w-full" variant="outline">
-                            Voir les détails
-                          </Button>
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Actions Recommandées</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      {teamStats.highRiskCount > 0 && (
+                        <div className="p-3 bg-orange-50 rounded-lg border border-orange-200">
+                          <p className="text-orange-800 font-medium">
+                            ⚠️ {teamStats.highRiskCount} personne(s) nécessitent votre attention
+                          </p>
+                          <p className="text-sm text-orange-600 mt-1">
+                            Planifiez des entretiens individuels
+                          </p>
                         </div>
-                      </CardContent>
-                    </Card>
-                  );
-                })}
+                      )}
+                      
+                      {teamStats.improvementTrend < 0 && (
+                        <div className="p-3 bg-blue-50 rounded-lg border border-blue-200">
+                          <p className="text-blue-800 font-medium">
+                            📈 Tendance en baisse détectée
+                          </p>
+                          <p className="text-sm text-blue-600 mt-1">
+                            Organisez une réunion d'équipe pour identifier les causes
+                          </p>
+                        </div>
+                      )}
+                      
+                      {teamStats.avgScore > 75 && (
+                        <div className="p-3 bg-green-50 rounded-lg border border-green-200">
+                          <p className="text-green-800 font-medium">
+                            🎉 Excellente performance d'équipe !
+                          </p>
+                          <p className="text-sm text-green-600 mt-1">
+                            Continuez sur cette voie et partagez les bonnes pratiques
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
             </TabsContent>
 
-            <TabsContent value="members">
+            <TabsContent value="team-results">
               <Card>
                 <CardHeader>
-                  <CardTitle>Liste des Collaborateurs</CardTitle>
+                  <CardTitle>Résultats des 3 Évaluations du Simulateur (Données Anonymisées)</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    {teamMembers.map((member) => {
-                      const latestScore = teamScores
-                        .filter(score => score.user_id === member.profiles.id)
-                        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0];
-
-                      return (
-                        <div key={member.id} className="flex items-center justify-between p-4 border rounded-lg">
-                          <div>
-                            <h4 className="font-semibold">{member.profiles.full_name}</h4>
-                            <p className="text-sm text-gray-600">{member.teams.name}</p>
-                          </div>
-                          <div className="flex items-center space-x-4">
-                            {latestScore && (
-                              <div className="text-right">
-                                <p className="font-medium">QVT: {latestScore.qvt_score}/100</p>
-                                <Badge variant={
-                                  latestScore.burnout_risk_percentage > 70 ? 'destructive' :
-                                  latestScore.burnout_risk_percentage > 40 ? 'default' : 'secondary'
-                                }>
-                                  Burnout: {latestScore.burnout_risk_percentage}%
-                                </Badge>
-                              </div>
-                            )}
-                            <Button size="sm" variant="outline">
-                              Contacter
-                            </Button>
-                          </div>
+                    {teamScores.slice(0, 10).map((score, index) => (
+                      <div key={`${score.user_id}-${score.created_at}`} className="flex items-center justify-between p-4 border rounded-lg bg-gray-50">
+                        <div>
+                          <h4 className="font-medium">{getAnonymizedTeamMember(score.user_id, index)}</h4>
+                          <p className="text-sm text-gray-600">
+                            Évaluation du {new Date(score.created_at).toLocaleDateString('fr-FR')}
+                          </p>
                         </div>
-                      );
-                    })}
+                        <div className="text-right">
+                          <p className="font-medium">QVT: {score.qvt_score}/100</p>
+                          <Badge variant={
+                            score.burnout_risk === 'low' ? 'secondary' :
+                            score.burnout_risk === 'medium' ? 'default' : 'destructive'
+                          }>
+                            {score.burnout_risk === 'low' ? 'Bien' : 
+                             score.burnout_risk === 'medium' ? 'Attention' : 'À surveiller'}
+                          </Badge>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </CardContent>
               </Card>
@@ -269,46 +369,37 @@ const ManagerDashboard = () => {
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center">
-                    <AlertTriangle className="h-5 w-5 mr-2 text-red-600" />
-                    Alertes Burnout - Action Requise
+                    <AlertTriangle className="h-5 w-5 mr-2 text-orange-600" />
+                    Situations Nécessitant une Attention
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    {teams.map((teamManager) => {
-                      const highRiskMembers = getHighRiskMembers(teamManager.teams.id);
-                      
-                      if (highRiskMembers.length === 0) return null;
-
-                      return (
-                        <div key={teamManager.teams.id} className="border-l-4 border-red-500 pl-4">
-                          <h4 className="font-semibold text-red-700">Équipe: {teamManager.teams.name}</h4>
-                          <p className="text-sm text-gray-600 mb-2">
-                            {highRiskMembers.length} membre(s) à risque élevé de burnout
+                    {teamScores
+                      .filter(score => score.burnout_risk_percentage > 50)
+                      .slice(0, 5)
+                      .map((score, index) => (
+                        <div key={`alert-${score.user_id}-${score.created_at}`} className="border-l-4 border-orange-500 pl-4 bg-orange-50 p-4 rounded-r-lg">
+                          <h4 className="font-semibold text-orange-800">
+                            {getAnonymizedTeamMember(score.user_id, index)} - Niveau de stress élevé
+                          </h4>
+                          <p className="text-sm text-orange-600 mb-2">
+                            Score de stress: {score.burnout_risk_percentage}% | QVT: {score.qvt_score}/100
                           </p>
-                          <div className="space-y-2">
-                            {highRiskMembers.map((score) => {
-                              const member = teamMembers.find(m => m.profiles.id === score.user_id);
-                              return (
-                                <div key={score.id} className="bg-red-50 p-3 rounded-lg">
-                                  <p className="font-medium">{member?.profiles?.full_name}</p>
-                                  <p className="text-sm text-red-600">
-                                    Risque burnout: {score.burnout_risk_percentage}%
-                                  </p>
-                                  <Button size="sm" className="mt-2" variant="destructive">
-                                    Prendre contact
-                                  </Button>
-                                </div>
-                              );
-                            })}
+                          <div className="space-x-2">
+                            <Button size="sm" className="bg-orange-600 hover:bg-orange-700">
+                              Planifier un entretien
+                            </Button>
+                            <Button size="sm" variant="outline" className="border-orange-300 text-orange-700">
+                              Voir l'historique
+                            </Button>
                           </div>
                         </div>
-                      );
-                    })}
+                      ))}
                     
-                    {teams.every(team => getHighRiskMembers(team.teams.id).length === 0) && (
+                    {teamScores.filter(score => score.burnout_risk_percentage > 50).length === 0 && (
                       <div className="text-center py-8">
-                        <p className="text-gray-500">Aucune alerte en cours. Toutes vos équipes sont en bonne santé ! 🎉</p>
+                        <p className="text-gray-500">🎉 Aucune alerte en cours. Votre équipe est en bonne santé !</p>
                       </div>
                     )}
                   </div>
