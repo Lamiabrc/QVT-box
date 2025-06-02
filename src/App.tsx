@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -44,6 +45,9 @@ import TeensCustomization from '@/pages/TeensCustomization';
 import TeensJournal from '@/pages/TeensJournal';
 import TeensPlaylist from '@/pages/TeensPlaylist';
 import TeensMetaverse from '@/pages/TeensMetaverse';
+import EmployeeDashboard from '@/pages/entreprise/EmployeeDashboard';
+import ManagerDashboard from '@/pages/entreprise/ManagerDashboard';
+import HRDashboard from '@/pages/entreprise/HRDashboard';
 
 const queryClient = new QueryClient();
 
@@ -90,14 +94,17 @@ function App() {
           <Route path="/entreprise/register" element={<EntrepriseRegister />} />
           <Route path="/entreprise/forgot-password" element={<EntrepriseForgotPassword />} />
           <Route path="/entreprise/reset-password" element={<EntrepriseResetPassword />} />
-          <Route path="/entreprise" element={<ProtectedRoute requireAuth={true}><Entreprise /></ProtectedRoute>} />
+          <Route path="/entreprise" element={<Entreprise />} />
           <Route path="/entreprise/dashboard" element={<ProtectedRoute requireAuth={true}><EntrepriseDashboard /></ProtectedRoute>} />
+          <Route path="/entreprise/employee-dashboard" element={<ProtectedRoute requireAuth={true}><EmployeeDashboard /></ProtectedRoute>} />
+          <Route path="/entreprise/manager-dashboard" element={<ProtectedRoute requireAuth={true}><ManagerDashboard /></ProtectedRoute>} />
+          <Route path="/entreprise/hr-dashboard" element={<ProtectedRoute requireAuth={true}><HRDashboard /></ProtectedRoute>} />
           <Route path="/entreprise/admin-dashboard" element={<ProtectedRoute requireAuth={true} requireAdmin={true}><EntrepriseAdminDashboard /></ProtectedRoute>} />
           <Route path="/entreprise/questionnaire" element={<ProtectedRoute requireAuth={true}><EntrepriseQuestionnaire /></ProtectedRoute>} />
           <Route path="/entreprise/orders" element={<ProtectedRoute requireAuth={true}><EntrepriseOrders /></ProtectedRoute>} />
           <Route path="/entreprise/shop" element={<ProtectedRoute requireAuth={true}><EntrepriseShop /></ProtectedRoute>} />
           <Route path="/entreprise/unboxing" element={<ProtectedRoute requireAuth={true}><EntrepriseUnboxing /></ProtectedRoute>} />
-          <Route path="/entreprise/simulator" element={<ProtectedRoute requireAuth={true}><EntrepriseSimulator /></ProtectedRoute>} />
+          <Route path="/entreprise/simulator" element={<EntrepriseSimulator />} />
           <Route path="/entreprise/admin-content" element={<ProtectedRoute requireAuth={true} requireAdmin={true}><EntrepriseAdminContentManager /></ProtectedRoute>} />
           
           <Route path="*" element={<NotFound />} />

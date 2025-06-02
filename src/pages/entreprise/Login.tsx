@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { ArrowLeft, Building2, UserCheck, Settings } from "lucide-react";
+import { ArrowLeft, Building2, UserCheck, Settings, Users } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -26,11 +26,33 @@ const EntrepriseLogin = () => {
     const checkAuth = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
-        navigate(getRoleInfo().redirectPath);
+        // Rediriger selon le rôle
+        redirectBasedOnRole(session.user.id);
       }
     };
     checkAuth();
   }, []);
+
+  const redirectBasedOnRole = async (userId) => {
+    try {
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('enterprise_role')
+        .eq('id', userId)
+        .single();
+
+      if (profile?.enterprise_role === 'hr') {
+        navigate('/entreprise/hr-dashboard');
+      } else if (profile?.enterprise_role === 'manager') {
+        navigate('/entreprise/manager-dashboard');
+      } else {
+        navigate('/entreprise/employee-dashboard');
+      }
+    } catch (error) {
+      console.error('Error checking role:', error);
+      navigate('/entreprise/employee-dashboard');
+    }
+  };
 
   const getRoleInfo = () => {
     switch (role) {
@@ -38,29 +60,32 @@ const EntrepriseLogin = () => {
         return {
           title: 'Connexion Salarié',
           icon: <UserCheck className="w-8 h-8 text-blue-400" />,
-          description: 'Accédez à votre espace salarié QVT',
-          redirectPath: '/entreprise/dashboard'
+          description: 'Accédez à votre espace salarié QVT'
         };
-      case 'qvt-manager':
+      case 'manager':
         return {
-          title: 'Connexion Responsable QVT',
+          title: 'Connexion Manager',
+          icon: <Users className="w-8 h-8 text-green-400" />,
+          description: 'Gérez vos équipes et leur bien-être'
+        };
+      case 'hr':
+        return {
+          title: 'Connexion RH',
           icon: <Settings className="w-8 h-8 text-indigo-400" />,
-          description: 'Gérez votre équipe et les budgets QVT',
-          redirectPath: '/entreprise/admin-dashboard'
+          description: 'Administrez les équipes et collaborateurs'
         };
       default:
         return {
           title: 'Connexion Entreprise',
           icon: <Building2 className="w-8 h-8 text-blue-400" />,
-          description: 'Accédez à votre espace QVT',
-          redirectPath: '/entreprise'
+          description: 'Accédez à votre espace QVT'
         };
     }
   };
 
   const roleInfo = getRoleInfo();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     
@@ -82,12 +107,12 @@ const EntrepriseLogin = () => {
       if (data.user && data.session) {
         toast({
           title: "Connexion réussie",
-          description: `Bienvenue dans votre espace ${role === 'employee' ? 'salarié' : 'responsable QVT'}`,
+          description: `Bienvenue dans votre espace ${role || 'entreprise'}`,
         });
         
-        // Wait a bit for session to be properly set
+        // Rediriger selon le rôle
         setTimeout(() => {
-          navigate(roleInfo.redirectPath);
+          redirectBasedOnRole(data.user.id);
         }, 100);
       }
     } catch (error) {
@@ -195,6 +220,43 @@ const EntrepriseLogin = () => {
               </form>
             </CardContent>
           </Card>
+
+          {/* Sélection du rôle si pas spécifié */}
+          {!role && (
+            <div className="mt-8">
+              <Card className="bg-black/40 backdrop-blur-sm border-2 border-white/20">
+                <CardHeader>
+                  <CardTitle className="text-white text-center">Ou choisissez votre rôle</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <Button 
+                    variant="outline" 
+                    className="w-full justify-start bg-white/10 border-white/20 text-white hover:bg-white/20"
+                    onClick={() => navigate('/entreprise/login?role=employee')}
+                  >
+                    <UserCheck className="w-4 h-4 mr-2" />
+                    Connexion Salarié
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="w-full justify-start bg-white/10 border-white/20 text-white hover:bg-white/20"
+                    onClick={() => navigate('/entreprise/login?role=manager')}
+                  >
+                    <Users className="w-4 h-4 mr-2" />
+                    Connexion Manager
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="w-full justify-start bg-white/10 border-white/20 text-white hover:bg-white/20"
+                    onClick={() => navigate('/entreprise/login?role=hr')}
+                  >
+                    <Settings className="w-4 h-4 mr-2" />
+                    Connexion RH
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
+          )}
         </div>
       </div>
     </div>

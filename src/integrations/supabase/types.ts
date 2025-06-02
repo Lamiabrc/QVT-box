@@ -264,6 +264,7 @@ export type Database = {
           company_size: string | null
           created_at: string | null
           email: string
+          enterprise_role: string | null
           entreprise: string | null
           family_code: string | null
           full_name: string | null
@@ -283,6 +284,7 @@ export type Database = {
           company_size?: string | null
           created_at?: string | null
           email: string
+          enterprise_role?: string | null
           entreprise?: string | null
           family_code?: string | null
           full_name?: string | null
@@ -302,6 +304,7 @@ export type Database = {
           company_size?: string | null
           created_at?: string | null
           email?: string
+          enterprise_role?: string | null
           entreprise?: string | null
           family_code?: string | null
           full_name?: string | null
@@ -382,6 +385,105 @@ export type Database = {
           team_id?: string
           type?: string
           user_id?: string | null
+        }
+        Relationships: []
+      }
+      team_managers: {
+        Row: {
+          assigned_at: string
+          id: string
+          manager_id: string | null
+          team_id: string | null
+        }
+        Insert: {
+          assigned_at?: string
+          id?: string
+          manager_id?: string | null
+          team_id?: string | null
+        }
+        Update: {
+          assigned_at?: string
+          id?: string
+          manager_id?: string | null
+          team_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "team_managers_manager_id_fkey"
+            columns: ["manager_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "team_managers_team_id_fkey"
+            columns: ["team_id"]
+            isOneToOne: false
+            referencedRelation: "teams"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      team_members: {
+        Row: {
+          employee_id: string | null
+          id: string
+          joined_at: string
+          team_id: string | null
+        }
+        Insert: {
+          employee_id?: string | null
+          id?: string
+          joined_at?: string
+          team_id?: string | null
+        }
+        Update: {
+          employee_id?: string | null
+          id?: string
+          joined_at?: string
+          team_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "team_members_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "team_members_team_id_fkey"
+            columns: ["team_id"]
+            isOneToOne: false
+            referencedRelation: "teams"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      teams: {
+        Row: {
+          company_id: string
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          updated_at?: string
         }
         Relationships: []
       }

@@ -2,7 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { BarChart3, FileText, Lightbulb, Package, ArrowLeft, Users, TrendingUp, LogIn } from "lucide-react";
+import { BarChart3, FileText, Lightbulb, ArrowLeft, Users, TrendingUp, LogIn, UserCheck, Settings } from "lucide-react";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -27,7 +27,7 @@ const Entreprise = () => {
     return () => subscription.unsubscribe();
   }, []);
 
-  const handleProtectedNavigation = (path: string) => {
+  const handleProtectedNavigation = (path) => {
     if (!user) {
       navigate('/entreprise/login');
       return;
@@ -80,6 +80,63 @@ const Entreprise = () => {
           </p>
         </div>
 
+        {/* Accès par rôle */}
+        <div className="grid md:grid-cols-3 gap-6 mb-12">
+          <Card className="group hover:shadow-lg transition-all duration-300 cursor-pointer transform hover:-translate-y-1"
+                onClick={() => navigate('/entreprise/login?role=employee')}>
+            <CardHeader className="text-center pb-4">
+              <div className="w-16 h-16 bg-blue-100 rounded-2xl mx-auto mb-4 flex items-center justify-center group-hover:bg-blue-200 transition-colors">
+                <UserCheck className="w-8 h-8 text-blue-600" />
+              </div>
+              <CardTitle className="text-lg">Espace Salarié</CardTitle>
+            </CardHeader>
+            <CardContent className="text-center pt-0">
+              <p className="text-muted-foreground text-sm mb-4">
+                Accédez à votre tableau de bord personnel, évaluations QVT et recommandations.
+              </p>
+              <Button className="w-full bg-blue-600 hover:bg-blue-700">
+                Connexion Salarié
+              </Button>
+            </CardContent>
+          </Card>
+
+          <Card className="group hover:shadow-lg transition-all duration-300 cursor-pointer transform hover:-translate-y-1"
+                onClick={() => navigate('/entreprise/login?role=manager')}>
+            <CardHeader className="text-center pb-4">
+              <div className="w-16 h-16 bg-green-100 rounded-2xl mx-auto mb-4 flex items-center justify-center group-hover:bg-green-200 transition-colors">
+                <Users className="w-8 h-8 text-green-600" />
+              </div>
+              <CardTitle className="text-lg">Espace Manager</CardTitle>
+            </CardHeader>
+            <CardContent className="text-center pt-0">
+              <p className="text-muted-foreground text-sm mb-4">
+                Gérez le bien-être de vos équipes, suivez les alertes et optimisez la performance.
+              </p>
+              <Button className="w-full bg-green-600 hover:bg-green-700">
+                Connexion Manager
+              </Button>
+            </CardContent>
+          </Card>
+
+          <Card className="group hover:shadow-lg transition-all duration-300 cursor-pointer transform hover:-translate-y-1"
+                onClick={() => navigate('/entreprise/login?role=hr')}>
+            <CardHeader className="text-center pb-4">
+              <div className="w-16 h-16 bg-indigo-100 rounded-2xl mx-auto mb-4 flex items-center justify-center group-hover:bg-indigo-200 transition-colors">
+                <Settings className="w-8 h-8 text-indigo-600" />
+              </div>
+              <CardTitle className="text-lg">Espace RH</CardTitle>
+            </CardHeader>
+            <CardContent className="text-center pt-0">
+              <p className="text-muted-foreground text-sm mb-4">
+                Administration complète : équipes, collaborateurs, analytics et rapports.
+              </p>
+              <Button className="w-full bg-indigo-600 hover:bg-indigo-700">
+                Connexion RH
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+
         {/* Free Access Banner */}
         <div className="mb-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
           <p className="text-blue-800 text-center">
@@ -114,12 +171,12 @@ const Entreprise = () => {
               <div className="w-16 h-16 bg-primary/10 rounded-2xl mx-auto mb-4 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                 <BarChart3 className="w-8 h-8 text-primary" />
               </div>
-              <CardTitle className="text-lg">Dashboard RH</CardTitle>
+              <CardTitle className="text-lg">Dashboard</CardTitle>
               {!user && <div className="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full">CONNEXION REQUISE</div>}
             </CardHeader>
             <CardContent className="text-center pt-0">
               <p className="text-muted-foreground text-sm mb-4">
-                Suivi anonymisé des scores QVT, alertes et graphiques analytiques.
+                Tableaux de bord adaptés à votre rôle.
               </p>
               <Button className="w-full" variant="outline">
                 Accéder au Dashboard
