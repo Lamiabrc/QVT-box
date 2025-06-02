@@ -1,332 +1,362 @@
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useState } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Calendar } from "@/components/ui/calendar";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Navigation from "@/components/Navigation";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Calendar as CalendarIcon, Clock, MapPin, Users, Star } from "lucide-react";
-import { useState } from "react";
+import { useSecureAuth } from "@/hooks/useSecureAuth";
+import { CalendarDays, Gift, Heart, Star, Users, CalendarPlus } from "lucide-react";
 
-const TeensCalendar = () => {
+const Calendar = () => {
   const navigate = useNavigate();
+  const { user } = useSecureAuth();
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
 
   const events = [
     {
-      date: "2024-12-28",
-      time: "14:00",
-      title: "Atelier Créatif - Street Art",
-      type: "workshop",
-      location: "Métaverse - Creative Studio",
-      participants: 12,
-      color: "from-pink-500 to-purple-500",
-      icon: "🎨"
+      date: "2024-01-15",
+      title: "Anniversaire de Léa",
+      type: "birthday",
+      description: "17 ans aujourd'hui ! 🎂",
+      participants: ["famille"]
     },
     {
-      date: "2024-12-28",
-      time: "16:30",
-      title: "Check-in Bien-être",
-      type: "checkin",
-      location: "Personnel",
-      participants: 1,
-      color: "from-green-500 to-emerald-500",
-      icon: "💚"
+      date: "2024-01-20",
+      title: "Séance méditation en famille",
+      type: "activity",
+      description: "20 minutes de relaxation ensemble",
+      participants: ["parent", "teen"]
     },
     {
-      date: "2024-12-29",
-      time: "15:00",
-      title: "Session Gaming en Équipe",
-      type: "gaming",
-      location: "Métaverse - Gaming Arena",
-      participants: 8,
-      color: "from-orange-500 to-red-500",
-      icon: "🎮"
+      date: "2024-01-25",
+      title: "Saint-Paul (Papa)",
+      type: "nameday",
+      description: "Bonne fête Papa !",
+      participants: ["famille"]
     },
     {
-      date: "2024-12-30",
-      time: "18:00",
-      title: "Livraison Box Mensuelle",
-      type: "delivery",
-      location: "À domicile",
-      participants: 1,
-      color: "from-blue-500 to-cyan-500",
-      icon: "📦"
-    },
-    {
-      date: "2024-12-31",
-      time: "20:00",
-      title: "Réveillon Virtuel 🎉",
-      type: "celebration",
-      location: "Métaverse - Chill Lounge",
-      participants: 50,
-      color: "from-yellow-500 to-orange-500",
-      icon: "🎊"
-    },
-    {
-      date: "2025-01-02",
-      time: "10:00",
-      title: "Atelier Développement Personnel",
-      type: "workshop",
-      location: "Métaverse - Wellness Center",
-      participants: 15,
-      color: "from-purple-500 to-indigo-500",
-      icon: "🧘"
+      date: "2024-02-14",
+      title: "Saint-Valentin",
+      type: "holiday",
+      description: "Journée de l'amour et de l'amitié",
+      participants: ["famille"]
     }
   ];
 
-  const todayEvents = events.filter(event => {
-    const today = new Date().toISOString().split('T')[0];
-    return event.date === today;
-  });
-
-  const upcomingEvents = events.filter(event => {
-    const eventDate = new Date(event.date);
-    const today = new Date();
-    return eventDate > today;
-  }).slice(0, 3);
-
-  const getEventTypeColor = (type: string) => {
-    switch (type) {
-      case 'workshop': return 'bg-pink-500/20 text-pink-300';
-      case 'checkin': return 'bg-green-500/20 text-green-300';
-      case 'gaming': return 'bg-orange-500/20 text-orange-300';
-      case 'delivery': return 'bg-blue-500/20 text-blue-300';
-      case 'celebration': return 'bg-yellow-500/20 text-yellow-300';
-      default: return 'bg-purple-500/20 text-purple-300';
+  const parentTeenActivities = [
+    {
+      title: "Atelier Cuisine Anti-Stress",
+      duration: "1h30",
+      description: "Préparez ensemble des recettes apaisantes",
+      image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400",
+      difficulty: "Facile",
+      benefits: ["Communication", "Créativité", "Détente"]
+    },
+    {
+      title: "Balade Photo Nature",
+      duration: "2h",
+      description: "Explorez la nature et capturez de beaux moments",
+      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400",
+      difficulty: "Facile",
+      benefits: ["Connexion nature", "Partage", "Créativité"]
+    },
+    {
+      title: "Séance Yoga Parent-Ado",
+      duration: "45min",
+      description: "Relaxation et étirements en duo",
+      image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400",
+      difficulty: "Modéré",
+      benefits: ["Relaxation", "Complicité", "Bien-être"]
+    },
+    {
+      title: "Atelier Art-Thérapie",
+      duration: "1h",
+      description: "Exprimez vos émotions à travers l'art",
+      image: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400",
+      difficulty: "Facile",
+      benefits: ["Expression", "Créativité", "Communication"]
     }
-  };
+  ];
+
+  const parentTips = [
+    {
+      title: "Comment reconnaître les signes de stress chez votre ado",
+      category: "Observation",
+      description: "Apprenez à identifier les signaux d'alarme précoces",
+      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400",
+      readTime: "5 min"
+    },
+    {
+      title: "L'art de l'écoute active avec votre adolescent",
+      category: "Communication",
+      description: "Techniques pour créer un dialogue ouvert et bienveillant",
+      image: "https://images.unsplash.com/photo-1516302752625-fcc3c50ae61f?w=400",
+      readTime: "7 min"
+    },
+    {
+      title: "Créer un environnement propice au bien-être",
+      category: "Environnement",
+      description: "Aménager l'espace familial pour favoriser la sérénité",
+      image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400",
+      readTime: "6 min"
+    },
+    {
+      title: "Gérer ses propres émotions pour mieux accompagner",
+      category: "Auto-soin",
+      description: "Prendre soin de soi pour être un meilleur parent",
+      image: "https://images.unsplash.com/photo-1494790108755-2616c14b2be6?w=400",
+      readTime: "8 min"
+    }
+  ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-indigo-900 to-cyan-900 relative overflow-hidden">
-      {/* Animated background */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-20 left-10 w-20 h-20 bg-pink-500 rounded-full animate-pulse"></div>
-        <div className="absolute top-40 right-20 w-16 h-16 bg-yellow-400 rounded-full animate-bounce"></div>
-        <div className="absolute bottom-20 left-1/4 w-24 h-24 bg-green-400 rounded-full animate-ping"></div>
-      </div>
-
-      {/* Header */}
-      <header className="relative z-10 border-b border-white/20 bg-black/30 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Button 
-              variant="ghost" 
-              onClick={() => navigate('/teens')}
-              className="flex items-center space-x-2 text-white hover:bg-white/20"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              <span>Retour</span>
-            </Button>
-            <div className="flex items-center space-x-3">
-              <CalendarIcon className="w-6 h-6 text-blue-400" />
-              <h1 className="text-2xl font-black text-white">MON CALENDRIER</h1>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <div className="container mx-auto px-4 py-8 relative z-10">
-        {/* Hero Section */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-cyan-400 mb-6">
-            📅 MON PLANNING
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50">
+      <Navigation 
+        userType="teen"
+        onBack={() => navigate('/teens')} 
+      />
+      
+      <div className="container mx-auto px-4 py-8">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-black bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
+            AGENDA FAMILLE 📅
           </h1>
-          <p className="text-xl text-gray-200 mb-8">
-            Organise tes activités, check-ins et moments bien-être ! ⏰
+          <p className="text-xl text-gray-600">
+            Anniversaires, fêtes et moments de partage en famille
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* Calendar */}
-          <div className="lg:col-span-1">
-            <Card className="bg-black/40 backdrop-blur-sm border-2 border-white/20">
-              <CardHeader>
-                <CardTitle className="text-xl font-bold text-white">
-                  📅 Calendrier
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <Calendar
-                  mode="single"
-                  selected={selectedDate}
-                  onSelect={setSelectedDate}
-                  className="rounded-md border-0"
-                />
-              </CardContent>
-            </Card>
+        <Tabs defaultValue="calendar" className="w-full">
+          <TabsList className="grid w-full grid-cols-4 mb-8">
+            <TabsTrigger value="calendar" className="font-bold">📅 AGENDA</TabsTrigger>
+            <TabsTrigger value="activities" className="font-bold">🎯 ACTIVITÉS</TabsTrigger>
+            <TabsTrigger value="tips" className="font-bold">💡 CONSEILS</TabsTrigger>
+            <TabsTrigger value="interactions" className="font-bold">💝 INTERACTIONS</TabsTrigger>
+          </TabsList>
 
-            {/* Quick Stats */}
-            <Card className="mt-6 bg-gradient-to-r from-green-500/10 to-emerald-500/10 border-2 border-green-400/30">
-              <CardContent className="p-6">
-                <h3 className="text-lg font-bold text-white mb-4">📊 Cette Semaine</h3>
-                <div className="space-y-3">
-                  <div className="flex justify-between">
-                    <span className="text-gray-300">Check-ins</span>
-                    <span className="text-green-400 font-bold">6/7</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-300">Ateliers</span>
-                    <span className="text-blue-400 font-bold">3</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-300">Points gagnés</span>
-                    <span className="text-yellow-400 font-bold">+127</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+          <TabsContent value="calendar">
+            <div className="grid lg:grid-cols-3 gap-8">
+              <Card className="lg:col-span-1 border-4 border-purple-200">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-purple-800">
+                    <CalendarDays className="h-6 w-6" />
+                    Calendrier
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CalendarComponent
+                    mode="single"
+                    selected={selectedDate}
+                    onSelect={setSelectedDate}
+                    className="rounded-md border"
+                  />
+                </CardContent>
+              </Card>
 
-          {/* Events */}
-          <div className="lg:col-span-2 space-y-8">
-            {/* Today's Events */}
-            <Card className="bg-black/40 backdrop-blur-sm border-2 border-white/20">
-              <CardHeader>
-                <CardTitle className="text-2xl font-bold text-white flex items-center">
-                  <Clock className="w-6 h-6 mr-3 text-green-400" />
-                  🌟 Aujourd'hui
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                {todayEvents.length > 0 ? (
-                  <div className="space-y-4">
-                    {todayEvents.map((event, index) => (
-                      <div 
-                        key={index} 
-                        className={`bg-gradient-to-r ${event.color}/10 border-2 border-white/20 rounded-2xl p-4 hover:border-white/40 transition-all duration-300`}
-                      >
-                        <div className="flex items-start justify-between">
-                          <div className="flex items-center space-x-4">
-                            <div className="text-3xl">{event.icon}</div>
-                            <div>
-                              <h4 className="text-lg font-bold text-white">{event.title}</h4>
-                              <div className="flex items-center space-x-4 text-sm text-gray-300 mt-1">
-                                <span className="flex items-center">
-                                  <Clock className="w-3 h-3 mr-1" />
-                                  {event.time}
-                                </span>
-                                <span className="flex items-center">
-                                  <MapPin className="w-3 h-3 mr-1" />
-                                  {event.location}
-                                </span>
-                                <span className="flex items-center">
-                                  <Users className="w-3 h-3 mr-1" />
-                                  {event.participants}
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                          <Badge className={getEventTypeColor(event.type)}>
-                            {event.type}
-                          </Badge>
-                        </div>
-                        <Button className="w-full mt-3 bg-white/10 hover:bg-white/20 text-white rounded-2xl">
-                          Rejoindre maintenant
-                        </Button>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="text-center py-8">
-                    <div className="text-6xl mb-4">🌸</div>
-                    <p className="text-gray-300">Aucun événement aujourd'hui</p>
-                    <p className="text-gray-400 text-sm">Profite de cette journée libre !</p>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-
-            {/* Upcoming Events */}
-            <Card className="bg-black/40 backdrop-blur-sm border-2 border-white/20">
-              <CardHeader>
-                <CardTitle className="text-2xl font-bold text-white flex items-center">
-                  <Star className="w-6 h-6 mr-3 text-yellow-400" />
-                  🚀 À Venir
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {upcomingEvents.map((event, index) => (
-                    <div 
-                      key={index} 
-                      className={`bg-gradient-to-r ${event.color}/10 border-2 border-white/20 rounded-2xl p-4 hover:border-white/40 transition-all duration-300`}
-                    >
-                      <div className="flex items-start justify-between">
-                        <div className="flex items-center space-x-4">
-                          <div className="text-3xl">{event.icon}</div>
-                          <div>
-                            <h4 className="text-lg font-bold text-white">{event.title}</h4>
-                            <div className="flex items-center space-x-4 text-sm text-gray-300 mt-1">
-                              <span>{new Date(event.date).toLocaleDateString('fr-FR')}</span>
-                              <span className="flex items-center">
-                                <Clock className="w-3 h-3 mr-1" />
-                                {event.time}
-                              </span>
-                              <span className="flex items-center">
-                                <Users className="w-3 h-3 mr-1" />
-                                {event.participants}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                        <Badge className={getEventTypeColor(event.type)}>
-                          {event.type}
+              <Card className="lg:col-span-2 border-4 border-pink-200">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-pink-800">
+                    <Star className="h-6 w-6" />
+                    Événements à venir
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {events.map((event, index) => (
+                    <div key={index} className="bg-white p-4 rounded-xl border-2 border-gray-200">
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="font-bold text-gray-800">{event.title}</h4>
+                        <Badge className={`${
+                          event.type === 'birthday' ? 'bg-pink-400' :
+                          event.type === 'activity' ? 'bg-blue-400' :
+                          event.type === 'nameday' ? 'bg-green-400' : 'bg-red-400'
+                        } text-white font-bold`}>
+                          {event.type === 'birthday' ? '🎂 Anniversaire' :
+                           event.type === 'activity' ? '🎯 Activité' :
+                           event.type === 'nameday' ? '🌟 Fête' : '🎉 Fête'}
                         </Badge>
                       </div>
-                      <div className="flex space-x-3 mt-3">
-                        <Button className="flex-1 bg-white/10 hover:bg-white/20 text-white rounded-2xl">
-                          Participer
-                        </Button>
-                        <Button variant="outline" className="border-gray-400 text-gray-300 hover:bg-white/10 rounded-2xl">
-                          Rappel
-                        </Button>
-                      </div>
+                      <p className="text-gray-600 mb-2">{event.description}</p>
+                      <p className="text-sm text-gray-500">📅 {event.date}</p>
                     </div>
                   ))}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
 
-        {/* Quick Actions */}
-        <div className="grid md:grid-cols-3 gap-6 mt-8">
-          <Card className="group bg-gradient-to-br from-green-500/10 to-emerald-600/10 border-2 border-green-400/30 hover:border-green-400/60 transition-all duration-300 cursor-pointer">
-            <CardContent className="p-8 text-center">
-              <CalendarIcon className="w-16 h-16 text-green-400 mx-auto mb-4 group-hover:scale-110 transition-transform" />
-              <h3 className="text-xl font-bold text-white mb-3">📅 Planifier Check-in</h3>
-              <p className="text-gray-300 mb-4">Programme tes moments bien-être</p>
-              <Button className="w-full bg-green-500 hover:bg-green-600 rounded-2xl">
-                Planifier
-              </Button>
-            </CardContent>
-          </Card>
+          <TabsContent value="activities">
+            <div className="grid md:grid-cols-2 gap-6">
+              {parentTeenActivities.map((activity, index) => (
+                <Card key={index} className="border-4 border-blue-200 bg-gradient-to-br from-blue-50 to-purple-50">
+                  <div className="relative h-48 overflow-hidden rounded-t-lg">
+                    <img 
+                      src={activity.image} 
+                      alt={activity.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute top-4 right-4">
+                      <Badge className="bg-white/90 text-black font-bold">
+                        {activity.duration}
+                      </Badge>
+                    </div>
+                  </div>
+                  <CardHeader>
+                    <CardTitle className="text-xl font-black text-blue-800">
+                      {activity.title}
+                    </CardTitle>
+                    <CardDescription className="text-blue-600 font-medium">
+                      {activity.description}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="flex gap-2 flex-wrap">
+                      {activity.benefits.map((benefit, idx) => (
+                        <Badge key={idx} className="bg-green-400 text-white text-xs">
+                          {benefit}
+                        </Badge>
+                      ))}
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <Badge variant="outline" className="font-bold">
+                        {activity.difficulty}
+                      </Badge>
+                      <Button className="bg-blue-500 hover:bg-blue-600 font-bold">
+                        <CalendarPlus className="mr-2 h-4 w-4" />
+                        Planifier
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </TabsContent>
 
-          <Card className="group bg-gradient-to-br from-purple-500/10 to-indigo-600/10 border-2 border-purple-400/30 hover:border-purple-400/60 transition-all duration-300 cursor-pointer">
-            <CardContent className="p-8 text-center">
-              <Users className="w-16 h-16 text-purple-400 mx-auto mb-4 group-hover:scale-110 transition-transform" />
-              <h3 className="text-xl font-bold text-white mb-3">👥 Créer Événement</h3>
-              <p className="text-gray-300 mb-4">Organise une activité avec tes amis</p>
-              <Button className="w-full bg-purple-500 hover:bg-purple-600 rounded-2xl">
-                Créer
-              </Button>
-            </CardContent>
-          </Card>
+          <TabsContent value="tips">
+            <div className="grid md:grid-cols-2 gap-6">
+              {parentTips.map((tip, index) => (
+                <Card key={index} className="border-4 border-green-200 bg-gradient-to-br from-green-50 to-emerald-50">
+                  <div className="relative h-48 overflow-hidden rounded-t-lg">
+                    <img 
+                      src={tip.image} 
+                      alt={tip.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute top-4 left-4">
+                      <Badge className="bg-green-500 text-white font-bold">
+                        {tip.category}
+                      </Badge>
+                    </div>
+                  </div>
+                  <CardHeader>
+                    <CardTitle className="text-xl font-black text-green-800">
+                      {tip.title}
+                    </CardTitle>
+                    <CardDescription className="text-green-600 font-medium">
+                      {tip.description}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex justify-between items-center">
+                      <Badge variant="outline" className="font-bold">
+                        📖 {tip.readTime}
+                      </Badge>
+                      <Button className="bg-green-500 hover:bg-green-600 font-bold">
+                        Lire l'article
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </TabsContent>
 
-          <Card className="group bg-gradient-to-br from-blue-500/10 to-cyan-600/10 border-2 border-blue-400/30 hover:border-blue-400/60 transition-all duration-300 cursor-pointer">
-            <CardContent className="p-8 text-center">
-              <Star className="w-16 h-16 text-blue-400 mx-auto mb-4 group-hover:scale-110 transition-transform" />
-              <h3 className="text-xl font-bold text-white mb-3">⭐ Mes Favoris</h3>
-              <p className="text-gray-300 mb-4">Accès rapide à tes activités préférées</p>
-              <Button className="w-full bg-blue-500 hover:bg-blue-600 rounded-2xl">
-                Voir favoris
-              </Button>
-            </CardContent>
-          </Card>
-        </div>
+          <TabsContent value="interactions">
+            <div className="space-y-8">
+              <Card className="border-4 border-red-200 bg-gradient-to-r from-red-50 to-pink-50">
+                <CardHeader>
+                  <CardTitle className="text-2xl font-black text-red-800 flex items-center gap-2">
+                    <Heart className="h-8 w-8" />
+                    CHALLENGES PARENT-ADO
+                  </CardTitle>
+                  <CardDescription className="text-red-700 font-medium">
+                    Renforcez vos liens à travers des défis amusants
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="grid md:grid-cols-3 gap-4">
+                  <div className="bg-white p-4 rounded-xl border-2 border-red-300 text-center">
+                    <div className="text-4xl mb-2">🎨</div>
+                    <h4 className="font-bold text-red-800 mb-2">Défi Créatif</h4>
+                    <p className="text-sm text-red-600">Créer ensemble une œuvre d'art en 30 min</p>
+                    <Button className="mt-3 bg-red-400 hover:bg-red-500 text-white">
+                      Accepter
+                    </Button>
+                  </div>
+                  <div className="bg-white p-4 rounded-xl border-2 border-red-300 text-center">
+                    <div className="text-4xl mb-2">📸</div>
+                    <h4 className="font-bold text-red-800 mb-2">Photo Challenge</h4>
+                    <p className="text-sm text-red-600">Prendre 10 photos sur le thème "bonheur"</p>
+                    <Button className="mt-3 bg-red-400 hover:bg-red-500 text-white">
+                      Accepter
+                    </Button>
+                  </div>
+                  <div className="bg-white p-4 rounded-xl border-2 border-red-300 text-center">
+                    <div className="text-4xl mb-2">🍳</div>
+                    <h4 className="font-bold text-red-800 mb-2">Cuisine Express</h4>
+                    <p className="text-sm text-red-600">Préparer un plat surprise en duo</p>
+                    <Button className="mt-3 bg-red-400 hover:bg-red-500 text-white">
+                      Accepter
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="border-4 border-purple-200 bg-gradient-to-r from-purple-50 to-indigo-50">
+                <CardHeader>
+                  <CardTitle className="text-2xl font-black text-purple-800 flex items-center gap-2">
+                    <Users className="h-8 w-8" />
+                    MOMENTS DE PARTAGE
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    <h4 className="font-bold text-purple-800">💭 Questions du jour</h4>
+                    <div className="space-y-3">
+                      <div className="bg-white p-3 rounded-lg border-2 border-purple-300">
+                        <p className="text-sm font-medium">"Quelle a été ta plus belle découverte cette semaine ?"</p>
+                      </div>
+                      <div className="bg-white p-3 rounded-lg border-2 border-purple-300">
+                        <p className="text-sm font-medium">"Si tu pouvais changer une chose dans le monde, ce serait quoi ?"</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <h4 className="font-bold text-purple-800">🎯 Objectifs communs</h4>
+                    <div className="space-y-3">
+                      <div className="bg-white p-3 rounded-lg border-2 border-purple-300">
+                        <p className="text-sm font-medium">📚 Lire ensemble 15 min/jour</p>
+                        <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
+                          <div className="bg-purple-600 h-2 rounded-full w-3/4"></div>
+                        </div>
+                      </div>
+                      <div className="bg-white p-3 rounded-lg border-2 border-purple-300">
+                        <p className="text-sm font-medium">🚶‍♀️ Marcher 30 min ensemble</p>
+                        <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
+                          <div className="bg-purple-600 h-2 rounded-full w-1/2"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );
 };
 
-export default TeensCalendar;
+export default Calendar;
