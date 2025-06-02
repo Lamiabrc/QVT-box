@@ -24,6 +24,7 @@ import TeensIntimacySpace from '@/pages/TeensIntimacySpace';
 import TeensFamilySimulator from '@/pages/teens/FamilySimulator';
 import TeensQuestionnaire from '@/pages/TeensQuestionnaire';
 import TeensDashboardParent from '@/pages/TeensDashboardParent';
+import TeensAIEvaluation from '@/pages/TeensAIEvaluation';
 import EntrepriseLogin from '@/pages/entreprise/Login';
 import EntrepriseRegister from '@/pages/entreprise/Register';
 import EntrepriseForgotPassword from '@/pages/entreprise/ForgotPassword';
@@ -75,6 +76,7 @@ function App() {
           <Route path="/teens/family-simulator" element={<ProtectedRoute requireAuth={true}><TeensFamilySimulator /></ProtectedRoute>} />
           <Route path="/teens/questionnaire" element={<ProtectedRoute requireAuth={true}><TeensQuestionnaire /></ProtectedRoute>} />
           <Route path="/teens/dashboard-parent" element={<ProtectedRoute requireAuth={true}><TeensDashboardParent /></ProtectedRoute>} />
+          <Route path="/teens/ai-evaluation" element={<ProtectedRoute requireAuth={true}><TeensAIEvaluation /></ProtectedRoute>} />
           
           {/* Entreprise Routes */}
           <Route path="/entreprise/login" element={<EntrepriseLogin />} />
