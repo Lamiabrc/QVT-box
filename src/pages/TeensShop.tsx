@@ -4,9 +4,45 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, ShoppingBag, Star, Heart, Gift, Crown, Sparkles } from "lucide-react";
+import TeensHeader from "@/components/teens/TeensHeader";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 const TeensShop = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
+  const [userPoints, setUserPoints] = useState(847);
+  const [wishlist, setWishlist] = useState(["Style Streetwear", "Anniversaire Mega", "Studio Musique"]);
+
+  const handlePurchase = (itemName: string, price: number) => {
+    if (userPoints >= price) {
+      setUserPoints(prev => prev - price);
+      toast({
+        title: "Achat réussi ! 🎉",
+        description: `Tu as acheté ${itemName} pour ${price} points !`,
+      });
+    } else {
+      toast({
+        title: "Points insuffisants 😅",
+        description: "Tu n'as pas assez de points pour cet achat !",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const toggleWishlist = (itemName: string) => {
+    setWishlist(prev => {
+      if (prev.includes(itemName)) {
+        return prev.filter(item => item !== itemName);
+      } else {
+        return [...prev, itemName];
+      }
+    });
+    toast({
+      title: wishlist.includes(itemName) ? "Retiré de la wishlist" : "Ajouté à la wishlist",
+      description: itemName,
+    });
+  };
 
   const shopCategories = [
     {
@@ -51,37 +87,16 @@ const TeensShop = () => {
     }
   ];
 
-  const userPoints = 847;
-  const wishlist = ["Style Streetwear", "Anniversaire Mega", "Studio Musique"];
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-900 via-indigo-900 to-cyan-900 relative overflow-hidden">
+      <TeensHeader />
+      
       {/* Animated background */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute top-20 left-10 w-20 h-20 bg-pink-500 rounded-full animate-pulse"></div>
         <div className="absolute top-40 right-20 w-16 h-16 bg-yellow-400 rounded-full animate-bounce"></div>
         <div className="absolute bottom-20 left-1/4 w-24 h-24 bg-green-400 rounded-full animate-ping"></div>
       </div>
-
-      {/* Header */}
-      <header className="relative z-10 border-b border-white/20 bg-black/30 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Button 
-              variant="ghost" 
-              onClick={() => navigate('/teens')}
-              className="flex items-center space-x-2 text-white hover:bg-white/20"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              <span>Retour</span>
-            </Button>
-            <div className="flex items-center space-x-3">
-              <ShoppingBag className="w-6 h-6 text-pink-400" />
-              <h1 className="text-2xl font-black text-white">BOUTIQUE</h1>
-            </div>
-          </div>
-        </div>
-      </header>
 
       <div className="container mx-auto px-4 py-8 relative z-10">
         {/* Hero Section */}
@@ -144,6 +159,7 @@ const TeensShop = () => {
                             : 'bg-gray-600 cursor-not-allowed'
                         }`}
                         disabled={userPoints < item.price}
+                        onClick={() => handlePurchase(item.name, item.price)}
                       >
                         {userPoints >= item.price ? 'Acheter' : 'Pas assez de points'}
                       </Button>
@@ -153,6 +169,7 @@ const TeensShop = () => {
                         className={`w-full rounded-2xl border-gray-400 hover:bg-white/10 ${
                           wishlist.includes(item.name) ? 'text-pink-400 border-pink-400' : 'text-white'
                         }`}
+                        onClick={() => toggleWishlist(item.name)}
                       >
                         <Heart className={`w-4 h-4 mr-2 ${wishlist.includes(item.name) ? 'fill-current' : ''}`} />
                         {wishlist.includes(item.name) ? 'Dans la wishlist' : 'Ajouter à la wishlist'}
@@ -205,7 +222,10 @@ const TeensShop = () => {
                   <span className="line-through text-gray-500 mr-2">200 points</span>
                   <span className="text-2xl font-bold text-green-400">150 points</span>
                 </div>
-                <Button className="w-full bg-green-500 hover:bg-green-600 rounded-2xl">
+                <Button 
+                  className="w-full bg-green-500 hover:bg-green-600 rounded-2xl"
+                  onClick={() => handlePurchase("Pack Anniversaire", 150)}
+                >
                   Offre limitée !
                 </Button>
               </div>

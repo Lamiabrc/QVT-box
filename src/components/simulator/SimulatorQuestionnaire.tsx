@@ -64,6 +64,28 @@ const SimulatorQuestionnaire: React.FC<SimulatorQuestionnaireProps> = ({
               { value: "2", label: "Déséquilibre léger" },
               { value: "1", label: "Déséquilibre important" }
             ]
+          },
+          {
+            id: "motivation_level",
+            text: "Comment évaluez-vous votre motivation au travail ?",
+            options: [
+              { value: "5", label: "Très motivé(e)" },
+              { value: "4", label: "Motivé(e)" },
+              { value: "3", label: "Moyennement motivé(e)" },
+              { value: "2", label: "Peu motivé(e)" },
+              { value: "1", label: "Pas du tout motivé(e)" }
+            ]
+          },
+          {
+            id: "physical_symptoms",
+            text: "Ressentez-vous des symptômes physiques liés au stress professionnel ?",
+            options: [
+              { value: "1", label: "Jamais" },
+              { value: "2", label: "Rarement" },
+              { value: "3", label: "Parfois" },
+              { value: "4", label: "Souvent" },
+              { value: "5", label: "Très souvent" }
+            ]
           }
         ];
       case "team":
@@ -100,10 +122,46 @@ const SimulatorQuestionnaire: React.FC<SimulatorQuestionnaireProps> = ({
               { value: "2", label: "Inéquitable" },
               { value: "1", label: "Très inéquitable" }
             ]
+          },
+          {
+            id: "team_management",
+            text: "Comment évaluez-vous la qualité du management de votre équipe ?",
+            options: [
+              { value: "5", label: "Excellent" },
+              { value: "4", label: "Bon" },
+              { value: "3", label: "Correct" },
+              { value: "2", label: "Insuffisant" },
+              { value: "1", label: "Très mauvais" }
+            ]
+          },
+          {
+            id: "team_conflicts",
+            text: "À quelle fréquence rencontrez-vous des conflits dans votre équipe ?",
+            options: [
+              { value: "5", label: "Jamais" },
+              { value: "4", label: "Rarement" },
+              { value: "3", label: "Parfois" },
+              { value: "2", label: "Souvent" },
+              { value: "1", label: "Très souvent" }
+            ]
           }
         ];
       case "life_event":
         return [
+          {
+            id: "life_event_type",
+            text: "Quel événement de vie traversez-vous actuellement ?",
+            options: [
+              { value: "birth", label: "Naissance d'un enfant" },
+              { value: "divorce", label: "Divorce/Séparation" },
+              { value: "bereavement", label: "Deuil" },
+              { value: "illness", label: "Maladie (personnelle ou proche)" },
+              { value: "moving", label: "Déménagement" },
+              { value: "marriage", label: "Mariage" },
+              { value: "job_change", label: "Changement professionnel" },
+              { value: "other", label: "Autre événement majeur" }
+            ]
+          },
           {
             id: "event_impact",
             text: "Comment cet événement affecte-t-il votre travail ?",
@@ -135,6 +193,17 @@ const SimulatorQuestionnaire: React.FC<SimulatorQuestionnaireProps> = ({
               { value: "3", label: "Modérée" },
               { value: "4", label: "Difficile" },
               { value: "5", label: "Très difficile" }
+            ]
+          },
+          {
+            id: "work_productivity",
+            text: "Comment cet événement affecte-t-il votre productivité ?",
+            options: [
+              { value: "1", label: "Améliore ma productivité" },
+              { value: "2", label: "Pas d'effet" },
+              { value: "3", label: "Légère baisse" },
+              { value: "4", label: "Baisse importante" },
+              { value: "5", label: "Baisse très importante" }
             ]
           }
         ];
