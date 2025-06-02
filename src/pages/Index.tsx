@@ -5,8 +5,10 @@ import { Button } from '@/components/ui/button';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Building2, Users, Shield, Brain, Heart, Package, ArrowRight, CheckCircle, Sparkles, Target, Coffee, Star, Gift, Zap, Smile } from 'lucide-react';
+
 const Index = () => {
   const navigate = useNavigate();
+  
   const interactiveBubbles = [{
     id: 1,
     image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=120&h=120&fit=crop&crop=face&auto=format&q=80",
@@ -112,10 +114,12 @@ const Index = () => {
     tooltip: "⚡ Leadership & management",
     category: "entreprise"
   }];
+  
   const handleBubbleClick = (route: string) => {
     console.log('Bulle cliquée, navigation vers:', route);
     navigate(route);
   };
+  
   return <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 via-white to-purple-50">
       <Header />
       
@@ -161,16 +165,15 @@ const Index = () => {
 
               <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 max-w-4xl mx-auto shadow-xl border border-white/50">
                 <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-                  Bienvenue dans l'univers de votre{' '}
+                  Bienvenu dans l'univers{' '}
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
-                    Qualité de Vie
+                    QVT Box
                   </span>
                 </h1>
                 
                 <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8 leading-relaxed">
-                  Je suis Lamia Brechet, fondatrice de QVT Box. Je suis ravie de vous accueillir dans notre solution phygitale innovante qui allie 
-                  intelligence artificielle et objets bien-être pour transformer votre quotidien 
-                  professionnel et familial. <strong>Cliquez sur les bulles flottantes pour découvrir nos produits !</strong>
+                  Une solution phygitale innovante qui allie l'intelligence artificielle et box bien-être pour transformer votre quotidien, 
+                  au travail ou en famille ou les deux. <strong>Cliquez sur les bulles flottantes pour voir les bulles !</strong>
                 </p>
 
                 <div className="flex flex-wrap justify-center gap-4 mb-8">
@@ -374,4 +377,5 @@ const Index = () => {
       <Footer />
     </div>;
 };
+
 export default Index;
