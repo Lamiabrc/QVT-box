@@ -718,6 +718,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      can_manager_access_team: {
+        Args: { manager_id: string; target_team_id: string }
+        Returns: boolean
+      }
+      get_user_enterprise_role: {
+        Args: { target_user_id: string }
+        Returns: string
+      }
       get_user_role: {
         Args: { user_id: string }
         Returns: string
@@ -728,6 +736,14 @@ export type Database = {
       }
       is_user_admin: {
         Args: { user_id: string }
+        Returns: boolean
+      }
+      is_user_hr: {
+        Args: { target_user_id: string }
+        Returns: boolean
+      }
+      is_user_manager: {
+        Args: { target_user_id: string }
         Returns: boolean
       }
       setup_qvt_database: {

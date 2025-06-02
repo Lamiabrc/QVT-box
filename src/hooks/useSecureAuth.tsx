@@ -9,6 +9,9 @@ export const useSecureAuth = () => {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isManager, setIsManager] = useState(false);
+  const [isHR, setIsHR] = useState(false);
+  const [enterpriseRole, setEnterpriseRole] = useState<string | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -20,9 +23,10 @@ export const useSecureAuth = () => {
         setUser(session?.user ?? null);
         
         if (session?.user) {
-          // Check if user is admin (defer with setTimeout to avoid deadlock)
+          // Check user roles and enterprise role (defer with setTimeout to avoid deadlock)
           setTimeout(async () => {
             try {
+              // Check admin role
               const { data: roleData } = await supabase
                 .from('user_roles')
                 .select('role')
@@ -30,13 +34,32 @@ export const useSecureAuth = () => {
                 .single();
               
               setIsAdmin(roleData?.role === 'admin');
+
+              // Check enterprise role and permissions
+              const { data: profileData } = await supabase
+                .from('profiles')
+                .select('enterprise_role')
+                .eq('id', session.user.id)
+                .single();
+              
+              if (profileData?.enterprise_role) {
+                setEnterpriseRole(profileData.enterprise_role);
+                setIsManager(profileData.enterprise_role === 'manager');
+                setIsHR(profileData.enterprise_role === 'hr');
+              }
             } catch (error) {
-              console.error('Error checking admin role:', error);
+              console.error('Error checking user roles:', error);
               setIsAdmin(false);
+              setIsManager(false);
+              setIsHR(false);
+              setEnterpriseRole(null);
             }
           }, 0);
         } else {
           setIsAdmin(false);
+          setIsManager(false);
+          setIsHR(false);
+          setEnterpriseRole(null);
         }
         
         setLoading(false);
@@ -52,6 +75,7 @@ export const useSecureAuth = () => {
         setUser(session?.user ?? null);
         
         if (session?.user) {
+          // Check roles for existing session
           const { data: roleData } = await supabase
             .from('user_roles')
             .select('role')
@@ -59,6 +83,18 @@ export const useSecureAuth = () => {
             .single();
           
           setIsAdmin(roleData?.role === 'admin');
+
+          const { data: profileData } = await supabase
+            .from('profiles')
+            .select('enterprise_role')
+            .eq('id', session.user.id)
+            .single();
+          
+          if (profileData?.enterprise_role) {
+            setEnterpriseRole(profileData.enterprise_role);
+            setIsManager(profileData.enterprise_role === 'manager');
+            setIsHR(profileData.enterprise_role === 'hr');
+          }
         }
       } catch (error) {
         console.error('Error checking initial session:', error);
@@ -84,11 +120,40 @@ export const useSecureAuth = () => {
     return true;
   };
 
+  const requireManager = () => {
+    if (!isManager && !isHR && !isAdmin) {
+      toast({
+        variant: "destructive",
+        title: "Accès refusé",
+        description: "Vous devez être manager, RH ou administrateur pour effectuer cette action.",
+      });
+      return false;
+    }
+    return true;
+  };
+
+  const requireHR = () => {
+    if (!isHR && !isAdmin) {
+      toast({
+        variant: "destructive",
+        title: "Accès refusé",
+        description: "Vous devez être RH ou administrateur pour effectuer cette action.",
+      });
+      return false;
+    }
+    return true;
+  };
+
   return {
     user,
     session,
     loading,
     isAdmin,
-    requireAdmin
+    isManager,
+    isHR,
+    enterpriseRole,
+    requireAdmin,
+    requireManager,
+    requireHR
   };
 };

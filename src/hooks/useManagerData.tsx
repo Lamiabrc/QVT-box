@@ -70,8 +70,33 @@ export const useManagerData = (userId: string | undefined) => {
   };
 
   const fetchManagerData = async () => {
+    if (!userId) {
+      setLoading(false);
+      return;
+    }
+
     try {
-      const { data: managedTeams } = await supabase
+      console.log('Fetching manager data for user:', userId);
+
+      // Check if user is authorized to access manager data
+      const { data: userProfile, error: profileError } = await supabase
+        .from('profiles')
+        .select('enterprise_role')
+        .eq('id', userId)
+        .single();
+
+      if (profileError) {
+        console.error('Error fetching user profile:', profileError);
+        throw new Error('Impossible de vérifier les autorisations utilisateur');
+      }
+
+      if (!['manager', 'hr', 'admin'].includes(userProfile?.enterprise_role)) {
+        console.warn('User not authorized for manager data access');
+        throw new Error('Accès non autorisé aux données de gestion');
+      }
+
+      // Fetch teams managed by this user
+      const { data: managedTeams, error: teamsError } = await supabase
         .from('team_managers')
         .select(`
           *,
@@ -79,40 +104,61 @@ export const useManagerData = (userId: string | undefined) => {
         `)
         .eq('manager_id', userId);
 
+      if (teamsError) {
+        console.error('Error fetching managed teams:', teamsError);
+        throw teamsError;
+      }
+
       setTeams(managedTeams || []);
 
       if (managedTeams && managedTeams.length > 0) {
         const teamIds = managedTeams.map(tm => tm.teams.id);
         
-        const { data: members } = await supabase
+        // Fetch team members for managed teams
+        const { data: members, error: membersError } = await supabase
           .from('team_members')
           .select(`
             *,
-            profiles!inner(id, full_name, email, preferred_name),
+            profiles!inner(id, full_name, preferred_name),
             teams!inner(name)
           `)
           .in('team_id', teamIds);
+
+        if (membersError) {
+          console.error('Error fetching team members:', membersError);
+          throw membersError;
+        }
 
         setTeamMembers(members || []);
 
         if (members && members.length > 0) {
           const memberIds = members.map(m => m.profiles.id);
-          const { data: scores } = await supabase
+          
+          // Fetch simulator responses for team members
+          const { data: scores, error: scoresError } = await supabase
             .from('simulator_responses')
             .select('user_id, qvt_score, burnout_risk_percentage, burnout_risk, created_at')
             .in('user_id', memberIds)
             .order('created_at', { ascending: false });
 
+          if (scoresError) {
+            console.error('Error fetching simulator responses:', scoresError);
+            throw scoresError;
+          }
+
           setTeamScores(scores || []);
           calculateTeamStats(scores || [], members || []);
         }
       }
-    } catch (error) {
-      console.error('Error fetching manager data:', error);
+
+      console.log('Manager data fetched successfully');
+
+    } catch (error: any) {
+      console.error('Error in fetchManagerData:', error);
       toast({
         variant: "destructive",
         title: "Erreur",
-        description: "Impossible de charger les données des équipes.",
+        description: error.message || "Impossible de charger les données des équipes.",
       });
     } finally {
       setLoading(false);
@@ -120,6 +166,8 @@ export const useManagerData = (userId: string | undefined) => {
   };
 
   const fetchTeamEvaluationData = async () => {
+    if (!userId) return;
+
     try {
       const { data: managedTeams } = await supabase
         .from('team_managers')
@@ -166,29 +214,22 @@ export const useManagerData = (userId: string | undefined) => {
 
           setEvolutionData(evolutionChartData);
 
+          // Generate evaluation results based on actual data
           const teamEvaluationResults = [
             {
               id: '1',
-              date: '2024-01-15',
-              participantCount: teamMembers.length || 12,
-              avgScore: teamStats.avgScore || 75,
-              riskCount: teamStats.highRiskCount || 2,
+              date: new Date().toISOString().split('T')[0],
+              participantCount: teamMembers.length || 0,
+              avgScore: teamStats.avgScore || 0,
+              riskCount: teamStats.highRiskCount || 0,
               type: 'Équipe'
             },
             {
               id: '2',
-              date: '2024-01-01',
-              participantCount: teamMembers.length || 12,
-              avgScore: (teamStats.avgScore || 75) - 3,
-              riskCount: (teamStats.highRiskCount || 2) + 1,
-              type: 'Équipe'
-            },
-            {
-              id: '3',
-              date: '2023-12-15',
-              participantCount: teamMembers.length || 12,
-              avgScore: (teamStats.avgScore || 75) - 5,
-              riskCount: (teamStats.highRiskCount || 2) + 2,
+              date: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+              participantCount: teamMembers.length || 0,
+              avgScore: Math.max(0, (teamStats.avgScore || 0) - 3),
+              riskCount: Math.min(teamMembers.length, (teamStats.highRiskCount || 0) + 1),
               type: 'Équipe'
             }
           ];

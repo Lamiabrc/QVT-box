@@ -1,266 +1,168 @@
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { ArrowLeft, Building2, UserCheck, Settings, Users } from "lucide-react";
-import { useState, useEffect } from "react";
-import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { useAuthOperations } from '@/hooks/useAuthOperations';
+import { useSecureAuth } from '@/hooks/useSecureAuth';
+import { EntrepriseHeader } from '@/components/entreprise/EntrepriseHeader';
 
-const EntrepriseLogin = () => {
+const Login = () => {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const role = searchParams.get('role');
-  const { toast } = useToast();
+  const location = useLocation();
+  const { signInUser, loading } = useAuthOperations();
+  const { user, session } = useSecureAuth();
   
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
-  const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [successMessage, setSuccessMessage] = useState('');
 
-  // Check if user is already logged in
+  // Check for success message from registration
   useEffect(() => {
-    const checkAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session) {
-        // Rediriger selon le rôle
-        redirectBasedOnRole(session.user.id);
-      }
-    };
-    checkAuth();
-  }, []);
-
-  const redirectBasedOnRole = async (userId) => {
-    try {
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('enterprise_role')
-        .eq('id', userId)
-        .single();
-
-      if (profile?.enterprise_role === 'hr') {
-        navigate('/entreprise/hr-dashboard');
-      } else if (profile?.enterprise_role === 'manager') {
-        navigate('/entreprise/manager-dashboard');
-      } else {
-        navigate('/entreprise/employee-dashboard');
-      }
-    } catch (error) {
-      console.error('Error checking role:', error);
-      navigate('/entreprise/employee-dashboard');
+    if (location.state?.message) {
+      setSuccessMessage(location.state.message);
     }
+  }, [location.state]);
+
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (user && session) {
+      navigate('/entreprise');
+    }
+  }, [user, session, navigate]);
+
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+
+    if (!formData.email) {
+      newErrors.email = 'Email requis';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'Format d\'email invalide';
+    }
+
+    if (!formData.password) {
+      newErrors.password = 'Mot de passe requis';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
-  const getRoleInfo = () => {
-    switch (role) {
-      case 'employee':
-        return {
-          title: 'Connexion Salarié',
-          icon: <UserCheck className="w-8 h-8 text-blue-400" />,
-          description: 'Accédez à votre espace salarié QVT'
-        };
-      case 'manager':
-        return {
-          title: 'Connexion Manager',
-          icon: <Users className="w-8 h-8 text-green-400" />,
-          description: 'Gérez vos équipes et leur bien-être'
-        };
-      case 'hr':
-        return {
-          title: 'Connexion RH',
-          icon: <Settings className="w-8 h-8 text-indigo-400" />,
-          description: 'Administrez les équipes et collaborateurs'
-        };
-      default:
-        return {
-          title: 'Connexion Entreprise',
-          icon: <Building2 className="w-8 h-8 text-blue-400" />,
-          description: 'Accédez à votre espace QVT'
-        };
-    }
-  };
-
-  const roleInfo = getRoleInfo();
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
     
-    try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: formData.email,
-        password: formData.password,
-      });
+    if (!validateForm()) {
+      return;
+    }
 
-      if (error) {
-        toast({
-          title: "Erreur de connexion",
-          description: error.message,
-          variant: "destructive"
-        });
-        return;
-      }
+    const { user, session, error } = await signInUser(formData.email, formData.password);
 
-      if (data.user && data.session) {
-        toast({
-          title: "Connexion réussie",
-          description: `Bienvenue dans votre espace ${role || 'entreprise'}`,
-        });
-        
-        // Rediriger selon le rôle
-        setTimeout(() => {
-          redirectBasedOnRole(data.user.id);
-        }, 100);
-      }
-    } catch (error) {
-      toast({
-        title: "Erreur",
-        description: "Une erreur inattendue s'est produite",
-        variant: "destructive"
-      });
-    } finally {
-      setIsLoading(false);
+    if (user && session && !error) {
+      // Successful login - redirect will happen via useEffect
+      navigate('/entreprise');
+    }
+  };
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: '' }));
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900">
-      {/* Header */}
-      <header className="border-b border-white/20 bg-black/30 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Button 
-              variant="ghost" 
-              onClick={() => navigate('/auth')}
-              className="flex items-center space-x-2 text-white hover:bg-white/20"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              <span>Retour</span>
-            </Button>
-            <div className="flex items-center space-x-3">
-              <Building2 className="w-6 h-6 text-blue-400" />
-              <h1 className="text-xl font-bold text-white">QVT BOX</h1>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <div className="container mx-auto px-4 py-16">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900">
+      <EntrepriseHeader />
+      
+      <div className="container mx-auto px-4 py-8">
         <div className="max-w-md mx-auto">
-          <Card className="bg-black/40 backdrop-blur-sm border-2 border-white/20">
+          <Card className="backdrop-blur-sm bg-white/95 shadow-xl">
             <CardHeader className="text-center">
-              <div className="w-16 h-16 bg-blue-500/20 rounded-2xl mx-auto mb-4 flex items-center justify-center">
-                {roleInfo.icon}
-              </div>
-              <CardTitle className="text-2xl font-bold text-white">
-                {roleInfo.title}
+              <CardTitle className="text-2xl font-bold text-gray-800">
+                Connexion Entreprise
               </CardTitle>
-              <p className="text-gray-300">{roleInfo.description}</p>
             </CardHeader>
             <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="space-y-2">
-                  <Label htmlFor="email" className="text-white">Email professionnel</Label>
+              {successMessage && (
+                <Alert className="mb-4 border-green-200 bg-green-50">
+                  <AlertDescription className="text-green-800">
+                    {successMessage}
+                  </AlertDescription>
+                </Alert>
+              )}
+
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                  <Label htmlFor="email">Adresse email</Label>
                   <Input
                     id="email"
                     type="email"
                     value={formData.email}
-                    onChange={(e) => setFormData({...formData, email: e.target.value})}
-                    className="bg-white/10 border-white/20 text-white placeholder:text-gray-400"
-                    placeholder="votre@entreprise.com"
+                    onChange={(e) => handleInputChange('email', e.target.value)}
+                    className={errors.email ? 'border-red-500' : ''}
                     required
-                    disabled={isLoading}
+                    autoComplete="email"
                   />
+                  {errors.email && (
+                    <p className="text-sm text-red-500 mt-1">{errors.email}</p>
+                  )}
                 </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="password" className="text-white">Mot de passe</Label>
+
+                <div>
+                  <Label htmlFor="password">Mot de passe</Label>
                   <Input
                     id="password"
                     type="password"
                     value={formData.password}
-                    onChange={(e) => setFormData({...formData, password: e.target.value})}
-                    className="bg-white/10 border-white/20 text-white placeholder:text-gray-400"
-                    placeholder="••••••••"
+                    onChange={(e) => handleInputChange('password', e.target.value)}
+                    className={errors.password ? 'border-red-500' : ''}
                     required
-                    disabled={isLoading}
+                    autoComplete="current-password"
                   />
+                  {errors.password && (
+                    <p className="text-sm text-red-500 mt-1">{errors.password}</p>
+                  )}
                 </div>
 
                 <Button 
                   type="submit" 
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-2xl"
-                  disabled={isLoading}
+                  className="w-full" 
+                  disabled={loading}
                 >
-                  {isLoading ? 'Connexion...' : 'Se connecter'}
+                  {loading ? 'Connexion en cours...' : 'Se connecter'}
                 </Button>
-
-                <div className="text-center space-y-2">
-                  <Button 
-                    variant="link" 
-                    onClick={() => navigate('/entreprise/forgot-password')}
-                    className="text-blue-400 hover:text-blue-300"
-                  >
-                    Mot de passe oublié ?
-                  </Button>
-                  <div className="text-gray-400">
-                    Pas encore de compte ?{' '}
-                    <Button 
-                      variant="link" 
-                      onClick={() => navigate('/entreprise/register')}
-                      className="text-blue-400 hover:text-blue-300 p-0"
-                    >
-                      S'inscrire
-                    </Button>
-                  </div>
-                </div>
               </form>
+
+              <div className="mt-4 text-center">
+                <Link 
+                  to="/entreprise/forgot-password" 
+                  className="text-sm text-blue-600 hover:underline"
+                >
+                  Mot de passe oublié ?
+                </Link>
+              </div>
+
+              <div className="mt-6 text-center">
+                <p className="text-sm text-gray-600">
+                  Pas encore de compte ?{' '}
+                  <Link to="/entreprise/register" className="text-blue-600 hover:underline">
+                    Créer un compte
+                  </Link>
+                </p>
+              </div>
             </CardContent>
           </Card>
-
-          {/* Sélection du rôle si pas spécifié */}
-          {!role && (
-            <div className="mt-8">
-              <Card className="bg-black/40 backdrop-blur-sm border-2 border-white/20">
-                <CardHeader>
-                  <CardTitle className="text-white text-center">Ou choisissez votre rôle</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <Button 
-                    variant="outline" 
-                    className="w-full justify-start bg-white/10 border-white/20 text-white hover:bg-white/20"
-                    onClick={() => navigate('/entreprise/login?role=employee')}
-                  >
-                    <UserCheck className="w-4 h-4 mr-2" />
-                    Connexion Salarié
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    className="w-full justify-start bg-white/10 border-white/20 text-white hover:bg-white/20"
-                    onClick={() => navigate('/entreprise/login?role=manager')}
-                  >
-                    <Users className="w-4 h-4 mr-2" />
-                    Connexion Manager
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    className="w-full justify-start bg-white/10 border-white/20 text-white hover:bg-white/20"
-                    onClick={() => navigate('/entreprise/login?role=hr')}
-                  >
-                    <Settings className="w-4 h-4 mr-2" />
-                    Connexion RH
-                  </Button>
-                </CardContent>
-              </Card>
-            </div>
-          )}
         </div>
       </div>
     </div>
   );
 };
 
-export default EntrepriseLogin;
+export default Login;
