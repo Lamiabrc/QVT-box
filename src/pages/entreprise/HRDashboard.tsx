@@ -28,6 +28,11 @@ import QVTEvolutionChart from '@/components/dashboard/QVTEvolutionChart';
 import EvaluationResultsTable from '@/components/dashboard/EvaluationResultsTable';
 import TeamPerformanceChart from '@/components/dashboard/TeamPerformanceChart';
 
+interface MonthlyDataItem {
+  scores: number[];
+  date: string;
+}
+
 const HRDashboard = () => {
   const { user } = useSecureAuth();
   const { toast } = useToast();
@@ -284,7 +289,7 @@ const HRDashboard = () => {
         .order('created_at', { ascending: true });
 
       // Grouper par mois pour l'évolution
-      const monthlyData = {};
+      const monthlyData: Record<string, MonthlyDataItem> = {};
       evolutionRaw?.forEach(response => {
         const month = new Date(response.created_at).toLocaleDateString('fr-FR', { year: 'numeric', month: 'short' });
         if (!monthlyData[month]) {
@@ -293,7 +298,7 @@ const HRDashboard = () => {
         monthlyData[month].scores.push(response.qvt_score);
       });
 
-      const evolutionChartData = Object.values(monthlyData).map(month => ({
+      const evolutionChartData = Object.values(monthlyData).map((month: MonthlyDataItem) => ({
         date: month.date,
         avgScore: Math.round(month.scores.reduce((sum, score) => sum + score, 0) / month.scores.length),
         teamCount: month.scores.length
