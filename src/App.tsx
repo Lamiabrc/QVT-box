@@ -14,6 +14,8 @@ import TeensLogin from '@/pages/teens/Login';
 import TeensRegister from '@/pages/teens/Register';
 import Teens from '@/pages/Teens';
 import TeensPersonalSpace from '@/pages/TeensPersonalSpace';
+import TeensFunSolutions from '@/pages/TeensFunSolutions';
+import TeensParentalAccessDashboard from '@/pages/TeensParentalAccessDashboard';
 import TeensShop from '@/pages/TeensShop';
 import TeensQuickAlert from '@/pages/TeensQuickAlert';
 import TeensCalendar from '@/pages/TeensCalendar';
@@ -62,6 +64,8 @@ function App() {
           <Route path="/teens/register" element={<TeensRegister />} />
           <Route path="/teens" element={<ProtectedRoute requireAuth={true}><Teens /></ProtectedRoute>} />
           <Route path="/teens/personal-space" element={<ProtectedRoute requireAuth={true}><TeensPersonalSpace /></ProtectedRoute>} />
+          <Route path="/teens/fun-solutions" element={<ProtectedRoute requireAuth={true}><TeensFunSolutions /></ProtectedRoute>} />
+          <Route path="/teens/parental-access-dashboard" element={<ProtectedRoute requireAuth={true}><TeensParentalAccessDashboard /></ProtectedRoute>} />
           <Route path="/teens/customization" element={<ProtectedRoute requireAuth={true}><TeensCustomization /></ProtectedRoute>} />
           <Route path="/teens/journal" element={<ProtectedRoute requireAuth={true}><TeensJournal /></ProtectedRoute>} />
           <Route path="/teens/playlist" element={<ProtectedRoute requireAuth={true}><TeensPlaylist /></ProtectedRoute>} />

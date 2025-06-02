@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -195,6 +194,19 @@ const TeensFamilySpace = () => {
             
             <Card 
               className="cursor-pointer hover:shadow-lg transition-shadow"
+              onClick={() => navigate('/teens/fun-solutions')}
+            >
+              <CardHeader>
+                <div className="w-12 h-12 rounded-lg bg-cyan-100 text-cyan-600 flex items-center justify-center mb-3">
+                  <Gamepad2 className="h-6 w-6" />
+                </div>
+                <CardTitle className="text-lg">Solutions Fun</CardTitle>
+                <CardDescription>Activités ludiques pour booster ton bien-être</CardDescription>
+              </CardHeader>
+            </Card>
+
+            <Card 
+              className="cursor-pointer hover:shadow-lg transition-shadow"
               onClick={() => navigate('/teens/family-space')}
             >
               <CardHeader>
@@ -216,6 +228,19 @@ const TeensFamilySpace = () => {
                 </div>
                 <CardTitle className="text-lg">Agenda Famille</CardTitle>
                 <CardDescription>Anniversaires, fêtes et activités en famille</CardDescription>
+              </CardHeader>
+            </Card>
+
+            <Card 
+              className="cursor-pointer hover:shadow-lg transition-shadow"
+              onClick={() => navigate('/teens/parental-access-dashboard')}
+            >
+              <CardHeader>
+                <div className="w-12 h-12 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center mb-3">
+                  <Shield className="h-6 w-6" />
+                </div>
+                <CardTitle className="text-lg">Dashboard Parental</CardTitle>
+                <CardDescription>Espace sécurisé pour l'accompagnement parental</CardDescription>
               </CardHeader>
             </Card>
           </div>

@@ -1,197 +1,202 @@
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useState } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Textarea } from "@/components/ui/textarea";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Heart, User, Palette, Settings, Star, Trophy, Music, BookOpen } from "lucide-react";
+import { Heart, MessageCircle, Shield, AlertTriangle, Users, Lock, ArrowLeft } from "lucide-react";
 import TeensHeader from "@/components/teens/TeensHeader";
-import WellbeingAlerts from "@/components/WellbeingAlerts";
 
 const TeensPersonalSpace = () => {
   const navigate = useNavigate();
+  const [personalThoughts, setPersonalThoughts] = useState("");
+  const [parentMessage, setParentMessage] = useState("");
 
-  const personalStats = [
-    { label: "Jours de streak", value: "12", icon: "🔥", color: "from-red-500 to-orange-500" },
-    { label: "Points bien-être", value: "847", icon: "⭐", color: "from-yellow-500 to-orange-500" },
-    { label: "Humeur moyenne", value: "8.2/10", icon: "😊", color: "from-green-500 to-emerald-500" },
-    { label: "Niveau", value: "Ninja 🥷", icon: "🎯", color: "from-purple-500 to-indigo-500" }
+  const intimateTopics = [
+    { icon: "💕", title: "Relations & Amour", description: "Questions sur les relations amoureuses" },
+    { icon: "🌡️", title: "Changements Corps", description: "Comprendre les transformations" },
+    { icon: "😰", title: "Pression Sociale", description: "Gérer la pression des autres" },
+    { icon: "🚫", title: "Dire Non", description: "Apprendre à poser des limites" },
+    { icon: "🧠", title: "Santé Mentale", description: "Anxiété, dépression, stress" },
+    { icon: "🎭", title: "Identité", description: "Qui suis-je vraiment ?" }
   ];
 
-  const achievements = [
-    { name: "Première semaine complète", icon: "🏆", completed: true },
-    { name: "Communicateur pro", icon: "💬", completed: true },
-    { name: "Zen master", icon: "🧘", completed: false },
-    { name: "Famille connectée", icon: "👨‍👩‍👧‍👦", completed: true },
-    { name: "Créatif du mois", icon: "🎨", completed: false },
-    { name: "Aventurier", icon: "🗺️", completed: false }
-  ];
-
-  const personalityTraits = [
-    { trait: "Créatif", level: 85, color: "bg-pink-500" },
-    { trait: "Sociable", level: 70, color: "bg-blue-500" },
-    { trait: "Aventurier", level: 60, color: "bg-green-500" },
-    { trait: "Empathique", level: 90, color: "bg-purple-500" },
-    { trait: "Curieux", level: 80, color: "bg-yellow-500" }
+  const alertSituations = [
+    { level: "attention", icon: "⚠️", title: "Pression pour essayer des substances", urgent: false },
+    { level: "urgent", icon: "🚨", title: "Pensées d'automutilation", urgent: true },
+    { level: "attention", icon: "😰", title: "Anxiété intense récurrente", urgent: false },
+    { level: "urgent", icon: "💔", title: "Harcèlement ou violence", urgent: true },
+    { level: "attention", icon: "🌙", title: "Troubles du sommeil", urgent: false }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-indigo-900 to-cyan-900 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50">
       <TeensHeader />
       
-      {/* Animated background elements */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-20 left-10 w-20 h-20 bg-pink-500 rounded-full animate-pulse"></div>
-        <div className="absolute top-40 right-20 w-16 h-16 bg-yellow-400 rounded-full animate-bounce"></div>
-        <div className="absolute bottom-20 left-1/4 w-24 h-24 bg-green-400 rounded-full animate-ping"></div>
-      </div>
+      <div className="container mx-auto px-4 py-8 max-w-4xl">
+        <div className="mb-6">
+          <Button
+            variant="ghost"
+            onClick={() => navigate('/teens')}
+            className="text-purple-600 hover:bg-purple-100"
+          >
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Retour au dashboard
+          </Button>
+        </div>
 
-      <div className="container mx-auto px-4 py-8 relative z-10">
-        {/* Profile Header */}
-        <div className="text-center mb-12">
-          <div className="relative inline-block mb-6">
-            <div className="w-32 h-32 bg-gradient-to-r from-pink-500 to-purple-600 rounded-3xl flex items-center justify-center text-6xl mx-auto shadow-2xl shadow-pink-500/30">
-              🦄
-            </div>
-            <div className="absolute -bottom-2 -right-2 w-12 h-12 bg-yellow-400 rounded-full flex items-center justify-center text-2xl animate-bounce">
-              ⭐
-            </div>
-          </div>
-          <h1 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-500 to-cyan-400 mb-4">
-            Salut Alex ! 👋
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
+            Mon Espace Personnel 🌸
           </h1>
-          <p className="text-xl text-gray-200 mb-6">
-            Voici ton espace personnel pour suivre ton évolution ! 🚀
-          </p>
-          <div className="flex justify-center space-x-4">
-            <Badge className="bg-pink-500/20 text-pink-300 px-6 py-2 text-lg">#CreativeGenius</Badge>
-            <Badge className="bg-purple-500/20 text-purple-300 px-6 py-2 text-lg">#FamilyFirst</Badge>
-            <Badge className="bg-cyan-500/20 text-cyan-300 px-6 py-2 text-lg">#WellBeingChampion</Badge>
+          <p className="text-gray-600">Ton safe space pour parler de tout, même ce qui te préoccupe</p>
+          <div className="flex justify-center gap-2 mt-3">
+            <Badge className="bg-green-100 text-green-700">
+              <Shield className="h-3 w-3 mr-1" />
+              100% Confidentiel
+            </Badge>
+            <Badge className="bg-blue-100 text-blue-700">
+              <Heart className="h-3 w-3 mr-1" />
+              Sans jugement
+            </Badge>
           </div>
         </div>
 
-        {/* Wellbeing Alerts */}
-        <div className="mb-12">
-          <WellbeingAlerts />
-        </div>
+        <Tabs defaultValue="journal" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-4">
+            <TabsTrigger value="journal">Journal Perso</TabsTrigger>
+            <TabsTrigger value="intimate">Vie Intime</TabsTrigger>
+            <TabsTrigger value="alerts">Alertes</TabsTrigger>
+            <TabsTrigger value="parents">Avec Parents</TabsTrigger>
+          </TabsList>
 
-        {/* Personal Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
-          {personalStats.map((stat, index) => (
-            <Card key={index} className={`group bg-gradient-to-br ${stat.color}/10 border-2 border-white/20 hover:border-white/40 transition-all duration-300 transform hover:-translate-y-2`}>
-              <CardContent className="p-6 text-center">
-                <div className="text-4xl mb-3">{stat.icon}</div>
-                <div className={`text-3xl font-black bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-2`}>
-                  {stat.value}
+          <TabsContent value="journal" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <MessageCircle className="h-5 w-5" />
+                  Mon Journal Secret
+                </CardTitle>
+                <CardDescription>
+                  Écris tout ce qui te passe par la tête. C'est TON espace.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Textarea
+                  placeholder="Aujourd'hui j'ai ressenti... Ce qui me préoccupe c'est... Je suis fier/fière de... 💭"
+                  value={personalThoughts}
+                  onChange={(e) => setPersonalThoughts(e.target.value)}
+                  className="min-h-40 mb-4"
+                />
+                <div className="flex justify-between items-center">
+                  <div className="flex gap-2">
+                    <Badge variant="outline">#thoughts</Badge>
+                    <Badge variant="outline">#feelings</Badge>
+                    <Badge variant="outline">#dreams</Badge>
+                  </div>
+                  <Button>Sauvegarder</Button>
                 </div>
-                <p className="text-sm text-gray-300 font-semibold">{stat.label}</p>
               </CardContent>
             </Card>
-          ))}
-        </div>
+          </TabsContent>
 
-        {/* Achievements & Personality */}
-        <div className="grid lg:grid-cols-2 gap-8 mb-12">
-          {/* Achievements */}
-          <Card className="bg-black/40 backdrop-blur-sm border-2 border-white/20">
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold text-white flex items-center">
-                <Trophy className="w-6 h-6 mr-3 text-yellow-400" />
-                Mes Achievements 🏆
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-2 gap-4">
-                {achievements.map((achievement, index) => (
-                  <div 
-                    key={index} 
-                    className={`p-4 rounded-2xl border-2 ${
-                      achievement.completed 
-                        ? 'bg-green-500/10 border-green-400/30' 
-                        : 'bg-gray-500/10 border-gray-400/30'
-                    } text-center transition-all duration-300 hover:scale-105`}
-                  >
-                    <div className="text-3xl mb-2">{achievement.icon}</div>
-                    <p className={`text-sm font-semibold ${
-                      achievement.completed ? 'text-green-300' : 'text-gray-400'
-                    }`}>
-                      {achievement.name}
-                    </p>
-                    {achievement.completed && (
-                      <Badge className="bg-green-500/20 text-green-300 mt-2">Débloqué!</Badge>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+          <TabsContent value="intimate" className="space-y-6">
+            <div className="grid md:grid-cols-2 gap-4">
+              {intimateTopics.map((topic, index) => (
+                <Card key={index} className="hover:shadow-lg transition-shadow cursor-pointer">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-3 text-lg">
+                      <span className="text-2xl">{topic.icon}</span>
+                      {topic.title}
+                    </CardTitle>
+                    <CardDescription>{topic.description}</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Button variant="outline" className="w-full">
+                      Parler en toute sécurité
+                    </Button>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </TabsContent>
 
-          {/* Personality Traits */}
-          <Card className="bg-black/40 backdrop-blur-sm border-2 border-white/20">
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold text-white flex items-center">
-                <Palette className="w-6 h-6 mr-3 text-pink-400" />
-                Ma Personnalité 🎨
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {personalityTraits.map((trait, index) => (
-                  <div key={index}>
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="text-white font-semibold">{trait.trait}</span>
-                      <span className="text-gray-300">{trait.level}%</span>
-                    </div>
-                    <div className="w-full bg-gray-600 rounded-full h-3">
-                      <div 
-                        className={`${trait.color} h-3 rounded-full transition-all duration-500`}
-                        style={{ width: `${trait.level}%` }}
-                      ></div>
+          <TabsContent value="alerts" className="space-y-6">
+            <Card className="border-orange-200 bg-orange-50">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-orange-700">
+                  <AlertTriangle className="h-5 w-5" />
+                  Situations qui m'inquiètent
+                </CardTitle>
+                <CardDescription>
+                  Si tu vis une de ces situations, on peut alerter tes parents pour t'aider
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                {alertSituations.map((situation, index) => (
+                  <div key={index} className={`p-4 rounded-lg border-l-4 ${
+                    situation.urgent ? 'bg-red-50 border-red-400' : 'bg-yellow-50 border-yellow-400'
+                  }`}>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <span className="text-xl">{situation.icon}</span>
+                        <span className="font-medium">{situation.title}</span>
+                      </div>
+                      <Button 
+                        size="sm" 
+                        variant={situation.urgent ? "destructive" : "outline"}
+                      >
+                        {situation.urgent ? "Alerte Urgente" : "Signaler"}
+                      </Button>
                     </div>
                   </div>
                 ))}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
 
-        {/* Quick Actions */}
-        <div className="grid md:grid-cols-3 gap-6">
-          <Card className="group bg-gradient-to-br from-pink-500/10 to-purple-600/10 border-2 border-pink-400/30 hover:border-pink-400/60 transition-all duration-300 cursor-pointer"
-                onClick={() => navigate('/teens/customization')}>
-            <CardContent className="p-8 text-center">
-              <Palette className="w-16 h-16 text-pink-400 mx-auto mb-4 group-hover:scale-110 transition-transform" />
-              <h3 className="text-xl font-bold text-white mb-3">🎨 Personnaliser</h3>
-              <p className="text-gray-300 mb-4">Customise ton avatar, tes couleurs et ton style !</p>
-              <Button className="w-full bg-pink-500 hover:bg-pink-600 rounded-2xl">
-                Customiser
-              </Button>
-            </CardContent>
-          </Card>
-
-          <Card className="group bg-gradient-to-br from-green-500/10 to-emerald-600/10 border-2 border-green-400/30 hover:border-green-400/60 transition-all duration-300 cursor-pointer"
-                onClick={() => navigate('/teens/journal')}>
-            <CardContent className="p-8 text-center">
-              <BookOpen className="w-16 h-16 text-green-400 mx-auto mb-4 group-hover:scale-110 transition-transform" />
-              <h3 className="text-xl font-bold text-white mb-3">📖 Mon Journal</h3>
-              <p className="text-gray-300 mb-4">Écris tes pensées, tes rêves et tes découvertes !</p>
-              <Button className="w-full bg-green-500 hover:bg-green-600 rounded-2xl">
-                Écrire
-              </Button>
-            </CardContent>
-          </Card>
-
-          <Card className="group bg-gradient-to-br from-purple-500/10 to-indigo-600/10 border-2 border-purple-400/30 hover:border-purple-400/60 transition-all duration-300 cursor-pointer"
-                onClick={() => navigate('/teens/playlist')}>
-            <CardContent className="p-8 text-center">
-              <Music className="w-16 h-16 text-purple-400 mx-auto mb-4 group-hover:scale-110 transition-transform" />
-              <h3 className="text-xl font-bold text-white mb-3">🎵 Ma Playlist</h3>
-              <p className="text-gray-300 mb-4">Crée ta playlist bien-être et partage tes vibes !</p>
-              <Button className="w-full bg-purple-500 hover:bg-purple-600 rounded-2xl">
-                Écouter
-              </Button>
-            </CardContent>
-          </Card>
-        </div>
+          <TabsContent value="parents" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Users className="h-5 w-5" />
+                  Communication avec mes Parents
+                </CardTitle>
+                <CardDescription>
+                  Un espace pour échanger avec tes parents quand tu en as envie
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="bg-blue-50 p-4 rounded-lg">
+                    <p className="text-sm text-blue-700 font-medium mb-2">Message de Maman - Il y a 2h</p>
+                    <p className="text-blue-600">"Salut ma chérie ! J'ai vu que tu as fait ton check-in aujourd'hui. Je suis fière de toi ! 💕 N'hésite pas si tu veux qu'on discute."</p>
+                  </div>
+                  
+                  <Textarea
+                    placeholder="Écris un message à tes parents... Ils recevront une notification douce 📱"
+                    value={parentMessage}
+                    onChange={(e) => setParentMessage(e.target.value)}
+                    className="min-h-32"
+                  />
+                  
+                  <div className="flex justify-between">
+                    <div className="flex gap-2">
+                      <Button variant="outline" size="sm">
+                        <Lock className="h-4 w-4 mr-1" />
+                        Privé
+                      </Button>
+                      <Button variant="outline" size="sm">Demander de l'aide</Button>
+                    </div>
+                    <Button>Envoyer Message</Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );
