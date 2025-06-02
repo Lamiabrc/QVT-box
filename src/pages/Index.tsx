@@ -27,17 +27,98 @@ const Index = () => {
       
       <main className="flex-1">
         <section className="container mx-auto px-4 py-16">
-          {/* Hero Section avec images */}
-          <div className="text-center mb-16 relative">
-            {/* Images d'arrière-plan décoratives */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-br from-blue-400 to-cyan-400 rounded-full opacity-20 animate-pulse"></div>
-              <div className="absolute top-20 right-20 w-24 h-24 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full opacity-20 animate-bounce"></div>
-              <div className="absolute bottom-10 left-1/4 w-40 h-40 bg-gradient-to-br from-green-400 to-teal-400 rounded-full opacity-20 animate-ping"></div>
+          {/* Hero Section avec bulles flottantes multiples */}
+          <div className="text-center mb-16 relative overflow-hidden">
+            {/* Bulles flottantes avec différents personnages */}
+            <div className="absolute inset-0 pointer-events-none">
+              {/* Bulle Patronne principale - centre haut */}
+              <div className="absolute top-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+                <div className="relative">
+                  <div className="w-20 h-20 bg-gradient-to-br from-blue-400 to-cyan-400 rounded-full opacity-90 shadow-lg flex items-center justify-center">
+                    <img 
+                      src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=80&h=80&fit=crop&crop=face&auto=format&q=80" 
+                      alt="Patronne accueillante" 
+                      className="w-16 h-16 rounded-full object-cover border-2 border-white"
+                    />
+                  </div>
+                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full flex items-center justify-center animate-pulse">
+                    <Sparkles className="w-3 h-3 text-white" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Bulle Manager/RH - gauche */}
+              <div className="absolute top-32 left-20 animate-pulse" style={{ animationDelay: '0.5s' }}>
+                <div className="relative">
+                  <div className="w-16 h-16 bg-gradient-to-br from-indigo-400 to-purple-400 rounded-full opacity-80 shadow-lg flex items-center justify-center">
+                    <img 
+                      src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=64&h=64&fit=crop&crop=face&auto=format&q=80" 
+                      alt="Manager RH" 
+                      className="w-12 h-12 rounded-full object-cover border-2 border-white"
+                    />
+                  </div>
+                  <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-full flex items-center justify-center">
+                    <Building2 className="w-2.5 h-2.5 text-white" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Bulle Travailleur - droite */}
+              <div className="absolute top-20 right-16 animate-bounce" style={{ animationDelay: '1s' }}>
+                <div className="relative">
+                  <div className="w-14 h-14 bg-gradient-to-br from-green-400 to-teal-400 rounded-full opacity-75 shadow-lg flex items-center justify-center">
+                    <img 
+                      src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=56&h=56&fit=crop&crop=face&auto=format&q=80" 
+                      alt="Équipe de travail" 
+                      className="w-10 h-10 rounded-full object-cover border-2 border-white"
+                    />
+                  </div>
+                  <div className="absolute -top-1 -left-1 w-4 h-4 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center animate-ping">
+                    <Heart className="w-2 h-2 text-white" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Bulle Adolescent - gauche bas */}
+              <div className="absolute top-60 left-32 animate-pulse" style={{ animationDelay: '1.5s' }}>
+                <div className="relative">
+                  <div className="w-18 h-18 bg-gradient-to-br from-pink-400 to-rose-400 rounded-full opacity-85 shadow-lg flex items-center justify-center">
+                    <img 
+                      src="https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=72&h=72&fit=crop&crop=face&auto=format&q=80" 
+                      alt="Adolescent" 
+                      className="w-14 h-14 rounded-full object-cover border-2 border-white"
+                    />
+                  </div>
+                  <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-gradient-to-br from-pink-500 to-purple-500 rounded-full flex items-center justify-center">
+                    <Users className="w-2.5 h-2.5 text-white" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Bulle Famille - droite bas */}
+              <div className="absolute top-52 right-28 animate-bounce" style={{ animationDelay: '2s' }}>
+                <div className="relative">
+                  <div className="w-16 h-16 bg-gradient-to-br from-orange-400 to-red-400 rounded-full opacity-80 shadow-lg flex items-center justify-center">
+                    <img 
+                      src="https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=64&h=64&fit=crop&crop=center&auto=format&q=80" 
+                      alt="Espace famille" 
+                      className="w-12 h-12 rounded-full object-cover border-2 border-white"
+                    />
+                  </div>
+                  <div className="absolute -top-1 -left-1 w-4 h-4 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full flex items-center justify-center animate-pulse">
+                    <Package className="w-2 h-2 text-white" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Bulles décoratives supplémentaires */}
+              <div className="absolute bottom-20 left-16 w-12 h-12 bg-gradient-to-br from-cyan-300 to-blue-300 rounded-full opacity-60 animate-ping" style={{ animationDelay: '0.3s' }}></div>
+              <div className="absolute bottom-32 right-20 w-10 h-10 bg-gradient-to-br from-purple-300 to-pink-300 rounded-full opacity-50 animate-bounce" style={{ animationDelay: '2.5s' }}></div>
+              <div className="absolute top-40 left-1/3 w-8 h-8 bg-gradient-to-br from-green-300 to-teal-300 rounded-full opacity-40 animate-pulse" style={{ animationDelay: '1.2s' }}></div>
             </div>
 
             <div className="relative z-10">
-              {/* Image chaleureuse de patronne accueillante */}
+              {/* Image principale de la patronne */}
               <div className="flex justify-center mb-8">
                 <div className="relative">
                   <img 
