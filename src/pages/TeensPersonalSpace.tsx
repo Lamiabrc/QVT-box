@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Heart, User, Palette, Settings, Star, Trophy, Music, BookOpen } from "lucide-react";
+import TeensHeader from "@/components/teens/TeensHeader";
+import WellbeingAlerts from "@/components/WellbeingAlerts";
 
 const TeensPersonalSpace = () => {
   const navigate = useNavigate();
@@ -34,32 +36,14 @@ const TeensPersonalSpace = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-900 via-indigo-900 to-cyan-900 relative overflow-hidden">
+      <TeensHeader />
+      
       {/* Animated background elements */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute top-20 left-10 w-20 h-20 bg-pink-500 rounded-full animate-pulse"></div>
         <div className="absolute top-40 right-20 w-16 h-16 bg-yellow-400 rounded-full animate-bounce"></div>
         <div className="absolute bottom-20 left-1/4 w-24 h-24 bg-green-400 rounded-full animate-ping"></div>
       </div>
-
-      {/* Header */}
-      <header className="relative z-10 border-b border-white/20 bg-black/30 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Button 
-              variant="ghost" 
-              onClick={() => navigate('/teens')}
-              className="flex items-center space-x-2 text-white hover:bg-white/20"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              <span>Retour</span>
-            </Button>
-            <div className="flex items-center space-x-3">
-              <User className="w-6 h-6 text-pink-400" />
-              <h1 className="text-2xl font-black text-white">MON ESPACE</h1>
-            </div>
-          </div>
-        </div>
-      </header>
 
       <div className="container mx-auto px-4 py-8 relative z-10">
         {/* Profile Header */}
@@ -83,6 +67,11 @@ const TeensPersonalSpace = () => {
             <Badge className="bg-purple-500/20 text-purple-300 px-6 py-2 text-lg">#FamilyFirst</Badge>
             <Badge className="bg-cyan-500/20 text-cyan-300 px-6 py-2 text-lg">#WellBeingChampion</Badge>
           </div>
+        </div>
+
+        {/* Wellbeing Alerts */}
+        <div className="mb-12">
+          <WellbeingAlerts />
         </div>
 
         {/* Personal Stats */}

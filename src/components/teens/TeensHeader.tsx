@@ -1,13 +1,14 @@
 
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Home, User, Settings, LogOut } from 'lucide-react';
+import { Home, User, Settings, LogOut, ShoppingBag, CalendarDays, Globe } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
 const TeensHeader = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { toast } = useToast();
 
   const handleLogout = async () => {
@@ -22,6 +23,8 @@ const TeensHeader = () => {
       navigate('/');
     }
   };
+
+  const isActive = (path: string) => location.pathname === path;
 
   return (
     <header className="bg-gradient-to-r from-purple-600 via-pink-500 to-cyan-500 border-b border-white/20">
@@ -43,30 +46,51 @@ const TeensHeader = () => {
             <Button
               variant="ghost"
               onClick={() => navigate('/teens')}
-              className="text-white hover:bg-white/20 rounded-xl"
+              className={`text-white hover:bg-white/20 rounded-xl ${
+                isActive('/teens') ? 'bg-white/20' : ''
+              }`}
             >
               <Home className="w-4 h-4 mr-2" />
               Accueil
             </Button>
             <Button
               variant="ghost"
-              onClick={() => navigate('/teens/metaverse')}
-              className="text-white hover:bg-white/20 rounded-xl"
+              onClick={() => navigate('/teens/personal-space')}
+              className={`text-white hover:bg-white/20 rounded-xl ${
+                isActive('/teens/personal-space') ? 'bg-white/20' : ''
+              }`}
             >
+              <User className="w-4 h-4 mr-2" />
+              Mon Espace
+            </Button>
+            <Button
+              variant="ghost"
+              onClick={() => navigate('/teens/metaverse')}
+              className={`text-white hover:bg-white/20 rounded-xl ${
+                isActive('/teens/metaverse') ? 'bg-white/20' : ''
+              }`}
+            >
+              <Globe className="w-4 h-4 mr-2" />
               🌌 Métaverse
             </Button>
             <Button
               variant="ghost"
               onClick={() => navigate('/teens/shop')}
-              className="text-white hover:bg-white/20 rounded-xl"
+              className={`text-white hover:bg-white/20 rounded-xl ${
+                isActive('/teens/shop') ? 'bg-white/20' : ''
+              }`}
             >
+              <ShoppingBag className="w-4 h-4 mr-2" />
               🛍️ Boutique
             </Button>
             <Button
               variant="ghost"
               onClick={() => navigate('/teens/calendar')}
-              className="text-white hover:bg-white/20 rounded-xl"
+              className={`text-white hover:bg-white/20 rounded-xl ${
+                isActive('/teens/calendar') ? 'bg-white/20' : ''
+              }`}
             >
+              <CalendarDays className="w-4 h-4 mr-2" />
               📅 Calendrier
             </Button>
           </nav>
