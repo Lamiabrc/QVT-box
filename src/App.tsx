@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -51,6 +50,7 @@ import TeensMetaverse from '@/pages/TeensMetaverse';
 import EmployeeDashboard from '@/pages/entreprise/EmployeeDashboard';
 import ManagerDashboard from '@/pages/entreprise/ManagerDashboard';
 import HRDashboard from '@/pages/entreprise/HRDashboard';
+import Shop from '@/pages/Shop'; // ← on importe la page “/shop”
 
 const queryClient = new QueryClient();
 
@@ -114,7 +114,9 @@ function App() {
           <Route path="/entreprise/unboxing" element={<ProtectedRoute requireAuth={true}><EntrepriseUnboxing /></ProtectedRoute>} />
           <Route path="/entreprise/simulator" element={<EntrepriseSimulator />} />
           <Route path="/entreprise/admin-content" element={<ProtectedRoute requireAuth={true} requireAdmin={true}><EntrepriseAdminContentManager /></ProtectedRoute>} />
-          
+import HRDashboard from '@/pages/entreprise/HRDashboard';
+import Shop from '@/pages/Shop'; // ← on importe la page “/shop”
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

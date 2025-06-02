@@ -1,4 +1,4 @@
-
+// src/components/Navigation.tsx
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
