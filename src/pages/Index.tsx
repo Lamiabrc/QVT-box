@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
@@ -28,176 +29,220 @@ const Index = () => {
   const interactiveBubbles = [
     {
       id: 1,
-      image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=80&h=80&fit=crop&crop=face&auto=format&q=80",
-      alt: "Patronne accueillante",
-      size: "w-24 h-24",
-      bgGradient: "from-blue-400 to-cyan-400",
-      icon: <Sparkles className="w-4 h-4 text-white" />,
-      position: "top-10 left-1/2 transform -translate-x-1/2",
+      image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=100&h=100&fit=crop&crop=face&auto=format&q=80",
+      alt: "Patronne - QVT Box",
+      size: "w-28 h-28",
+      bgGradient: "from-blue-500 to-cyan-500",
+      icon: <Sparkles className="w-5 h-5 text-white" />,
+      position: "top-12 left-1/2 transform -translate-x-1/2",
       animation: "animate-bounce",
       delay: "0s",
-      onClick: () => navigate('/entreprise/shop'),
-      tooltip: "Découvrir nos box premium"
+      route: '/entreprise/shop',
+      tooltip: "🛍️ Découvrir la boutique entreprise",
+      category: "entreprise"
     },
     {
       id: 2,
-      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=64&h=64&fit=crop&crop=face&auto=format&q=80",
+      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=80&h=80&fit=crop&crop=face&auto=format&q=80",
       alt: "Manager RH",
-      size: "w-20 h-20",
-      bgGradient: "from-indigo-400 to-purple-400",
-      icon: <Building2 className="w-3 h-3 text-white" />,
-      position: "top-32 left-20",
+      size: "w-24 h-24",
+      bgGradient: "from-indigo-500 to-purple-500",
+      icon: <Building2 className="w-4 h-4 text-white" />,
+      position: "top-32 left-16",
       animation: "animate-pulse",
-      delay: "0.5s",
-      onClick: () => navigate('/entreprise/shop'),
-      tooltip: "Solutions RH & Management"
+      delay: "0.3s",
+      route: '/entreprise/dashboard',
+      tooltip: "📊 Dashboard RH & Management",
+      category: "entreprise"
     },
     {
       id: 3,
-      image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=56&h=56&fit=crop&crop=face&auto=format&q=80",
-      alt: "Équipe de travail",
-      size: "w-18 h-18",
-      bgGradient: "from-green-400 to-teal-400",
-      icon: <Heart className="w-3 h-3 text-white" />,
-      position: "top-20 right-16",
+      image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=70&h=70&fit=crop&crop=face&auto=format&q=80",
+      alt: "Équipe bien-être",
+      size: "w-20 h-20",
+      bgGradient: "from-green-500 to-teal-500",
+      icon: <Heart className="w-4 h-4 text-white" />,
+      position: "top-20 right-20",
       animation: "animate-bounce",
-      delay: "1s",
-      onClick: () => navigate('/entreprise/shop'),
-      tooltip: "Box bien-être équipe"
+      delay: "0.6s",
+      route: '/entreprise/shop',
+      tooltip: "💚 Box bien-être équipe",
+      category: "entreprise"
     },
     {
       id: 4,
-      image: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=72&h=72&fit=crop&crop=face&auto=format&q=80",
-      alt: "Adolescent",
-      size: "w-22 h-22",
-      bgGradient: "from-pink-400 to-rose-400",
-      icon: <Users className="w-3 h-3 text-white" />,
-      position: "top-60 left-32",
+      image: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=90&h=90&fit=crop&crop=face&auto=format&q=80",
+      alt: "Espace adolescent",
+      size: "w-26 h-26",
+      bgGradient: "from-pink-500 to-rose-500",
+      icon: <Users className="w-4 h-4 text-white" />,
+      position: "top-64 left-28",
       animation: "animate-pulse",
-      delay: "1.5s",
-      onClick: () => navigate('/teens/shop'),
-      tooltip: "Espace ados & famille"
+      delay: "0.9s",
+      route: '/teens/shop',
+      tooltip: "🎮 Boutique ados & famille",
+      category: "famille"
     },
     {
       id: 5,
-      image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=64&h=64&fit=crop&crop=center&auto=format&q=80",
-      alt: "Espace famille",
-      size: "w-20 h-20",
-      bgGradient: "from-orange-400 to-red-400",
-      icon: <Package className="w-3 h-3 text-white" />,
-      position: "top-52 right-28",
+      image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=85&h=85&fit=crop&crop=center&auto=format&q=80",
+      alt: "Famille connectée",
+      size: "w-24 h-24",
+      bgGradient: "from-orange-500 to-red-500",
+      icon: <Package className="w-4 h-4 text-white" />,
+      position: "top-48 right-32",
       animation: "animate-bounce",
-      delay: "2s",
-      onClick: () => navigate('/teens/shop'),
-      tooltip: "Box famille personnalisée"
+      delay: "1.2s",
+      route: '/teens',
+      tooltip: "👨‍👩‍👧‍👦 Espace famille",
+      category: "famille"
     },
-    // Nouvelles bulles plus nombreuses
     {
       id: 6,
-      image: "https://images.unsplash.com/photo-1582562124811-c09040d0a901?w=60&h=60&fit=crop&crop=face&auto=format&q=80",
-      alt: "Bien-être",
-      size: "w-16 h-16",
-      bgGradient: "from-yellow-400 to-amber-400",
-      icon: <Coffee className="w-2.5 h-2.5 text-white" />,
+      image: "https://images.unsplash.com/photo-1582562124811-c09040d0a901?w=75&h=75&fit=crop&crop=face&auto=format&q=80",
+      alt: "Détente au travail",
+      size: "w-22 h-22",
+      bgGradient: "from-yellow-500 to-amber-500",
+      icon: <Coffee className="w-3 h-3 text-white" />,
       position: "top-44 left-12",
       animation: "animate-ping",
-      delay: "0.8s",
-      onClick: () => navigate('/entreprise/shop'),
-      tooltip: "Box détente & relaxation"
+      delay: "0.4s",
+      route: '/entreprise/shop',
+      tooltip: "☕ Box détente & pause café",
+      category: "entreprise"
     },
     {
       id: 7,
-      image: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=68&h=68&fit=crop&crop=center&auto=format&q=80",
-      alt: "Motivation",
-      size: "w-19 h-19",
-      bgGradient: "from-emerald-400 to-green-400",
-      icon: <Star className="w-3 h-3 text-white" />,
-      position: "top-16 right-32",
+      image: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=95&h=95&fit=crop&crop=center&auto=format&q=80",
+      alt: "Motivation équipe",
+      size: "w-25 h-25",
+      bgGradient: "from-emerald-500 to-green-500",
+      icon: <Star className="w-4 h-4 text-white" />,
+      position: "top-16 right-36",
       animation: "animate-bounce",
-      delay: "0.3s",
-      onClick: () => navigate('/entreprise/shop'),
-      tooltip: "Box motivation & énergie"
+      delay: "0.7s",
+      route: '/entreprise/questionnaire',
+      tooltip: "⭐ Évaluation motivation",
+      category: "entreprise"
     },
     {
       id: 8,
-      image: "https://images.unsplash.com/photo-1501286353178-1ec881214838?w=56&h=56&fit=crop&crop=center&auto=format&q=80",
-      alt: "Innovation",
-      size: "w-17 h-17",
-      bgGradient: "from-purple-400 to-violet-400",
-      icon: <Gift className="w-2.5 h-2.5 text-white" />,
-      position: "top-72 right-20",
+      image: "https://images.unsplash.com/photo-1501286353178-1ec881214838?w=80&h=80&fit=crop&crop=center&auto=format&q=80",
+      alt: "Innovation RH",
+      size: "w-23 h-23",
+      bgGradient: "from-purple-500 to-violet-500",
+      icon: <Gift className="w-3 h-3 text-white" />,
+      position: "top-72 right-24",
       animation: "animate-pulse",
-      delay: "1.2s",
-      onClick: () => navigate('/entreprise/shop'),
-      tooltip: "Box créativité & innovation"
+      delay: "1.5s",
+      route: '/entreprise/shop',
+      tooltip: "🎁 Box innovation & créativité",
+      category: "entreprise"
     },
     {
       id: 9,
-      image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=52&h=52&fit=crop&crop=face&auto=format&q=80",
-      alt: "Leadership",
-      size: "w-15 h-15",
-      bgGradient: "from-cyan-400 to-blue-400",
-      icon: <Zap className="w-2 h-2 text-white" />,
+      image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=65&h=65&fit=crop&crop=face&auto=format&q=80",
+      alt: "Leadership féminin",
+      size: "w-19 h-19",
+      bgGradient: "from-cyan-500 to-blue-500",
+      icon: <Zap className="w-3 h-3 text-white" />,
       position: "top-36 left-1/3",
       animation: "animate-bounce",
-      delay: "0.7s",
-      onClick: () => navigate('/entreprise/shop'),
-      tooltip: "Box leadership"
+      delay: "1.1s",
+      route: '/entreprise/dashboard',
+      tooltip: "⚡ Leadership & management",
+      category: "entreprise"
     },
     {
       id: 10,
-      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=58&h=58&fit=crop&crop=face&auto=format&q=80",
-      alt: "Communication",
-      size: "w-16 h-16",
-      bgGradient: "from-rose-400 to-pink-400",
-      icon: <Smile className="w-2.5 h-2.5 text-white" />,
+      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=70&h=70&fit=crop&crop=face&auto=format&q=80",
+      alt: "Communication familiale",
+      size: "w-21 h-21",
+      bgGradient: "from-rose-500 to-pink-500",
+      icon: <Smile className="w-3 h-3 text-white" />,
       position: "top-68 left-1/4",
       animation: "animate-ping",
       delay: "1.8s",
-      onClick: () => navigate('/teens/shop'),
-      tooltip: "Communication familiale"
+      route: '/teens/family-space',
+      tooltip: "😊 Communication parent-ado",
+      category: "famille"
     },
-    // Bulles décoratives plus petites mais interactives
     {
       id: 11,
-      image: null,
-      alt: "Bonus",
-      size: "w-12 h-12",
-      bgGradient: "from-cyan-300 to-blue-300",
-      icon: <Heart className="w-2 h-2 text-white" />,
-      position: "bottom-20 left-16",
-      animation: "animate-ping",
-      delay: "0.3s",
-      onClick: () => navigate('/entreprise/shop'),
-      tooltip: "Surprise box"
+      image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=60&h=60&fit=crop&crop=face&auto=format&q=80",
+      alt: "Travail d'équipe",
+      size: "w-18 h-18",
+      bgGradient: "from-teal-500 to-cyan-500",
+      icon: <Users className="w-3 h-3 text-white" />,
+      position: "bottom-32 left-20",
+      animation: "animate-bounce",
+      delay: "0.8s",
+      route: '/entreprise/shop',
+      tooltip: "👥 Cohésion d'équipe",
+      category: "entreprise"
     },
     {
       id: 12,
-      image: null,
-      alt: "Special",
-      size: "w-14 h-14",
-      bgGradient: "from-purple-300 to-pink-300",
-      icon: <Sparkles className="w-2.5 h-2.5 text-white" />,
-      position: "bottom-32 right-20",
-      animation: "animate-bounce",
-      delay: "2.5s",
-      onClick: () => navigate('/teens/shop'),
-      tooltip: "Édition limitée"
+      image: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=55&h=55&fit=crop&crop=face&auto=format&q=80",
+      alt: "Adolescent heureux",
+      size: "w-17 h-17",
+      bgGradient: "from-violet-500 to-purple-500",
+      icon: <Heart className="w-2 h-2 text-white" />,
+      position: "bottom-28 right-16",
+      animation: "animate-pulse",
+      delay: "2.1s",
+      route: '/teens/personal-space',
+      tooltip: "💜 Espace personnel ado",
+      category: "famille"
     },
     {
       id: 13,
-      image: null,
-      alt: "Premium",
-      size: "w-10 h-10",
-      bgGradient: "from-green-300 to-teal-300",
-      icon: <Star className="w-2 h-2 text-white" />,
+      image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=50&h=50&fit=crop&crop=center&auto=format&q=80",
+      alt: "Maison familiale",
+      size: "w-16 h-16",
+      bgGradient: "from-amber-500 to-orange-500",
+      icon: <Package className="w-2 h-2 text-white" />,
       position: "top-40 right-1/4",
-      animation: "animate-pulse",
-      delay: "1.2s",
-      onClick: () => navigate('/entreprise/shop'),
-      tooltip: "Collection premium"
+      animation: "animate-bounce",
+      delay: "1.3s",
+      route: '/teens/shop',
+      tooltip: "🏠 Box famille premium",
+      category: "famille"
+    },
+    {
+      id: 14,
+      image: "https://images.unsplash.com/photo-1582562124811-c09040d0a901?w=45&h=45&fit=crop&crop=face&auto=format&q=80",
+      alt: "Bien-être professionnel",
+      size: "w-15 h-15",
+      bgGradient: "from-lime-500 to-green-500",
+      icon: <Shield className="w-2 h-2 text-white" />,
+      position: "bottom-20 left-1/3",
+      animation: "animate-ping",
+      delay: "0.5s",
+      route: '/entreprise/questionnaire',
+      tooltip: "🛡️ Prévention burn-out",
+      category: "entreprise"
+    },
+    {
+      id: 15,
+      image: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=40&h=40&fit=crop&crop=center&auto=format&q=80",
+      alt: "Performance équipe",
+      size: "w-14 h-14",
+      bgGradient: "from-sky-500 to-blue-500",
+      icon: <Target className="w-2 h-2 text-white" />,
+      position: "bottom-40 right-1/3",
+      animation: "animate-bounce",
+      delay: "1.6s",
+      route: '/entreprise/dashboard',
+      tooltip: "🎯 Performance & objectifs",
+      category: "entreprise"
     }
   ];
+
+  const handleBubbleClick = (route: string) => {
+    console.log('Bulle cliquée, navigation vers:', route);
+    navigate(route);
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 via-white to-purple-50">
@@ -206,24 +251,24 @@ const Index = () => {
       <main className="flex-1">
         <section className="container mx-auto px-4 py-16">
           {/* Hero Section avec bulles flottantes interactives */}
-          <div className="text-center mb-16 relative overflow-hidden">
+          <div className="text-center mb-16 relative overflow-hidden min-h-96">
             {/* Bulles flottantes interactives */}
-            <div className="absolute inset-0 pointer-events-none">
+            <div className="absolute inset-0 w-full h-full">
               {interactiveBubbles.map((bubble) => (
                 <div
                   key={bubble.id}
-                  className={`absolute ${bubble.position} ${bubble.animation} cursor-pointer pointer-events-auto group`}
+                  className={`absolute ${bubble.position} ${bubble.animation} cursor-pointer group z-10`}
                   style={{ animationDelay: bubble.delay }}
-                  onClick={bubble.onClick}
+                  onClick={() => handleBubbleClick(bubble.route)}
                   title={bubble.tooltip}
                 >
-                  <div className="relative transform transition-all duration-300 group-hover:scale-110 group-hover:z-10">
-                    <div className={`${bubble.size} bg-gradient-to-br ${bubble.bgGradient} rounded-full opacity-90 shadow-lg flex items-center justify-center group-hover:opacity-100 group-hover:shadow-2xl transition-all duration-300`}>
+                  <div className="relative transform transition-all duration-300 group-hover:scale-125 group-hover:z-20">
+                    <div className={`${bubble.size} bg-gradient-to-br ${bubble.bgGradient} rounded-full opacity-90 shadow-xl flex items-center justify-center group-hover:opacity-100 group-hover:shadow-2xl transition-all duration-300 border-2 border-white/30 group-hover:border-white/60`}>
                       {bubble.image ? (
                         <img 
                           src={bubble.image}
                           alt={bubble.alt}
-                          className={`${bubble.size.replace('w-', 'w-').replace('h-', 'h-').replace(/\d+/, (match) => String(parseInt(match) - 4))} rounded-full object-cover border-2 border-white`}
+                          className={`w-full h-full rounded-full object-cover border-2 border-white`}
                         />
                       ) : (
                         <div className="w-full h-full rounded-full bg-gradient-to-br from-white/20 to-white/10 flex items-center justify-center">
@@ -231,14 +276,16 @@ const Index = () => {
                         </div>
                       )}
                     </div>
-                    <div className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full flex items-center justify-center animate-pulse group-hover:animate-bounce">
+                    <div className="absolute -top-1 -right-1 w-6 h-6 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full flex items-center justify-center animate-pulse group-hover:animate-bounce shadow-lg">
                       {bubble.icon}
                     </div>
                     {/* Tooltip au survol */}
-                    <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none">
+                    <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-30 shadow-lg">
                       {bubble.tooltip}
-                      <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-2 border-r-2 border-t-2 border-transparent border-t-gray-900"></div>
+                      <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
                     </div>
+                    {/* Effet de pulsation pour indiquer la cliquabilité */}
+                    <div className={`absolute inset-0 ${bubble.size} bg-gradient-to-br ${bubble.bgGradient} rounded-full opacity-0 group-hover:opacity-20 animate-ping`}></div>
                   </div>
                 </div>
               ))}
@@ -250,7 +297,7 @@ const Index = () => {
                 <div className="relative">
                   <img 
                     src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=200&h=200&fit=crop&crop=face&auto=format&q=80" 
-                    alt="Patronne accueillante" 
+                    alt="Lamia Brechet - Fondatrice QVT Box" 
                     className="w-32 h-32 rounded-full object-cover shadow-2xl border-4 border-white animate-fade-in cursor-pointer hover:scale-105 transition-transform duration-300"
                     onClick={() => navigate('/entreprise')}
                     title="Découvrir l'espace entreprise"
@@ -270,9 +317,9 @@ const Index = () => {
                 </h1>
                 
                 <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8 leading-relaxed">
-                  Je suis ravie de vous accueillir dans notre solution phygitale innovante qui allie 
+                  Je suis Lamia Brechet, fondatrice de QVT Box. Je suis ravie de vous accueillir dans notre solution phygitale innovante qui allie 
                   intelligence artificielle et objets bien-être pour transformer votre quotidien 
-                  professionnel et familial. Cliquez sur les bulles pour découvrir nos produits !
+                  professionnel et familial. <strong>Cliquez sur les bulles flottantes pour découvrir nos produits !</strong>
                 </p>
 
                 <div className="flex flex-wrap justify-center gap-4 mb-8">
@@ -293,19 +340,19 @@ const Index = () => {
             </div>
           </div>
 
-          {/* Message personnalisé de la patronne */}
+          {/* Message personnalisé de la fondatrice */}
           <div className="max-w-4xl mx-auto mb-16">
             <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200/50 shadow-lg">
               <CardContent className="p-8">
                 <div className="flex items-start space-x-6">
                   <img 
-                    src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=120&h=120&fit=crop&crop=face&auto=format&q=80" 
-                    alt="Message de la fondatrice" 
+                    src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=120&h=120&fit=crop&crop=face&auto=format&q=80" 
+                    alt="Lamia Brechet - Message de la fondatrice" 
                     className="w-20 h-20 rounded-full object-cover border-3 border-white shadow-lg flex-shrink-0"
                   />
                   <div className="flex-1">
                     <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                      💬 Un message personnel pour vous
+                      💬 Un message personnel de votre fondatrice
                     </h3>
                     <p className="text-gray-700 leading-relaxed text-lg italic">
                       "Après 15 ans d'expérience en entreprise, j'ai créé QVT Box pour répondre 
@@ -315,7 +362,7 @@ const Index = () => {
                       chacun peut s'épanouir pleinement."
                     </p>
                     <p className="text-primary font-semibold mt-4">
-                      — Marie Dubois, Fondatrice & CEO
+                      — Lamia Brechet, Fondatrice & CEO
                     </p>
                   </div>
                 </div>
