@@ -5,49 +5,39 @@ import { Button } from '@/components/ui/button';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { ArrowLeft, Shield, Heart, MapPin, Users, Lightbulb, Award } from 'lucide-react';
-
 const NosValeurs = () => {
-  const valeurs = [
-    {
-      icon: <MapPin className="w-8 h-8 text-white" />,
-      title: "🇫🇷 French Tech",
-      description: "Fiers de notre origine française, nous développons nos solutions en France avec un savoir-faire local reconnu.",
-      gradient: "from-blue-500 to-blue-600"
-    },
-    {
-      icon: <Shield className="w-8 h-8 text-white" />,
-      title: "🛡️ Sécurité & Confidentialité",
-      description: "Protection maximale des données personnelles avec un hébergement 100% français et une conformité RGPD stricte.",
-      gradient: "from-green-500 to-green-600"
-    },
-    {
-      icon: <Heart className="w-8 h-8 text-white" />,
-      title: "❤️ Bienveillance",
-      description: "Approche humaine et éthique centrée sur le bien-être et l'épanouissement de chaque individu.",
-      gradient: "from-pink-500 to-pink-600"
-    },
-    {
-      icon: <Users className="w-8 h-8 text-white" />,
-      title: "👥 Inclusion",
-      description: "Solutions accessibles à tous, respectueuses de la diversité et adaptées aux besoins de chaque famille et entreprise.",
-      gradient: "from-purple-500 to-purple-600"
-    },
-    {
-      icon: <Lightbulb className="w-8 h-8 text-white" />,
-      title: "💡 Innovation",
-      description: "Recherche constante d'amélioration grâce aux dernières avancées en intelligence artificielle et bien-être.",
-      gradient: "from-orange-500 to-orange-600"
-    },
-    {
-      icon: <Award className="w-8 h-8 text-white" />,
-      title: "🏆 Excellence Française",
-      description: "Engagement éthique local avec du 100% fabriqué en France, partenariat avec des fabricants et fournisseurs français engagés et éthiques.",
-      gradient: "from-indigo-500 to-indigo-600"
-    }
-  ];
-
-  return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 via-white to-purple-50">
+  const valeurs = [{
+    icon: <MapPin className="w-8 h-8 text-white" />,
+    title: "🇫🇷 French Tech",
+    description: "Fiers de notre origine française, nous développons nos solutions en France avec un savoir-faire local reconnu.",
+    gradient: "from-blue-500 to-blue-600"
+  }, {
+    icon: <Shield className="w-8 h-8 text-white" />,
+    title: "🛡️ Sécurité & Confidentialité",
+    description: "Protection maximale des données personnelles avec un hébergement 100% français et une conformité RGPD stricte.",
+    gradient: "from-green-500 to-green-600"
+  }, {
+    icon: <Heart className="w-8 h-8 text-white" />,
+    title: "❤️ Bienveillance",
+    description: "Approche humaine et éthique centrée sur le bien-être et l'épanouissement de chaque individu.",
+    gradient: "from-pink-500 to-pink-600"
+  }, {
+    icon: <Users className="w-8 h-8 text-white" />,
+    title: "👥 Inclusion",
+    description: "Solutions accessibles à tous, respectueuses de la diversité et adaptées aux besoins de chaque famille et entreprise.",
+    gradient: "from-purple-500 to-purple-600"
+  }, {
+    icon: <Lightbulb className="w-8 h-8 text-white" />,
+    title: "💡 Innovation",
+    description: "Recherche constante d'amélioration grâce aux dernières avancées en intelligence artificielle et bien-être.",
+    gradient: "from-orange-500 to-orange-600"
+  }, {
+    icon: <Award className="w-8 h-8 text-white" />,
+    title: "🏆 Excellence Française",
+    description: "Engagement éthique local avec du 100% fabriqué en France, partenariat avec des fabricants et fournisseurs français engagés et éthiques.",
+    gradient: "from-indigo-500 to-indigo-600"
+  }];
+  return <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 via-white to-purple-50">
       <Header />
       
       <main className="flex-1">
@@ -70,11 +60,10 @@ const NosValeurs = () => {
 
             {/* Valeurs Grid */}
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-              {valeurs.map((valeur, index) => (
-                <Card key={index} className="group hover:shadow-xl transition-all duration-300 border-2 hover:border-primary/20">
+              {valeurs.map((valeur, index) => <Card key={index} className="group hover:shadow-xl transition-all duration-300 border-2 hover:border-primary/20">
                   <CardContent className="p-6">
                     <div className="text-center">
-                      <div className={`w-16 h-16 bg-gradient-to-br ${valeur.gradient} rounded-full mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg`}>
+                      <div className="">
                         {valeur.icon}
                       </div>
                       <h3 className="text-xl font-bold text-gray-900 mb-3">
@@ -85,8 +74,7 @@ const NosValeurs = () => {
                       </p>
                     </div>
                   </CardContent>
-                </Card>
-              ))}
+                </Card>)}
             </div>
 
             {/* Engagement Section */}
@@ -129,19 +117,10 @@ const NosValeurs = () => {
                 Rejoignez-nous dans cette démarche d'amélioration du bien-être au travail et en famille.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
-                <Button 
-                  size="lg"
-                  className="bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-white px-8 py-4 rounded-xl shadow-lg"
-                  onClick={() => window.location.href = '/entreprise'}
-                >
+                <Button size="lg" className="bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-white px-8 py-4 rounded-xl shadow-lg" onClick={() => window.location.href = '/entreprise'}>
                   Découvrir nos solutions
                 </Button>
-                <Button 
-                  variant="outline"
-                  size="lg"
-                  className="border-2 border-primary text-primary hover:bg-primary hover:text-white px-8 py-4 rounded-xl"
-                  onClick={() => window.location.href = '/qui-sommes-nous'}
-                >
+                <Button variant="outline" size="lg" className="border-2 border-primary text-primary hover:bg-primary hover:text-white px-8 py-4 rounded-xl" onClick={() => window.location.href = '/qui-sommes-nous'}>
                   En savoir plus sur nous
                 </Button>
               </div>
@@ -151,8 +130,6 @@ const NosValeurs = () => {
       </main>
 
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default NosValeurs;
