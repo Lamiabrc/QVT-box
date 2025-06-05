@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
@@ -10,7 +9,7 @@ import { Building2, Users, Shield, Brain, Heart, Package, ArrowRight, CheckCircl
 const Index = () => {
   const navigate = useNavigate();
   
-  // Bulles réduites avec mouvements plus larges
+  // Bulles flottantes réduites avec mouvements plus larges
   const floatingBubbles = [
     {
       id: 1,
@@ -18,8 +17,8 @@ const Index = () => {
       alt: "QVT Innovation",
       size: "w-24 h-24",
       bgGradient: "from-blue-500 to-cyan-500",
-      icon: <Sparkles className="w-5 h-5 text-white" />,
-      position: "top-16 left-16",
+      icon: <Coffee className="w-5 h-5 text-white" />,
+      position: "top-20 left-20",
       animation: "animate-bounce",
       delay: "0s",
       route: '/entreprise/shop',
@@ -32,7 +31,7 @@ const Index = () => {
       size: "w-28 h-28",
       bgGradient: "from-indigo-500 to-purple-500",
       icon: <Building2 className="w-5 h-5 text-white" />,
-      position: "top-32 right-24",
+      position: "top-40 right-32",
       animation: "animate-pulse",
       delay: "0.5s",
       route: '/entreprise/dashboard',
@@ -45,7 +44,7 @@ const Index = () => {
       size: "w-26 h-26",
       bgGradient: "from-green-500 to-teal-500",
       icon: <Heart className="w-4 h-4 text-white" />,
-      position: "top-64 left-32",
+      position: "bottom-40 left-40",
       animation: "animate-bounce",
       delay: "1s",
       route: '/entreprise/shop',
@@ -58,7 +57,7 @@ const Index = () => {
       size: "w-32 h-32",
       bgGradient: "from-pink-500 to-rose-500",
       icon: <Users className="w-6 h-6 text-white" />,
-      position: "bottom-32 right-16",
+      position: "bottom-32 right-20",
       animation: "animate-pulse",
       delay: "1.5s",
       route: '/teens/shop',
@@ -71,7 +70,7 @@ const Index = () => {
       size: "w-30 h-30",
       bgGradient: "from-orange-500 to-red-500",
       icon: <Package className="w-5 h-5 text-white" />,
-      position: "bottom-16 left-1/4",
+      position: "bottom-20 left-1/4",
       animation: "animate-bounce",
       delay: "2s",
       route: '/famille',
@@ -84,7 +83,7 @@ const Index = () => {
       size: "w-22 h-22",
       bgGradient: "from-yellow-500 to-amber-500",
       icon: <Coffee className="w-4 h-4 text-white" />,
-      position: "top-48 left-1/3",
+      position: "top-60 left-1/3",
       animation: "animate-ping",
       delay: "0.7s",
       route: '/entreprise/shop',
@@ -92,7 +91,7 @@ const Index = () => {
     }
   ];
 
-  // Grandes bulles pour les univers
+  // Grandes bulles pour les univers positionnées au centre
   const universeBubbles = [
     {
       id: 'entreprise',
@@ -132,15 +131,63 @@ const Index = () => {
           {/* Hero Section */}
           <div className="text-center mb-16 relative overflow-hidden min-h-[700px]">
             
-            {/* Bulles flottantes plus petites avec mouvements larges */}
-            <div className="absolute inset-0 w-full h-full overflow-hidden">
+            {/* Message de bienvenue déplacé en haut */}
+            <div className="relative z-30 mb-12">
+              {/* Image principale de la patronne */}
+              <div className="flex justify-center mb-8">
+                <div className="relative">
+                  <img 
+                    alt="Lamia Brechet - Fondatrice QVT Box" 
+                    className="w-32 h-32 rounded-full object-cover shadow-2xl border-4 border-white animate-fade-in cursor-pointer hover:scale-105 transition-transform duration-300" 
+                    onClick={() => navigate('/entreprise')} 
+                    title="Découvrir l'espace entreprise" 
+                    src="/lovable-uploads/1487ccee-42cd-40a6-8a14-c02384e891be.jpg" 
+                  />
+                  <div className="absolute -bottom-2 -right-2 w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center shadow-lg animate-bounce">
+                    <Star className="w-5 h-5 text-white" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 max-w-3xl mx-auto shadow-xl border border-white/50">
+                <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4">
+                  Bienvenu dans l'univers{' '}
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+                    QVT Box
+                  </span>
+                </h1>
+                
+                <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-6 leading-relaxed">
+                  Une solution phygitale innovante qui allie l'intelligence artificielle et box bien-être pour transformer votre quotidien, 
+                  au travail ou en famille. <strong>Choisissez votre univers pour commencer !</strong>
+                </p>
+
+                <div className="flex flex-wrap justify-center gap-3">
+                  <div className="flex items-center space-x-2 bg-white px-4 py-2 rounded-full shadow-md border-l-4 border-blue-500">
+                    <Package className="h-4 w-4 text-primary" />
+                    <span className="text-sm font-medium">Box française 🇫🇷</span>
+                  </div>
+                  <div className="flex items-center space-x-2 bg-white px-4 py-2 rounded-full shadow-md border-l-4 border-purple-500">
+                    <Brain className="h-4 w-4 text-primary" />
+                    <span className="text-sm font-medium">IA avancée 🤖</span>
+                  </div>
+                  <div className="flex items-center space-x-2 bg-white px-4 py-2 rounded-full shadow-md border-l-4 border-green-500">
+                    <Shield className="h-4 w-4 text-primary" />
+                    <span className="text-sm font-medium">RGPD sécurisé 🛡️</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Zone des bulles flottantes */}
+            <div className="absolute inset-0 w-full h-full overflow-hidden top-32">
               {floatingBubbles.map(bubble => (
                 <div 
                   key={bubble.id} 
                   className={`absolute ${bubble.position} ${bubble.animation} cursor-pointer group z-10`} 
                   style={{
                     animationDelay: bubble.delay,
-                    animationDuration: "4s",
+                    animationDuration: "6s",
                     transform: "translateX(0) translateY(0)"
                   }} 
                   onClick={() => handleBubbleClick(bubble.route)} 
@@ -195,53 +242,6 @@ const Index = () => {
                   </div>
                 </div>
               ))}
-            </div>
-
-            <div className="relative z-30">
-              {/* Image principale de la patronne */}
-              <div className="flex justify-center mb-8">
-                <div className="relative">
-                  <img 
-                    alt="Lamia Brechet - Fondatrice QVT Box" 
-                    className="w-32 h-32 rounded-full object-cover shadow-2xl border-4 border-white animate-fade-in cursor-pointer hover:scale-105 transition-transform duration-300" 
-                    onClick={() => navigate('/entreprise')} 
-                    title="Découvrir l'espace entreprise" 
-                    src="/lovable-uploads/1487ccee-42cd-40a6-8a14-c02384e891be.jpg" 
-                  />
-                  <div className="absolute -bottom-2 -right-2 w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center shadow-lg animate-bounce">
-                    <Sparkles className="w-5 h-5 text-white" />
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 max-w-4xl mx-auto shadow-xl border border-white/50">
-                <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-                  Bienvenu dans l'univers{' '}
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
-                    QVT Box
-                  </span>
-                </h1>
-                
-                <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8 leading-relaxed">
-                  Une solution phygitale innovante qui allie l'intelligence artificielle et box bien-être pour transformer votre quotidien, 
-                  au travail ou en famille. <strong>Choisissez votre univers pour commencer !</strong>
-                </p>
-
-                <div className="flex flex-wrap justify-center gap-4 mb-8">
-                  <div className="flex items-center space-x-2 bg-white px-6 py-3 rounded-full shadow-md border-l-4 border-blue-500">
-                    <Package className="h-5 w-5 text-primary" />
-                    <span className="text-sm font-medium">Box française 🇫🇷</span>
-                  </div>
-                  <div className="flex items-center space-x-2 bg-white px-6 py-3 rounded-full shadow-md border-l-4 border-purple-500">
-                    <Brain className="h-5 w-5 text-primary" />
-                    <span className="text-sm font-medium">IA avancée 🤖</span>
-                  </div>
-                  <div className="flex items-center space-x-2 bg-white px-6 py-3 rounded-full shadow-md border-l-4 border-green-500">
-                    <Shield className="h-5 w-5 text-primary" />
-                    <span className="text-sm font-medium">RGPD sécurisé 🛡️</span>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
 
