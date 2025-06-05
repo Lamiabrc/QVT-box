@@ -2,7 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { Building2, TrendingUp, Users, Shield, ArrowLeft, LogIn, UserPlus } from "lucide-react";
+import { Building2, TrendingUp, Users, Shield, ArrowLeft, LogIn, UserPlus, Play } from "lucide-react";
 
 const EntrepriseHome = () => {
   const navigate = useNavigate();
@@ -48,7 +48,7 @@ const EntrepriseHome = () => {
                 onClick={() => navigate('/simulator/entreprise')}>
             <CardHeader className="text-center pb-4">
               <div className="w-16 h-16 bg-green-100 rounded-2xl mx-auto mb-4 flex items-center justify-center group-hover:bg-green-200 transition-colors">
-                <TrendingUp className="w-8 h-8 text-green-600" />
+                <Play className="w-8 h-8 text-green-600" />
               </div>
               <CardTitle className="text-xl">Simulateur QVT</CardTitle>
               <div className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">GRATUIT</div>
