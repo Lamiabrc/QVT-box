@@ -1,10 +1,23 @@
-
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from '@/components/ui/toaster';
 import Index from '@/pages/Index';
-import Auth from '@/pages/Auth';
+import ProtectedRoute from '@/components/ProtectedRoute';
+
+// Auth pages
+import Login from '@/pages/auth/Login';
+import Register from '@/pages/auth/Register';
+import ForgotPassword from '@/pages/auth/ForgotPassword';
+
+// Universe homes
+import EntrepriseHome from '@/pages/entreprise/EntrepriseHome';
+import TeensHome from '@/pages/teens/TeensHome';
+
+// Simulator
+import SimulatorHome from '@/pages/simulator/SimulatorHome';
+
+// Keep existing imports for protected pages
 import Profil from '@/pages/Profil';
 import Recommandations from '@/pages/Recommandations';
 import Historique from '@/pages/Historique';
@@ -12,8 +25,8 @@ import NotFound from '@/pages/NotFound';
 import QuiSommesNous from '@/pages/QuiSommesNous';
 import NosValeurs from '@/pages/NosValeurs';
 import Contact from '@/pages/Contact';
-import ProtectedRoute from '@/components/ProtectedRoute';
 import AdminPanel from '@/pages/AdminPanel';
+
 import TeensLogin from '@/pages/teens/Login';
 import TeensRegister from '@/pages/teens/Register';
 import Teens from '@/pages/Teens';
@@ -60,13 +73,28 @@ function App() {
       <BrowserRouter>
         <Toaster />
         <Routes>
+          {/* Home page with universe selector */}
           <Route path="/" element={<Index />} />
-          <Route path="/auth" element={<Auth />} />
+          
+          {/* New unified auth routes */}
+          <Route path="/auth/login" element={<Login />} />
+          <Route path="/auth/register" element={<Register />} />
+          <Route path="/auth/forgot-password" element={<ForgotPassword />} />
+          
+          {/* Universe home pages */}
+          <Route path="/entreprise" element={<EntrepriseHome />} />
+          <Route path="/famille" element={<TeensHome />} />
+          
+          {/* Simulator routes */}
+          <Route path="/simulator/:universe" element={<SimulatorHome />} />
+          <Route path="/simulator/:universe/questionnaire" element={<EntrepriseSimulator />} />
+          
+          {/* Protected user pages */}
           <Route path="/profil" element={<ProtectedRoute requireAuth={true}><Profil /></ProtectedRoute>} />
           <Route path="/recommandations" element={<ProtectedRoute requireAuth={true}><Recommandations /></ProtectedRoute>} />
           <Route path="/historique" element={<ProtectedRoute requireAuth={true}><Historique /></ProtectedRoute>} />
           
-          {/* Pages footer */}
+          {/* Footer pages */}
           <Route path="/qui-sommes-nous" element={<QuiSommesNous />} />
           <Route path="/nos-valeurs" element={<NosValeurs />} />
           <Route path="/contact" element={<Contact />} />
@@ -74,10 +102,12 @@ function App() {
           {/* Admin Route */}
           <Route path="/admin" element={<ProtectedRoute requireAuth={true}><AdminPanel /></ProtectedRoute>} />
           
-          {/* Teens Routes */}
+          {/* Legacy Teens Routes - keep for compatibility */}
           <Route path="/teens/login" element={<TeensLogin />} />
           <Route path="/teens/register" element={<TeensRegister />} />
           <Route path="/teens" element={<ProtectedRoute requireAuth={true}><Teens /></ProtectedRoute>} />
+          <Route path="/teens/dashboard" element={<ProtectedRoute requireAuth={true}><Teens /></ProtectedRoute>} />
+          
           <Route path="/teens/personal-space" element={<ProtectedRoute requireAuth={true}><TeensPersonalSpace /></ProtectedRoute>} />
           <Route path="/teens/fun-solutions" element={<ProtectedRoute requireAuth={true}><TeensFunSolutions /></ProtectedRoute>} />
           <Route path="/teens/parental-access-dashboard" element={<ProtectedRoute requireAuth={true}><TeensParentalAccessDashboard /></ProtectedRoute>} />
@@ -97,12 +127,11 @@ function App() {
           <Route path="/teens/dashboard-parent" element={<ProtectedRoute requireAuth={true}><TeensDashboardParent /></ProtectedRoute>} />
           <Route path="/teens/ai-evaluation" element={<ProtectedRoute requireAuth={true}><TeensAIEvaluation /></ProtectedRoute>} />
           
-          {/* Entreprise Routes */}
+          {/* Legacy Entreprise Routes - keep for compatibility */}
           <Route path="/entreprise/login" element={<EntrepriseLogin />} />
           <Route path="/entreprise/register" element={<EntrepriseRegister />} />
           <Route path="/entreprise/forgot-password" element={<EntrepriseForgotPassword />} />
           <Route path="/entreprise/reset-password" element={<EntrepriseResetPassword />} />
-          <Route path="/entreprise" element={<Entreprise />} />
           <Route path="/entreprise/dashboard" element={<ProtectedRoute requireAuth={true}><EntrepriseDashboard /></ProtectedRoute>} />
           <Route path="/entreprise/employee-dashboard" element={<ProtectedRoute requireAuth={true}><EmployeeDashboard /></ProtectedRoute>} />
           <Route path="/entreprise/manager-dashboard" element={<ProtectedRoute requireAuth={true}><ManagerDashboard /></ProtectedRoute>} />
