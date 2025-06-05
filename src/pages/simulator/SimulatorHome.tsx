@@ -57,9 +57,9 @@ const SimulatorHome = () => {
 
         {/* Types d'évaluation */}
         <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-12">
-          {/* Évaluation personnelle */}
+          {/* Évaluation personnelle/individuelle */}
           <Card className="group hover:shadow-lg transition-all duration-300 cursor-pointer transform hover:-translate-y-1"
-                onClick={() => navigate(`/entreprise/simulator?type=personal`)}>
+                onClick={() => navigate(isFamily ? `/teens/family-simulator?type=personal` : `/entreprise/simulator?type=personal`)}>
             <CardHeader className="text-center pb-4">
               <div className="w-16 h-16 bg-blue-100 rounded-2xl mx-auto mb-4 flex items-center justify-center group-hover:bg-blue-200 transition-colors">
                 {isFamily ? (
