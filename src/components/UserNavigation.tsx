@@ -16,6 +16,7 @@ const UserNavigation = () => {
   };
 
   const handleChangeUniverse = () => {
+    // Propose à l'utilisateur de changer d'univers
     navigate('/');
   };
 

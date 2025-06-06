@@ -2,7 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { Users, Heart, Shield, ArrowLeft, LogIn, UserPlus, Play } from "lucide-react";
+import { Users, Heart, Shield, ArrowLeft, LogIn, UserPlus, GamepadIcon } from "lucide-react";
 
 const TeensHome = () => {
   const navigate = useNavigate();
@@ -48,7 +48,7 @@ const TeensHome = () => {
                 onClick={() => navigate('/simulator/famille')}>
             <CardHeader className="text-center pb-4">
               <div className="w-16 h-16 bg-green-100 rounded-2xl mx-auto mb-4 flex items-center justify-center group-hover:bg-green-200 transition-colors">
-                <Play className="w-8 h-8 text-green-600" />
+                <Heart className="w-8 h-8 text-green-600" />
               </div>
               <CardTitle className="text-xl">Simulateur Famille</CardTitle>
               <div className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">GRATUIT</div>
@@ -99,7 +99,7 @@ const TeensHome = () => {
           <h2 className="text-2xl font-bold text-center mb-8">Qui peut utiliser l'espace famille ?</h2>
           <div className="grid md:grid-cols-2 gap-6">
             <Card className="text-center p-6">
-              <Heart className="w-12 h-12 text-pink-600 mx-auto mb-4" />
+              <GamepadIcon className="w-12 h-12 text-blue-600 mx-auto mb-4" />
               <h3 className="font-semibold mb-2">Adolescents (13-18 ans)</h3>
               <p className="text-sm text-gray-600">Interface ludique, activités personnalisées, espace d'expression sécurisé</p>
             </Card>

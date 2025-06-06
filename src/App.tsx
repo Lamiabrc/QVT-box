@@ -81,12 +81,13 @@ function App() {
           <Route path="/auth/register" element={<Register />} />
           <Route path="/auth/forgot-password" element={<ForgotPassword />} />
           
-          {/* Universe home pages - corrected routes */}
+          {/* Universe home pages */}
           <Route path="/entreprise" element={<EntrepriseHome />} />
           <Route path="/famille" element={<TeensHome />} />
           
-          {/* Simulator routes - corrected */}
+          {/* Simulator routes */}
           <Route path="/simulator/:universe" element={<SimulatorHome />} />
+          <Route path="/simulator/:universe/questionnaire" element={<EntrepriseSimulator />} />
           
           {/* Protected user pages */}
           <Route path="/profil" element={<ProtectedRoute requireAuth={true}><Profil /></ProtectedRoute>} />
