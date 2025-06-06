@@ -1,8 +1,9 @@
+
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Heart, Shield, Brain, Gamepad2, MessageCircle, Package, Sparkles, ChevronRight, Users, ShoppingBag, CalendarDays } from "lucide-react";
+import { Heart, Shield, Brain, Gamepad2, MessageCircle, Package, Sparkles, ChevronRight, Users, ShoppingBag, CalendarDays, Palette } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useSecureAuth } from "@/hooks/useSecureAuth";
 import Navigation from "@/components/Navigation";
@@ -14,7 +15,6 @@ const TeensFamilySpace = () => {
   const [userType, setUserType] = useState<"teen" | "parent" | null>(null);
 
   useEffect(() => {
-    // For now, default to teen type when user exists
     if (user) {
       setUserType("teen");
     }
@@ -23,115 +23,122 @@ const TeensFamilySpace = () => {
   const features = [
     {
       icon: Brain,
-      title: "Évaluation IA",
-      description: "Tests interactifs et ludiques pour évaluer ton bien-être mental",
-      color: "bg-purple-100 text-purple-600",
+      title: "Évaluation IA Créative",
+      description: "Tests interactifs et colorés pour évaluer ton bien-être mental",
+      gradient: "from-purple-400 to-pink-500",
       route: "/teens/ai-evaluation"
     },
     {
       icon: Shield,
-      title: "Accès Parental",
-      description: "Espace sécurisé pour que tes parents puissent t'accompagner",
-      color: "bg-blue-100 text-blue-600",
+      title: "Accès Parental Sécurisé",
+      description: "Espace coloré et sécurisé pour que tes parents t'accompagnent",
+      gradient: "from-blue-400 to-cyan-500",
       route: "/teens/parental-access"
     },
     {
       icon: Gamepad2,
-      title: "Solutions Fun",
-      description: "Activités ludiques et exercices de relaxation personnalisés",
-      color: "bg-green-100 text-green-600",
+      title: "Solutions Fun Créatives",
+      description: "Activités ludiques et exercices de relaxation personnalisés et colorés",
+      gradient: "from-green-400 to-emerald-500",
       route: "/teens/personal-space"
     },
     {
       icon: MessageCircle,
-      title: "Espace d'Expression",
-      description: "Partage tes émotions dans un environnement bienveillant",
-      color: "bg-orange-100 text-orange-600",
+      title: "Espace d'Expression Coloré",
+      description: "Partage tes émotions dans un environnement bienveillant et créatif",
+      gradient: "from-orange-400 to-red-500",
       route: "/teens/personal-space"
     },
     {
       icon: Sparkles,
-      title: "Métaverse",
-      description: "Explore des environnements virtuels apaisants avec ta famille",
-      color: "bg-pink-100 text-pink-600",
+      title: "Métaverse Créatif",
+      description: "Explore des environnements virtuels colorés et apaisants avec ta famille",
+      gradient: "from-pink-400 to-purple-500",
       route: "/teens/metaverse"
     },
     {
       icon: ShoppingBag,
-      title: "Boutique",
-      description: "Produits 100% Made in France pour ton bien-être",
-      color: "bg-emerald-100 text-emerald-600",
+      title: "Boutique Créative",
+      description: "Produits colorés 100% Made in France pour ton bien-être",
+      gradient: "from-emerald-400 to-teal-500",
       route: "/teens/shop"
     }
   ];
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-cyan-400 via-blue-300 to-purple-400">
+        <div className="w-12 h-12 bg-gradient-to-r from-red-500 via-yellow-400 to-green-500 rounded-2xl animate-spin"></div>
       </div>
     );
   }
 
   if (!user || !userType) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-400 via-pink-500 to-red-500">
-        <div className="container mx-auto px-4 py-16">
+      <div className="min-h-screen bg-gradient-to-br from-cyan-400 via-blue-300 to-purple-400 relative overflow-hidden">
+        {/* Floating cubes */}
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute top-20 left-10 w-20 h-20 bg-red-500 rounded-2xl animate-bounce transform rotate-12"></div>
+          <div className="absolute top-40 right-20 w-16 h-16 bg-yellow-400 rounded-2xl animate-pulse transform -rotate-45"></div>
+          <div className="absolute bottom-20 left-1/4 w-24 h-24 bg-green-500 rounded-2xl animate-spin-slow transform rotate-45"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 py-16 relative z-10">
           <div className="text-center mb-12">
-            <h1 className="text-6xl font-bold text-white mb-4 animate-fade-in">
-              QVTeens<span className="text-yellow-300">Box</span>
+            <h1 className="text-6xl font-black text-white mb-4 animate-fade-in drop-shadow-lg">
+              QVTeens<span className="text-yellow-300">Créative</span><span className="text-pink-300">Box</span>
             </h1>
-            <p className="text-xl text-white/90 max-w-2xl mx-auto animate-fade-in">
-              Ta santé mentale, notre priorité. Une app fun et interactive pour prendre soin de toi avec l'aide de tes parents.
+            <p className="text-xl text-white font-semibold max-w-2xl mx-auto animate-fade-in">
+              Ta santé mentale, notre priorité. Une app fun, interactive et colorée pour prendre soin de toi avec l'aide de tes parents.
             </p>
             
             <div className="flex justify-center gap-3 mt-6 flex-wrap">
-              <Badge className="bg-white/20 text-white text-sm px-3 py-1">#teenmentalhealth</Badge>
-              <Badge className="bg-white/20 text-white text-sm px-3 py-1">#safespace</Badge>
-              <Badge className="bg-white/20 text-white text-sm px-3 py-1">#interactive</Badge>
-              <Badge className="bg-white/20 text-white text-sm px-3 py-1">#ai</Badge>
+              <Badge className="bg-red-500/80 text-white text-sm px-4 py-2 font-bold">#teenmentalhealth</Badge>
+              <Badge className="bg-yellow-500/80 text-white text-sm px-4 py-2 font-bold">#créativité</Badge>
+              <Badge className="bg-green-500/80 text-white text-sm px-4 py-2 font-bold">#interactive</Badge>
+              <Badge className="bg-blue-500/80 text-white text-sm px-4 py-2 font-bold">#coloré</Badge>
             </div>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <Card 
-              className="p-8 hover:scale-105 transition-transform cursor-pointer bg-white/10 backdrop-blur-sm border-white/20 text-white"
+              className="p-8 hover:scale-105 transition-transform cursor-pointer bg-gradient-to-br from-pink-500 to-purple-500 backdrop-blur-sm border-4 border-white/30 text-white shadow-2xl rounded-3xl"
               onClick={() => navigate('/auth')}
             >
               <CardHeader className="text-center">
-                <div className="mx-auto w-20 h-20 bg-yellow-400 rounded-full flex items-center justify-center mb-4">
-                  <Gamepad2 className="h-10 w-10 text-purple-600" />
+                <div className="mx-auto w-24 h-24 bg-white/20 rounded-3xl flex items-center justify-center mb-6 shadow-lg">
+                  <Gamepad2 className="h-12 w-12 text-white" />
                 </div>
-                <CardTitle className="text-2xl">Je suis un Ado</CardTitle>
-                <CardDescription className="text-white/80">
-                  Accède à ton espace personnel fun et sécurisé
+                <CardTitle className="text-3xl font-black">Je suis un Ado</CardTitle>
+                <CardDescription className="text-white/90 font-semibold text-lg">
+                  Accède à ton espace personnel créatif et sécurisé
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Button className="w-full bg-yellow-400 text-purple-600 hover:bg-yellow-300 font-semibold">
-                  Commencer mon aventure
-                  <ChevronRight className="ml-2 h-4 w-4" />
+                <Button className="w-full bg-white text-purple-600 hover:bg-gray-100 font-black text-lg py-3 rounded-2xl">
+                  Commencer mon aventure créative
+                  <ChevronRight className="ml-2 h-5 w-5" />
                 </Button>
               </CardContent>
             </Card>
 
             <Card 
-              className="p-8 hover:scale-105 transition-transform cursor-pointer bg-white/10 backdrop-blur-sm border-white/20 text-white"
+              className="p-8 hover:scale-105 transition-transform cursor-pointer bg-gradient-to-br from-blue-500 to-cyan-500 backdrop-blur-sm border-4 border-white/30 text-white shadow-2xl rounded-3xl"
               onClick={() => navigate('/auth')}
             >
               <CardHeader className="text-center">
-                <div className="mx-auto w-20 h-20 bg-blue-400 rounded-full flex items-center justify-center mb-4">
-                  <Shield className="h-10 w-10 text-white" />
+                <div className="mx-auto w-24 h-24 bg-white/20 rounded-3xl flex items-center justify-center mb-6 shadow-lg">
+                  <Shield className="h-12 w-12 text-white" />
                 </div>
-                <CardTitle className="text-2xl">Je suis un Parent</CardTitle>
-                <CardDescription className="text-white/80">
-                  Accompagne ton enfant dans son bien-être mental
+                <CardTitle className="text-3xl font-black">Je suis un Parent</CardTitle>
+                <CardDescription className="text-white/90 font-semibold text-lg">
+                  Accompagne ton enfant dans son bien-être créatif
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Button className="w-full bg-blue-400 text-white hover:bg-blue-300 font-semibold">
-                  Espace parental
-                  <ChevronRight className="ml-2 h-4 w-4" />
+                <Button className="w-full bg-white text-blue-600 hover:bg-gray-100 font-black text-lg py-3 rounded-2xl">
+                  Espace parental créatif
+                  <ChevronRight className="ml-2 h-5 w-5" />
                 </Button>
               </CardContent>
             </Card>
@@ -142,33 +149,49 @@ const TeensFamilySpace = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-cyan-400 via-blue-300 to-purple-400 relative overflow-hidden">
+      {/* Floating cubes */}
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute top-20 left-10 w-16 h-16 bg-red-500 rounded-2xl transform rotate-12 animate-bounce"></div>
+        <div className="absolute top-40 right-20 w-12 h-12 bg-yellow-400 rounded-2xl transform -rotate-45 animate-pulse"></div>
+        <div className="absolute bottom-32 left-1/4 w-20 h-20 bg-green-500 rounded-2xl transform rotate-45 animate-spin-slow"></div>
+        <div className="absolute top-60 left-1/2 w-14 h-14 bg-orange-500 rounded-2xl transform rotate-12 animate-bounce"></div>
+        <div className="absolute bottom-20 right-10 w-18 h-18 bg-purple-500 rounded-2xl transform -rotate-12 animate-pulse"></div>
+      </div>
+
       <Navigation 
         userType={userType} 
         onBack={() => navigate('/teens')}
       />
       
       {userType === "teen" ? (
-        <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto px-4 py-8 relative z-10">
           {/* Welcome Hero Section */}
           <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
-              Bienvenue dans ton Espace Famille ! 👨‍👩‍👧‍👦
-            </h1>
-            <p className="text-gray-600">
-              Connecte-toi avec ta famille dans un environnement sécurisé
-            </p>
+            <div className="relative inline-block mb-6">
+              <h1 className="text-4xl font-black bg-gradient-to-r from-red-500 via-yellow-400 via-green-500 via-blue-500 to-purple-500 bg-clip-text text-transparent mb-4">
+                Bienvenue dans ton Espace Famille Créatif ! 👨‍👩‍👧‍👦🎨
+              </h1>
+              <div className="absolute -top-2 -right-8 text-3xl animate-spin-slow">🎲</div>
+            </div>
+            <div className="bg-white/20 backdrop-blur-sm rounded-3xl p-6 border-4 border-white/30 shadow-2xl">
+              <p className="text-white font-semibold text-lg">
+                Connecte-toi avec ta famille dans un environnement sécurisé et coloré
+              </p>
+            </div>
           </div>
 
           {/* Quick Alerts */}
           <div className="mb-12">
-            <Card className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-3">
-                  <Heart className="h-6 w-6" />
+            <Card className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white border-4 border-white/30 shadow-2xl rounded-3xl">
+              <CardContent className="p-8">
+                <div className="flex items-center gap-4">
+                  <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center">
+                    <Heart className="h-8 w-8" />
+                  </div>
                   <div>
-                    <h3 className="font-bold">Message de Papa</h3>
-                    <p className="text-sm">Tu fais du super boulot ! Continue comme ça 💪</p>
+                    <h3 className="font-black text-2xl">Message créatif de Papa</h3>
+                    <p className="text-lg font-semibold">Tu fais du super boulot créatif ! Continue comme ça 💪🎨</p>
                   </div>
                 </div>
               </CardContent>
@@ -179,90 +202,91 @@ const TeensFamilySpace = () => {
             {features.map((feature, index) => (
               <Card 
                 key={index}
-                className="cursor-pointer hover:shadow-lg transition-shadow"
+                className={`cursor-pointer hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 bg-gradient-to-br ${feature.gradient} border-4 border-white/50 rounded-3xl`}
                 onClick={() => navigate(feature.route)}
               >
                 <CardHeader>
-                  <div className={`w-12 h-12 rounded-lg ${feature.color} flex items-center justify-center mb-3`}>
-                    <feature.icon className="h-6 w-6" />
+                  <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mb-4 shadow-lg">
+                    <feature.icon className="h-8 w-8 text-white" />
                   </div>
-                  <CardTitle className="text-lg">{feature.title}</CardTitle>
-                  <CardDescription>{feature.description}</CardDescription>
+                  <CardTitle className="text-xl font-black text-white">{feature.title}</CardTitle>
+                  <CardDescription className="text-white/90 font-semibold">{feature.description}</CardDescription>
                 </CardHeader>
               </Card>
             ))}
             
+            {/* Additional colorful cards */}
             <Card 
-              className="cursor-pointer hover:shadow-lg transition-shadow"
+              className="cursor-pointer hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 bg-gradient-to-br from-cyan-400 to-blue-500 border-4 border-white/50 rounded-3xl"
               onClick={() => navigate('/teens/fun-solutions')}
             >
               <CardHeader>
-                <div className="w-12 h-12 rounded-lg bg-cyan-100 text-cyan-600 flex items-center justify-center mb-3">
-                  <Gamepad2 className="h-6 w-6" />
+                <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mb-4 shadow-lg">
+                  <Gamepad2 className="h-8 w-8 text-white" />
                 </div>
-                <CardTitle className="text-lg">Solutions Fun</CardTitle>
-                <CardDescription>Activités ludiques pour booster ton bien-être</CardDescription>
+                <CardTitle className="text-xl font-black text-white">Solutions Fun Créatives</CardTitle>
+                <CardDescription className="text-white/90 font-semibold">Activités ludiques colorées pour booster ton bien-être</CardDescription>
               </CardHeader>
             </Card>
 
             <Card 
-              className="cursor-pointer hover:shadow-lg transition-shadow"
+              className="cursor-pointer hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 bg-gradient-to-br from-emerald-400 to-teal-500 border-4 border-white/50 rounded-3xl"
               onClick={() => navigate('/teens/family-space')}
             >
               <CardHeader>
-                <div className="w-12 h-12 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center mb-3">
-                  <Users className="h-6 w-6" />
+                <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mb-4 shadow-lg">
+                  <Users className="h-8 w-8 text-white" />
                 </div>
-                <CardTitle className="text-lg">Espace Famille</CardTitle>
-                <CardDescription>Connecte-toi avec tes parents et tes frères/sœurs</CardDescription>
+                <CardTitle className="text-xl font-black text-white">Espace Famille Coloré</CardTitle>
+                <CardDescription className="text-white/90 font-semibold">Connecte-toi avec tes parents et tes frères/sœurs dans la couleur</CardDescription>
               </CardHeader>
             </Card>
 
             <Card 
-              className="cursor-pointer hover:shadow-lg transition-shadow"
+              className="cursor-pointer hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 bg-gradient-to-br from-yellow-400 to-orange-500 border-4 border-white/50 rounded-3xl"
               onClick={() => navigate('/teens/calendar')}
             >
               <CardHeader>
-                <div className="w-12 h-12 rounded-lg bg-yellow-100 text-yellow-600 flex items-center justify-center mb-3">
-                  <CalendarDays className="h-6 w-6" />
+                <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mb-4 shadow-lg">
+                  <CalendarDays className="h-8 w-8 text-white" />
                 </div>
-                <CardTitle className="text-lg">Agenda Famille</CardTitle>
-                <CardDescription>Anniversaires, fêtes et activités en famille</CardDescription>
+                <CardTitle className="text-xl font-black text-white">Agenda Famille Créatif</CardTitle>
+                <CardDescription className="text-white/90 font-semibold">Anniversaires, fêtes et activités créatives en famille</CardDescription>
               </CardHeader>
             </Card>
 
             <Card 
-              className="cursor-pointer hover:shadow-lg transition-shadow"
+              className="cursor-pointer hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 bg-gradient-to-br from-blue-400 to-indigo-500 border-4 border-white/50 rounded-3xl"
               onClick={() => navigate('/teens/parental-access-dashboard')}
             >
               <CardHeader>
-                <div className="w-12 h-12 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center mb-3">
-                  <Shield className="h-6 w-6" />
+                <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mb-4 shadow-lg">
+                  <Shield className="h-8 w-8 text-white" />
                 </div>
-                <CardTitle className="text-lg">Dashboard Parental</CardTitle>
-                <CardDescription>Espace sécurisé pour l'accompagnement parental</CardDescription>
+                <CardTitle className="text-xl font-black text-white">Dashboard Parental Créatif</CardTitle>
+                <CardDescription className="text-white/90 font-semibold">Espace sécurisé et coloré pour l'accompagnement parental</CardDescription>
               </CardHeader>
             </Card>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-8 mb-12">
             {/* Metaverse Card */}
-            <Card className="bg-gradient-to-r from-purple-100 via-pink-100 to-blue-100 border-2 border-purple-300">
+            <Card className="bg-gradient-to-br from-purple-400 via-pink-400 to-red-400 border-4 border-white/50 shadow-2xl rounded-3xl">
               <CardHeader>
-                <CardTitle className="text-center flex items-center justify-center gap-2">
-                  <Sparkles className="h-6 w-6 text-purple-600" />
-                  🌌 Métaverse Famille ✨
+                <CardTitle className="text-center flex items-center justify-center gap-2 text-white font-black text-2xl">
+                  <Sparkles className="h-8 w-8 text-white" />
+                  🌈 Métaverse Famille Créatif ✨
                 </CardTitle>
-                <CardDescription className="text-center text-gray-700">
-                  Explore des mondes virtuels apaisants avec ta famille
+                <CardDescription className="text-center text-white/90 font-semibold text-lg">
+                  Explore des mondes virtuels colorés et apaisants avec ta famille
                 </CardDescription>
               </CardHeader>
               <CardContent className="text-center">
                 <Button 
-                  className="bg-purple-600 hover:bg-purple-700 text-white font-bold"
+                  className="bg-white text-purple-600 hover:bg-gray-100 font-black text-lg py-3 px-8 rounded-2xl"
                   onClick={() => navigate('/teens/metaverse')}
                 >
-                  🚀 Explorer le Métaverse
+                  🚀 Explorer le Métaverse Créatif
                 </Button>
               </CardContent>
             </Card>

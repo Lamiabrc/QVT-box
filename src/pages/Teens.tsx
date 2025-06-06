@@ -1,7 +1,8 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Zap, Gift, Heart, Shield, MessageCircle, Calendar, Star, User, Users } from "lucide-react";
+import { ArrowLeft, Heart, Shield, MessageCircle, Calendar, User, Users, Palette, Sparkles, Star } from "lucide-react";
 
 const Teens = () => {
   const navigate = useNavigate();
@@ -11,48 +12,48 @@ const Teens = () => {
       icon: "🏠",
       title: "Espace Famille",
       subtitle: "Connecte-toi avec tes parents",
-      description: "Partage tes moments, envoie des signaux et renforce vos liens",
-      color: "from-blue-500 to-cyan-500",
+      description: "Partage tes moments colorés, envoie des signaux et renforce vos liens",
+      gradient: "from-blue-400 to-cyan-500",
       path: "/teens/family-space"
     },
     {
-      icon: "🌸",
+      icon: "🎨",
       title: "Mon Espace Personnel",
-      subtitle: "Ton univers privé",
-      description: "Journal, customisation, achievements et suivi de ton évolution",
-      color: "from-pink-500 to-purple-500",
+      subtitle: "Ton univers créatif",
+      description: "Journal coloré, customisation, achievements et suivi de ton évolution",
+      gradient: "from-pink-500 to-purple-500",
       path: "/teens/personal-space"
     },
     {
       icon: "🔒",
       title: "Espace Intimité",
       subtitle: "Safe space 100% confidentiel",
-      description: "Conseils ados, corps, relations, études dans un espace ultra-sécurisé",
-      color: "from-purple-500 to-indigo-500",
+      description: "Conseils colorés, corps, relations, études dans un espace ultra-sécurisé",
+      gradient: "from-purple-500 to-indigo-500",
       path: "/teens/intimacy-space"
     },
     {
       icon: "🎮",
       title: "Solutions Fun",
-      subtitle: "Jeux et activités bien-être",
-      description: "Mini-jeux, challenges et activités pour te détendre et apprendre",
-      color: "from-green-500 to-emerald-500",
+      subtitle: "Jeux et activités colorées",
+      description: "Mini-jeux, challenges et activités créatives pour te détendre",
+      gradient: "from-green-500 to-emerald-500",
       path: "/teens/fun-solutions"
     },
     {
-      icon: "🌌",
-      title: "Métaverse",
-      subtitle: "Explore, joue, apprends",
-      description: "Espaces virtuels pour te connecter et grandir avec d'autres ados",
-      color: "from-cyan-500 to-blue-500",
+      icon: "🌈",
+      title: "Métaverse Coloré",
+      subtitle: "Explore, joue, crée",
+      description: "Espaces virtuels colorés pour te connecter et grandir avec d'autres ados",
+      gradient: "from-cyan-500 to-blue-500",
       path: "/teens/metaverse"
     },
     {
       icon: "🛍️",
-      title: "Boutique",
+      title: "Boutique Créative",
       subtitle: "Personnalise ton expérience",
-      description: "Dépense tes points bien-être pour des récompenses cool",
-      color: "from-yellow-500 to-orange-500",
+      description: "Dépense tes points créativité pour des récompenses colorées",
+      gradient: "from-yellow-500 to-orange-500",
       path: "/teens/shop"
     }
   ];
@@ -62,57 +63,59 @@ const Teens = () => {
       icon: "💚",
       title: "Check-in Quotidien",
       description: "Comment tu te sens aujourd'hui ?",
-      color: "from-green-500 to-emerald-500",
+      gradient: "from-green-500 to-emerald-500",
       path: "/teens/check-in"
     },
     {
       icon: "🚨",
       title: "Alerte Rapide",
       description: "Signale où tu es à tes parents",
-      color: "from-red-500 to-pink-500",
+      gradient: "from-red-500 to-pink-500",
       path: "/teens/quick-alert"
     },
     {
       icon: "📅",
       title: "Mon Calendrier",
-      description: "Organise tes activités et événements",
-      color: "from-blue-500 to-indigo-500",
+      description: "Organise tes activités colorées",
+      gradient: "from-blue-500 to-indigo-500",
       path: "/teens/calendar"
     }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-indigo-900 to-cyan-900 relative overflow-hidden">
-      {/* Animated background elements */}
+    <div className="min-h-screen bg-gradient-to-br from-cyan-400 via-blue-300 to-purple-400 relative overflow-hidden">
+      {/* Floating cubes inspired by Rubik's cube */}
       <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-20 left-10 w-20 h-20 bg-pink-500 rounded-full animate-pulse"></div>
-        <div className="absolute top-40 right-20 w-16 h-16 bg-yellow-400 rounded-full animate-bounce"></div>
-        <div className="absolute bottom-20 left-1/4 w-24 h-24 bg-green-400 rounded-full animate-ping"></div>
-        <div className="absolute bottom-40 right-10 w-12 h-12 bg-orange-500 rounded-full animate-pulse"></div>
+        <div className="absolute top-20 left-10 w-16 h-16 bg-red-500 rounded-2xl transform rotate-12 animate-bounce"></div>
+        <div className="absolute top-40 right-20 w-12 h-12 bg-yellow-400 rounded-2xl transform -rotate-45 animate-pulse"></div>
+        <div className="absolute bottom-32 left-1/4 w-20 h-20 bg-green-500 rounded-2xl transform rotate-45 animate-spin-slow"></div>
+        <div className="absolute top-60 left-1/2 w-14 h-14 bg-orange-500 rounded-2xl transform rotate-12 animate-bounce"></div>
+        <div className="absolute bottom-20 right-10 w-18 h-18 bg-purple-500 rounded-2xl transform -rotate-12 animate-pulse"></div>
+        <div className="absolute top-32 right-1/3 w-10 h-10 bg-pink-500 rounded-2xl transform rotate-45 animate-spin-slow"></div>
       </div>
 
-      {/* Header with street art style */}
-      <header className="relative z-10 border-b border-white/20 bg-black/30 backdrop-blur-sm">
+      {/* Header with colorful design */}
+      <header className="relative z-10 border-b border-white/30 bg-white/20 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <Button 
               variant="ghost" 
               onClick={() => navigate('/')}
-              className="flex items-center space-x-2 text-white hover:bg-white/20"
+              className="flex items-center space-x-2 text-white hover:bg-white/20 font-semibold"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Retour</span>
             </Button>
             <div className="flex items-center space-x-3">
               <div className="relative">
-                <div className="w-12 h-12 bg-gradient-to-r from-pink-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg shadow-pink-500/50">
-                  <Heart className="w-6 h-6 text-white animate-pulse" />
+                <div className="w-12 h-12 bg-gradient-to-r from-red-500 via-yellow-400 via-green-500 via-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg animate-pulse">
+                  <Palette className="w-6 h-6 text-white" />
                 </div>
                 <div className="absolute -top-1 -right-1 w-4 h-4 bg-yellow-400 rounded-full animate-bounce"></div>
               </div>
               <div>
                 <h1 className="text-2xl font-black text-white tracking-wide">QVTeen</h1>
-                <p className="text-sm text-cyan-300 font-semibold">Box</p>
+                <p className="text-sm text-yellow-300 font-bold">Créative Box</p>
               </div>
             </div>
           </div>
@@ -120,28 +123,29 @@ const Teens = () => {
       </header>
 
       <div className="container mx-auto px-4 py-8 relative z-10">
-        {/* Hero Section with street art vibe */}
+        {/* Hero Section with creative vibe */}
         <div className="text-center mb-16 animate-fade-in">
           <div className="relative inline-block mb-8">
-            <h1 className="text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-500 to-cyan-400 mb-4 transform rotate-1">
-              YO!
+            <h1 className="text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-yellow-400 via-green-500 via-blue-500 to-purple-500 mb-4 transform rotate-1">
+              CRÉATIVITÉ!
             </h1>
-            <div className="absolute -top-2 -right-8 text-4xl animate-spin-slow">⚡</div>
-            <div className="absolute -bottom-4 -left-6 text-3xl animate-bounce">🔥</div>
+            <div className="absolute -top-2 -right-8 text-4xl animate-spin-slow">🎨</div>
+            <div className="absolute -bottom-4 -left-6 text-3xl animate-bounce">🌈</div>
           </div>
           
-          <div className="bg-black/40 backdrop-blur-sm rounded-3xl p-8 border border-white/20 max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-              TON ESPACE <span className="text-pink-400">BIEN-ÊTRE</span> & <span className="text-cyan-400">EXPRESSION</span>
+          <div className="bg-white/20 backdrop-blur-sm rounded-3xl p-8 border-4 border-white/30 max-w-4xl mx-auto shadow-2xl">
+            <h2 className="text-3xl md:text-4xl font-black text-white mb-6">
+              TON ESPACE <span className="text-yellow-300">CRÉATIF</span> & <span className="text-pink-300">COLORÉ</span>
             </h2>
-            <p className="text-xl text-gray-200 mb-6">
-              Un espace 100% safe où tu peux être toi-même, partager avec tes parents, 
-              et recevoir du soutien quand tu en as besoin 💪
+            <p className="text-xl text-white font-semibold mb-6">
+              Un espace 100% safe où tu peux exprimer ta créativité, partager avec tes parents, 
+              et recevoir du soutien dans un univers coloré et ludique 🎨
             </p>
             <div className="flex flex-wrap justify-center gap-4 text-lg">
-              <span className="bg-pink-500/20 text-pink-300 px-4 py-2 rounded-full border border-pink-400/30">#SafeSpace</span>
-              <span className="bg-purple-500/20 text-purple-300 px-4 py-2 rounded-full border border-purple-400/30">#MentalHealth</span>
-              <span className="bg-cyan-500/20 text-cyan-300 px-4 py-2 rounded-full border border-cyan-400/30">#TeenPower</span>
+              <span className="bg-red-500/80 text-white px-6 py-3 rounded-full border-4 border-white/30 font-black">#SafeSpace</span>
+              <span className="bg-yellow-500/80 text-white px-6 py-3 rounded-full border-4 border-white/30 font-black">#Créativité</span>
+              <span className="bg-green-500/80 text-white px-6 py-3 rounded-full border-4 border-white/30 font-black">#TeenPower</span>
+              <span className="bg-blue-500/80 text-white px-6 py-3 rounded-full border-4 border-white/30 font-black">#Couleurs</span>
             </div>
           </div>
         </div>
@@ -151,20 +155,20 @@ const Teens = () => {
           {mainFeatures.map((feature, index) => (
             <Card 
               key={index} 
-              className={`group bg-gradient-to-br ${feature.color}/10 border-2 border-white/20 hover:border-white/40 transition-all duration-300 transform hover:-translate-y-2 cursor-pointer`}
+              className={`group bg-gradient-to-br ${feature.gradient} border-4 border-white/50 hover:border-white/80 transition-all duration-300 transform hover:-translate-y-2 cursor-pointer shadow-2xl rounded-3xl`}
               onClick={() => navigate(feature.path)}
             >
               <CardHeader>
-                <div className="text-4xl mb-4">{feature.icon}</div>
-                <CardTitle className="text-xl font-bold text-white">
+                <div className="text-5xl mb-4 transform group-hover:scale-110 transition-transform">{feature.icon}</div>
+                <CardTitle className="text-xl font-black text-white">
                   {feature.title}
                 </CardTitle>
-                <p className="text-sm text-gray-300">{feature.subtitle}</p>
+                <p className="text-sm text-white/90 font-semibold">{feature.subtitle}</p>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-300 mb-4">{feature.description}</p>
-                <Button className="w-full bg-white/10 hover:bg-white/20 text-white border-0 rounded-2xl">
-                  Explorer
+                <p className="text-white font-semibold mb-4">{feature.description}</p>
+                <Button className="w-full bg-white/20 hover:bg-white/30 text-white border-2 border-white/50 rounded-2xl font-bold">
+                  Explorer 🚀
                 </Button>
               </CardContent>
             </Card>
@@ -173,20 +177,20 @@ const Teens = () => {
 
         {/* Quick Actions */}
         <div className="mb-16">
-          <h2 className="text-3xl font-bold text-white text-center mb-8">⚡ Actions Rapides</h2>
+          <h2 className="text-3xl font-black text-white text-center mb-8 drop-shadow-lg">⚡ Actions Créatives Rapides</h2>
           <div className="grid md:grid-cols-3 gap-6">
             {quickActions.map((action, index) => (
               <Card 
                 key={index} 
-                className={`group bg-gradient-to-br ${action.color}/10 border-2 border-white/20 hover:border-white/40 transition-all duration-300 cursor-pointer`}
+                className={`group bg-gradient-to-br ${action.gradient} border-4 border-white/50 hover:border-white/80 transition-all duration-300 cursor-pointer shadow-2xl rounded-3xl`}
                 onClick={() => navigate(action.path)}
               >
                 <CardContent className="p-6 text-center">
-                  <div className="text-3xl mb-3">{action.icon}</div>
-                  <h3 className="text-lg font-bold text-white mb-2">{action.title}</h3>
-                  <p className="text-gray-300 text-sm mb-4">{action.description}</p>
-                  <Button className="w-full bg-white/10 hover:bg-white/20 text-white rounded-2xl">
-                    Go !
+                  <div className="text-4xl mb-4 transform group-hover:scale-110 transition-transform">{action.icon}</div>
+                  <h3 className="text-lg font-black text-white mb-2">{action.title}</h3>
+                  <p className="text-white font-semibold text-sm mb-4">{action.description}</p>
+                  <Button className="w-full bg-white/20 hover:bg-white/30 text-white rounded-2xl font-bold">
+                    Go ! 🎨
                   </Button>
                 </CardContent>
               </Card>
@@ -196,64 +200,67 @@ const Teens = () => {
 
         {/* Parent Access Section */}
         <div className="grid md:grid-cols-2 gap-8 mb-16">
-          <Card className="group bg-gradient-to-br from-purple-500/10 to-indigo-600/10 border-2 border-purple-400/30 hover:border-purple-400/60 transition-all duration-300 cursor-pointer transform hover:-translate-y-1"
+          <Card className="group bg-gradient-to-br from-purple-500 to-indigo-600 border-4 border-white/50 hover:border-white/80 transition-all duration-300 cursor-pointer transform hover:-translate-y-1 shadow-2xl rounded-3xl"
                 onClick={() => navigate('/teens/parental-access')}>
             <CardHeader className="text-center pb-4">
-              <div className="w-20 h-20 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-2xl mx-auto mb-4 flex items-center justify-center group-hover:rotate-6 transition-transform shadow-lg shadow-purple-500/30">
-                <Shield className="w-10 h-10 text-white" />
+              <div className="w-24 h-24 bg-white/20 rounded-3xl mx-auto mb-4 flex items-center justify-center group-hover:rotate-6 transition-transform shadow-lg">
+                <Shield className="w-12 h-12 text-white" />
               </div>
-              <CardTitle className="text-xl text-white font-bold">🔗 ACCÈS PARENTS</CardTitle>
+              <CardTitle className="text-2xl text-white font-black">🔗 ACCÈS PARENTS</CardTitle>
             </CardHeader>
             <CardContent className="text-center pt-0">
-              <p className="text-gray-300 text-sm mb-4">
-                Gère la connexion avec tes parents de manière sécurisée
+              <p className="text-white font-semibold text-lg mb-6">
+                Gère la connexion avec tes parents de manière sécurisée et colorée
               </p>
-              <Button className="w-full bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white rounded-2xl font-bold">
+              <Button className="w-full bg-white text-purple-600 hover:bg-gray-100 rounded-2xl font-black text-lg py-3">
                 GÉRER 🔐
               </Button>
             </CardContent>
           </Card>
 
-          <Card className="group bg-gradient-to-br from-blue-500/10 to-cyan-600/10 border-2 border-blue-400/30 hover:border-blue-400/60 transition-all duration-300 cursor-pointer transform hover:-translate-y-1"
+          <Card className="group bg-gradient-to-br from-blue-500 to-cyan-600 border-4 border-white/50 hover:border-white/80 transition-all duration-300 cursor-pointer transform hover:-translate-y-1 shadow-2xl rounded-3xl"
                 onClick={() => navigate('/teens/parental-access-dashboard')}>
             <CardHeader className="text-center pb-4">
-              <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl mx-auto mb-4 flex items-center justify-center group-hover:rotate-6 transition-transform shadow-lg shadow-blue-500/30">
-                <Users className="w-10 h-10 text-white" />
+              <div className="w-24 h-24 bg-white/20 rounded-3xl mx-auto mb-4 flex items-center justify-center group-hover:rotate-6 transition-transform shadow-lg">
+                <Users className="w-12 h-12 text-white" />
               </div>
-              <CardTitle className="text-xl text-white font-bold">👥 DASHBOARD PARENTS</CardTitle>
+              <CardTitle className="text-2xl text-white font-black">👥 DASHBOARD PARENTS</CardTitle>
             </CardHeader>
             <CardContent className="text-center pt-0">
-              <p className="text-gray-300 text-sm mb-4">
-                Voir ce que tes parents peuvent accéder (transparence totale)
+              <p className="text-white font-semibold text-lg mb-6">
+                Voir ce que tes parents peuvent accéder (transparence totale et colorée)
               </p>
-              <Button className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white rounded-2xl font-bold">
+              <Button className="w-full bg-white text-blue-600 hover:bg-gray-100 rounded-2xl font-black text-lg py-3">
                 VOIR DASHBOARD 👁️
               </Button>
             </CardContent>
           </Card>
         </div>
 
-        {/* Safety & Privacy Notice with graffiti style */}
+        {/* Safety & Privacy Notice with creative style */}
         <div className="relative">
-          <div className="bg-black/60 backdrop-blur-sm rounded-3xl p-8 border-2 border-white/20 text-center">
-            <div className="absolute -top-4 left-8 bg-red-500 text-white px-4 py-2 rounded-2xl transform -rotate-3 font-bold shadow-lg">
+          <div className="bg-white/20 backdrop-blur-sm rounded-3xl p-8 border-4 border-white/30 text-center shadow-2xl">
+            <div className="absolute -top-4 left-8 bg-red-500 text-white px-6 py-3 rounded-2xl transform -rotate-3 font-black shadow-lg border-2 border-white">
               ULTRA SAFE
             </div>
-            <div className="absolute -top-4 right-8 bg-green-500 text-white px-4 py-2 rounded-2xl transform rotate-2 font-bold shadow-lg">
-              100% PRIVÉ
+            <div className="absolute -top-4 right-8 bg-green-500 text-white px-6 py-3 rounded-2xl transform rotate-2 font-black shadow-lg border-2 border-white">
+              100% CRÉATIF
             </div>
             
-            <Shield className="w-16 h-16 text-cyan-400 mx-auto mb-6 animate-pulse" />
-            <h3 className="text-3xl font-black text-white mb-6">🔒 TON ESPACE ULTRA-SÉCURISÉ</h3>
-            <p className="text-gray-200 max-w-3xl mx-auto text-lg leading-relaxed">
-              QVTeen Box respecte ta vie privée à 100%. Tes données restent entre toi et tes parents. 
-              Pas de réseaux sociaux, pas d'inconnus, juste un espace family safe pour ton bien-être ! 🛡️
+            <div className="w-20 h-20 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-3xl mx-auto mb-6 flex items-center justify-center animate-pulse shadow-lg">
+              <Shield className="w-10 h-10 text-white" />
+            </div>
+            <h3 className="text-3xl font-black text-white mb-6 drop-shadow-lg">🔒 TON ESPACE CRÉATIF ULTRA-SÉCURISÉ</h3>
+            <p className="text-white font-semibold max-w-3xl mx-auto text-lg leading-relaxed">
+              QVTeen Créative Box respecte ta vie privée à 100% tout en te permettant d'exprimer ta créativité. 
+              Tes données restent entre toi et tes parents dans un environnement coloré et safe ! 🛡️🎨
             </p>
             
             <div className="flex flex-wrap justify-center gap-4 mt-8">
-              <span className="bg-green-500/20 text-green-300 px-6 py-3 rounded-full border border-green-400/30 font-bold">#Privacy</span>
-              <span className="bg-blue-500/20 text-blue-300 px-6 py-3 rounded-full border border-blue-400/30 font-bold">#FamilyOnly</span>
-              <span className="bg-purple-500/20 text-purple-300 px-6 py-3 rounded-full border border-purple-400/30 font-bold">#RGPD</span>
+              <span className="bg-green-500/80 text-white px-6 py-3 rounded-full border-4 border-white/30 font-black">#Privacy</span>
+              <span className="bg-blue-500/80 text-white px-6 py-3 rounded-full border-4 border-white/30 font-black">#FamilyOnly</span>
+              <span className="bg-purple-500/80 text-white px-6 py-3 rounded-full border-4 border-white/30 font-black">#Créativité</span>
+              <span className="bg-yellow-500/80 text-white px-6 py-3 rounded-full border-4 border-white/30 font-black">#RGPD</span>
             </div>
           </div>
         </div>
@@ -262,7 +269,7 @@ const Teens = () => {
       {/* Floating action button for quick alert */}
       <div className="fixed bottom-8 right-8 z-20">
         <Button 
-          className="w-16 h-16 bg-red-500 hover:bg-red-600 rounded-full shadow-lg shadow-red-500/50 text-white animate-pulse"
+          className="w-16 h-16 bg-gradient-to-br from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 rounded-full shadow-2xl text-white animate-pulse border-4 border-white/50"
           onClick={() => navigate('/teens/quick-alert')}
         >
           🚨

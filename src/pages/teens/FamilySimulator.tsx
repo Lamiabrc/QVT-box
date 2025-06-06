@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -164,23 +163,37 @@ const FamilySimulator = () => {
 
   return (
     <AuthGuard>
-      <div className="min-h-screen flex flex-col bg-gradient-to-br from-pink-50 via-purple-50 to-cyan-50">
+      <div className="min-h-screen flex flex-col bg-gradient-to-br from-cyan-400 via-blue-300 to-purple-400 relative overflow-hidden">
+        {/* Floating cubes inspired by Rubik's cube */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-20 left-10 w-16 h-16 bg-red-500 rounded-2xl transform rotate-12 animate-bounce"></div>
+          <div className="absolute top-40 right-20 w-12 h-12 bg-yellow-400 rounded-2xl transform -rotate-45 animate-pulse"></div>
+          <div className="absolute bottom-32 left-1/4 w-20 h-20 bg-green-500 rounded-2xl transform rotate-45 animate-spin-slow"></div>
+          <div className="absolute top-60 left-1/2 w-14 h-14 bg-orange-500 rounded-2xl transform rotate-12 animate-bounce"></div>
+          <div className="absolute bottom-20 right-10 w-18 h-18 bg-purple-500 rounded-2xl transform -rotate-12 animate-pulse"></div>
+        </div>
+
         <Header />
         
-        <main className="flex-1 py-8 px-4">
+        <main className="flex-1 py-8 px-4 relative z-10">
           <div className="container mx-auto max-w-3xl">
             <div className="text-center mb-8">
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                🏠 Simulateur Bien-être Familial
-              </h1>
-              <p className="text-gray-600">
-                Évaluez le bien-être familial et obtenez des recommandations personnalisées
-              </p>
-              {role && (
-                <p className="text-sm text-pink-600 mt-1">
-                  Mode : {role === "teen" ? "👨‍🎓 Adolescent" : role === "parent" ? "👨‍👩‍👧‍👦 Parent" : "👪 Famille"}
+              <div className="relative inline-block mb-6">
+                <h1 className="text-4xl font-black text-white mb-2 drop-shadow-lg">
+                  🎨 Simulateur Bien-être Familial Créatif
+                </h1>
+                <div className="absolute -top-2 -right-8 text-3xl animate-spin-slow">🎲</div>
+              </div>
+              <div className="bg-white/20 backdrop-blur-sm rounded-3xl p-6 border-4 border-white/30 shadow-2xl">
+                <p className="text-white font-semibold text-lg">
+                  Évaluez le bien-être familial et obtenez des recommandations colorées et personnalisées
                 </p>
-              )}
+                {role && (
+                  <p className="text-lg text-yellow-300 mt-3 font-black">
+                    Mode : {role === "teen" ? "🎨 Adolescent Créatif" : role === "parent" ? "👨‍👩‍👧‍👦 Parent Bienveillant" : "👪 Famille Unie"}
+                  </p>
+                )}
+              </div>
             </div>
             
             {!showResults ? (
@@ -203,7 +216,7 @@ const FamilySimulator = () => {
                 )}
 
                 {currentStep >= -1 && (
-                  <Card className="shadow-md border-t-4 border-t-pink-500 mt-4">
+                  <Card className="shadow-2xl border-4 border-white/30 bg-white/20 backdrop-blur-sm mt-4 rounded-3xl">
                     <FamilySimulatorNavigation
                       onPrevious={handlePrevious}
                       onNext={handleNext}
