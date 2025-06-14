@@ -12,6 +12,8 @@ interface User {
   email: string;
   full_name?: string;
   role?: string;
+  account_type?: string;
+  entreprise?: string;
 }
 
 interface UserManagerProps {
@@ -87,6 +89,9 @@ const UserManager: React.FC<UserManagerProps> = ({ users, onUpdateUserRole, load
                   <div>
                     <p className="font-medium">{user.full_name || 'Nom non défini'}</p>
                     <p className="text-sm text-gray-600">{user.email}</p>
+                    {user.entreprise && (
+                      <p className="text-xs text-gray-500">{user.entreprise}</p>
+                    )}
                   </div>
                 </div>
                 

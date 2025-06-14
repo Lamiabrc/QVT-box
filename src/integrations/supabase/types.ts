@@ -312,12 +312,14 @@ export type Database = {
       }
       profiles: {
         Row: {
+          account_type: string | null
           alert_threshold: number | null
           assigned_teen_id: string | null
           created_at: string | null
           department_or_school: string | null
           email: string
           enterprise_role: string | null
+          entreprise: string | null
           full_name: string | null
           hr_access: boolean | null
           id: string
@@ -328,12 +330,14 @@ export type Database = {
           updated_at: string | null
         }
         Insert: {
+          account_type?: string | null
           alert_threshold?: number | null
           assigned_teen_id?: string | null
           created_at?: string | null
           department_or_school?: string | null
           email: string
           enterprise_role?: string | null
+          entreprise?: string | null
           full_name?: string | null
           hr_access?: boolean | null
           id: string
@@ -344,12 +348,14 @@ export type Database = {
           updated_at?: string | null
         }
         Update: {
+          account_type?: string | null
           alert_threshold?: number | null
           assigned_teen_id?: string | null
           created_at?: string | null
           department_or_school?: string | null
           email?: string
           enterprise_role?: string | null
+          entreprise?: string | null
           full_name?: string | null
           hr_access?: boolean | null
           id?: string
@@ -487,6 +493,13 @@ export type Database = {
           team_id?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "team_members_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "team_members_team_id_fkey"
             columns: ["team_id"]

@@ -114,13 +114,13 @@ export const useManagerData = (userId: string | undefined) => {
       if (managedTeams && managedTeams.length > 0) {
         const teamIds = managedTeams.map(tm => tm.teams.id);
         
-        // Fetch team members for managed teams
+        // Fetch team members for managed teams with proper join
         const { data: members, error: membersError } = await supabase
           .from('team_members')
           .select(`
             *,
-            profiles!inner(id, full_name, preferred_name),
-            teams!inner(name)
+            profiles!team_members_employee_id_fkey(id, full_name, email),
+            teams!team_members_team_id_fkey(id, name)
           `)
           .in('team_id', teamIds);
 
@@ -132,7 +132,9 @@ export const useManagerData = (userId: string | undefined) => {
         setTeamMembers(members || []);
 
         if (members && members.length > 0) {
-          const memberIds = members.map(m => m.profiles.id);
+          const memberIds = members
+            .filter(m => m.profiles && m.profiles.id)
+            .map(m => m.profiles.id);
           
           // Fetch simulator responses for team members
           const { data: scores, error: scoresError } = await supabase
@@ -183,13 +185,15 @@ export const useManagerData = (userId: string | undefined) => {
         const { data: teamEvolutionRaw } = await supabase
           .from('team_members')
           .select(`
-            profiles!inner(id),
-            teams!inner(id)
+            profiles!team_members_employee_id_fkey(id),
+            teams!team_members_team_id_fkey(id)
           `)
           .in('team_id', teamIds);
 
         if (teamEvolutionRaw) {
-          const memberIds = teamEvolutionRaw.map(tm => tm.profiles.id);
+          const memberIds = teamEvolutionRaw
+            .filter(tm => tm.profiles && tm.profiles.id)
+            .map(tm => tm.profiles.id);
           
           const { data: scoresData } = await supabase
             .from('simulator_responses')
