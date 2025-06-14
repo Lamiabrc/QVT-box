@@ -1,150 +1,155 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Toaster } from '@/components/ui/toaster';
-import Index from '@/pages/Index';
-import ProtectedRoute from '@/components/ProtectedRoute';
+
+import { Toaster } from "@/components/ui/toaster";
+import { Toaster as Sonner } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import Index from "./pages/Index";
+import Auth from "./pages/Auth";
+import Profil from "./pages/Profil";
+import Historique from "./pages/Historique";
+import Recommandations from "./pages/Recommandations";
+import Entreprise from "./pages/Entreprise";
+import EntrepriseDashboard from "./pages/EntrepriseDashboard";
+import Contact from "./pages/Contact";
+import QuiSommesNous from "./pages/QuiSommesNous";
+import NosValeurs from "./pages/NosValeurs";
+import NotFound from "./pages/NotFound";
+import Teens from "./pages/Teens";
+import TeensHome from "./pages/teens/TeensHome";
+import TeensQuestionnaire from "./pages/TeensQuestionnaire";
+import TeensPersonalSpace from "./pages/TeensPersonalSpace";
+import TeensJournal from "./pages/TeensJournal";
+import TeensCheckIn from "./pages/TeensCheckIn";
+import TeensCalendar from "./pages/TeensCalendar";
+import TeensFamilySpace from "./pages/TeensFamilySpace";
+import TeensParentalAccess from "./pages/TeensParentalAccess";
+import TeensParentalAccessDashboard from "./pages/TeensParentalAccessDashboard";
+import TeensDashboardParent from "./pages/TeensDashboardParent";
+import TeensCustomization from "./pages/TeensCustomization";
+import TeensMetaverse from "./pages/TeensMetaverse";
+import TeensPlaylist from "./pages/TeensPlaylist";
+import TeensShop from "./pages/TeensShop";
+import TeensIntimacySpace from "./pages/TeensIntimacySpace";
+import TeensFunSolutions from "./pages/TeensFunSolutions";
+import TeensQuickAlert from "./pages/TeensQuickAlert";
+import TeensAIEvaluation from "./pages/TeensAIEvaluation";
+
+// Enterprise pages
+import EntrepriseHome from "./pages/entreprise/EntrepriseHome";
+import Login from "./pages/entreprise/Login";
+import Register from "./pages/entreprise/Register";
+import ForgotPassword from "./pages/entreprise/ForgotPassword";
+import ResetPassword from "./pages/entreprise/ResetPassword";
+import Dashboard from "./pages/entreprise/Dashboard";
+import EmployeeDashboard from "./pages/entreprise/EmployeeDashboard";
+import ManagerDashboard from "./pages/entreprise/ManagerDashboard";
+import HRDashboard from "./pages/entreprise/HRDashboard";
+import AdminDashboard from "./pages/entreprise/AdminDashboard";
+import Shop from "./pages/entreprise/Shop";
+import Orders from "./pages/entreprise/Orders";
+import Unboxing from "./pages/entreprise/Unboxing";
+import Simulator from "./pages/entreprise/Simulator";
+import AdminContentManager from "./pages/entreprise/AdminContentManager";
+
+// Teens auth pages
+import TeensLogin from "./pages/teens/Login";
+import TeensRegister from "./pages/teens/Register";
 
 // Auth pages
-import Login from '@/pages/auth/Login';
-import Register from '@/pages/auth/Register';
-import ForgotPassword from '@/pages/auth/ForgotPassword';
+import AuthLogin from "./pages/auth/Login";
+import AuthRegister from "./pages/auth/Register";
+import AuthForgotPassword from "./pages/auth/ForgotPassword";
 
-// Universe homes
-import EntrepriseHome from '@/pages/entreprise/EntrepriseHome';
-import TeensHome from '@/pages/teens/TeensHome';
-
-// Simulators - unified approach
-import EntrepriseSimulator from '@/pages/entreprise/Simulator';
-import FamilySimulator from '@/pages/teens/FamilySimulator';
-
-// Keep existing imports for protected pages
-import Profil from '@/pages/Profil';
-import Recommandations from '@/pages/Recommandations';
-import Historique from '@/pages/Historique';
-import NotFound from '@/pages/NotFound';
-import QuiSommesNous from '@/pages/QuiSommesNous';
-import NosValeurs from '@/pages/NosValeurs';
-import Contact from '@/pages/Contact';
-import AdminPanel from '@/pages/AdminPanel';
-
-import TeensLogin from '@/pages/teens/Login';
-import TeensRegister from '@/pages/teens/Register';
-import Teens from '@/pages/Teens';
-import TeensPersonalSpace from '@/pages/TeensPersonalSpace';
-import TeensFunSolutions from '@/pages/TeensFunSolutions';
-import TeensParentalAccessDashboard from '@/pages/TeensParentalAccessDashboard';
-import TeensShop from '@/pages/TeensShop';
-import TeensQuickAlert from '@/pages/TeensQuickAlert';
-import TeensCalendar from '@/pages/TeensCalendar';
-import TeensCheckIn from '@/pages/TeensCheckIn';
-import TeensParentalAccess from '@/pages/TeensParentalAccess';
-import TeensFamilySpace from '@/pages/TeensFamilySpace';
-import TeensIntimacySpace from '@/pages/TeensIntimacySpace';
-import TeensQuestionnaire from '@/pages/TeensQuestionnaire';
-import TeensDashboardParent from '@/pages/TeensDashboardParent';
-import TeensAIEvaluation from '@/pages/TeensAIEvaluation';
-import EntrepriseLogin from '@/pages/entreprise/Login';
-import EntrepriseRegister from '@/pages/entreprise/Register';
-import EntrepriseForgotPassword from '@/pages/entreprise/ForgotPassword';
-import EntrepriseResetPassword from '@/pages/entreprise/ResetPassword';
-import Entreprise from '@/pages/Entreprise';
-import EntrepriseDashboard from '@/pages/EntrepriseDashboard';
-import EntrepriseAdminDashboard from '@/pages/entreprise/AdminDashboard';
-import EntrepriseQuestionnaire from '@/pages/EntrepriseQuestionnaire';
-import EntrepriseOrders from '@/pages/entreprise/Orders';
-import EntrepriseShop from '@/pages/entreprise/Shop';
-import EntrepriseUnboxing from '@/pages/entreprise/Unboxing';
-import EntrepriseAdminContentManager from '@/pages/entreprise/AdminContentManager';
-import TeensCustomization from '@/pages/TeensCustomization';
-import TeensJournal from '@/pages/TeensJournal';
-import TeensPlaylist from '@/pages/TeensPlaylist';
-import TeensMetaverse from '@/pages/TeensMetaverse';
-import EmployeeDashboard from '@/pages/entreprise/EmployeeDashboard';
-import ManagerDashboard from '@/pages/entreprise/ManagerDashboard';
-import HRDashboard from '@/pages/entreprise/HRDashboard';
+// New pages
+import AdminPanel from "./pages/AdminPanel";
+import FamilySimulator from "./pages/teens/FamilySimulator";
+import SimulatorHub from "./pages/simulator/SimulatorHub";
+import AdminDashboardMain from "./pages/admin/AdminDashboard";
 
 const queryClient = new QueryClient();
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
+      <TooltipProvider>
         <Toaster />
-        <Routes>
-          {/* Home page with universe selector */}
-          <Route path="/" element={<Index />} />
-          
-          {/* Unified auth routes */}
-          <Route path="/auth/login" element={<Login />} />
-          <Route path="/auth/register" element={<Register />} />
-          <Route path="/auth/forgot-password" element={<ForgotPassword />} />
-          
-          {/* Universe home pages */}
-          <Route path="/entreprise" element={<EntrepriseHome />} />
-          <Route path="/famille" element={<TeensHome />} />
-          
-          {/* Simulator routes - corrected */}
-          <Route path="/entreprise/simulator" element={<EntrepriseSimulator />} />
-          <Route path="/famille/simulator" element={<FamilySimulator />} />
-          
-          {/* Protected user pages */}
-          <Route path="/profil" element={<ProtectedRoute requireAuth={true}><Profil /></ProtectedRoute>} />
-          <Route path="/recommandations" element={<ProtectedRoute requireAuth={true}><Recommandations /></ProtectedRoute>} />
-          <Route path="/historique" element={<ProtectedRoute requireAuth={true}><Historique /></ProtectedRoute>} />
-          
-          {/* Footer pages */}
-          <Route path="/qui-sommes-nous" element={<QuiSommesNous />} />
-          <Route path="/nos-valeurs" element={<NosValeurs />} />
-          <Route path="/contact" element={<Contact />} />
-          
-          {/* Admin Route */}
-          <Route path="/admin" element={<ProtectedRoute requireAuth={true}><AdminPanel /></ProtectedRoute>} />
-          
-          {/* Legacy Teens Routes - keep for compatibility */}
-          <Route path="/teens/login" element={<TeensLogin />} />
-          <Route path="/teens/register" element={<TeensRegister />} />
-          <Route path="/teens" element={<ProtectedRoute requireAuth={true}><Teens /></ProtectedRoute>} />
-          <Route path="/teens/dashboard" element={<ProtectedRoute requireAuth={true}><Teens /></ProtectedRoute>} />
-          
-          <Route path="/teens/personal-space" element={<ProtectedRoute requireAuth={true}><TeensPersonalSpace /></ProtectedRoute>} />
-          <Route path="/teens/fun-solutions" element={<ProtectedRoute requireAuth={true}><TeensFunSolutions /></ProtectedRoute>} />
-          <Route path="/teens/parental-access-dashboard" element={<ProtectedRoute requireAuth={true}><TeensParentalAccessDashboard /></ProtectedRoute>} />
-          <Route path="/teens/customization" element={<ProtectedRoute requireAuth={true}><TeensCustomization /></ProtectedRoute>} />
-          <Route path="/teens/journal" element={<ProtectedRoute requireAuth={true}><TeensJournal /></ProtectedRoute>} />
-          <Route path="/teens/playlist" element={<ProtectedRoute requireAuth={true}><TeensPlaylist /></ProtectedRoute>} />
-          <Route path="/teens/metaverse" element={<ProtectedRoute requireAuth={true}><TeensMetaverse /></ProtectedRoute>} />
-          <Route path="/teens/shop" element={<ProtectedRoute requireAuth={true}><TeensShop /></ProtectedRoute>} />
-          <Route path="/teens/quick-alert" element={<ProtectedRoute requireAuth={true}><TeensQuickAlert /></ProtectedRoute>} />
-          <Route path="/teens/calendar" element={<ProtectedRoute requireAuth={true}><TeensCalendar /></ProtectedRoute>} />
-          <Route path="/teens/check-in" element={<ProtectedRoute requireAuth={true}><TeensCheckIn /></ProtectedRoute>} />
-          <Route path="/teens/parental-access" element={<ProtectedRoute requireAuth={true}><TeensParentalAccess /></ProtectedRoute>} />
-          <Route path="/teens/family-space" element={<ProtectedRoute requireAuth={true}><TeensFamilySpace /></ProtectedRoute>} />
-          <Route path="/teens/intimacy-space" element={<ProtectedRoute requireAuth={true}><TeensIntimacySpace /></ProtectedRoute>} />
-          <Route path="/teens/family-simulator" element={<FamilySimulator />} />
-          <Route path="/teens/questionnaire" element={<ProtectedRoute requireAuth={true}><TeensQuestionnaire /></ProtectedRoute>} />
-          <Route path="/teens/dashboard-parent" element={<ProtectedRoute requireAuth={true}><TeensDashboardParent /></ProtectedRoute>} />
-          <Route path="/teens/ai-evaluation" element={<ProtectedRoute requireAuth={true}><TeensAIEvaluation /></ProtectedRoute>} />
-          
-          {/* Legacy Entreprise Routes - keep for compatibility */}
-          <Route path="/entreprise/login" element={<EntrepriseLogin />} />
-          <Route path="/entreprise/register" element={<EntrepriseRegister />} />
-          <Route path="/entreprise/forgot-password" element={<EntrepriseForgotPassword />} />
-          <Route path="/entreprise/reset-password" element={<EntrepriseResetPassword />} />
-          <Route path="/entreprise/dashboard" element={<ProtectedRoute requireAuth={true}><EntrepriseDashboard /></ProtectedRoute>} />
-          <Route path="/entreprise/employee-dashboard" element={<ProtectedRoute requireAuth={true}><EmployeeDashboard /></ProtectedRoute>} />
-          <Route path="/entreprise/manager-dashboard" element={<ProtectedRoute requireAuth={true}><ManagerDashboard /></ProtectedRoute>} />
-          <Route path="/entreprise/hr-dashboard" element={<ProtectedRoute requireAuth={true}><HRDashboard /></ProtectedRoute>} />
-          <Route path="/entreprise/admin-dashboard" element={<ProtectedRoute requireAuth={true} requireAdmin={true}><EntrepriseAdminDashboard /></ProtectedRoute>} />
-          <Route path="/entreprise/questionnaire" element={<ProtectedRoute requireAuth={true}><EntrepriseQuestionnaire /></ProtectedRoute>} />
-          <Route path="/entreprise/orders" element={<ProtectedRoute requireAuth={true}><EntrepriseOrders /></ProtectedRoute>} />
-          <Route path="/entreprise/shop" element={<ProtectedRoute requireAuth={true}><EntrepriseShop /></ProtectedRoute>} />
-          <Route path="/entreprise/unboxing" element={<ProtectedRoute requireAuth={true}><EntrepriseUnboxing /></ProtectedRoute>} />
-          <Route path="/entreprise/admin-content" element={<ProtectedRoute requireAuth={true} requireAdmin={true}><EntrepriseAdminContentManager /></ProtectedRoute>} />
-          
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            {/* Main routes */}
+            <Route path="/" element={<Index />} />
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/auth/login" element={<AuthLogin />} />
+            <Route path="/auth/register" element={<AuthRegister />} />
+            <Route path="/auth/forgot-password" element={<AuthForgotPassword />} />
+            <Route path="/profil" element={<Profil />} />
+            <Route path="/historique" element={<Historique />} />
+            <Route path="/recommandations" element={<Recommandations />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/qui-sommes-nous" element={<QuiSommesNous />} />
+            <Route path="/nos-valeurs" element={<NosValeurs />} />
+            
+            {/* Admin routes */}
+            <Route path="/admin" element={<AdminPanel />} />
+            <Route path="/admin/dashboard" element={<AdminDashboardMain />} />
+            
+            {/* Simulator Hub */}
+            <Route path="/simulators" element={<SimulatorHub />} />
+
+            {/* Enterprise routes */}
+            <Route path="/entreprise" element={<EntrepriseHome />} />
+            <Route path="/entreprise/login" element={<Login />} />
+            <Route path="/entreprise/register" element={<Register />} />
+            <Route path="/entreprise/forgot-password" element={<ForgotPassword />} />
+            <Route path="/entreprise/reset-password" element={<ResetPassword />} />
+            <Route path="/entreprise/dashboard" element={<Dashboard />} />
+            <Route path="/entreprise/employee" element={<EmployeeDashboard />} />
+            <Route path="/entreprise/manager" element={<ManagerDashboard />} />
+            <Route path="/entreprise/hr" element={<HRDashboard />} />
+            <Route path="/entreprise/admin" element={<AdminDashboard />} />
+            <Route path="/entreprise/admin-content" element={<AdminContentManager />} />
+            <Route path="/entreprise/shop" element={<Shop />} />
+            <Route path="/entreprise/orders" element={<Orders />} />
+            <Route path="/entreprise/unboxing" element={<Unboxing />} />
+            <Route path="/entreprise/simulator" element={<Simulator />} />
+
+            {/* Teens routes */}
+            <Route path="/teens" element={<TeensHome />} />
+            <Route path="/teens/login" element={<TeensLogin />} />
+            <Route path="/teens/register" element={<TeensRegister />} />
+            <Route path="/teens/questionnaire" element={<TeensQuestionnaire />} />
+            <Route path="/teens/personal" element={<TeensPersonalSpace />} />
+            <Route path="/teens/journal" element={<TeensJournal />} />
+            <Route path="/teens/checkin" element={<TeensCheckIn />} />
+            <Route path="/teens/calendar" element={<TeensCalendar />} />
+            <Route path="/teens/family" element={<TeensFamilySpace />} />
+            <Route path="/teens/parental-access" element={<TeensParentalAccess />} />
+            <Route path="/teens/parental-dashboard" element={<TeensParentalAccessDashboard />} />
+            <Route path="/teens/parent-dashboard" element={<TeensDashboardParent />} />
+            <Route path="/teens/customization" element={<TeensCustomization />} />
+            <Route path="/teens/metaverse" element={<TeensMetaverse />} />
+            <Route path="/teens/playlist" element={<TeensPlaylist />} />
+            <Route path="/teens/shop" element={<TeensShop />} />
+            <Route path="/teens/intimacy" element={<TeensIntimacySpace />} />
+            <Route path="/teens/fun-solutions" element={<TeensFunSolutions />} />
+            <Route path="/teens/quick-alert" element={<TeensQuickAlert />} />
+            <Route path="/teens/ai-evaluation" element={<TeensAIEvaluation />} />
+
+            {/* Family routes */}
+            <Route path="/famille" element={<Navigate to="/teens" replace />} />
+            <Route path="/famille/simulator" element={<FamilySimulator />} />
+
+            {/* Legacy redirects */}
+            <Route path="/entreprise-dashboard" element={<Navigate to="/entreprise/dashboard" replace />} />
+            <Route path="/questionnaire" element={<Navigate to="/teens/questionnaire" replace />} />
+            
+            {/* 404 route */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
     </QueryClientProvider>
   );
 }
