@@ -3,44 +3,77 @@ export const familyQuestions = {
   family: [
     {
       id: "family_1",
-      text: "Comment décririez-vous l'ambiance générale de votre famille ?",
-      type: "scale" as const,
-      scale: { min: 1, max: 5, labels: ["Très tendue", "Très harmonieuse"] }
+      text: "Comment décrirais-tu l'ambiance de ta famille ? 🏠",
+      type: "emoji_scale" as const,
+      scale: { min: 1, max: 5, emojis: ["😰", "😕", "😐", "😊", "🥰"], labels: ["Très tendue", "Très harmonieuse"] }
     },
     {
       id: "family_2", 
-      text: "À quelle fréquence votre famille mange-t-elle ensemble ?",
-      type: "multiple_choice" as const,
+      text: "À quelle fréquence votre famille partage-t-elle des repas ensemble ? 🍽️",
+      type: "fun_multiple_choice" as const,
       options: [
-        "Tous les jours",
-        "Plusieurs fois par semaine", 
-        "Une fois par semaine",
-        "Rarement",
-        "Jamais"
+        { text: "Tous les jours", emoji: "🥳", points: 5 },
+        { text: "Plusieurs fois par semaine", emoji: "😊", points: 4 }, 
+        { text: "Une fois par semaine", emoji: "😐", points: 3 },
+        { text: "Rarement", emoji: "😕", points: 2 },
+        { text: "Jamais", emoji: "😢", points: 1 }
       ]
     },
     {
       id: "family_3",
-      text: "Comment évaluez-vous la communication dans votre famille ?",
-      type: "scale" as const,
-      scale: { min: 1, max: 5, labels: ["Très difficile", "Très fluide"] }
+      text: "Comment se passent les discussions dans ta famille ? 💬",
+      type: "emoji_scale" as const,
+      scale: { min: 1, max: 5, emojis: ["🤐", "😤", "😐", "😌", "🗣️"], labels: ["Très difficile", "Très fluide"] }
     },
     {
       id: "family_4",
-      text: "Quelles activités aimeriez-vous faire plus souvent en famille ?",
-      type: "text" as const
+      text: "Raconte-nous une activité que tu aimerais faire plus souvent en famille ! ✨",
+      type: "creative_text" as const,
+      placeholder: "Ex: cuisiner ensemble, jouer aux jeux vidéo, faire du sport...",
+      suggestions: ["🎮 Jeux vidéo", "🍳 Cuisine", "🚴‍♂️ Sport", "🎬 Cinéma", "🧩 Jeux de société"]
     },
     {
       id: "family_5",
-      text: "Comment gérez-vous les conflits dans votre famille ?",
-      type: "multiple_choice" as const,
+      text: "Quand il y a un petit conflit dans ta famille, comment ça se passe ? 🤔",
+      type: "story_choice" as const,
       options: [
-        "Discussion ouverte et calme",
-        "Chacun évite les conflits",
-        "Les parents prennent les décisions",
-        "Cela dépend de la situation",
-        "Les conflits ne se résolvent pas facilement"
+        { 
+          text: "On discute calmement jusqu'à trouver une solution", 
+          emoji: "🕊️", 
+          story: "Comme une famille de diplomates ! 👏",
+          points: 5 
+        },
+        { 
+          text: "Chacun évite le conflit", 
+          emoji: "🙈", 
+          story: "Parfois il vaut mieux laisser passer l'orage... 🌦️",
+          points: 3 
+        },
+        { 
+          text: "Les parents tranchent", 
+          emoji: "👨‍👩‍👧‍👦", 
+          story: "Les parents ont le dernier mot ! ⚖️",
+          points: 3 
+        },
+        { 
+          text: "Ça dépend vraiment de la situation", 
+          emoji: "🤷‍♀️", 
+          story: "Chaque conflit est unique ! 🎭",
+          points: 4 
+        },
+        { 
+          text: "C'est compliqué à résoudre", 
+          emoji: "😵‍💫", 
+          story: "Pas facile tous les jours... 💙",
+          points: 2 
+        }
       ]
+    },
+    {
+      id: "family_6",
+      text: "Sur une échelle de bonheur, comment te sens-tu dans ta famille ? 💖",
+      type: "animated_slider" as const,
+      scale: { min: 0, max: 100, emojis: ["😢", "😕", "😐", "😊", "🥰"], unit: "%" }
     }
   ]
 };

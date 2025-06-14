@@ -1,14 +1,13 @@
 
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, LogIn } from "lucide-react";
+import { ArrowLeft, LogIn, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent } from "@/components/ui/card";
 import { getQuestionsForType } from "@/data/familyQuestions";
+import FamilyQuestionCard from "@/components/teens/FamilyQuestionCard";
 
 const FamilySimulator = () => {
   const navigate = useNavigate();
@@ -66,13 +65,13 @@ const FamilySimulator = () => {
     
     Object.entries(answers).forEach(([questionId, answer]) => {
       const question = questions.find(q => q.id === questionId);
-      if (question?.type === "scale" && typeof answer === "number") {
+      if ((question?.type === "emoji_scale" || question?.type === "animated_slider") && typeof answer === "number") {
         totalScore += answer;
         scaleQuestions++;
       }
     });
     
-    const finalScore = scaleQuestions > 0 ? Math.round((totalScore / (scaleQuestions * 5)) * 100) : 50;
+    const finalScore = scaleQuestions > 0 ? Math.round((totalScore / (scaleQuestions * 5)) * 100) : 75;
     setScore(finalScore);
     setIsLoading(false);
     setShowResults(true);
@@ -81,8 +80,8 @@ const FamilySimulator = () => {
   const handleSaveResults = async () => {
     if (!user) {
       toast({
-        title: "Connexion requise",
-        description: "Connectez-vous pour sauvegarder vos résultats.",
+        title: "Connexion requise 🔐",
+        description: "Connecte-toi pour sauvegarder tes résultats !",
         variant: "destructive"
       });
       navigate('/teens/login');
@@ -105,13 +104,13 @@ const FamilySimulator = () => {
       if (error) throw error;
 
       toast({
-        title: "Résultats sauvegardés",
-        description: "Vos résultats ont été enregistrés avec succès.",
+        title: "Résultats sauvegardés ! 🎉",
+        description: "Tes résultats ont été enregistrés avec succès.",
       });
     } catch (error) {
       console.error('Error saving results:', error);
       toast({
-        title: "Erreur",
+        title: "Erreur 😕",
         description: "Impossible de sauvegarder les résultats.",
         variant: "destructive"
       });
@@ -126,140 +125,88 @@ const FamilySimulator = () => {
   };
 
   const currentQuestion = questions[currentStep];
-  const progress = ((currentStep + 1) / questions.length) * 100;
   const isCurrentQuestionAnswered = answers[currentQuestion?.id] !== undefined;
 
-  const renderQuestionInput = () => {
-    if (!currentQuestion) return null;
-
-    switch (currentQuestion.type) {
-      case "scale":
-        const scale = currentQuestion.scale || { min: 1, max: 5, labels: [] };
-        return (
-          <div className="space-y-4">
-            <div className="grid grid-cols-5 gap-2">
-              {Array.from({ length: scale.max - scale.min + 1 }, (_, i) => {
-                const value = scale.min + i;
-                return (
-                  <Button
-                    key={value}
-                    variant={answers[currentQuestion.id] === value ? "default" : "outline"}
-                    className="h-16 text-lg font-semibold"
-                    onClick={() => handleAnswerChange(currentQuestion.id, value)}
-                  >
-                    {value}
-                  </Button>
-                );
-              })}
-            </div>
-            {scale.labels.length > 0 && (
-              <div className="flex justify-between text-sm text-gray-600">
-                <span>{scale.labels[0]}</span>
-                <span>{scale.labels[1]}</span>
-              </div>
-            )}
-          </div>
-        );
-
-      case "multiple_choice":
-        return (
-          <div className="space-y-3">
-            {currentQuestion.options?.map((option, index) => (
-              <Button
-                key={index}
-                variant={answers[currentQuestion.id] === option ? "default" : "outline"}
-                className="w-full text-left justify-start h-auto py-4 px-6"
-                onClick={() => handleAnswerChange(currentQuestion.id, option)}
-              >
-                {option}
-              </Button>
-            ))}
-          </div>
-        );
-
-      case "text":
-        return (
-          <Textarea
-            value={answers[currentQuestion.id] as string || ""}
-            onChange={(e) => handleAnswerChange(currentQuestion.id, e.target.value)}
-            placeholder="Tapez votre réponse ici..."
-            className="min-h-32"
-          />
-        );
-
-      default:
-        return null;
-    }
-  };
-
   const renderResults = () => {
-    const riskLevel = score >= 70 ? 'low' : score >= 40 ? 'medium' : 'high';
-    const riskColor = riskLevel === 'low' ? 'text-green-600' : riskLevel === 'medium' ? 'text-yellow-600' : 'text-red-600';
+    const riskLevel = score >= 70 ? 'Excellent' : score >= 50 ? 'Bon' : score >= 30 ? 'À améliorer' : 'Préoccupant';
+    const riskEmoji = score >= 70 ? '🌟' : score >= 50 ? '😊' : score >= 30 ? '😐' : '😟';
     
     return (
       <div className="max-w-4xl mx-auto space-y-6">
-        <Card className="text-center">
-          <CardHeader>
-            <CardTitle className="text-2xl text-primary">Résultats de votre évaluation familiale</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="text-center">
-              <div className="text-4xl font-bold text-primary mb-2">{score}%</div>
-              <div className="text-gray-600">Score de bien-être familial</div>
-            </div>
+        <Card className="text-center shadow-xl bg-gradient-to-br from-pink-50 to-purple-50 border-t-4 border-t-pink-500">
+          <CardContent className="p-8">
+            <div className="text-6xl mb-4">{riskEmoji}</div>
+            <h2 className="text-3xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent mb-4">
+              Bravo ! Voici tes résultats familiaux ✨
+            </h2>
             
-            <div className={`text-lg font-semibold ${riskColor}`}>
-              Niveau de risque familial : {riskLevel === 'low' ? 'Faible' : riskLevel === 'medium' ? 'Modéré' : 'Élevé'}
+            <div className="text-center mb-6">
+              <div className="text-5xl font-bold text-pink-600 mb-2">{score}%</div>
+              <div className="text-xl text-gray-700">Score de bien-être familial</div>
+              <div className="text-lg font-semibold text-purple-600 mt-2">
+                Niveau : {riskLevel}
+              </div>
             </div>
 
             <div className="grid md:grid-cols-2 gap-6 mt-8">
-              <div className="bg-blue-50 p-6 rounded-lg">
-                <h3 className="font-semibold text-blue-800 mb-3">💡 Recommandations</h3>
-                <ul className="text-sm text-blue-700 space-y-2">
+              <div className="bg-gradient-to-r from-blue-50 to-blue-100 p-6 rounded-xl border border-blue-200">
+                <h3 className="font-bold text-blue-800 mb-3 text-lg">🎯 Recommandations personnalisées</h3>
+                <ul className="text-sm text-blue-700 space-y-2 text-left">
                   {score >= 70 ? (
                     <>
-                      <li>• Continuez à maintenir cette excellente dynamique familiale</li>
-                      <li>• Planifiez des activités communes régulières</li>
-                      <li>• Célébrez vos réussites familiales</li>
+                      <li>• Continue sur cette excellente voie ! 🌟</li>
+                      <li>• Planifiez des activités familiales régulières 🎮</li>
+                      <li>• Célébrez vos moments de bonheur ensemble 🎉</li>
                     </>
-                  ) : score >= 40 ? (
+                  ) : score >= 50 ? (
                     <>
-                      <li>• Améliorez la communication en famille</li>
-                      <li>• Organisez des temps d'échange sans écrans</li>
-                      <li>• Considérez un accompagnement familial</li>
+                      <li>• Améliorez la communication en famille 💬</li>
+                      <li>• Organisez des temps sans écrans 📱</li>
+                      <li>• Créez des rituels familiaux 🏠</li>
                     </>
                   ) : (
                     <>
-                      <li>• Envisagez une thérapie familiale</li>
-                      <li>• Créez des moments de dialogue privilégiés</li>
-                      <li>• Établissez des règles communes respectueuses</li>
+                      <li>• Envisagez un accompagnement familial 👨‍👩‍👧‍👦</li>
+                      <li>• Créez des moments de dialogue privilégiés 💝</li>
+                      <li>• Établissez des règles communes bienveillantes ✨</li>
                     </>
                   )}
                 </ul>
               </div>
 
-              <div className="bg-green-50 p-6 rounded-lg">
-                <h3 className="font-semibold text-green-800 mb-3">🎯 Prochaines étapes</h3>
-                <ul className="text-sm text-green-700 space-y-2">
-                  <li>• Partagez ces résultats en famille</li>
-                  <li>• Définissez ensemble des objectifs communs</li>
-                  <li>• Refaites l'évaluation dans 3 mois</li>
+              <div className="bg-gradient-to-r from-green-50 to-green-100 p-6 rounded-xl border border-green-200">
+                <h3 className="font-bold text-green-800 mb-3 text-lg">🚀 Prochaines étapes</h3>
+                <ul className="text-sm text-green-700 space-y-2 text-left">
+                  <li>• Partage ces résultats en famille 👨‍👩‍👧‍👦</li>
+                  <li>• Définissez ensemble des objectifs communs 🎯</li>
+                  <li>• Refais l'évaluation dans 1 mois 📅</li>
+                  <li>• Explore nos autres outils famille 🛠️</li>
                 </ul>
               </div>
             </div>
 
             <div className="flex flex-wrap justify-center gap-4 mt-8">
-              <Button onClick={handleRestart} variant="outline">
-                Refaire l'évaluation
+              <Button 
+                onClick={handleRestart} 
+                variant="outline"
+                className="border-pink-300 text-pink-600 hover:bg-pink-50"
+              >
+                🔄 Refaire l'évaluation
               </Button>
               {user && (
-                <Button onClick={handleSaveResults}>
-                  Sauvegarder les résultats
+                <Button 
+                  onClick={handleSaveResults}
+                  className="bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600"
+                >
+                  💾 Sauvegarder les résultats
                 </Button>
               )}
               {!user && (
-                <Button onClick={() => navigate('/teens/login')}>
-                  Se connecter pour sauvegarder
+                <Button 
+                  onClick={() => navigate('/teens/login')}
+                  className="bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600"
+                >
+                  🔐 Se connecter pour sauvegarder
                 </Button>
               )}
             </div>
@@ -270,24 +217,26 @@ const FamilySimulator = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-background to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50">
       {/* Header */}
-      <header className="border-b bg-card/80 backdrop-blur-sm">
+      <header className="border-b bg-white/80 backdrop-blur-sm shadow-sm">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <Button 
               variant="ghost" 
               onClick={() => navigate('/famille')}
-              className="flex items-center space-x-2"
+              className="flex items-center space-x-2 text-pink-600 hover:text-pink-700"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Retour à l'accueil famille</span>
             </Button>
-            <h1 className="text-2xl font-bold text-primary">Simulateur Famille - Gratuit</h1>
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent">
+              ✨ Évaluation Famille Interactive ✨
+            </h1>
             {!user && (
               <Button 
                 onClick={() => navigate('/teens/login')}
-                className="flex items-center space-x-2"
+                className="flex items-center space-x-2 bg-gradient-to-r from-pink-500 to-purple-500"
               >
                 <LogIn className="w-4 h-4" />
                 <span>Se connecter</span>
@@ -299,9 +248,9 @@ const FamilySimulator = () => {
 
       <div className="container mx-auto px-4 py-8">
         {!user && !showResults && (
-          <div className="mb-8 p-4 bg-pink-50 border border-pink-200 rounded-lg">
-            <p className="text-pink-800 text-center">
-              💡 <strong>Simulateur 100% gratuit</strong> - Évaluez le bien-être de votre famille. Connectez-vous uniquement pour sauvegarder vos résultats.
+          <div className="mb-8 p-6 bg-gradient-to-r from-pink-100 to-purple-100 border-2 border-pink-200 rounded-xl">
+            <p className="text-pink-800 text-center text-lg">
+              🎁 <strong>Évaluation 100% gratuite et fun !</strong> - Découvre le bien-être de ta famille avec une expérience interactive. Connecte-toi pour sauvegarder tes résultats ! ✨
             </p>
           </div>
         )}
@@ -310,48 +259,56 @@ const FamilySimulator = () => {
           renderResults()
         ) : (
           <div className="max-w-4xl mx-auto">
-            <Card className="shadow-lg border-t-4 border-t-pink-500">
-              <CardHeader>
-                <div className="flex justify-between items-center mb-4">
-                  <span className="text-sm font-medium text-gray-500">
-                    Question {currentStep + 1} sur {questions.length}
-                  </span>
-                  <span className="text-sm font-medium text-pink-600">
-                    {Math.round(progress)}%
-                  </span>
+            <FamilyQuestionCard
+              currentQuestion={currentQuestion}
+              currentStep={currentStep}
+              totalSteps={questions.length}
+              answer={answers[currentQuestion?.id]}
+              onAnswerChange={(value) => handleAnswerChange(currentQuestion.id, value)}
+            />
+
+            <Card className="mt-6 shadow-lg">
+              <CardContent className="p-6">
+                <div className="flex justify-between items-center">
+                  <Button
+                    variant="outline"
+                    onClick={handlePrevious}
+                    disabled={currentStep === 0}
+                    className="flex items-center space-x-2 border-pink-300 text-pink-600 hover:bg-pink-50"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                    <span>Précédent</span>
+                  </Button>
+
+                  <div className="text-center">
+                    <div className="text-sm text-gray-500 mb-1">
+                      Question {currentStep + 1} sur {questions.length}
+                    </div>
+                    <div className="flex space-x-1">
+                      {Array.from({ length: questions.length }, (_, i) => (
+                        <div
+                          key={i}
+                          className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                            i <= currentStep ? 'bg-pink-500' : 'bg-gray-200'
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  </div>
+
+                  <Button
+                    onClick={handleNext}
+                    disabled={!isCurrentQuestionAnswered || isLoading}
+                    className="flex items-center space-x-2 bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 disabled:opacity-50"
+                  >
+                    <span>
+                      {isLoading ? "Calcul en cours... ⏳" : currentStep === questions.length - 1 ? "Terminer 🎉" : "Suivant"}
+                    </span>
+                    {!isLoading && <ChevronRight className="w-4 h-4" />}
+                  </Button>
                 </div>
-                <Progress value={progress} className="mb-4" />
-                <CardTitle className="text-xl font-semibold leading-relaxed">
-                  {currentQuestion?.text}
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                {renderQuestionInput()}
               </CardContent>
             </Card>
-
-            <div className="flex justify-between items-center mt-6">
-              <Button
-                variant="outline"
-                onClick={handlePrevious}
-                disabled={currentStep === 0}
-                className="flex items-center space-x-2"
-              >
-                <ArrowLeft className="w-4 h-4" />
-                <span>Précédent</span>
-              </Button>
-
-              <Button
-                onClick={handleNext}
-                disabled={!isCurrentQuestionAnswered || isLoading}
-                className="flex items-center space-x-2 bg-pink-600 hover:bg-pink-700"
-              >
-                <span>
-                  {isLoading ? "Calcul en cours..." : currentStep === questions.length - 1 ? "Terminer" : "Suivant"}
-                </span>
-                {!isLoading && <ArrowLeft className="w-4 h-4 rotate-180" />}
-              </Button>
-            </div>
           </div>
         )}
       </div>
