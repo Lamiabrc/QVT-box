@@ -207,6 +207,64 @@ const SimulatorQuestionnaire: React.FC<SimulatorQuestionnaireProps> = ({
             ]
           }
         ];
+      case "family":
+        return [
+          {
+            id: "family_communication",
+            text: "Comment évaluez-vous la communication dans votre famille ?",
+            options: [
+              { value: "5", label: "Excellente - Nous parlons ouvertement" },
+              { value: "4", label: "Bonne - Communication régulière" },
+              { value: "3", label: "Correcte - Quelques difficultés" },
+              { value: "2", label: "Difficile - Peu d'échanges" },
+              { value: "1", label: "Très difficile - Quasi absence de dialogue" }
+            ]
+          },
+          {
+            id: "family_stress",
+            text: "Quel est le niveau de stress général dans votre foyer ?",
+            options: [
+              { value: "1", label: "Très calme - Atmosphère détendue" },
+              { value: "2", label: "Calme - Tensions occasionnelles" },
+              { value: "3", label: "Modéré - Stress gérable" },
+              { value: "4", label: "Élevé - Tensions fréquentes" },
+              { value: "5", label: "Très élevé - Climat tendu permanent" }
+            ]
+          },
+          {
+            id: "teen_wellbeing",
+            text: "Comment percevez-vous le bien-être de votre adolescent(e) ?",
+            options: [
+              { value: "5", label: "Excellent - Épanoui(e) et confiant(e)" },
+              { value: "4", label: "Bon - Quelques préoccupations mineures" },
+              { value: "3", label: "Moyen - Signaux d'alerte occasionnels" },
+              { value: "2", label: "Préoccupant - Changements comportementaux" },
+              { value: "1", label: "Très préoccupant - Signes de détresse" }
+            ]
+          },
+          {
+            id: "screen_time",
+            text: "Comment gérez-vous le temps d'écran dans votre famille ?",
+            options: [
+              { value: "5", label: "Très bien - Règles claires et respectées" },
+              { value: "4", label: "Bien - Quelques négociations" },
+              { value: "3", label: "Moyennement - Difficultés occasionnelles" },
+              { value: "2", label: "Difficilement - Conflits fréquents" },
+              { value: "1", label: "Pas du tout - Usage incontrôlé" }
+            ]
+          },
+          {
+            id: "family_activities",
+            text: "À quelle fréquence faites-vous des activités ensemble ?",
+            options: [
+              { value: "5", label: "Très souvent - Activités régulières" },
+              { value: "4", label: "Souvent - Plusieurs fois par semaine" },
+              { value: "3", label: "Parfois - Weekends principalement" },
+              { value: "2", label: "Rarement - Occasions spéciales" },
+              { value: "1", label: "Jamais - Chacun de son côté" }
+            ]
+          }
+        ];
       default:
         return [];
     }
@@ -249,6 +307,7 @@ const SimulatorQuestionnaire: React.FC<SimulatorQuestionnaireProps> = ({
       case "personal": return "Évaluation Personnelle";
       case "team": return "Évaluation d'Équipe";
       case "life_event": return "Événement de Vie";
+      case "family": return "Évaluation Familiale";
       default: return "Questionnaire";
     }
   };

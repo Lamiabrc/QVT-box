@@ -42,9 +42,12 @@ const AdminContentManager = () => {
   const { users, loading: usersLoading, updateUserRole } = useUserRoles();
   const [activeTab, setActiveTab] = useState('content');
 
+  // Vérifier si l'utilisateur est autorisé (admin ou lamia.brechet@outlook.fr)
+  const isAuthorized = isAdmin || user?.email === 'lamia.brechet@outlook.fr';
+
   useEffect(() => {
     if (!authLoading && user) {
-      if (isAdmin) {
+      if (isAuthorized) {
         refetch();
       } else {
         toast({
@@ -54,11 +57,18 @@ const AdminContentManager = () => {
         });
       }
     }
-  }, [authLoading, user, isAdmin]);
+  }, [authLoading, user, isAuthorized]);
 
   const handleCreateContent = async (newContent: Omit<ContentItem, "id" | "created_at" | "updated_at">) => {
     try {
-      if (!requireAdmin()) return;
+      if (!isAuthorized) {
+        toast({
+          variant: "destructive",
+          title: "Accès refusé",
+          description: "Vous n'êtes pas autorisé à effectuer cette action.",
+        });
+        return;
+      }
       await createContent(newContent);
       toast({
         title: "Succès",
@@ -75,7 +85,14 @@ const AdminContentManager = () => {
 
   const handleUpdateContent = async (id: string, updates: Partial<ContentItem>) => {
     try {
-      if (!requireAdmin()) return;
+      if (!isAuthorized) {
+        toast({
+          variant: "destructive",
+          title: "Accès refusé",
+          description: "Vous n'êtes pas autorisé à effectuer cette action.",
+        });
+        return;
+      }
       await updateContent(id, updates);
       toast({
         title: "Succès",
@@ -92,7 +109,14 @@ const AdminContentManager = () => {
 
   const handleDeleteContent = async (id: string) => {
     try {
-      if (!requireAdmin()) return;
+      if (!isAuthorized) {
+        toast({
+          variant: "destructive",
+          title: "Accès refusé",
+          description: "Vous n'êtes pas autorisé à effectuer cette action.",
+        });
+        return;
+      }
       await deleteContent(id);
       toast({
         title: "Succès",
@@ -109,7 +133,14 @@ const AdminContentManager = () => {
 
   const handleUpdateUserRole = async (userId: string, role: string) => {
     try {
-      if (!requireAdmin()) return;
+      if (!isAuthorized) {
+        toast({
+          variant: "destructive",
+          title: "Accès refusé",
+          description: "Vous n'êtes pas autorisé à effectuer cette action.",
+        });
+        return;
+      }
       await updateUserRole(userId, role);
     } catch (error) {
       // Error is already handled in useUserRoles hook
@@ -129,7 +160,7 @@ const AdminContentManager = () => {
     );
   }
 
-  if (!isAdmin) {
+  if (!isAuthorized) {
     return (
       <AuthGuard requireAuth={true}>
         <div className="min-h-screen flex items-center justify-center">
@@ -164,6 +195,13 @@ const AdminContentManager = () => {
               <div>
                 <h1 className="text-3xl font-bold text-gray-900">Gestion de Contenu Admin</h1>
                 <p className="text-gray-600">Gérez le contenu et les utilisateurs de la plateforme</p>
+                {user?.email === 'lamia.brechet@outlook.fr' && (
+                  <div className="mt-2">
+                    <span className="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded-full">
+                      Admin Principal
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
 

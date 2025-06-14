@@ -1,249 +1,172 @@
 
-import React, { useState, useEffect } from "react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import { Card } from "@/components/ui/card";
+import { useNavigate } from "react-router-dom";
+import { ArrowLeft, LogIn } from "lucide-react";
+import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
-import FamilySimulatorResults from "@/components/teens/FamilySimulatorResults";
-import { familyQuestions, getQuestionsForRole } from "@/data/familySimulatorQuestions";
-import FamilyQuestionCard from "@/components/teens/FamilyQuestionCard";
-import FamilyRoleSelector from "@/components/teens/FamilyRoleSelector";
-import FamilySimulatorNavigation from "@/components/teens/FamilySimulatorNavigation";
-import AuthGuard from "@/components/AuthGuard";
-import { 
-  calculateFamilyWellnessScore, 
-  calculateFamilyRisk, 
-  getRecommendedFamilyBox 
-} from "@/utils/familySimulatorCalculations";
-import { FamilySimulatorResult, FamilyRole } from "@/types/familySimulator";
 import { supabase } from "@/integrations/supabase/client";
+import { Button } from "@/components/ui/button";
+import SimulatorTypeSelector, { SimulatorType } from "@/components/simulator/SimulatorTypeSelector";
+import SimulatorQuestionnaire from "@/components/simulator/SimulatorQuestionnaire";
+import SimulatorResults from "@/components/simulator/SimulatorResults";
 
 const FamilySimulator = () => {
+  const navigate = useNavigate();
   const { toast } = useToast();
-  const [currentStep, setCurrentStep] = useState(-1);
-  const [role, setRole] = useState<FamilyRole | null>(null);
-  const [questions, setQuestions] = useState(familyQuestions);
-  const [answers, setAnswers] = useState<Record<string, string | number>>({});
-  const [showResults, setShowResults] = useState(false);
-  const [loadingResults, setLoadingResults] = useState(false);
-  const [results, setResults] = useState<FamilySimulatorResult | null>(null);
-  
-  useEffect(() => {
-    if (role) {
-      const roleQuestions = getQuestionsForRole(role);
-      setQuestions([...familyQuestions, ...roleQuestions]);
-    }
-  }, [role]);
+  const [user, setUser] = useState(null);
+  const [currentStep, setCurrentStep] = useState<'type-selection' | 'questionnaire' | 'results'>('type-selection');
+  const [selectedType, setSelectedType] = useState<SimulatorType | null>(null);
+  const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [score, setScore] = useState<number>(0);
 
-  const processResults = async (): Promise<FamilySimulatorResult> => {
-    setLoadingResults(true);
-    
-    try {
-      const wellnessScore = calculateFamilyWellnessScore(answers, role!);
-      const familyRisk = calculateFamilyRisk(wellnessScore, role!);
-      
-      const recommendedBox = getRecommendedFamilyBox(answers, wellnessScore, role!);
-      const recommendations = [recommendedBox];
-      
-      const finalResult = {
-        wellnessScore,
-        familyRisk: familyRisk.category,
-        riskPercentage: familyRisk.percentage,
-        recommendations,
-        role: role!,
-        communicationScore: Math.round(wellnessScore * 7),
-        emotionalScore: Math.round(wellnessScore * 6.5),
-        supportScore: Math.round(wellnessScore * 8)
-      };
-      
-      setResults(finalResult);
-      
-      // Sauvegarder les résultats
-      const { data: { user } } = await supabase.auth.getUser();
-      if (user) {
-        await supabase.from('teen_checkins').insert({
-          teen_id: user.id,
-          mood: familyRisk.category as any,
-          stress_level: Math.round((100 - wellnessScore) / 10),
-          family_relationship: Math.round(wellnessScore / 10),
-          personal_notes: `Simulateur famille - Role: ${role}`
-        });
+  // Check auth status silently (no redirect)
+  useEffect(() => {
+    const checkUser = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setUser(session?.user || null);
+    };
+    checkUser();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        setUser(session?.user || null);
       }
-      
-      return finalResult;
-    } catch (error) {
-      console.error("Error processing family results:", error);
+    );
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleTypeSelection = (type: SimulatorType) => {
+    setSelectedType(type);
+    setCurrentStep('questionnaire');
+  };
+
+  const handleQuestionnaireComplete = (questionnaireAnswers: Record<string, string>, questionnaireScore: number) => {
+    setAnswers(questionnaireAnswers);
+    setScore(questionnaireScore);
+    setCurrentStep('results');
+  };
+
+  const handleSaveResults = async () => {
+    if (!user) {
       toast({
-        title: "Erreur",
-        description: "Un problème est survenu lors du traitement des résultats.",
+        title: "Connexion requise",
+        description: "Connectez-vous pour sauvegarder vos résultats.",
         variant: "destructive"
       });
-      
-      const wellnessScore = calculateFamilyWellnessScore(answers, role!);
-      const familyRisk = calculateFamilyRisk(wellnessScore, role!);
-      
-      const fallbackResult = {
-        wellnessScore,
-        familyRisk: familyRisk.category,
-        riskPercentage: familyRisk.percentage,
-        recommendations: ["Nous recommandons de refaire le test plus tard."],
-        role: role!,
-        communicationScore: Math.round(wellnessScore * 7),
-        emotionalScore: Math.round(wellnessScore * 6.5),
-        supportScore: Math.round(wellnessScore * 8)
-      };
-      
-      setResults(fallbackResult);
-      return fallbackResult;
-    } finally {
-      setLoadingResults(false);
+      navigate('/teens/login');
+      return;
     }
-  };
 
-  const handleRoleChange = (selectedRole: FamilyRole) => {
-    setRole(selectedRole);
-    setAnswers({ role: selectedRole });
-    setCurrentStep(0);
-  };
+    try {
+      const { error } = await supabase
+        .from('simulator_responses')
+        .insert({
+          user_id: user.id,
+          answers: answers,
+          qvt_score: score,
+          burnout_risk_percentage: Math.max(0, 100 - score),
+          burnout_risk: score >= 70 ? 'low' : score >= 40 ? 'medium' : 'high',
+          context: 'family',
+          happiness_score: Math.round(score * 0.8)
+        });
 
-  const handleQuestionChange = (value: string | number) => {
-    const currentQuestion = questions[currentStep];
-    setAnswers({
-      ...answers,
-      [currentQuestion.id]: value,
-    });
-  };
+      if (error) throw error;
 
-  const handleNext = async () => {
-    if (currentStep < questions.length - 1) {
-      setCurrentStep(currentStep + 1);
-    } else {
-      setShowResults(true);
       toast({
-        title: "Évaluation terminée !",
-        description: "Votre score bien-être familial est en cours de calcul.",
+        title: "Résultats sauvegardés",
+        description: "Vos résultats ont été enregistrés avec succès.",
       });
-      await processResults();
+    } catch (error) {
+      console.error('Error saving results:', error);
+      toast({
+        title: "Erreur",
+        description: "Impossible de sauvegarder les résultats.",
+        variant: "destructive"
+      });
     }
   };
 
-  const handlePrevious = () => {
-    if (currentStep > 0) {
-      setCurrentStep(currentStep - 1);
-    } else if (currentStep === 0) {
-      setCurrentStep(-1);
-      setRole(null);
-      setQuestions(familyQuestions);
-    }
-  };
-
-  const handleReset = () => {
+  const handleRestart = () => {
+    setCurrentStep('type-selection');
+    setSelectedType(null);
     setAnswers({});
-    setCurrentStep(-1);
-    setRole(null);
-    setQuestions(familyQuestions);
-    setShowResults(false);
-    setResults(null);
+    setScore(0);
   };
 
-  const handleFeedback = (type: "like" | "dislike") => {
-    toast({
-      title: type === "like" ? "Merci pour votre avis positif !" : "Merci pour votre retour !",
-      description: type === "like" 
-        ? "Nous sommes ravis que ces recommandations vous soient utiles." 
-        : "Nous allons améliorer nos suggestions en fonction de votre retour.",
-    });
-  };
-
-  const isCurrentQuestionAnswered = () => {
-    if (currentStep === -1) return role !== null;
-    
-    const currentQuestion = questions[currentStep];
-    return answers[currentQuestion.id] !== undefined;
+  const handleBack = () => {
+    if (currentStep === 'questionnaire') {
+      setCurrentStep('type-selection');
+      setSelectedType(null);
+    } else if (currentStep === 'results') {
+      setCurrentStep('questionnaire');
+    }
   };
 
   return (
-    <AuthGuard>
-      <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 relative overflow-hidden">
-        {/* Floating wellness elements */}
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-20 left-10 w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full animate-pulse"></div>
-          <div className="absolute top-40 right-20 w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl transform rotate-45 animate-bounce"></div>
-          <div className="absolute bottom-32 left-1/4 w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl transform rotate-12 animate-pulse"></div>
-          <div className="absolute top-60 left-1/2 w-14 h-14 bg-gradient-to-br from-orange-500 to-yellow-500 rounded-full animate-bounce"></div>
-          <div className="absolute bottom-20 right-10 w-18 h-18 bg-gradient-to-br from-red-500 to-rose-500 rounded-2xl transform -rotate-12 animate-pulse"></div>
-        </div>
-
-        <Header />
-        
-        <main className="flex-1 py-8 px-4 relative z-10">
-          <div className="container mx-auto max-w-3xl">
-            <div className="text-center mb-8">
-              <div className="relative inline-block mb-6">
-                <h1 className="text-4xl font-bold text-gray-900 mb-2">
-                  🧠 Évaluation Bien-être Familial
-                </h1>
-                <div className="absolute -top-2 -right-8 text-3xl animate-pulse">💙</div>
-              </div>
-              <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-6 border border-gray-200 shadow-lg">
-                <p className="text-gray-700 font-semibold text-lg">
-                  Outils IA d'évaluation du bien-être familial et recommandations personnalisées
-                </p>
-                {role && (
-                  <p className="text-lg text-blue-600 mt-3 font-bold">
-                    Mode : {role === "teen" ? "🎯 Adolescent" : role === "parent" ? "👨‍👩‍👧‍👦 Parent" : "👪 Famille"}
-                  </p>
-                )}
-              </div>
-            </div>
-            
-            {!showResults ? (
-              <>
-                {currentStep === -1 && (
-                  <FamilyRoleSelector
-                    selectedRole={role}
-                    onRoleChange={handleRoleChange}
-                  />
-                )}
-
-                {currentStep >= 0 && (
-                  <FamilyQuestionCard 
-                    currentQuestion={questions[currentStep]}
-                    currentStep={currentStep}
-                    totalSteps={questions.length}
-                    answer={answers[questions[currentStep].id]}
-                    onAnswerChange={handleQuestionChange}
-                  />
-                )}
-
-                {currentStep >= -1 && (
-                  <Card className="shadow-lg border border-gray-200 bg-white/80 backdrop-blur-sm mt-4 rounded-3xl">
-                    <FamilySimulatorNavigation
-                      onPrevious={handlePrevious}
-                      onNext={handleNext}
-                      isFirstStep={currentStep === -1}
-                      isLastStep={currentStep === questions.length - 1}
-                      isCurrentQuestionAnswered={isCurrentQuestionAnswered()}
-                      isLoading={loadingResults}
-                    />
-                  </Card>
-                )}
-              </>
-            ) : (
-              results && (
-                <FamilySimulatorResults 
-                  result={results}
-                  onFeedback={handleFeedback}
-                  onReset={handleReset}
-                />
-              )
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-background to-purple-50">
+      {/* Header */}
+      <header className="border-b bg-card/80 backdrop-blur-sm">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <Button 
+              variant="ghost" 
+              onClick={() => navigate('/')}
+              className="flex items-center space-x-2"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              <span>Retour à l'accueil</span>
+            </Button>
+            <h1 className="text-2xl font-bold text-primary">Simulateur Famille - Gratuit</h1>
+            {!user && (
+              <Button 
+                onClick={() => navigate('/teens/login')}
+                className="flex items-center space-x-2"
+              >
+                <LogIn className="w-4 h-4" />
+                <span>Se connecter</span>
+              </Button>
             )}
           </div>
-        </main>
-        
-        <Footer />
+        </div>
+      </header>
+
+      <div className="container mx-auto px-4 py-8">
+        {!user && currentStep === 'type-selection' && (
+          <div className="mb-8 p-4 bg-pink-50 border border-pink-200 rounded-lg">
+            <p className="text-pink-800 text-center">
+              💡 <strong>Simulateur 100% gratuit</strong> - Évaluez le bien-être de votre famille. Connectez-vous uniquement pour sauvegarder vos résultats.
+            </p>
+          </div>
+        )}
+
+        {currentStep === 'type-selection' && (
+          <SimulatorTypeSelector
+            selectedType={selectedType}
+            onTypeSelect={handleTypeSelection}
+            universe="famille"
+          />
+        )}
+
+        {currentStep === 'questionnaire' && selectedType && (
+          <SimulatorQuestionnaire
+            simulatorType={selectedType}
+            onBack={handleBack}
+            onComplete={handleQuestionnaireComplete}
+          />
+        )}
+
+        {currentStep === 'results' && selectedType && (
+          <SimulatorResults
+            simulatorType={selectedType}
+            score={score}
+            answers={answers}
+            onRestart={handleRestart}
+            onSave={user ? handleSaveResults : undefined}
+            userConnected={!!user}
+          />
+        )}
       </div>
-    </AuthGuard>
+    </div>
   );
 };
 

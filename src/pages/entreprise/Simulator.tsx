@@ -143,6 +143,7 @@ const Simulator = () => {
           <SimulatorTypeSelector
             selectedType={selectedType}
             onTypeSelect={handleTypeSelection}
+            universe="entreprise"
           />
         )}
 
