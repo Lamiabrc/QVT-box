@@ -92,6 +92,74 @@ export type Database = {
         }
         Relationships: []
       }
+      enterprise_questionnaires: {
+        Row: {
+          autonomie: number | null
+          comments: Json | null
+          communication: number | null
+          created_at: string | null
+          equilibre: number | null
+          global_feedback: string | null
+          id: string
+          recommandations: Json | null
+          reconnaissance: number | null
+          relations: number | null
+          risque: string | null
+          score: number | null
+          sens: number | null
+          stress_level: number | null
+          updated_at: string | null
+          user_id: string | null
+          workload: number | null
+        }
+        Insert: {
+          autonomie?: number | null
+          comments?: Json | null
+          communication?: number | null
+          created_at?: string | null
+          equilibre?: number | null
+          global_feedback?: string | null
+          id?: string
+          recommandations?: Json | null
+          reconnaissance?: number | null
+          relations?: number | null
+          risque?: string | null
+          score?: number | null
+          sens?: number | null
+          stress_level?: number | null
+          updated_at?: string | null
+          user_id?: string | null
+          workload?: number | null
+        }
+        Update: {
+          autonomie?: number | null
+          comments?: Json | null
+          communication?: number | null
+          created_at?: string | null
+          equilibre?: number | null
+          global_feedback?: string | null
+          id?: string
+          recommandations?: Json | null
+          reconnaissance?: number | null
+          relations?: number | null
+          risque?: string | null
+          score?: number | null
+          sens?: number | null
+          stress_level?: number | null
+          updated_at?: string | null
+          user_id?: string | null
+          workload?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "enterprise_questionnaires_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       family_connections: {
         Row: {
           approved_at: string | null
@@ -120,22 +188,31 @@ export type Database = {
           role?: Database["public"]["Enums"]["family_role"]
           teen_id?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "family_connections_parent_id_fkey"
-            columns: ["parent_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "family_connections_teen_id_fkey"
-            columns: ["teen_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
+      }
+      family_profiles: {
+        Row: {
+          created_at: string | null
+          family_code: string
+          id: number
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          family_code: string
+          id?: number
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          family_code?: string
+          id?: number
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
       }
       metrics: {
         Row: {
@@ -195,15 +272,7 @@ export type Database = {
           shipped_at?: string | null
           teen_id?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "monthly_boxes_teen_id_fkey"
-            columns: ["teen_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       parent_checkins: {
         Row: {
@@ -239,85 +308,66 @@ export type Database = {
           support_feeling?: number | null
           teen_id?: string | null
         }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          alert_threshold: number | null
+          assigned_teen_id: string | null
+          created_at: string | null
+          department_or_school: string | null
+          email: string
+          enterprise_role: string | null
+          full_name: string | null
+          hr_access: boolean | null
+          id: string
+          notifications_enabled: boolean | null
+          privacy_anonymized: boolean | null
+          role: string
+          teen_access: boolean | null
+          updated_at: string | null
+        }
+        Insert: {
+          alert_threshold?: number | null
+          assigned_teen_id?: string | null
+          created_at?: string | null
+          department_or_school?: string | null
+          email: string
+          enterprise_role?: string | null
+          full_name?: string | null
+          hr_access?: boolean | null
+          id: string
+          notifications_enabled?: boolean | null
+          privacy_anonymized?: boolean | null
+          role: string
+          teen_access?: boolean | null
+          updated_at?: string | null
+        }
+        Update: {
+          alert_threshold?: number | null
+          assigned_teen_id?: string | null
+          created_at?: string | null
+          department_or_school?: string | null
+          email?: string
+          enterprise_role?: string | null
+          full_name?: string | null
+          hr_access?: boolean | null
+          id?: string
+          notifications_enabled?: boolean | null
+          privacy_anonymized?: boolean | null
+          role?: string
+          teen_access?: boolean | null
+          updated_at?: string | null
+        }
         Relationships: [
           {
-            foreignKeyName: "parent_checkins_parent_id_fkey"
-            columns: ["parent_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "parent_checkins_teen_id_fkey"
-            columns: ["teen_id"]
+            foreignKeyName: "profiles_assigned_teen_id_fkey"
+            columns: ["assigned_teen_id"]
             isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
-      }
-      profiles: {
-        Row: {
-          account_type: Database["public"]["Enums"]["account_type"]
-          age: number | null
-          avatar_url: string | null
-          company_size: string | null
-          created_at: string | null
-          email: string
-          enterprise_role: string | null
-          entreprise: string | null
-          family_code: string | null
-          full_name: string | null
-          id: string
-          industry: string | null
-          preferred_name: string | null
-          role: string
-          subscription_plan:
-            | Database["public"]["Enums"]["subscription_plan"]
-            | null
-          subscription_status: string | null
-        }
-        Insert: {
-          account_type: Database["public"]["Enums"]["account_type"]
-          age?: number | null
-          avatar_url?: string | null
-          company_size?: string | null
-          created_at?: string | null
-          email: string
-          enterprise_role?: string | null
-          entreprise?: string | null
-          family_code?: string | null
-          full_name?: string | null
-          id: string
-          industry?: string | null
-          preferred_name?: string | null
-          role: string
-          subscription_plan?:
-            | Database["public"]["Enums"]["subscription_plan"]
-            | null
-          subscription_status?: string | null
-        }
-        Update: {
-          account_type?: Database["public"]["Enums"]["account_type"]
-          age?: number | null
-          avatar_url?: string | null
-          company_size?: string | null
-          created_at?: string | null
-          email?: string
-          enterprise_role?: string | null
-          entreprise?: string | null
-          family_code?: string | null
-          full_name?: string | null
-          id?: string
-          industry?: string | null
-          preferred_name?: string | null
-          role?: string
-          subscription_plan?:
-            | Database["public"]["Enums"]["subscription_plan"]
-            | null
-          subscription_status?: string | null
-        }
-        Relationships: []
       }
       simulator_responses: {
         Row: {
@@ -409,13 +459,6 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "team_managers_manager_id_fkey"
-            columns: ["manager_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-          {
             foreignKeyName: "team_managers_team_id_fkey"
             columns: ["team_id"]
             isOneToOne: false
@@ -444,13 +487,6 @@ export type Database = {
           team_id?: string | null
         }
         Relationships: [
-          {
-            foreignKeyName: "team_members_employee_id_fkey"
-            columns: ["employee_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
           {
             foreignKeyName: "team_members_team_id_fkey"
             columns: ["team_id"]
@@ -518,22 +554,7 @@ export type Database = {
           parent_id?: string | null
           teen_id?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "teen_alerts_parent_id_fkey"
-            columns: ["parent_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "teen_alerts_teen_id_fkey"
-            columns: ["teen_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       teen_checkins: {
         Row: {
@@ -575,13 +596,40 @@ export type Database = {
           stress_level?: number | null
           teen_id?: string | null
         }
+        Relationships: []
+      }
+      teen_notifications: {
+        Row: {
+          created_at: string | null
+          family_id: string | null
+          id: number
+          message: string
+          type: string
+          urgent: boolean | null
+        }
+        Insert: {
+          created_at?: string | null
+          family_id?: string | null
+          id?: number
+          message: string
+          type: string
+          urgent?: boolean | null
+        }
+        Update: {
+          created_at?: string | null
+          family_id?: string | null
+          id?: number
+          message?: string
+          type?: string
+          urgent?: boolean | null
+        }
         Relationships: [
           {
-            foreignKeyName: "teen_checkins_teen_id_fkey"
-            columns: ["teen_id"]
+            foreignKeyName: "teen_notifications_family_id_fkey"
+            columns: ["family_id"]
             isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
+            referencedRelation: "family_profiles"
+            referencedColumns: ["family_code"]
           },
         ]
       }
@@ -610,10 +658,109 @@ export type Database = {
           reward_type?: string
           teen_id?: string | null
         }
+        Relationships: []
+      }
+      teens_profiles: {
+        Row: {
+          created_at: string | null
+          email: string
+          ethnicity: string | null
+          feelsdiscriminated: string | null
+          id: string
+          ismixed: string | null
+          language: string | null
+          name: string
+          origins: string | null
+          religion: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          ethnicity?: string | null
+          feelsdiscriminated?: string | null
+          id?: string
+          ismixed?: string | null
+          language?: string | null
+          name: string
+          origins?: string | null
+          religion?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          ethnicity?: string | null
+          feelsdiscriminated?: string | null
+          id?: string
+          ismixed?: string | null
+          language?: string | null
+          name?: string
+          origins?: string | null
+          religion?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      teens_questionnaires: {
+        Row: {
+          anxiete: number | null
+          comments: Json | null
+          created_at: string | null
+          ecrans: number | null
+          energie: number | null
+          estime: number | null
+          global_feedback: string | null
+          id: string
+          motivation: number | null
+          recommandations: Json | null
+          relations: number | null
+          risque: string | null
+          score: number | null
+          sommeil: number | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          anxiete?: number | null
+          comments?: Json | null
+          created_at?: string | null
+          ecrans?: number | null
+          energie?: number | null
+          estime?: number | null
+          global_feedback?: string | null
+          id?: string
+          motivation?: number | null
+          recommandations?: Json | null
+          relations?: number | null
+          risque?: string | null
+          score?: number | null
+          sommeil?: number | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          anxiete?: number | null
+          comments?: Json | null
+          created_at?: string | null
+          ecrans?: number | null
+          energie?: number | null
+          estime?: number | null
+          global_feedback?: string | null
+          id?: string
+          motivation?: number | null
+          recommandations?: Json | null
+          relations?: number | null
+          risque?: string | null
+          score?: number | null
+          sommeil?: number | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
         Relationships: [
           {
-            foreignKeyName: "teen_rewards_teen_id_fkey"
-            columns: ["teen_id"]
+            foreignKeyName: "teens_questionnaires_user_id_fkey"
+            columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]
@@ -696,22 +843,7 @@ export type Database = {
           receiver_id?: string | null
           sender_id?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "virtual_gifts_receiver_id_fkey"
-            columns: ["receiver_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "virtual_gifts_sender_id_fkey"
-            columns: ["sender_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
     }
     Views: {

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -163,14 +164,14 @@ const FamilySimulator = () => {
 
   return (
     <AuthGuard>
-      <div className="min-h-screen flex flex-col bg-gradient-to-br from-cyan-400 via-blue-300 to-purple-400 relative overflow-hidden">
-        {/* Floating cubes inspired by Rubik's cube */}
+      <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 relative overflow-hidden">
+        {/* Floating wellness elements */}
         <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-20 left-10 w-16 h-16 bg-red-500 rounded-2xl transform rotate-12 animate-bounce"></div>
-          <div className="absolute top-40 right-20 w-12 h-12 bg-yellow-400 rounded-2xl transform -rotate-45 animate-pulse"></div>
-          <div className="absolute bottom-32 left-1/4 w-20 h-20 bg-green-500 rounded-2xl transform rotate-45 animate-spin-slow"></div>
-          <div className="absolute top-60 left-1/2 w-14 h-14 bg-orange-500 rounded-2xl transform rotate-12 animate-bounce"></div>
-          <div className="absolute bottom-20 right-10 w-18 h-18 bg-purple-500 rounded-2xl transform -rotate-12 animate-pulse"></div>
+          <div className="absolute top-20 left-10 w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full animate-pulse"></div>
+          <div className="absolute top-40 right-20 w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl transform rotate-45 animate-bounce"></div>
+          <div className="absolute bottom-32 left-1/4 w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl transform rotate-12 animate-pulse"></div>
+          <div className="absolute top-60 left-1/2 w-14 h-14 bg-gradient-to-br from-orange-500 to-yellow-500 rounded-full animate-bounce"></div>
+          <div className="absolute bottom-20 right-10 w-18 h-18 bg-gradient-to-br from-red-500 to-rose-500 rounded-2xl transform -rotate-12 animate-pulse"></div>
         </div>
 
         <Header />
@@ -179,18 +180,18 @@ const FamilySimulator = () => {
           <div className="container mx-auto max-w-3xl">
             <div className="text-center mb-8">
               <div className="relative inline-block mb-6">
-                <h1 className="text-4xl font-black text-white mb-2 drop-shadow-lg">
-                  🎨 Simulateur Bien-être Familial Créatif
+                <h1 className="text-4xl font-bold text-gray-900 mb-2">
+                  🧠 Évaluation Bien-être Familial
                 </h1>
-                <div className="absolute -top-2 -right-8 text-3xl animate-spin-slow">🎲</div>
+                <div className="absolute -top-2 -right-8 text-3xl animate-pulse">💙</div>
               </div>
-              <div className="bg-white/20 backdrop-blur-sm rounded-3xl p-6 border-4 border-white/30 shadow-2xl">
-                <p className="text-white font-semibold text-lg">
-                  Évaluez le bien-être familial et obtenez des recommandations colorées et personnalisées
+              <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-6 border border-gray-200 shadow-lg">
+                <p className="text-gray-700 font-semibold text-lg">
+                  Outils IA d'évaluation du bien-être familial et recommandations personnalisées
                 </p>
                 {role && (
-                  <p className="text-lg text-yellow-300 mt-3 font-black">
-                    Mode : {role === "teen" ? "🎨 Adolescent Créatif" : role === "parent" ? "👨‍👩‍👧‍👦 Parent Bienveillant" : "👪 Famille Unie"}
+                  <p className="text-lg text-blue-600 mt-3 font-bold">
+                    Mode : {role === "teen" ? "🎯 Adolescent" : role === "parent" ? "👨‍👩‍👧‍👦 Parent" : "👪 Famille"}
                   </p>
                 )}
               </div>
@@ -216,7 +217,7 @@ const FamilySimulator = () => {
                 )}
 
                 {currentStep >= -1 && (
-                  <Card className="shadow-2xl border-4 border-white/30 bg-white/20 backdrop-blur-sm mt-4 rounded-3xl">
+                  <Card className="shadow-lg border border-gray-200 bg-white/80 backdrop-blur-sm mt-4 rounded-3xl">
                     <FamilySimulatorNavigation
                       onPrevious={handlePrevious}
                       onNext={handleNext}

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { ArrowLeft, Users, Heart, Shield, Palette, Star } from "lucide-react";
+import { ArrowLeft, Users, Heart, Shield, Brain, Star } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -37,26 +37,26 @@ const TeensLogin = () => {
       case 'teen':
         return {
           title: 'Connexion Ado',
-          icon: <Heart className="w-8 h-8 text-pink-300" />,
-          description: 'Accède à ton espace créatif sécurisé',
+          icon: <Heart className="w-8 h-8 text-blue-300" />,
+          description: 'Accède à ton espace bien-être personnalisé',
           redirectPath: '/teens',
-          gradient: 'from-pink-500 to-purple-500'
+          gradient: 'from-blue-500 to-purple-500'
         };
       case 'parent':
         return {
           title: 'Connexion Parent',
-          icon: <Shield className="w-8 h-8 text-blue-300" />,
-          description: 'Gérez l\'espace famille coloré',
+          icon: <Shield className="w-8 h-8 text-green-300" />,
+          description: 'Gérez l\'espace famille et le suivi bien-être',
           redirectPath: '/teens/dashboard-parent',
-          gradient: 'from-blue-500 to-cyan-500'
+          gradient: 'from-green-500 to-emerald-500'
         };
       default:
         return {
           title: 'Connexion Famille',
-          icon: <Palette className="w-8 h-8 text-yellow-300" />,
-          description: 'Accédez à l\'espace familial créatif',
+          icon: <Brain className="w-8 h-8 text-purple-300" />,
+          description: 'Accédez à votre espace bien-être familial',
           redirectPath: '/teens',
-          gradient: 'from-red-500 to-yellow-500'
+          gradient: 'from-purple-500 to-pink-500'
         };
     }
   };
@@ -85,7 +85,7 @@ const TeensLogin = () => {
       if (data.user && data.session) {
         toast({
           title: "Connexion réussie",
-          description: `Bienvenue dans ton espace ${role === 'teen' ? 'créatif' : 'parent'} !`,
+          description: `Bienvenue dans votre espace ${role === 'teen' ? 'bien-être' : 'famille'} !`,
         });
         
         setTimeout(() => {
@@ -104,32 +104,32 @@ const TeensLogin = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-cyan-400 via-blue-300 to-purple-400 relative overflow-hidden">
-      {/* Floating cubes */}
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 relative overflow-hidden">
+      {/* Floating wellness elements */}
       <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-20 left-10 w-20 h-20 bg-red-500 rounded-2xl animate-bounce transform rotate-12"></div>
-        <div className="absolute top-40 right-20 w-16 h-16 bg-yellow-400 rounded-2xl animate-pulse transform -rotate-45"></div>
-        <div className="absolute bottom-20 left-1/4 w-24 h-24 bg-green-500 rounded-2xl animate-spin-slow transform rotate-45"></div>
-        <div className="absolute bottom-40 right-10 w-18 h-18 bg-purple-500 rounded-2xl animate-bounce transform -rotate-12"></div>
-        <div className="absolute top-60 left-1/2 w-14 h-14 bg-orange-500 rounded-2xl animate-pulse transform rotate-12"></div>
+        <div className="absolute top-20 left-10 w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full animate-pulse"></div>
+        <div className="absolute top-40 right-20 w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl transform rotate-45 animate-bounce"></div>
+        <div className="absolute bottom-32 left-1/4 w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl transform rotate-12 animate-pulse"></div>
+        <div className="absolute bottom-40 right-10 w-18 h-18 bg-gradient-to-br from-orange-500 to-yellow-500 rounded-full animate-bounce"></div>
+        <div className="absolute top-60 left-1/2 w-14 h-14 bg-gradient-to-br from-red-500 to-rose-500 rounded-2xl transform -rotate-12 animate-pulse"></div>
       </div>
 
-      <header className="relative z-10 border-b border-white/30 bg-white/20 backdrop-blur-sm">
+      <header className="relative z-10 border-b border-gray-200 bg-white/80 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <Button 
               variant="ghost" 
               onClick={() => navigate('/auth')}
-              className="flex items-center space-x-2 text-white hover:bg-white/20 font-semibold"
+              className="flex items-center space-x-2 text-gray-700 hover:bg-gray-100 font-semibold"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Retour</span>
             </Button>
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-red-500 via-yellow-400 to-green-500 rounded-xl flex items-center justify-center transform rotate-12 shadow-lg">
-                <Palette className="w-6 h-6 text-white" />
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center shadow-lg">
+                <Heart className="w-6 h-6 text-white" />
               </div>
-              <h1 className="text-xl font-black text-white">QV FAMILLE BOX</h1>
+              <h1 className="text-xl font-bold text-gray-900">QVT BOX FAMILLE</h1>
             </div>
           </div>
         </div>
@@ -137,40 +137,40 @@ const TeensLogin = () => {
 
       <div className="container mx-auto px-4 py-16 relative z-10">
         <div className="max-w-md mx-auto">
-          <Card className="bg-white/20 backdrop-blur-sm border-4 border-white/30 shadow-2xl rounded-3xl">
+          <Card className="bg-white/90 backdrop-blur-sm border-2 border-gray-200 shadow-xl rounded-3xl">
             <CardHeader className="text-center">
-              <div className={`w-20 h-20 bg-gradient-to-br ${roleInfo.gradient} rounded-3xl mx-auto mb-6 flex items-center justify-center shadow-lg transform rotate-6`}>
+              <div className={`w-20 h-20 bg-gradient-to-br ${roleInfo.gradient} rounded-2xl mx-auto mb-6 flex items-center justify-center shadow-lg`}>
                 {roleInfo.icon}
               </div>
-              <CardTitle className="text-3xl font-black text-white mb-2">
+              <CardTitle className="text-3xl font-bold text-gray-900 mb-2">
                 {roleInfo.title}
               </CardTitle>
-              <p className="text-white font-semibold text-lg">{roleInfo.description}</p>
+              <p className="text-gray-600 font-semibold text-lg">{roleInfo.description}</p>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="space-y-2">
-                  <Label htmlFor="email" className="text-white font-bold text-lg">Email</Label>
+                  <Label htmlFor="email" className="text-gray-700 font-bold text-lg">Email</Label>
                   <Input
                     id="email"
                     type="email"
                     value={formData.email}
                     onChange={(e) => setFormData({...formData, email: e.target.value})}
-                    className="bg-white/20 border-white/30 text-white placeholder:text-white/70 font-semibold rounded-2xl py-3"
-                    placeholder="ton@email.com"
+                    className="bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-500 font-medium rounded-xl py-3"
+                    placeholder="votre@email.com"
                     required
                     disabled={isLoading}
                   />
                 </div>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="password" className="text-white font-bold text-lg">Mot de passe</Label>
+                  <Label htmlFor="password" className="text-gray-700 font-bold text-lg">Mot de passe</Label>
                   <Input
                     id="password"
                     type="password"
                     value={formData.password}
                     onChange={(e) => setFormData({...formData, password: e.target.value})}
-                    className="bg-white/20 border-white/30 text-white placeholder:text-white/70 font-semibold rounded-2xl py-3"
+                    className="bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-500 font-medium rounded-xl py-3"
                     placeholder="••••••••"
                     required
                     disabled={isLoading}
@@ -179,7 +179,7 @@ const TeensLogin = () => {
 
                 <Button 
                   type="submit" 
-                  className={`w-full bg-gradient-to-r ${roleInfo.gradient} hover:shadow-2xl text-white font-black py-4 rounded-2xl text-lg transform hover:scale-105 transition-all`}
+                  className={`w-full bg-gradient-to-r ${roleInfo.gradient} hover:shadow-lg text-white font-bold py-4 rounded-xl text-lg transform hover:scale-105 transition-all`}
                   disabled={isLoading}
                 >
                   {isLoading ? 'Connexion...' : '🚀 Se connecter'}
@@ -188,16 +188,16 @@ const TeensLogin = () => {
                 <div className="text-center space-y-3">
                   <Button 
                     variant="link" 
-                    className="text-white hover:text-yellow-300 font-bold"
+                    className="text-gray-600 hover:text-gray-900 font-semibold"
                   >
                     Mot de passe oublié ?
                   </Button>
-                  <div className="text-white font-semibold">
+                  <div className="text-gray-600 font-medium">
                     Pas encore de compte ?{' '}
                     <Button 
                       variant="link" 
                       onClick={() => navigate(`/teens/register?role=${role}`)}
-                      className="text-yellow-300 hover:text-yellow-100 p-0 font-black"
+                      className="text-blue-600 hover:text-blue-800 p-0 font-bold"
                     >
                       S'inscrire
                     </Button>
