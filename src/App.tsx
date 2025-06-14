@@ -14,8 +14,9 @@ import ForgotPassword from '@/pages/auth/ForgotPassword';
 import EntrepriseHome from '@/pages/entreprise/EntrepriseHome';
 import TeensHome from '@/pages/teens/TeensHome';
 
-// Simulator
-import SimulatorHome from '@/pages/simulator/SimulatorHome';
+// Simulators - unified approach
+import EntrepriseSimulator from '@/pages/entreprise/Simulator';
+import FamilySimulator from '@/pages/teens/FamilySimulator';
 
 // Keep existing imports for protected pages
 import Profil from '@/pages/Profil';
@@ -40,7 +41,6 @@ import TeensCheckIn from '@/pages/TeensCheckIn';
 import TeensParentalAccess from '@/pages/TeensParentalAccess';
 import TeensFamilySpace from '@/pages/TeensFamilySpace';
 import TeensIntimacySpace from '@/pages/TeensIntimacySpace';
-import TeensFamilySimulator from '@/pages/teens/FamilySimulator';
 import TeensQuestionnaire from '@/pages/TeensQuestionnaire';
 import TeensDashboardParent from '@/pages/TeensDashboardParent';
 import TeensAIEvaluation from '@/pages/TeensAIEvaluation';
@@ -55,7 +55,6 @@ import EntrepriseQuestionnaire from '@/pages/EntrepriseQuestionnaire';
 import EntrepriseOrders from '@/pages/entreprise/Orders';
 import EntrepriseShop from '@/pages/entreprise/Shop';
 import EntrepriseUnboxing from '@/pages/entreprise/Unboxing';
-import EntrepriseSimulator from '@/pages/entreprise/Simulator';
 import EntrepriseAdminContentManager from '@/pages/entreprise/AdminContentManager';
 import TeensCustomization from '@/pages/TeensCustomization';
 import TeensJournal from '@/pages/TeensJournal';
@@ -76,7 +75,7 @@ function App() {
           {/* Home page with universe selector */}
           <Route path="/" element={<Index />} />
           
-          {/* New unified auth routes */}
+          {/* Unified auth routes */}
           <Route path="/auth/login" element={<Login />} />
           <Route path="/auth/register" element={<Register />} />
           <Route path="/auth/forgot-password" element={<ForgotPassword />} />
@@ -85,9 +84,9 @@ function App() {
           <Route path="/entreprise" element={<EntrepriseHome />} />
           <Route path="/famille" element={<TeensHome />} />
           
-          {/* Simulator routes */}
-          <Route path="/simulator/:universe" element={<SimulatorHome />} />
-          <Route path="/simulator/:universe/questionnaire" element={<EntrepriseSimulator />} />
+          {/* Simulator routes - corrected */}
+          <Route path="/entreprise/simulator" element={<EntrepriseSimulator />} />
+          <Route path="/famille/simulator" element={<FamilySimulator />} />
           
           {/* Protected user pages */}
           <Route path="/profil" element={<ProtectedRoute requireAuth={true}><Profil /></ProtectedRoute>} />
@@ -122,7 +121,7 @@ function App() {
           <Route path="/teens/parental-access" element={<ProtectedRoute requireAuth={true}><TeensParentalAccess /></ProtectedRoute>} />
           <Route path="/teens/family-space" element={<ProtectedRoute requireAuth={true}><TeensFamilySpace /></ProtectedRoute>} />
           <Route path="/teens/intimacy-space" element={<ProtectedRoute requireAuth={true}><TeensIntimacySpace /></ProtectedRoute>} />
-          <Route path="/teens/family-simulator" element={<ProtectedRoute requireAuth={true}><TeensFamilySimulator /></ProtectedRoute>} />
+          <Route path="/teens/family-simulator" element={<FamilySimulator />} />
           <Route path="/teens/questionnaire" element={<ProtectedRoute requireAuth={true}><TeensQuestionnaire /></ProtectedRoute>} />
           <Route path="/teens/dashboard-parent" element={<ProtectedRoute requireAuth={true}><TeensDashboardParent /></ProtectedRoute>} />
           <Route path="/teens/ai-evaluation" element={<ProtectedRoute requireAuth={true}><TeensAIEvaluation /></ProtectedRoute>} />
@@ -141,7 +140,6 @@ function App() {
           <Route path="/entreprise/orders" element={<ProtectedRoute requireAuth={true}><EntrepriseOrders /></ProtectedRoute>} />
           <Route path="/entreprise/shop" element={<ProtectedRoute requireAuth={true}><EntrepriseShop /></ProtectedRoute>} />
           <Route path="/entreprise/unboxing" element={<ProtectedRoute requireAuth={true}><EntrepriseUnboxing /></ProtectedRoute>} />
-          <Route path="/entreprise/simulator" element={<EntrepriseSimulator />} />
           <Route path="/entreprise/admin-content" element={<ProtectedRoute requireAuth={true} requireAdmin={true}><EntrepriseAdminContentManager /></ProtectedRoute>} />
           
           <Route path="*" element={<NotFound />} />
