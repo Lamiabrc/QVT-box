@@ -5,12 +5,12 @@ import BubbleComponent from '@/components/bubble/BubbleComponent';
 import { useNavigate } from 'react-router-dom';
 
 const bubbleContent = [
-  { imageUrl: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=200&h=200&fit=crop&crop=entropy', link: '/auth' },
-  { imageUrl: 'https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?q=80&w=200&h=200&fit=crop&crop=entropy', link: '/entreprise/simulator' },
-  { imageUrl: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?q=80&w=200&h=200&fit=crop&crop=entropy', link: '/famille' },
-  { imageUrl: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=200&h=200&fit=crop&crop=entropy', link: '/auth/login' },
-  { imageUrl: 'https://images.unsplash.com/photo-1605810230434-7631ac76ec81?q=80&w=200&h=200&fit=crop&crop=entropy', link: '/qui-sommes-nous' },
-  { imageUrl: 'https://images.unsplash.com/photo-1582562124811-c09040d0a901?q=80&w=200&h=200&fit=crop&crop=entropy', link: '/contact' },
+  { imageUrl: 'https://images.unsplash.com/photo-1582562124811-c09040d0a901?q=80&w=200&h=200&fit=crop&crop=entropy', link: '/auth' },
+  { imageUrl: 'https://images.unsplash.com/photo-1535268647677-300dbf3d78d1?q=80&w=200&h=200&fit=crop&crop=entropy', link: '/entreprise/simulator' },
+  { imageUrl: 'https://images.unsplash.com/photo-1441057206919-63d19fac2369?q=80&w=200&h=200&fit=crop&crop=entropy', link: '/famille' },
+  { imageUrl: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?q=80&w=200&h=200&fit=crop&crop=entropy', link: '/auth/login' },
+  { imageUrl: 'https://images.unsplash.com/photo-1561037404-61cd46aa615b?q=80&w=200&h=200&fit=crop&crop=entropy', link: '/qui-sommes-nous' },
+  { imageUrl: 'https://images.unsplash.com/photo-1596492784533-2c706e005292?q=80&w=200&h=200&fit=crop&crop=entropy', link: '/contact' },
 ];
 
 const FloatingBubbles = () => {
@@ -80,3 +80,4 @@ const FloatingBubbles = () => {
 };
 
 export default FloatingBubbles;
+
