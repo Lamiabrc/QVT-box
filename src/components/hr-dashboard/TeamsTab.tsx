@@ -98,7 +98,7 @@ const TeamsTab: React.FC<TeamsTabProps> = ({ teams, managers, newTeam, setNewTea
                     <div className="mb-2">
                       <span className="text-sm font-medium">Manager: </span>
                       <span className="text-sm text-gray-600">
-                        {team.team_managers[0].profiles.full_name}
+                        {team.team_managers[0].profiles?.full_name}
                       </span>
                     </div>
                   )}

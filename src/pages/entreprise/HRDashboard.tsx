@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useSecureAuth } from '@/hooks/useSecureAuth';
@@ -24,7 +25,7 @@ export interface TeamMemberOrManager {
     id: string;
     full_name: string;
     email: string;
-  };
+  } | null;
   [key: string]: any; // Allow other properties from team_members/team_managers
 }
 
@@ -111,11 +112,11 @@ const HRDashboard = () => {
           *,
           team_managers(
             *,
-            profiles!inner(id, full_name, email)
+            profiles:manager_id(id, full_name, email)
           ),
           team_members(
             *,
-            profiles!inner(id, full_name, email)
+            profiles:employee_id(id, full_name, email)
           )
         `)
         .eq('company_id', profile.enterprise_id);
