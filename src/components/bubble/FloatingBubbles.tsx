@@ -21,6 +21,7 @@ const FloatingBubbles = () => {
     const bubbles = Array.from({ length: 20 }, (_, i) => {
       const content = bubbleContent[i % bubbleContent.length];
       const size = Math.random() * 60 + 40; // 40px to 100px
+      const amplitude = Math.random() * 30 + 20; // Sideways wave amplitude from 20 to 50px
       return {
         id: `floating_${i}`,
         size: size,
@@ -33,13 +34,15 @@ const FloatingBubbles = () => {
         color: 'rgba(255, 255, 255, 0.1)',
         animation: 'float',
         timestamp: new Date(),
+        // Adding more points to the x-axis animation to create a wave-like motion
+        xKeyframes: [0, amplitude, -amplitude, 0], 
       };
     });
     setAnimatedBubbles(bubbles);
   }, []);
 
   return (
-    <div className="absolute inset-0 overflow-hidden w-full h-full pointer-events-none">
+    <div className="absolute inset-0 overflow-hidden w-full h-full pointer-events-none z-0">
       <AnimatePresence>
         {animatedBubbles.map((bubble) => (
           <motion.div
@@ -54,7 +57,7 @@ const FloatingBubbles = () => {
             initial={{ y: 0, opacity: 0 }}
             animate={{
               y: `-${window.innerHeight + bubble.size * 2}px`,
-              x: [0, Math.random() * 60 - 30, 0],
+              x: bubble.xKeyframes,
               opacity: [0, 0.9, 0.9, 0],
               transition: {
                 duration: bubble.duration,
