@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -15,19 +14,19 @@ const Index = () => {
 
   // Générer des bulles flottantes animées
   useEffect(() => {
-    const bubbles = Array.from({ length: 12 }, (_, i) => ({
+    const bubbles = Array.from({ length: 25 }, (_, i) => ({
       id: `floating_${i}`,
       emotion: ['happy', 'excited', 'neutral'][Math.floor(Math.random() * 3)],
       intensity: Math.floor(Math.random() * 5) + 5,
       color: ['#FFD700', '#FF6B6B', '#4CAF50', '#2196F3', '#9C27B0'][Math.floor(Math.random() * 5)],
-      size: ['small', 'medium'][Math.floor(Math.random() * 2)],
+      size: ['small', 'medium', 'large'][Math.floor(Math.random() * 3)],
       animation: ['float', 'pulse'][Math.floor(Math.random() * 2)],
       timestamp: new Date(),
       position: {
-        top: `${Math.random() * 80 + 10}%`,
-        left: `${Math.random() * 80 + 10}%`,
+        top: `${Math.random() * 100}%`,
+        left: `${Math.random() * 100}%`,
       },
-      delay: Math.random() * 3
+      delay: Math.random() * 5
     }));
     setAnimatedBubbles(bubbles);
   }, []);
