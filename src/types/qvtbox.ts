@@ -24,6 +24,8 @@ export interface UserProfile {
   role?: FamilyRole;
   specialities?: EnterpriseSpeciality[];
   status?: EnterpriseStatus[];
+  retraiteAnnee?: number;
+  promotionEnvisagee?: boolean;
   bubbleHistory: BubbleData[];
   currentMood: BubbleData;
 }
@@ -34,6 +36,8 @@ export interface BoxRecommendation {
   description: string;
   category: string;
   targetRole?: FamilyRole;
+  targetSpecialities?: EnterpriseSpeciality[];
+  targetStatus?: EnterpriseStatus[];
   targetUniverse: UniverseType;
   aiConfidence: number;
   urgency: 'low' | 'medium' | 'high' | 'urgent';
@@ -49,4 +53,22 @@ export interface EmotionalEvaluation {
   aiAnalysis?: string;
   recommendations: BoxRecommendation[];
   timestamp: Date;
+}
+
+export interface MLDataPoint {
+  userId: string;
+  evaluation: EmotionalEvaluation;
+  userContext: {
+    role?: FamilyRole;
+    specialities?: EnterpriseSpeciality[];
+    status?: EnterpriseStatus[];
+    universe: UniverseType;
+  };
+  features: {
+    emotionalScore: number;
+    textSentiment?: number;
+    riskFactors: string[];
+    timeOfDay: number;
+    dayOfWeek: number;
+  };
 }
