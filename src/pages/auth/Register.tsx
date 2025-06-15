@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -46,9 +45,7 @@ const Register = () => {
         toast({ title: "Erreur", description: "Veuillez entrer un code valide.", variant: "destructive" });
         return;
     }
-    // Simple assumption: we'll decide if it's family or enterprise in the backend.
-    // For a more robust solution, we could prefix codes, e.g., 'ENT-' and 'FAM-'.
-    setAccountType('join_enterprise'); // For now, let's assume enterprise, can be improved.
+    setAccountType('join_with_code');
     setStep('form');
   }
 
@@ -66,7 +63,7 @@ const Register = () => {
       fullName: formData.fullName,
       accountType: accountType,
       ...( (accountType === 'create_family' || accountType === 'create_enterprise') && { entityName: formData.entityName }),
-      ...( (accountType === 'join_family' || accountType === 'join_enterprise') && { joinCode: joinCode }),
+      ...( accountType === 'join_with_code' && { joinCode: joinCode }),
     };
 
     const { user, error, joinCode: newJoinCode } = await registerUser(registrationData);
@@ -76,7 +73,7 @@ const Register = () => {
         setFinalJoinCode(newJoinCode);
         setStep('show_code');
       } else {
-        navigate('/entreprise/login', { state: { message: 'Compte créé ! Veuillez vérifier votre email pour vous connecter.' } });
+        navigate('/auth/login', { state: { message: 'Compte créé ! Veuillez vérifier votre email pour vous connecter.' } });
       }
     }
   };

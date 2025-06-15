@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -8,7 +7,7 @@ export interface RegisterData {
   email: string;
   password: string;
   fullName: string;
-  accountType: 'create_enterprise' | 'create_family' | 'join_enterprise' | 'join_family' | 'individual' | 'teen';
+  accountType: 'create_enterprise' | 'create_family' | 'join_with_code' | 'individual' | 'teen';
   entityName?: string; // Nom de l'entreprise ou de la famille
   joinCode?: string;
   age?: number;
@@ -64,6 +63,7 @@ export const useAuthOperations = () => {
         account_type: data.accountType,
         role: 'user', // default role
         age: data.age || null,
+        onboarding_completed: true, // Par défaut, l'onboarding est considéré comme fait
       };
       
       let resultPayload: any = { user, error: null, joinCode: null };
@@ -83,6 +83,7 @@ export const useAuthOperations = () => {
           await supabase.from('enterprise_members').insert({ enterprise_id: enterprise.id, user_id: user.id, role: 'admin', is_approved: true });
           profileData.enterprise_id = enterprise.id;
           profileData.enterprise_role = 'admin';
+          profileData.onboarding_completed = false; // L'admin devra aussi compléter son profil pro
           resultPayload.joinCode = enterpriseCode;
           break;
         }
@@ -102,39 +103,45 @@ export const useAuthOperations = () => {
           resultPayload.joinCode = familyCode;
           break;
         }
-        case 'join_enterprise': {
-          if (!data.joinCode) throw new Error("Un code d'entreprise est requis.");
-          const { data: enterprise, error: enterpriseError } = await supabase
+        case 'join_with_code': {
+          if (!data.joinCode) throw new Error("Un code est requis pour rejoindre.");
+          const code = data.joinCode.toUpperCase();
+
+          const { data: enterprise } = await supabase
             .from('enterprises')
             .select('id')
-            .eq('enterprise_code', data.joinCode.toUpperCase())
+            .eq('enterprise_code', code)
             .single();
-          if (enterpriseError || !enterprise) throw new Error("Code d'entreprise invalide.");
           
-          await supabase.from('enterprise_members').insert({ enterprise_id: enterprise.id, user_id: user.id, role: 'employee', is_approved: true });
-          profileData.enterprise_id = enterprise.id;
-          profileData.enterprise_role = 'employee';
-          break;
-        }
-        case 'join_family': {
-          if (!data.joinCode) throw new Error("Un code de famille est requis.");
-          const { data: family, error: familyError } = await supabase
+          if (enterprise) {
+            await supabase.from('enterprise_members').insert({ enterprise_id: enterprise.id, user_id: user.id, role: 'employee', is_approved: true });
+            profileData.enterprise_id = enterprise.id;
+            profileData.enterprise_role = 'employee';
+            profileData.onboarding_completed = false; // Cet utilisateur devra faire l'onboarding
+            break; 
+          }
+
+          const { data: family } = await supabase
             .from('families')
             .select('id')
-            .eq('family_code', data.joinCode.toUpperCase())
+            .eq('family_code', code)
             .single();
-          if (familyError || !family) throw new Error("Code de famille invalide.");
-          
-          await supabase.from('family_members').insert({ family_id: family.id, user_id: user.id, role: 'teen', is_approved: true });
-          profileData.family_id = family.id;
-          break;
+
+          if (family) {
+            await supabase.from('family_members').insert({ family_id: family.id, user_id: user.id, role: 'teen', is_approved: true });
+            profileData.family_id = family.id;
+            // onboarding_completed reste true par défaut pour les membres de famille
+            break;
+          }
+
+          throw new Error("Code de jonction invalide.");
         }
         case 'teen':
           profileData.role = 'teen';
           break;
         case 'individual':
         default:
-          // No extra steps needed
+          // onboarding_completed reste true par défaut
           break;
       }
 

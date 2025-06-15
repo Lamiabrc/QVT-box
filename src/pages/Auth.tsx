@@ -69,7 +69,7 @@ const Auth = () => {
                 </Button>
                 <Button 
                   className="w-full bg-blue-600/80 hover:bg-blue-700/80 text-white py-3 text-lg rounded-xl"
-                  onClick={() => navigate('/auth/register?universe=entreprise')}
+                  onClick={() => navigate('/auth/register')}
                 >
                   <UserPlus className="w-5 h-5 mr-2" />
                   S'inscrire
@@ -105,7 +105,7 @@ const Auth = () => {
                 </Button>
                  <Button 
                   className="w-full bg-pink-600/80 hover:bg-pink-700/80 text-white py-3 text-lg rounded-xl"
-                  onClick={() => navigate('/auth/register?universe=famille')}
+                  onClick={() => navigate('/auth/register')}
                 >
                   <UserPlus className="w-5 h-5 mr-2" />
                   S'inscrire
