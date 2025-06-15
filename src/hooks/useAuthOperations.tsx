@@ -10,7 +10,6 @@ export interface RegisterData {
   accountType: 'create_enterprise' | 'create_family' | 'join_with_code' | 'individual' | 'teen';
   entityName?: string; // Nom de l'entreprise ou de la famille
   joinCode?: string;
-  age?: number;
 }
 
 const generateCode = (length = 8) => {
@@ -62,7 +61,6 @@ export const useAuthOperations = () => {
         full_name: data.fullName,
         account_type: data.accountType,
         role: 'user', // default role
-        age: data.age || null,
         onboarding_completed: true, // Par défaut, l'onboarding est considéré comme fait
       };
       
