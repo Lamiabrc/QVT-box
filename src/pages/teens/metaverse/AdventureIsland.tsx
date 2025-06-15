@@ -2,7 +2,8 @@
 import TeensHeader from "@/components/teens/TeensHeader";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { ArrowLeft, Rocket } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const AdventureIsland = () => {
@@ -23,12 +24,16 @@ const AdventureIsland = () => {
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <p className="text-lg text-cyan-700">
+                        <p className="text-lg text-cyan-700 mb-8">
                             Bienvenue sur l'Île Aventure. Explore et joue à des mini-jeux avec tes proches.
                         </p>
-                        <div className="mt-8 text-center">
-                            <p className="text-gray-600">La chasse au trésor et les défis familiaux seront bientôt disponibles ici.</p>
-                        </div>
+                        <Alert className="mt-8 bg-cyan-100/50 border-cyan-300 text-cyan-800">
+                            <Rocket className="h-4 w-4" />
+                            <AlertTitle className="font-bold">Bientôt disponible !</AlertTitle>
+                            <AlertDescription>
+                                Prépare-toi pour l'aventure ! La chasse au trésor et les défis familiaux arrivent prochainement pour encore plus de fun.
+                            </AlertDescription>
+                        </Alert>
                     </CardContent>
                 </Card>
             </div>

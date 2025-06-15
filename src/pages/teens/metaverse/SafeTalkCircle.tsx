@@ -2,7 +2,8 @@
 import TeensHeader from "@/components/teens/TeensHeader";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { ArrowLeft, Rocket } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const SafeTalkCircle = () => {
@@ -23,12 +24,16 @@ const SafeTalkCircle = () => {
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <p className="text-lg text-red-700">
+                        <p className="text-lg text-red-700 mb-8">
                             Bienvenue dans le Cercle de Parole. Un espace d'échange sécurisé et bienveillant.
                         </p>
-                        <div className="mt-8 text-center">
-                            <p className="text-gray-600">Les discussions guidées et le partage d'émotions seront bientôt disponibles ici.</p>
-                        </div>
+                        <Alert className="mt-8 bg-red-100/50 border-red-300 text-red-800">
+                            <Rocket className="h-4 w-4" />
+                            <AlertTitle className="font-bold">Bientôt disponible !</AlertTitle>
+                            <AlertDescription>
+                                De nouvelles manières de se connecter arrivent. Les discussions guidées et les outils de partage d'émotions seront bientôt là.
+                            </AlertDescription>
+                        </Alert>
                     </CardContent>
                 </Card>
             </div>

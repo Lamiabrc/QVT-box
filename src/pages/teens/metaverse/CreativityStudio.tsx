@@ -2,7 +2,8 @@
 import TeensHeader from "@/components/teens/TeensHeader";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { ArrowLeft, Rocket } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const CreativityStudio = () => {
@@ -23,12 +24,16 @@ const CreativityStudio = () => {
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <p className="text-lg text-purple-700">
+                        <p className="text-lg text-purple-700 mb-8">
                             Bienvenue dans le Studio Créatif. Crée, dessine et exprime-toi librement.
                         </p>
-                        <div className="mt-8 text-center">
-                            <p className="text-gray-600">Les outils de dessin 3D et de musique collaborative seront bientôt disponibles ici.</p>
-                        </div>
+                        <Alert className="mt-8 bg-purple-100/50 border-purple-300 text-purple-800">
+                            <Rocket className="h-4 w-4" />
+                            <AlertTitle className="font-bold">Bientôt disponible !</AlertTitle>
+                            <AlertDescription>
+                                De nouvelles fonctionnalités arrivent : les outils de dessin 3D et la musique collaborative seront bientôt là pour booster ta créativité !
+                            </AlertDescription>
+                        </Alert>
                     </CardContent>
                 </Card>
             </div>

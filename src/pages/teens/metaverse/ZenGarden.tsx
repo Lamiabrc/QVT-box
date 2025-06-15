@@ -2,7 +2,8 @@
 import TeensHeader from "@/components/teens/TeensHeader";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, Music, Wind, Headphones, PlayCircle } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { ArrowLeft, Music, Wind, Headphones, PlayCircle, Rocket } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const ZenGarden = () => {
@@ -76,6 +77,13 @@ const ZenGarden = () => {
                                 </CardContent>
                             </Card>
                         </div>
+                        <Alert className="mt-8 bg-emerald-100/50 border-emerald-300 text-emerald-800">
+                            <Rocket className="h-4 w-4" />
+                            <AlertTitle className="font-bold">En pleine croissance !</AlertTitle>
+                            <AlertDescription>
+                                Le Jardin Zen continue de fleurir. Nous ajouterons bientôt de nouvelles méditations guidées, des sons de la nature et des musiques d'ambiance pour une relaxation encore plus profonde.
+                            </AlertDescription>
+                        </Alert>
                     </CardContent>
                 </Card>
             </div>
