@@ -71,6 +71,7 @@ import ZenGarden from "./pages/teens/metaverse/ZenGarden";
 import CreativityStudio from "./pages/teens/metaverse/CreativityStudio";
 import AdventureIsland from "./pages/teens/metaverse/AdventureIsland";
 import SafeTalkCircle from "./pages/teens/metaverse/SafeTalkCircle";
+import SecureProtectedRoute from "./components/SecureProtectedRoute";
 
 const queryClient = new QueryClient();
 
@@ -88,9 +89,9 @@ function App() {
             <Route path="/auth/login" element={<AuthLogin />} />
             <Route path="/auth/register" element={<AuthRegister />} />
             <Route path="/auth/forgot-password" element={<AuthForgotPassword />} />
-            <Route path="/profil" element={<Profil />} />
-            <Route path="/historique" element={<Historique />} />
-            <Route path="/recommandations" element={<Recommandations />} />
+            <Route path="/profil" element={<SecureProtectedRoute requireAuth><Profil /></SecureProtectedRoute>} />
+            <Route path="/historique" element={<SecureProtectedRoute requireAuth><Historique /></SecureProtectedRoute>} />
+            <Route path="/recommandations" element={<SecureProtectedRoute requireAuth><Recommandations /></SecureProtectedRoute>} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/qui-sommes-nous" element={<QuiSommesNous />} />
             <Route path="/nos-valeurs" element={<NosValeurs />} />
