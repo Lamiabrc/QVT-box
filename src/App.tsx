@@ -1,40 +1,9 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Navigate } from "react-router-dom";
-import Index from "./pages/Index";
-import Auth from "./pages/Auth";
-import Profil from "./pages/Profil";
-import Historique from "./pages/Historique";
-import Recommandations from "./pages/Recommandations";
-import Entreprise from "./pages/Entreprise";
-import EntrepriseDashboard from "./pages/EntrepriseDashboard";
-import Contact from "./pages/Contact";
-import QuiSommesNous from "./pages/QuiSommesNous";
-import NosValeurs from "./pages/NosValeurs";
-import NotFound from "./pages/NotFound";
-import Teens from "./pages/Teens";
-import TeensHome from "./pages/teens/TeensHome";
-import TeensQuestionnaire from "./pages/TeensQuestionnaire";
-import TeensPersonalSpace from "./pages/TeensPersonalSpace";
-import TeensJournal from "./pages/TeensJournal";
-import TeensCheckIn from "./pages/TeensCheckIn";
-import TeensCalendar from "./pages/TeensCalendar";
-import TeensFamilySpace from "./pages/TeensFamilySpace";
-import TeensParentalAccess from "./pages/TeensParentalAccess";
-import TeensParentalAccessDashboard from "./pages/TeensParentalAccessDashboard";
-import TeensDashboardParent from "./pages/TeensDashboardParent";
-import TeensCustomization from "./pages/TeensCustomization";
-import TeensMetaverse from "./pages/TeensMetaverse";
-import TeensPlaylist from "./pages/TeensPlaylist";
-import TeensShop from "./pages/TeensShop";
-import TeensIntimacySpace from "./pages/TeensIntimacySpace";
-import TeensFunSolutions from "./pages/TeensFunSolutions";
-import TeensQuickAlert from "./pages/TeensQuickAlert";
-import TeensAIEvaluation from "./pages/TeensAIEvaluation";
 
 // Enterprise pages
 import EntrepriseHome from "./pages/entreprise/EntrepriseHome";
@@ -109,6 +78,7 @@ function App() {
             <Route path="/entreprise/manager" element={<ManagerDashboard />} />
             <Route path="/entreprise/hr" element={<HRDashboard />} />
             <Route path="/entreprise/admin" element={<AdminDashboard />} />
+            <Route path="/entreprise/admin-dashboard" element={<AdminDashboard />} />
             <Route path="/entreprise/admin-content" element={<AdminContentManager />} />
             <Route path="/entreprise/shop" element={<Shop />} />
             <Route path="/entreprise/orders" element={<Orders />} />
