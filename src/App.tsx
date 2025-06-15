@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -41,7 +40,6 @@ import TeensAIEvaluation from "./pages/TeensAIEvaluation";
 // Enterprise pages
 import EntrepriseHome from "./pages/entreprise/EntrepriseHome";
 import Login from "./pages/entreprise/Login";
-import Register from "./pages/entreprise/Register";
 import ForgotPassword from "./pages/entreprise/ForgotPassword";
 import ResetPassword from "./pages/entreprise/ResetPassword";
 import Dashboard from "./pages/entreprise/Dashboard";
@@ -57,7 +55,6 @@ import AdminContentManager from "./pages/entreprise/AdminContentManager";
 
 // Teens auth pages
 import TeensLogin from "./pages/teens/Login";
-import TeensRegister from "./pages/teens/Register";
 
 // Auth pages
 import AuthLogin from "./pages/auth/Login";
@@ -69,7 +66,6 @@ import AdminPanel from "./pages/AdminPanel";
 import FamilySimulator from "./pages/teens/FamilySimulator";
 import SimulatorHub from "./pages/simulator/SimulatorHub";
 import AdminDashboardMain from "./pages/admin/AdminDashboard";
-import FamilyRegister from "./pages/famille/Register";
 import ZenGarden from "./pages/teens/metaverse/ZenGarden";
 import CreativityStudio from "./pages/teens/metaverse/CreativityStudio";
 import AdventureIsland from "./pages/teens/metaverse/AdventureIsland";
@@ -108,7 +104,7 @@ function App() {
             {/* Enterprise routes */}
             <Route path="/entreprise" element={<EntrepriseHome />} />
             <Route path="/entreprise/login" element={<Login />} />
-            <Route path="/entreprise/register" element={<Register />} />
+            {/* <Route path="/entreprise/register" element={<Register />} /> DELETED */}
             <Route path="/entreprise/forgot-password" element={<ForgotPassword />} />
             <Route path="/entreprise/reset-password" element={<ResetPassword />} />
             <Route path="/entreprise/dashboard" element={<Dashboard />} />
@@ -126,7 +122,7 @@ function App() {
             {/* Teens routes */}
             <Route path="/teens" element={<Teens />} />
             <Route path="/teens/login" element={<TeensLogin />} />
-            <Route path="/teens/register" element={<TeensRegister />} />
+            {/* <Route path="/teens/register" element={<TeensRegister />} /> DELETED */}
             <Route path="/teens/questionnaire" element={<TeensQuestionnaire />} />
             <Route path="/teens/personal-space" element={<TeensPersonalSpace />} />
             <Route path="/teens/journal" element={<TeensJournal />} />
@@ -152,7 +148,7 @@ function App() {
             {/* Family routes */}
             <Route path="/famille" element={<Navigate to="/teens" replace />} />
             <Route path="/famille/simulator" element={<FamilySimulator />} />
-            <Route path="/famille/register" element={<FamilyRegister />} />
+            {/* <Route path="/famille/register" element={<FamilyRegister />} /> DELETED */}
 
             {/* Legacy redirects */}
             <Route path="/entreprise-dashboard" element={<Navigate to="/entreprise/dashboard" replace />} />

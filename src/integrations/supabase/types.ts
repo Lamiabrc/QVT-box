@@ -92,6 +92,41 @@ export type Database = {
         }
         Relationships: []
       }
+      enterprise_members: {
+        Row: {
+          created_at: string
+          enterprise_id: string
+          id: string
+          is_approved: boolean
+          role: Database["public"]["Enums"]["enterprise_role_enum"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          enterprise_id: string
+          id?: string
+          is_approved?: boolean
+          role: Database["public"]["Enums"]["enterprise_role_enum"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          enterprise_id?: string
+          id?: string
+          is_approved?: boolean
+          role?: Database["public"]["Enums"]["enterprise_role_enum"]
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "enterprise_members_enterprise_id_fkey"
+            columns: ["enterprise_id"]
+            isOneToOne: false
+            referencedRelation: "enterprises"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       enterprise_questionnaires: {
         Row: {
           autonomie: number | null
@@ -160,59 +195,88 @@ export type Database = {
           },
         ]
       }
-      family_connections: {
+      enterprises: {
         Row: {
-          approved_at: string | null
-          created_at: string | null
-          family_code: string
+          created_at: string
+          created_by: string
+          enterprise_code: string
           id: string
-          parent_id: string | null
-          role: Database["public"]["Enums"]["family_role"]
-          teen_id: string | null
+          name: string
         }
         Insert: {
-          approved_at?: string | null
-          created_at?: string | null
-          family_code: string
+          created_at?: string
+          created_by: string
+          enterprise_code: string
           id?: string
-          parent_id?: string | null
-          role: Database["public"]["Enums"]["family_role"]
-          teen_id?: string | null
+          name: string
         }
         Update: {
-          approved_at?: string | null
-          created_at?: string | null
-          family_code?: string
+          created_at?: string
+          created_by?: string
+          enterprise_code?: string
           id?: string
-          parent_id?: string | null
-          role?: Database["public"]["Enums"]["family_role"]
-          teen_id?: string | null
+          name?: string
         }
         Relationships: []
       }
-      family_profiles: {
+      families: {
         Row: {
-          created_at: string | null
+          created_at: string
+          created_by: string
           family_code: string
-          id: number
-          updated_at: string | null
-          user_id: string | null
+          id: string
+          name: string
         }
         Insert: {
-          created_at?: string | null
+          created_at?: string
+          created_by: string
           family_code: string
-          id?: number
-          updated_at?: string | null
-          user_id?: string | null
+          id?: string
+          name: string
         }
         Update: {
-          created_at?: string | null
+          created_at?: string
+          created_by?: string
           family_code?: string
-          id?: number
-          updated_at?: string | null
-          user_id?: string | null
+          id?: string
+          name?: string
         }
         Relationships: []
+      }
+      family_members: {
+        Row: {
+          created_at: string
+          family_id: string
+          id: string
+          is_approved: boolean
+          role: Database["public"]["Enums"]["family_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          family_id: string
+          id?: string
+          is_approved?: boolean
+          role: Database["public"]["Enums"]["family_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          family_id?: string
+          id?: string
+          is_approved?: boolean
+          role?: Database["public"]["Enums"]["family_role"]
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "family_members_family_id_fkey"
+            columns: ["family_id"]
+            isOneToOne: false
+            referencedRelation: "families"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       metrics: {
         Row: {
@@ -318,8 +382,11 @@ export type Database = {
           created_at: string | null
           department_or_school: string | null
           email: string
-          enterprise_role: string | null
-          entreprise: string | null
+          enterprise_id: string | null
+          enterprise_role:
+            | Database["public"]["Enums"]["enterprise_role_enum"]
+            | null
+          family_id: string | null
           full_name: string | null
           hr_access: boolean | null
           id: string
@@ -336,8 +403,11 @@ export type Database = {
           created_at?: string | null
           department_or_school?: string | null
           email: string
-          enterprise_role?: string | null
-          entreprise?: string | null
+          enterprise_id?: string | null
+          enterprise_role?:
+            | Database["public"]["Enums"]["enterprise_role_enum"]
+            | null
+          family_id?: string | null
           full_name?: string | null
           hr_access?: boolean | null
           id: string
@@ -354,8 +424,11 @@ export type Database = {
           created_at?: string | null
           department_or_school?: string | null
           email?: string
-          enterprise_role?: string | null
-          entreprise?: string | null
+          enterprise_id?: string | null
+          enterprise_role?:
+            | Database["public"]["Enums"]["enterprise_role_enum"]
+            | null
+          family_id?: string | null
           full_name?: string | null
           hr_access?: boolean | null
           id?: string
@@ -371,6 +444,20 @@ export type Database = {
             columns: ["assigned_teen_id"]
             isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "profiles_enterprise_id_fkey"
+            columns: ["enterprise_id"]
+            isOneToOne: false
+            referencedRelation: "enterprises"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "profiles_family_id_fkey"
+            columns: ["family_id"]
+            isOneToOne: false
+            referencedRelation: "families"
             referencedColumns: ["id"]
           },
         ]
@@ -636,15 +723,7 @@ export type Database = {
           type?: string
           urgent?: boolean | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "teen_notifications_family_id_fkey"
-            columns: ["family_id"]
-            isOneToOne: false
-            referencedRelation: "family_profiles"
-            referencedColumns: ["family_code"]
-          },
-        ]
+        Relationships: []
       }
       teen_rewards: {
         Row: {
@@ -913,6 +992,7 @@ export type Database = {
         | "happy"
         | "with_friends"
         | "need_help"
+      enterprise_role_enum: "employee" | "manager" | "hr" | "admin"
       family_role: "parent" | "teen" | "sibling"
       subscription_plan: "basic" | "premium" | "family"
       teen_mood:
@@ -1053,6 +1133,7 @@ export const Constants = {
         "with_friends",
         "need_help",
       ],
+      enterprise_role_enum: ["employee", "manager", "hr", "admin"],
       family_role: ["parent", "teen", "sibling"],
       subscription_plan: ["basic", "premium", "family"],
       teen_mood: [

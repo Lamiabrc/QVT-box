@@ -1,8 +1,7 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { Building2, Users, ArrowLeft, Zap, Target } from "lucide-react";
+import { Building2, Users, ArrowLeft, Zap, Target, UserPlus } from "lucide-react";
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -69,6 +68,13 @@ const Auth = () => {
                   🎯 Simulateur QVT (Gratuit)
                 </Button>
                 <Button 
+                  className="w-full bg-blue-600/80 hover:bg-blue-700/80 text-white py-3 text-lg rounded-xl"
+                  onClick={() => navigate('/auth/register?universe=entreprise')}
+                >
+                  <UserPlus className="w-5 h-5 mr-2" />
+                  S'inscrire
+                </Button>
+                <Button 
                   variant="outline"
                   className="w-full border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white py-3 text-lg rounded-xl"
                   onClick={() => navigate('/entreprise/login')}
@@ -93,9 +99,16 @@ const Auth = () => {
               <div className="grid grid-cols-1 gap-3">
                 <Button 
                   className="w-full bg-pink-600 hover:bg-pink-700 text-white py-3 text-lg rounded-xl"
-                  onClick={() => navigate('/teens/family-simulator')}
+                  onClick={() => navigate('/famille/simulator')}
                 >
                   🏠 Simulateur Famille (Gratuit)
+                </Button>
+                 <Button 
+                  className="w-full bg-pink-600/80 hover:bg-pink-700/80 text-white py-3 text-lg rounded-xl"
+                  onClick={() => navigate('/auth/register?universe=famille')}
+                >
+                  <UserPlus className="w-5 h-5 mr-2" />
+                  S'inscrire
                 </Button>
                 <Button 
                   variant="outline"

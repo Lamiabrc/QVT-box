@@ -3,16 +3,25 @@ import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
-interface RegisterData {
+// Nouvelle interface pour les données d'inscription
+export interface RegisterData {
   email: string;
   password: string;
   fullName: string;
-  accountType: 'abonne_salarie' | 'administrateur_entreprise' | 'particulier_travailleur';
-  entreprise?: string;
-  enterpriseRole?: string;
-  familyCode?: string;
+  accountType: 'create_enterprise' | 'create_family' | 'join_enterprise' | 'join_family' | 'individual' | 'teen';
+  entityName?: string; // Nom de l'entreprise ou de la famille
+  joinCode?: string;
   age?: number;
 }
+
+const generateCode = (length = 8) => {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return result;
+};
 
 export const useAuthOperations = () => {
   const [loading, setLoading] = useState(false);
@@ -20,109 +29,141 @@ export const useAuthOperations = () => {
 
   const registerUser = async (data: RegisterData) => {
     setLoading(true);
-    console.log('Starting user registration process');
+    console.log('Starting user registration process with data:', data);
     
     try {
-      // Validate input data
       if (!data.email || !data.password || !data.fullName) {
         throw new Error('Email, mot de passe et nom complet sont requis');
       }
-
       if (data.password.length < 6) {
         throw new Error('Le mot de passe doit contenir au moins 6 caractères');
       }
 
-      // Create user in Supabase Auth
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: data.email,
         password: data.password,
         options: {
-          emailRedirectTo: `${window.location.origin}/entreprise`,
+          emailRedirectTo: `${window.location.origin}/`,
           data: {
             full_name: data.fullName,
             account_type: data.accountType,
-            enterprise_role: data.enterpriseRole || 'employee'
           }
         }
       });
 
-      if (authError) {
-        console.error('Auth error:', authError);
-        throw authError;
-      }
+      if (authError) throw authError;
+      if (!authData.user) throw new Error('Erreur lors de la création du compte utilisateur');
+      
+      const user = authData.user;
+      console.log('User created in Auth:', user.id);
 
-      if (!authData.user) {
-        throw new Error('Erreur lors de la création du compte utilisateur');
-      }
-
-      console.log('User created successfully:', authData.user.id);
-
-      // Create user profile
-      const profileData = {
-        id: authData.user.id,
+      let profileData: any = {
+        id: user.id,
         email: data.email,
         full_name: data.fullName,
         account_type: data.accountType,
-        enterprise_role: data.enterpriseRole || 'employee',
-        role: 'user',
-        entreprise: data.entreprise || null,
-        family_code: data.familyCode || null,
-        age: data.age || null
+        role: 'user', // default role
+        age: data.age || null,
       };
+      
+      let resultPayload: any = { user, error: null, joinCode: null };
 
-      const { error: profileError } = await supabase
-        .from('profiles')
-        .insert([profileData]);
-
-      if (profileError) {
-        console.error('Profile creation error:', profileError);
-        throw new Error('Erreur lors de la création du profil utilisateur');
+      switch (data.accountType) {
+        case 'create_enterprise': {
+          if (!data.entityName) throw new Error("Le nom de l'entreprise est requis.");
+          const enterpriseCode = generateCode();
+          const { data: enterprise, error: enterpriseError } = await supabase
+            .from('enterprises')
+            .insert({ name: data.entityName, enterprise_code: enterpriseCode, created_by: user.id })
+            .select()
+            .single();
+          if (enterpriseError) throw enterpriseError;
+          console.log('Enterprise created:', enterprise.id);
+          
+          await supabase.from('enterprise_members').insert({ enterprise_id: enterprise.id, user_id: user.id, role: 'admin', is_approved: true });
+          profileData.enterprise_id = enterprise.id;
+          profileData.enterprise_role = 'admin';
+          resultPayload.joinCode = enterpriseCode;
+          break;
+        }
+        case 'create_family': {
+          if (!data.entityName) throw new Error("Le nom de la famille est requis.");
+          const familyCode = generateCode();
+          const { data: family, error: familyError } = await supabase
+            .from('families')
+            .insert({ name: data.entityName, family_code: familyCode, created_by: user.id })
+            .select()
+            .single();
+          if (familyError) throw familyError;
+          console.log('Family created:', family.id);
+          
+          await supabase.from('family_members').insert({ family_id: family.id, user_id: user.id, role: 'parent', is_approved: true });
+          profileData.family_id = family.id;
+          resultPayload.joinCode = familyCode;
+          break;
+        }
+        case 'join_enterprise': {
+          if (!data.joinCode) throw new Error("Un code d'entreprise est requis.");
+          const { data: enterprise, error: enterpriseError } = await supabase
+            .from('enterprises')
+            .select('id')
+            .eq('enterprise_code', data.joinCode.toUpperCase())
+            .single();
+          if (enterpriseError || !enterprise) throw new Error("Code d'entreprise invalide.");
+          
+          await supabase.from('enterprise_members').insert({ enterprise_id: enterprise.id, user_id: user.id, role: 'employee', is_approved: true });
+          profileData.enterprise_id = enterprise.id;
+          profileData.enterprise_role = 'employee';
+          break;
+        }
+        case 'join_family': {
+          if (!data.joinCode) throw new Error("Un code de famille est requis.");
+          const { data: family, error: familyError } = await supabase
+            .from('families')
+            .select('id')
+            .eq('family_code', data.joinCode.toUpperCase())
+            .single();
+          if (familyError || !family) throw new Error("Code de famille invalide.");
+          
+          await supabase.from('family_members').insert({ family_id: family.id, user_id: user.id, role: 'teen', is_approved: true });
+          profileData.family_id = family.id;
+          break;
+        }
+        case 'teen':
+          profileData.role = 'teen';
+          break;
+        case 'individual':
+        default:
+          // No extra steps needed
+          break;
       }
 
-      // Create user role entry
-      const { error: roleError } = await supabase
-        .from('user_roles')
-        .insert([{
-          user_id: authData.user.id,
-          role: 'user'
-        }]);
+      const { error: profileError } = await supabase.from('profiles').insert(profileData);
+      if (profileError) throw profileError;
+      console.log('Profile created/updated for user:', user.id);
 
-      if (roleError) {
-        console.error('Role creation error:', roleError);
-        // Don't throw here as it's not critical
-      }
-
-      console.log('User registration completed successfully');
+      const { error: roleError } = await supabase.from('user_roles').insert([{ user_id: user.id, role: 'user' }]);
+      if (roleError) console.error('Role creation error:', roleError); // Non-critical
 
       toast({
         title: "Compte créé avec succès",
         description: "Veuillez vérifier votre email pour confirmer votre compte.",
       });
 
-      return { user: authData.user, error: null };
+      return resultPayload;
 
     } catch (error: any) {
       console.error('Registration error:', error);
+      let errorMessage = error.message || 'Erreur lors de la création du compte';
+      if (error.message?.includes('already registered')) errorMessage = 'Cette adresse email est déjà utilisée';
       
-      let errorMessage = 'Erreur lors de la création du compte';
-      
-      if (error.message?.includes('already registered')) {
-        errorMessage = 'Cette adresse email est déjà utilisée';
-      } else if (error.message?.includes('Invalid email')) {
-        errorMessage = 'Adresse email invalide';
-      } else if (error.message?.includes('Password')) {
-        errorMessage = 'Le mot de passe ne respecte pas les critères requis';
-      } else if (error.message) {
-        errorMessage = error.message;
-      }
-
       toast({
         variant: "destructive",
         title: "Erreur de création de compte",
         description: errorMessage,
       });
 
-      return { user: null, error: errorMessage };
+      return { user: null, error: errorMessage, joinCode: null };
     } finally {
       setLoading(false);
     }
