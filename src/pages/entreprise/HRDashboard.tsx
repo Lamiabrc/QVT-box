@@ -252,6 +252,30 @@ const HRDashboard = () => {
     }
   };
 
+  const updateTeam = async (teamId: string, name: string, description: string) => {
+    try {
+      const { error } = await supabase
+        .from('teams')
+        .update({ name, description })
+        .eq('id', teamId);
+
+      if (error) throw error;
+
+      toast({
+        title: "Succès",
+        description: "Équipe mise à jour avec succès.",
+      });
+      fetchHRData(); // Refresh data
+    } catch (error) {
+      console.error('Error updating team:', error);
+      toast({
+        variant: "destructive",
+        title: "Erreur",
+        description: "Impossible de mettre à jour l'équipe.",
+      });
+    }
+  };
+
   const assignEmployeeToTeam = async (employeeId, teamId) => {
     try {
       await supabase
@@ -438,6 +462,7 @@ const HRDashboard = () => {
                 newTeam={newTeam}
                 setNewTeam={setNewTeam}
                 createTeam={createTeam}
+                updateTeam={updateTeam}
               />
             </TabsContent>
 
