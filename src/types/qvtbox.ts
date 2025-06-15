@@ -1,7 +1,7 @@
 
 export type UniverseType = 'famille' | 'entreprise' | 'coach';
 
-export type FamilyRole = 'parent' | 'enfant_ado' | 'grand_parent' | 'tuteur' | 'parrain_marraine' | 'institution' | 'adulte_referent';
+export type FamilyRole = 'parent_solo' | 'parent_en_couple' | 'parent_lgbt' | 'enfant_ado' | 'grand_parent' | 'famille_recomposee' | 'autre_situation' | 'tuteur' | 'parrain_marraine' | 'institution' | 'adulte_referent' | 'parent';
 
 export type EnterpriseSpeciality = 'salarie_itinerant' | 'teletravail' | 'penibilite' | 'retraite_proche' | 'promotion_envisagee';
 

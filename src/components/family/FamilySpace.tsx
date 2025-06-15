@@ -39,7 +39,12 @@ const FamilySpace: React.FC<FamilySpaceProps> = ({
       tuteur: "🎓",
       parrain_marraine: "🤝",
       institution: "🏫",
-      adulte_referent: "👥"
+      adulte_referent: "👥",
+      parent_solo: '🦸',
+      parent_en_couple: '👩‍❤️‍👨',
+      parent_lgbt: '🌈',
+      famille_recomposee: '🧩',
+      autre_situation: '👤'
     };
     return emojis[role as keyof typeof emojis] || "👤";
   };

@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -7,7 +6,8 @@ import { Heart, Shield, Brain, Gamepad2, MessageCircle, Package, Sparkles, Chevr
 import { useNavigate } from "react-router-dom";
 import { useSecureAuth } from "@/hooks/useSecureAuth";
 import Navigation from "@/components/Navigation";
-import BoxCatalog from "@/components/BoxCatalog";
+import BoxShop from "@/components/shop/BoxShop";
+import { familyBoxes } from "@/data/familyBoxes";
 
 const TeensFamilySpace = () => {
   const navigate = useNavigate();
@@ -19,6 +19,16 @@ const TeensFamilySpace = () => {
       setUserType("teen");
     }
   }, [user]);
+
+  const handleOrderBox = (boxId: string) => {
+    console.log("Ordering box:", boxId);
+    navigate('/teens/shop');
+  };
+
+  const handleViewBoxDetails = (boxId: string) => {
+    console.log("Viewing details for box:", boxId);
+    // You can navigate to a detailed view page here
+  };
 
   const features = [
     {
@@ -291,7 +301,15 @@ const TeensFamilySpace = () => {
               </CardContent>
             </Card>
             
-            <BoxCatalog />
+            <Card className="bg-white/80 backdrop-blur-sm border-4 border-white/30 shadow-2xl rounded-3xl p-4">
+                <BoxShop
+                  universe="famille"
+                  recommendations={familyBoxes}
+                  userRole="Membre de la famille"
+                  onOrderBox={handleOrderBox}
+                  onViewBoxDetails={handleViewBoxDetails}
+                />
+            </Card>
           </div>
         </div>
       ) : (

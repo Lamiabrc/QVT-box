@@ -18,53 +18,53 @@ const FamilyRoleSelector: React.FC<FamilyRoleSelectorProps> = ({
 }) => {
   const roles = [
     {
-      id: 'parent' as FamilyRole,
-      label: 'Parent',
-      emoji: '👨‍👩‍👧‍👦',
-      description: 'Père ou mère de famille',
+      id: 'parent_solo' as FamilyRole,
+      label: 'Parent Solo',
+      emoji: '🦸',
+      description: 'Je gère le quotidien en solo.',
+      color: 'from-orange-400 to-orange-600'
+    },
+    {
+      id: 'parent_en_couple' as FamilyRole,
+      label: 'Parents en couple',
+      emoji: '👩‍❤️‍👨',
+      description: 'Nous sommes deux pour élever nos enfants.',
       color: 'from-blue-400 to-blue-600'
+    },
+    {
+      id: 'parent_lgbt' as FamilyRole,
+      label: 'Parent(s) LGBT+',
+      emoji: '🌈',
+      description: 'Je fais partie d\'une famille arc-en-ciel.',
+      color: 'from-purple-400 to-purple-600'
     },
     {
       id: 'enfant_ado' as FamilyRole,
       label: 'Enfant/Ado',
       emoji: '🧑‍🎓',
-      description: 'Enfant ou adolescent',
+      description: 'J\'exprime mes émotions.',
       color: 'from-pink-400 to-pink-600'
     },
     {
       id: 'grand_parent' as FamilyRole,
       label: 'Grand-parent',
       emoji: '👴👵',
-      description: 'Grand-père ou grand-mère',
-      color: 'from-purple-400 to-purple-600'
+      description: 'J\'accompagne ma famille.',
+      color: 'from-teal-400 to-teal-600'
     },
     {
-      id: 'tuteur' as FamilyRole,
-      label: 'Tuteur',
-      emoji: '🎓',
-      description: 'Tuteur légal ou éducatif',
-      color: 'from-green-400 to-green-600'
-    },
-    {
-      id: 'parrain_marraine' as FamilyRole,
-      label: 'Parrain/Marraine',
-      emoji: '🤝',
-      description: 'Parrain ou marraine',
-      color: 'from-orange-400 to-orange-600'
-    },
-    {
-      id: 'institution' as FamilyRole,
-      label: 'Institution',
-      emoji: '🏫',
-      description: 'École, centre, institution',
+      id: 'famille_recomposee' as FamilyRole,
+      label: 'Famille Recomposée',
+      emoji: '🧩',
+      description: 'Nous créons de nouveaux liens.',
       color: 'from-indigo-400 to-indigo-600'
     },
     {
-      id: 'adulte_referent' as FamilyRole,
-      label: 'Adulte référent',
-      emoji: '👥',
-      description: 'Adulte de confiance',
-      color: 'from-teal-400 to-teal-600'
+      id: 'autre_situation' as FamilyRole,
+      label: 'Autre situation',
+      emoji: '👤',
+      description: 'Ma situation est unique.',
+      color: 'from-gray-400 to-gray-600'
     }
   ];
 

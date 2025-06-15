@@ -16,10 +16,24 @@ const FamilyRoleSelector: React.FC<FamilyRoleSelectorProps> = ({
 }) => {
   const roles = [
     {
-      id: 'parent' as FamilyRole,
-      title: '👨‍👩‍👧‍👦 Parent',
-      description: 'Je suis parent et je veux prendre soin du bien-être familial',
+      id: 'parent_solo' as FamilyRole,
+      title: '🦸 Parent Solo',
+      description: 'Je gère le quotidien de ma famille en solo',
+      color: '#FF7043',
+      bubble: { emotion: 'happy' as const, intensity: 7 }
+    },
+    {
+      id: 'parent_en_couple' as FamilyRole,
+      title: '👩‍❤️‍👨 Parents en couple',
+      description: 'Nous sommes deux pour élever nos enfants',
       color: '#4CAF50',
+      bubble: { emotion: 'happy' as const, intensity: 8 }
+    },
+    {
+      id: 'parent_lgbt' as FamilyRole,
+      title: '🌈 Parent(s) LGBT+',
+      description: 'Je suis un parent au sein d\'une famille arc-en-ciel',
+      color: '#9C27B0',
       bubble: { emotion: 'happy' as const, intensity: 8 }
     },
     {
@@ -33,37 +47,23 @@ const FamilyRoleSelector: React.FC<FamilyRoleSelectorProps> = ({
       id: 'grand_parent' as FamilyRole,
       title: '👴👵 Grand-parent',
       description: 'Je suis grand-parent et je veux accompagner ma famille',
-      color: '#9C27B0',
-      bubble: { emotion: 'neutral' as const, intensity: 6 }
-    },
-    {
-      id: 'tuteur' as FamilyRole,
-      title: '🎓 Tuteur / Tutrice',
-      description: 'Je suis tuteur/tutrice légal(e)',
-      color: '#FF9800',
-      bubble: { emotion: 'neutral' as const, intensity: 6 }
-    },
-    {
-      id: 'parrain_marraine' as FamilyRole,
-      title: '🤝 Parrain / Marraine',
-      description: 'Je suis parrain, marraine ou proche de la famille',
-      color: '#2196F3',
-      bubble: { emotion: 'happy' as const, intensity: 7 }
-    },
-    {
-      id: 'institution' as FamilyRole,
-      title: '🏫 Institution éducative',
-      description: 'Je représente une institution éducative ou sociale',
       color: '#607D8B',
+      bubble: { emotion: 'neutral' as const, intensity: 6 }
+    },
+    {
+      id: 'famille_recomposee' as FamilyRole,
+      title: '🧩 Famille Recomposée',
+      description: 'Nous formons une nouvelle famille avec des enfants de lits différents',
+      color: '#00BCD4',
+      bubble: { emotion: 'neutral' as const, intensity: 6 }
+    },
+    {
+      id: 'autre_situation' as FamilyRole,
+      title: '👤 Autre situation',
+      description: 'Ma situation familiale est différente',
+      color: '#795548',
       bubble: { emotion: 'neutral' as const, intensity: 5 }
     },
-    {
-      id: 'adulte_referent' as FamilyRole,
-      title: '👥 Adulte référent',
-      description: 'Je suis un autre adulte référent de confiance',
-      color: '#795548',
-      bubble: { emotion: 'neutral' as const, intensity: 6 }
-    }
   ];
 
   return (
