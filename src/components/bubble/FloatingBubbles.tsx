@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import BubbleComponent from '@/components/bubble/BubbleComponent';
@@ -26,7 +25,7 @@ const FloatingBubbles = () => {
   }, []);
 
   return (
-    <div className="absolute inset-0 pointer-events-none -z-10 overflow-hidden">
+    <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <AnimatePresence>
           {animatedBubbles.map((bubble) => (
             <motion.div
