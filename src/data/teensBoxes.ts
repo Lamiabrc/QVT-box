@@ -3,196 +3,203 @@ import { BoxRecommendation } from "@/types/qvtbox";
 
 export const teensBoxes: BoxRecommendation[] = [
   {
-    id: "teen_decompression",
-    title: "🎯 Décompression Scolaire",
-    description: "Techniques pour évacuer le stress des études et retrouver l'équilibre",
+    id: "teen_school_stress",
+    title: "📚 Décompression Scolaire",
+    description: "Outils anti-stress pour mieux gérer la pression scolaire et les examens",
     category: "scolaire",
-    targetRole: "enfant_ado",
-    targetUniverse: "famille",
-    aiConfidence: 0.9,
-    urgency: "medium",
-    contents: [
-      "Kit de relaxation express",
-      "Cartes de respiration guidée",
-      "Playlist anti-stress",
-      "Carnet de gratitude",
-      "Balle anti-stress personnalisée"
-    ]
-  },
-  {
-    id: "teen_emotions",
-    title: "🌈 Humeur & Gestion des Émotions",
-    description: "Outils pour comprendre et apprivoiser ses émotions",
-    category: "emotionnel",
     targetRole: "enfant_ado",
     targetUniverse: "famille",
     aiConfidence: 0.95,
     urgency: "high",
     contents: [
+      "Balle anti-stress personnalisable",
+      "Guide de techniques de respiration pour ados",
+      "Planning de révisions zen avec stickers",
+      "Cartes motivation avant examens",
+      "Playlist relaxation étude",
+      "Tisane détente spécial ado",
+      "Marque-pages citations inspirantes",
+      "Journal de réussites scolaires"
+    ]
+  },
+  {
+    id: "teen_emotions",
+    title: "🌈 Humeur & Gestion des Émotions",
+    description: "Kit complet pour comprendre et apprivoiser ses émotions d'adolescent",
+    category: "emotions",
+    targetRole: "enfant_ado",
+    targetUniverse: "famille",
+    aiConfidence: 0.9,
+    urgency: "high",
+    contents: [
       "Roue des émotions interactive",
-      "Journal émotionnel illustré",
-      "Cartes situations-émotions",
-      "Bracelet mood tracker",
-      "Guide 'Mes émotions et moi'"
+      "Carnet de bord émotionnel",
+      "Cartes situations + réactions",
+      "Bracelet mood ring",
+      "Guide parent : comprendre les émotions ado",
+      "Application mood tracker",
+      "Techniques de régulation émotionnelle",
+      "Vidéos témoignages d'ados"
     ]
   },
   {
     id: "teen_creativity",
     title: "🎨 Expression & Créativité",
-    description: "Libérer sa créativité pour s'exprimer et se découvrir",
+    description: "Libère ta créativité et exprime-toi à travers l'art et l'écriture",
     category: "creativite",
     targetRole: "enfant_ado",
     targetUniverse: "famille",
     aiConfidence: 0.8,
-    urgency: "low",
+    urgency: "medium",
     contents: [
-      "Carnet de création libre",
-      "Set d'art-thérapie",
-      "Défis créatifs quotidiens",
-      "Playlist inspiration",
-      "Kit DIY personnalisation"
+      "Carnet de dessin et d'écriture",
+      "Set de feutres et crayons de couleur",
+      "Stickers et autocollants créatifs",
+      "Guide d'activités artistiques",
+      "Défis créatifs hebdomadaires",
+      "Accès plateforme création numérique",
+      "Tutoriels DIY pour ados",
+      "Kit scrapbooking personnel"
     ]
   },
   {
     id: "teen_sleep",
     title: "😴 Sommeil & Récupération",
-    description: "Améliorer la qualité du sommeil et la récupération",
+    description: "Améliore la qualité de ton sommeil pour être en forme",
     category: "sommeil",
     targetRole: "enfant_ado",
     targetUniverse: "famille",
     aiConfidence: 0.85,
     urgency: "medium",
     contents: [
-      "Masque de sommeil connecté",
-      "Tisane relaxante ado",
-      "Guide du sommeil réparateur",
-      "Lampe d'ambiance apaisante",
-      "Carnet de rêves"
+      "Masque de sommeil personnalisé",
+      "Spray d'oreiller relaxant",
+      "Guide du sommeil pour ados",
+      "Veilleuse avec sons de la nature",
+      "Planning sommeil + tracker",
+      "Tisane bonne nuit",
+      "Techniques de relaxation pré-sommeil",
+      "Livre audio conte moderne"
     ]
   },
   {
-    id: "teen_self_esteem",
+    id: "teen_body_confidence",
     title: "💪 Corps & Estime de Soi",
-    description: "Développer une image positive de soi et confiance en soi",
+    description: "Développe une relation positive avec ton corps et renforce ta confiance",
     category: "estime",
     targetRole: "enfant_ado",
     targetUniverse: "famille",
     aiConfidence: 0.9,
     urgency: "high",
     contents: [
-      "Miroir affirmations positives",
-      "Cartes de forces personnelles",
-      "Kit sport bien-être",
-      "Guide nutrition équilibrée",
-      "Carnet de réussites"
+      "Miroir avec affirmations positives",
+      "Guide nutrition équilibrée ado",
+      "Cartes exercices bien-être corporel",
+      "Journal gratitude corps",
+      "Vidéos yoga pour ados",
+      "Produits de soin naturels",
+      "Guide diversité corporelle",
+      "Activités sport plaisir"
     ]
   },
   {
     id: "teen_friendships",
-    title: "👥 Relations & Amitiés",
-    description: "Cultiver des relations saines et authentiques",
+    title: "👫 Relations & Amitiés",
+    description: "Construis des amitiés saines et gère les conflits relationnels",
     category: "social",
     targetRole: "enfant_ado",
     targetUniverse: "famille",
-    aiConfidence: 0.8,
+    aiConfidence: 0.85,
     urgency: "medium",
     contents: [
-      "Guide des amitiés saines",
-      "Cartes conversation starter",
-      "Kit activités entre amis",
-      "Bracelet de l'amitié DIY",
-      "Test de compatibilité amicale"
+      "Cartes communication amicale",
+      "Guide résolution conflits ados",
+      "Activités de groupe à faire entre amis",
+      "Journal des moments d'amitié",
+      "Techniques d'écoute active",
+      "Gestion des réseaux sociaux",
+      "Bracelets de l'amitié DIY",
+      "Vidéos témoignages amitié"
     ]
   },
   {
     id: "teen_bullying",
     title: "🛡️ Harcèlement / Isolement",
-    description: "Outils de prévention et de soutien face au harcèlement",
+    description: "Ressources et soutien face au harcèlement et à l'isolement",
     category: "protection",
     targetRole: "enfant_ado",
     targetUniverse: "famille",
     aiConfidence: 0.95,
     urgency: "urgent",
     contents: [
-      "Guide anti-harcèlement",
-      "Cartes de ressources d'aide",
-      "Kit confiance en situation",
-      "Numéros d'urgence personnalisés",
-      "Plan d'action personnel"
+      "Guide d'urgence anti-harcèlement",
+      "Cartes contacts ressources",
+      "Techniques de confiance en soi",
+      "Journal de libération émotionnelle",
+      "Hotline jeunes 24h/24",
+      "Vidéos de témoignages et conseils",
+      "Kit de soutien psychologique",
+      "Protocole d'alerte famille"
     ]
   },
   {
     id: "teen_transitions",
     title: "🔄 Changements / Transitions",
-    description: "Accompagner les grands changements de la vie d'ado",
+    description: "Accompagnement lors des grandes transitions de la vie d'ado",
     category: "transition",
     targetRole: "enfant_ado",
     targetUniverse: "famille",
-    aiConfidence: 0.85,
+    aiConfidence: 0.8,
     urgency: "medium",
     contents: [
-      "Guide des grandes transitions",
-      "Cartes de gestion du changement",
-      "Rituel de passage personnel",
-      "Journal de transformation",
-      "Kit nouveaux débuts"
+      "Guide des transitions adolescentes",
+      "Carnet de projets d'avenir",
+      "Cartes gestion du changement",
+      "Journal de passage à l'âge adulte",
+      "Techniques d'adaptation",
+      "Vidéos orientation scolaire/pro",
+      "Kit découverte de soi",
+      "Planning objectifs personnels"
     ]
   },
   {
-    id: "teen_parent_relation",
-    title: "💝 Parent-Ado (Relationnel)",
-    description: "Améliorer la communication et la relation parent-ado",
-    category: "familial",
+    id: "teen_parent_relationship",
+    title: "👨‍👩‍👧‍👦 Parent-Ado (relationnel)",
+    description: "Améliore la communication et les relations avec tes parents",
+    category: "famille",
     targetRole: "enfant_ado",
     targetUniverse: "famille",
     aiConfidence: 0.9,
     urgency: "high",
     contents: [
-      "Cartes dialogue parent-ado",
+      "Cartes conversation parent-ado",
+      "Guide communication familiale",
+      "Activités de rapprochement",
       "Contrat de confiance mutuelle",
-      "Activités de complicité",
-      "Guide 'Comprendre mes parents'",
-      "Kit moments partagés"
+      "Techniques d'expression des besoins",
+      "Journal des moments complices",
+      "Vidéos conseils relations familiales",
+      "Planning temps qualité famille"
     ]
   },
   {
     id: "teen_passions",
-    title: "🚀 Passion & Projets Personnels",
-    description: "Cultiver ses passions et développer ses projets",
+    title: "🎯 Passion & Projets Personnels",
+    description: "Explore tes passions et développe tes projets personnels",
     category: "developpement",
     targetRole: "enfant_ado",
     targetUniverse: "famille",
     aiConfidence: 0.8,
     urgency: "low",
     contents: [
-      "Carnet de projet passion",
-      "Kit découverte talents",
-      "Guide 'Réaliser ses rêves'",
-      "Planner de projet créatif",
-      "Carte mentale des possibles"
+      "Carnet explorateur de passions",
+      "Guide création de projets",
+      "Planning organisation personnel",
+      "Cartes motivation et persévérance",
+      "Vidéos parcours inspirants",
+      "Kit entrepreneur en herbe",
+      "Techniques de créativité",
+      "Journal de réalisations"
     ]
   }
 ];
-
-export const getRecommendedBoxes = (userMood: string, scores: Record<string, number>): BoxRecommendation[] => {
-  // Logique de recommandation IA simplifiée
-  const recommendations: BoxRecommendation[] = [];
-  
-  if (scores.anxiete && scores.anxiete < 5) {
-    recommendations.push(teensBoxes.find(box => box.id === "teen_emotions")!);
-  }
-  
-  if (scores.sommeil && scores.sommeil < 5) {
-    recommendations.push(teensBoxes.find(box => box.id === "teen_sleep")!);
-  }
-  
-  if (scores.estime && scores.estime < 5) {
-    recommendations.push(teensBoxes.find(box => box.id === "teen_self_esteem")!);
-  }
-  
-  if (scores.relations && scores.relations < 5) {
-    recommendations.push(teensBoxes.find(box => box.id === "teen_friendships")!);
-  }
-  
-  return recommendations.slice(0, 3); // Maximum 3 recommandations
-};

@@ -40,8 +40,8 @@ const BubbleComponent: React.FC<BubbleComponentProps> = ({
     return sizes[size as keyof typeof sizes] || sizes.medium;
   };
 
-  const getAnimationVariants = () => {
-    const baseVariants = {
+  const getAnimationProps = () => {
+    const baseProps = {
       initial: { scale: 0.8, opacity: 0 },
       animate: { scale: 1, opacity: 1 },
       exit: { scale: 0.8, opacity: 0 }
@@ -50,33 +50,45 @@ const BubbleComponent: React.FC<BubbleComponentProps> = ({
     switch (bubble.animation) {
       case 'float':
         return {
-          ...baseVariants,
+          ...baseProps,
           animate: {
-            ...baseVariants.animate,
+            ...baseProps.animate,
             y: [-5, 5, -5],
-            transition: { duration: 3, repeat: Infinity, ease: "easeInOut" }
+            transition: { 
+              duration: 3, 
+              repeat: Infinity, 
+              repeatType: "reverse" as const
+            }
           }
         };
       case 'pulse':
         return {
-          ...baseVariants,
+          ...baseProps,
           animate: {
-            ...baseVariants.animate,
+            ...baseProps.animate,
             scale: [1, 1.1, 1],
-            transition: { duration: 2, repeat: Infinity, ease: "easeInOut" }
+            transition: { 
+              duration: 2, 
+              repeat: Infinity, 
+              repeatType: "reverse" as const
+            }
           }
         };
       case 'bounce':
         return {
-          ...baseVariants,
+          ...baseProps,
           animate: {
-            ...baseVariants.animate,
+            ...baseProps.animate,
             y: [0, -10, 0],
-            transition: { duration: 1.5, repeat: Infinity, ease: "easeOut" }
+            transition: { 
+              duration: 1.5, 
+              repeat: Infinity, 
+              repeatType: "loop" as const
+            }
           }
         };
       default:
-        return baseVariants;
+        return baseProps;
     }
   };
 
@@ -87,10 +99,7 @@ const BubbleComponent: React.FC<BubbleComponentProps> = ({
         backgroundColor: bubble.color,
         boxShadow: `0 0 20px ${bubble.color}40`
       }}
-      variants={getAnimationVariants()}
-      initial="initial"
-      animate="animate"
-      exit="exit"
+      {...getAnimationProps()}
       whileHover={interactive ? { 
         scale: 1.1,
         boxShadow: `0 0 30px ${bubble.color}60`,
