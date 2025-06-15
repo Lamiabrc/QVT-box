@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { BubbleData } from '@/types/qvtbox';
 
 interface BubbleComponentProps {
-  bubble: BubbleData;
+  bubble: BubbleData & { imageUrl?: string; };
   interactive?: boolean;
   onClick?: () => void;
   className?: string;
@@ -41,6 +41,10 @@ const BubbleComponent: React.FC<BubbleComponentProps> = ({
   };
 
   const getAnimationProps = () => {
+    if (bubble.imageUrl) {
+      return {}; // Disable self-animation for image bubbles (controlled externally)
+    }
+    
     const baseProps = {
       initial: { scale: 0.8, opacity: 0 },
       animate: { scale: 1, opacity: 1 },
@@ -94,38 +98,43 @@ const BubbleComponent: React.FC<BubbleComponentProps> = ({
 
   return (
     <motion.div
-      className={`${getSizeClass(bubble.size)} rounded-full flex items-center justify-center cursor-pointer shadow-lg backdrop-blur-sm border-2 border-white/30 ${className}`}
+      className={`${bubble.imageUrl ? 'w-full h-full' : getSizeClass(bubble.size)} rounded-full flex items-center justify-center shadow-lg backdrop-blur-sm border-2 border-white/30 ${className} overflow-hidden`}
       style={{ 
         backgroundColor: bubble.color,
-        boxShadow: `0 0 20px ${bubble.color}40`
+        boxShadow: `0 0 20px ${bubble.color}40`,
+        cursor: interactive || onClick ? 'pointer' : 'default'
       }}
       {...getAnimationProps()}
-      whileHover={interactive ? { 
+      whileHover={interactive || onClick ? { 
         scale: 1.1,
         boxShadow: `0 0 30px ${bubble.color}60`,
         transition: { duration: 0.2 }
       } : {}}
-      whileTap={interactive ? { scale: 0.95 } : {}}
+      whileTap={interactive || onClick ? { scale: 0.95 } : {}}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
       onClick={onClick}
     >
-      <div className="text-center">
-        <div className="text-2xl mb-1">
-          {getEmotionEmoji(bubble.emotion)}
+      {bubble.imageUrl ? (
+        <img src={bubble.imageUrl} alt="" className="w-full h-full object-cover" />
+      ) : (
+        <div className="text-center">
+          <div className="text-2xl mb-1">
+            {getEmotionEmoji(bubble.emotion)}
+          </div>
+          {(interactive && isHovered) && (
+            <motion.div
+              initial={{ opacity: 0, y: 5 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-xs font-medium text-white/90"
+            >
+              {bubble.intensity}/10
+            </motion.div>
+          )}
         </div>
-        {(interactive && isHovered) && (
-          <motion.div
-            initial={{ opacity: 0, y: 5 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-xs font-medium text-white/90"
-          >
-            {bubble.intensity}/10
-          </motion.div>
-        )}
-      </div>
+      )}
       
-      {interactive && (
+      {interactive && !bubble.imageUrl && (
         <motion.div
           className="absolute -inset-2 rounded-full border-2 border-white/50"
           initial={{ scale: 0, opacity: 0 }}
