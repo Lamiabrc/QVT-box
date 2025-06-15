@@ -8,6 +8,7 @@ import { useState } from "react";
 import { ArrowLeft, Building2, Users } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import FloatingBubbles from "@/components/bubble/FloatingBubbles";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
@@ -42,8 +43,9 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 flex items-center justify-center p-4">
-      <Card className="w-full max-w-md">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 flex items-center justify-center p-4 relative overflow-hidden">
+      <FloatingBubbles />
+      <Card className="w-full max-w-md relative z-10">
         <CardHeader className="text-center">
           <Button 
             variant="ghost" 

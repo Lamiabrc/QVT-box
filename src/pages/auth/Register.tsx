@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { useAuthOperations, RegisterData } from '@/hooks/useAuthOperations';
 import { ArrowLeft, Building, Users, User, GitFork, ClipboardCopy } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import FloatingBubbles from '@/components/bubble/FloatingBubbles';
 
 type Step = 'initial' | 'choose_type' | 'form' | 'show_code';
 type AccountType = RegisterData['accountType'];
@@ -158,8 +159,9 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 flex items-center justify-center p-4">
-      <Card className="w-full max-w-md bg-white/95 shadow-xl">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 flex items-center justify-center p-4 relative overflow-hidden">
+      <FloatingBubbles />
+      <Card className="w-full max-w-md bg-white/95 shadow-xl relative z-10">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-bold text-gray-800">
             Inscription

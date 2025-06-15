@@ -1,13 +1,16 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { Building2, Users, ArrowLeft, Zap, Target, UserPlus } from "lucide-react";
+import FloatingBubbles from "@/components/bubble/FloatingBubbles";
 
 const Auth = () => {
   const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 relative overflow-hidden">
+      <FloatingBubbles />
       {/* Animated background elements */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute top-20 left-10 w-32 h-32 bg-blue-500 rounded-full animate-pulse"></div>

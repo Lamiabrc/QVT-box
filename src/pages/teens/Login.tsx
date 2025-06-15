@@ -8,6 +8,7 @@ import { ArrowLeft, Users, Heart, Shield, Brain, Star } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import FloatingBubbles from "@/components/bubble/FloatingBubbles";
 
 const TeensLogin = () => {
   const navigate = useNavigate();
@@ -105,6 +106,7 @@ const TeensLogin = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 relative overflow-hidden">
+      <FloatingBubbles />
       {/* Floating wellness elements */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute top-20 left-10 w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full animate-pulse"></div>
