@@ -122,7 +122,7 @@ const TeensMetaverse = () => {
                 </div>
                 
                 <div className="flex space-x-3">
-                  <Button className={`flex-1 bg-gradient-to-r ${world.color} hover:opacity-90 text-white rounded-2xl font-bold`}>
+                  <Button className={`flex-1 bg-gradient-to-r ${world.color} hover:opacity-90 text-white rounded-2xl font-bold`} onClick={() => navigate(`/teens/metaverse/${world.id}`)}>
                     <Globe className="w-4 h-4 mr-2" />
                     Entrer
                   </Button>
