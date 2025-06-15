@@ -69,6 +69,7 @@ import AdminPanel from "./pages/AdminPanel";
 import FamilySimulator from "./pages/teens/FamilySimulator";
 import SimulatorHub from "./pages/simulator/SimulatorHub";
 import AdminDashboardMain from "./pages/admin/AdminDashboard";
+import FamilyRegister from "./pages/famille/Register";
 
 const queryClient = new QueryClient();
 
@@ -143,6 +144,7 @@ function App() {
             {/* Family routes */}
             <Route path="/famille" element={<Navigate to="/teens" replace />} />
             <Route path="/famille/simulator" element={<FamilySimulator />} />
+            <Route path="/famille/register" element={<FamilyRegister />} />
 
             {/* Legacy redirects */}
             <Route path="/entreprise-dashboard" element={<Navigate to="/entreprise/dashboard" replace />} />

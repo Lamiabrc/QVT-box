@@ -113,7 +113,7 @@ const TeensFamilySpace = () => {
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <Card 
               className="p-8 hover:scale-105 transition-transform cursor-pointer bg-gradient-to-br from-pink-500 to-purple-500 backdrop-blur-sm border-4 border-white/30 text-white shadow-2xl rounded-3xl"
-              onClick={() => navigate('/auth')}
+              onClick={() => navigate('/teens/register?role=teen')}
             >
               <CardHeader className="text-center">
                 <div className="mx-auto w-24 h-24 bg-white/20 rounded-3xl flex items-center justify-center mb-6 shadow-lg">
@@ -134,7 +134,7 @@ const TeensFamilySpace = () => {
 
             <Card 
               className="p-8 hover:scale-105 transition-transform cursor-pointer bg-gradient-to-br from-blue-500 to-cyan-500 backdrop-blur-sm border-4 border-white/30 text-white shadow-2xl rounded-3xl"
-              onClick={() => navigate('/auth')}
+              onClick={() => navigate('/famille/register')}
             >
               <CardHeader className="text-center">
                 <div className="mx-auto w-24 h-24 bg-white/20 rounded-3xl flex items-center justify-center mb-6 shadow-lg">

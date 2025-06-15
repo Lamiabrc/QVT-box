@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -38,17 +37,9 @@ const TeensRegister = () => {
           redirectPath: '/teens',
           gradient: 'from-pink-500 to-purple-500'
         };
-      case 'parent':
-        return {
-          title: 'Inscription Parent',
-          icon: <Shield className="w-8 h-8 text-blue-300" />,
-          description: 'Créez votre espace famille coloré',
-          redirectPath: '/teens/dashboard-parent',
-          gradient: 'from-blue-500 to-cyan-500'
-        };
       default:
         return {
-          title: 'Inscription Famille',
+          title: 'Inscription',
           icon: <Palette className="w-8 h-8 text-yellow-300" />,
           description: 'Rejoignez l\'espace familial créatif',
           redirectPath: '/teens',
@@ -100,7 +91,7 @@ const TeensRegister = () => {
     
     toast({
       title: "Inscription réussie",
-      description: `Bienvenue dans ton espace ${role === 'teen' ? 'créatif' : 'parent'} !`,
+      description: `Bienvenue dans ton espace créatif !`,
     });
     
     navigate(roleInfo.redirectPath);
