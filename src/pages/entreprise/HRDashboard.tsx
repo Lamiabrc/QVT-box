@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -70,11 +71,11 @@ const HRDashboard = () => {
       // Récupérer le profil utilisateur pour obtenir l'entreprise
       const { data: profile } = await supabase
         .from('profiles')
-        .select('entreprise')
+        .select('enterprise_id')
         .eq('id', user.id)
         .single();
 
-      if (!profile?.entreprise) {
+      if (!profile?.enterprise_id) {
         toast({
           variant: "destructive",
           title: "Erreur",
@@ -95,7 +96,7 @@ const HRDashboard = () => {
             profiles!inner(id, full_name, email)
           )
         `)
-        .eq('company_id', profile.entreprise);
+        .eq('company_id', profile.enterprise_id);
 
       setTeams(teamsData || []);
 
@@ -103,7 +104,7 @@ const HRDashboard = () => {
       const { data: employeesData } = await supabase
         .from('profiles')
         .select('*')
-        .eq('entreprise', profile.entreprise);
+        .eq('enterprise_id', profile.enterprise_id);
 
       setAllEmployees(employeesData || []);
 
@@ -175,16 +176,25 @@ const HRDashboard = () => {
     try {
       const { data: profile } = await supabase
         .from('profiles')
-        .select('entreprise')
+        .select('enterprise_id')
         .eq('id', user.id)
         .single();
 
+      if (!profile?.enterprise_id) {
+        toast({
+          variant: "destructive",
+          title: "Erreur",
+          description: "Profil utilisateur non trouvé ou aucune entreprise associée.",
+        });
+        return;
+      }
+      
       const { data: team, error } = await supabase
         .from('teams')
         .insert([{
           name: newTeam.name,
           description: newTeam.description,
-          company_id: profile.entreprise
+          company_id: profile.enterprise_id
         }])
         .select()
         .single();
@@ -270,11 +280,11 @@ const HRDashboard = () => {
     try {
       const { data: profile } = await supabase
         .from('profiles')
-        .select('entreprise')
+        .select('enterprise_id')
         .eq('id', user.id)
         .single();
 
-      if (!profile?.entreprise) return;
+      if (!profile?.enterprise_id) return;
 
       // Récupérer les données d'évolution
       const { data: evolutionRaw } = await supabase
@@ -283,9 +293,9 @@ const HRDashboard = () => {
           created_at,
           qvt_score,
           burnout_risk_percentage,
-          profiles!inner(entreprise)
+          profiles!inner(enterprise_id)
         `)
-        .eq('profiles.entreprise', profile.entreprise)
+        .eq('profiles.enterprise_id', profile.enterprise_id)
         .order('created_at', { ascending: true });
 
       // Grouper par mois pour l'évolution
