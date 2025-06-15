@@ -1,16 +1,15 @@
-
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import BubbleComponent from '@/components/bubble/BubbleComponent';
 import { useNavigate } from 'react-router-dom';
 
 const bubbleContent = [
-  { imageUrl: 'https://images.unsplash.com/photo-1582562124811-c09040d0a901?q=80&w=200&h=200&fit=crop&crop=entropy', link: '/auth' },
-  { imageUrl: 'https://images.unsplash.com/photo-1535268647677-300dbf3d78d1?q=80&w=200&h=200&fit=crop&crop=entropy', link: '/entreprise/simulator' },
-  { imageUrl: 'https://images.unsplash.com/photo-1441057206919-63d19fac2369?q=80&w=200&h=200&fit=crop&crop=entropy', link: '/famille' },
-  { imageUrl: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?q=80&w=200&h=200&fit=crop&crop=entropy', link: '/auth/login' },
-  { imageUrl: 'https://images.unsplash.com/photo-1561037404-61cd46aa615b?q=80&w=200&h=200&fit=crop&crop=entropy', link: '/qui-sommes-nous' },
-  { imageUrl: 'https://images.unsplash.com/photo-1596492784533-2c706e005292?q=80&w=200&h=200&fit=crop&crop=entropy', link: '/contact' },
+  { imageUrl: '/lovable-uploads/1487ccee-42cd-40a6-8a14-c02384e891be.jpg', link: '/auth' },
+  { imageUrl: '/lovable-uploads/a4ecdc7a-c850-42e1-b650-f1c34a951345.png', link: '/entreprise/simulator' },
+  { imageUrl: '/lovable-uploads/1398cdff-61cf-4c6c-a073-6f67536dd04b.png', link: '/famille' },
+  { imageUrl: '/lovable-uploads/1487ccee-42cd-40a6-8a14-c02384e891be.jpg', link: '/auth/login' },
+  { imageUrl: '/lovable-uploads/a4ecdc7a-c850-42e1-b650-f1c34a951345.png', link: '/qui-sommes-nous' },
+  { imageUrl: '/lovable-uploads/1398cdff-61cf-4c6c-a073-6f67536dd04b.png', link: '/contact' },
 ];
 
 const FloatingBubbles = () => {
@@ -80,4 +79,3 @@ const FloatingBubbles = () => {
 };
 
 export default FloatingBubbles;
-
