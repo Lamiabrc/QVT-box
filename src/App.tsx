@@ -128,11 +128,11 @@ function App() {
             <Route path="/teens/login" element={<TeensLogin />} />
             <Route path="/teens/register" element={<TeensRegister />} />
             <Route path="/teens/questionnaire" element={<TeensQuestionnaire />} />
-            <Route path="/teens/personal" element={<TeensPersonalSpace />} />
+            <Route path="/teens/personal-space" element={<TeensPersonalSpace />} />
             <Route path="/teens/journal" element={<TeensJournal />} />
             <Route path="/teens/checkin" element={<TeensCheckIn />} />
             <Route path="/teens/calendar" element={<TeensCalendar />} />
-            <Route path="/teens/family" element={<TeensFamilySpace />} />
+            <Route path="/teens/family-space" element={<TeensFamilySpace />} />
             <Route path="/teens/parental-access" element={<TeensParentalAccess />} />
             <Route path="/teens/parental-dashboard" element={<TeensParentalAccessDashboard />} />
             <Route path="/teens/parent-dashboard" element={<TeensDashboardParent />} />
@@ -144,7 +144,7 @@ function App() {
             <Route path="/teens/metaverse/safe-talk" element={<SafeTalkCircle />} />
             <Route path="/teens/playlist" element={<TeensPlaylist />} />
             <Route path="/teens/shop" element={<TeensShop />} />
-            <Route path="/teens/intimacy" element={<TeensIntimacySpace />} />
+            <Route path="/teens/intimacy-space" element={<TeensIntimacySpace />} />
             <Route path="/teens/fun-solutions" element={<TeensFunSolutions />} />
             <Route path="/teens/quick-alert" element={<TeensQuickAlert />} />
             <Route path="/teens/ai-evaluation" element={<TeensAIEvaluation />} />

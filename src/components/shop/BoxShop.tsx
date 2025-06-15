@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -59,7 +58,6 @@ const BoxShop: React.FC<BoxShopProps> = ({
   });
 
   const topRecommendations = recommendations
-    .filter(box => box.aiConfidence > 0.9)
     .sort((a, b) => b.aiConfidence - a.aiConfidence)
     .slice(0, 3);
 
