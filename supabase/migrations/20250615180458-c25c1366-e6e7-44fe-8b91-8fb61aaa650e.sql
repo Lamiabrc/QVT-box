@@ -1,0 +1,4 @@
+
+ALTER TABLE public.profiles
+ADD COLUMN IF NOT EXISTS fonction TEXT,
+ADD COLUMN IF NOT EXISTS type_poste TEXT;

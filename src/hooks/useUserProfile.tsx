@@ -6,7 +6,7 @@ import { useToast } from './use-toast';
 import { Database } from '@/integrations/supabase/types';
 
 export type Profile = Database['public']['Tables']['profiles']['Row'];
-export type UpdateProfileData = Partial<Omit<Profile, 'id' | 'created_at' | 'updated_at' | 'email'>>;
+export type UpdateProfileData = Partial<Profile>;
 
 export const useUserProfile = () => {
   const { user } = useSecureAuth();

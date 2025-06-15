@@ -387,6 +387,7 @@ export type Database = {
             | Database["public"]["Enums"]["enterprise_role_enum"]
             | null
           family_id: string | null
+          fonction: string | null
           full_name: string | null
           hr_access: boolean | null
           id: string
@@ -394,6 +395,7 @@ export type Database = {
           privacy_anonymized: boolean | null
           role: string
           teen_access: boolean | null
+          type_poste: string | null
           updated_at: string | null
         }
         Insert: {
@@ -408,6 +410,7 @@ export type Database = {
             | Database["public"]["Enums"]["enterprise_role_enum"]
             | null
           family_id?: string | null
+          fonction?: string | null
           full_name?: string | null
           hr_access?: boolean | null
           id: string
@@ -415,6 +418,7 @@ export type Database = {
           privacy_anonymized?: boolean | null
           role: string
           teen_access?: boolean | null
+          type_poste?: string | null
           updated_at?: string | null
         }
         Update: {
@@ -429,6 +433,7 @@ export type Database = {
             | Database["public"]["Enums"]["enterprise_role_enum"]
             | null
           family_id?: string | null
+          fonction?: string | null
           full_name?: string | null
           hr_access?: boolean | null
           id?: string
@@ -436,6 +441,7 @@ export type Database = {
           privacy_anonymized?: boolean | null
           role?: string
           teen_access?: boolean | null
+          type_poste?: string | null
           updated_at?: string | null
         }
         Relationships: [
