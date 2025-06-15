@@ -111,11 +111,11 @@ const HRDashboard = () => {
           *,
           team_managers(
             *,
-            profiles(id, full_name, email)
+            profiles!team_managers_manager_id_fkey(id, full_name, email)
           ),
           team_members(
             *,
-            profiles(id, full_name, email)
+            profiles!team_members_employee_id_fkey(id, full_name, email)
           )
         `)
         .eq('company_id', profile.enterprise_id);
