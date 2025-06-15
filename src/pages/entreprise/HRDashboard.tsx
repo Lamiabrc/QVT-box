@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useSecureAuth } from '@/hooks/useSecureAuth';
@@ -112,18 +111,18 @@ const HRDashboard = () => {
           *,
           team_managers(
             *,
-            profiles!team_managers_manager_id_fkey!left(id, full_name, email)
+            profiles(id, full_name, email)
           ),
           team_members(
             *,
-            profiles!team_members_employee_id_fkey!left(id, full_name, email)
+            profiles(id, full_name, email)
           )
         `)
         .eq('company_id', profile.enterprise_id);
       
       if (teamsError) throw teamsError;
 
-      setTeams(teamsData || []);
+      setTeams((teamsData as Team[]) || []);
 
       // Récupérer tous les employés de l'entreprise
       const { data: employeesData } = await supabase
