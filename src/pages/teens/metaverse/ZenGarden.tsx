@@ -5,14 +5,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { ArrowLeft, Music, Wind, Headphones, PlayCircle, Rocket } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import FloatingBubbles from "@/components/bubble/FloatingBubbles";
 
 const ZenGarden = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-green-50 via-teal-50 to-cyan-50">
+        <div className="min-h-screen bg-gradient-to-br from-green-50 via-teal-50 to-cyan-50 relative overflow-hidden">
+            <FloatingBubbles />
             <TeensHeader />
-            <div className="container mx-auto px-4 py-8">
+            <div className="container mx-auto px-4 py-8 relative z-10">
                 <Button onClick={() => navigate('/teens/metaverse')} variant="ghost" className="mb-4 text-gray-700 hover:bg-gray-200">
                     <ArrowLeft className="w-4 h-4 mr-2" />
                     Retour au Métaverse

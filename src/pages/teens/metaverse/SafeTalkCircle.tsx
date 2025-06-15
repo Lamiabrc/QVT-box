@@ -5,14 +5,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { ArrowLeft, Rocket } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import FloatingBubbles from "@/components/bubble/FloatingBubbles";
 
 const SafeTalkCircle = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-orange-200 via-red-300 to-rose-400">
+        <div className="min-h-screen bg-gradient-to-br from-orange-200 via-red-300 to-rose-400 relative overflow-hidden">
+            <FloatingBubbles />
             <TeensHeader />
-            <div className="container mx-auto px-4 py-8">
+            <div className="container mx-auto px-4 py-8 relative z-10">
                 <Button onClick={() => navigate('/teens/metaverse')} variant="ghost" className="mb-4">
                     <ArrowLeft className="w-4 h-4 mr-2" />
                     Retour au Métaverse
