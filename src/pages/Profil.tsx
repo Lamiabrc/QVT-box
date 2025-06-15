@@ -6,19 +6,124 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, User, Shield, Bell, Settings } from "lucide-react";
+import { ArrowLeft, User, Shield, Bell, Settings, Briefcase } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useUserProfile, UpdateProfileData } from "@/hooks/useUserProfile";
+import { useEffect, useState } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const Profil = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { profile, isLoading, updateProfile, isUpdating } = useUserProfile();
+  const [formData, setFormData] = useState<UpdateProfileData | null>(null);
+
+  useEffect(() => {
+    if (profile) {
+      setFormData(profile);
+    }
+  }, [profile]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setFormData(prev => (prev ? { ...prev, [id]: value } : null));
+  };
+  
+  const handleSwitchChange = (id: keyof UpdateProfileData, checked: boolean) => {
+     setFormData(prev => (prev ? { ...prev, [id]: checked } : null));
+  };
 
   const handleSave = () => {
-    toast({
-      title: "Profil mis à jour",
-      description: "Vos modifications ont été sauvegardées avec succès.",
+    if (!profile || !formData) {
+      toast({ title: "Erreur", description: "Impossible de sauvegarder le profil.", variant: "destructive" });
+      return;
+    }
+    
+    const payload: UpdateProfileData = {};
+    Object.keys(formData).forEach(keyStr => {
+      const key = keyStr as keyof UpdateProfileData;
+      if (formData[key] !== profile[key]) {
+        (payload as any)[key] = formData[key];
+      }
     });
+
+    if (Object.keys(payload).length > 0) {
+      updateProfile(payload);
+    } else {
+       toast({ title: "Aucune modification", description: "Vous n'avez fait aucune modification." });
+    }
   };
+  
+  const renderLoadingSkeleton = () => (
+    <div className="max-w-4xl mx-auto space-y-8">
+      <Card>
+        <CardHeader><Skeleton className="h-8 w-1/3" /></CardHeader>
+        <CardContent className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2"><Skeleton className="h-4 w-1/4" /><Skeleton className="h-10 w-full" /></div>
+            <div className="space-y-2"><Skeleton className="h-4 w-1/4" /><Skeleton className="h-10 w-full" /></div>
+          </div>
+        </CardContent>
+      </Card>
+      <Card>
+        <CardHeader><Skeleton className="h-8 w-1/3" /></CardHeader>
+        <CardContent className="space-y-6">
+          <Skeleton className="h-10 w-full" />
+          <Skeleton className="h-10 w-full" />
+        </CardContent>
+      </Card>
+    </div>
+  );
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-muted via-background to-primary/5">
+        <header className="border-b bg-card/80 backdrop-blur-sm">
+          <div className="container mx-auto px-4 py-4">
+            <div className="flex items-center justify-between">
+              <Button 
+                variant="ghost" 
+                onClick={() => navigate(-1)}
+                className="flex items-center space-x-2"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                <span>Retour</span>
+              </Button>
+              <div className="flex items-center space-x-3">
+                <User className="w-5 h-5 text-primary" />
+                <h1 className="text-xl font-bold text-primary">Mon Profil</h1>
+              </div>
+            </div>
+          </div>
+        </header>
+        <div className="container mx-auto px-4 py-8">{renderLoadingSkeleton()}</div>
+      </div>
+    );
+  }
+
+  if (!formData) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-muted via-background to-primary/5">
+        <header className="border-b bg-card/80 backdrop-blur-sm">
+          <div className="container mx-auto px-4 py-4">
+            <div className="flex items-center justify-between">
+              <Button variant="ghost" onClick={() => navigate(-1)} className="flex items-center space-x-2">
+                <ArrowLeft className="w-4 h-4" />
+                <span>Retour</span>
+              </Button>
+              <div className="flex items-center space-x-3">
+                <User className="w-5 h-5 text-primary" />
+                <h1 className="text-xl font-bold text-primary">Mon Profil</h1>
+              </div>
+            </div>
+          </div>
+        </header>
+        <div className="container mx-auto px-4 py-8 text-center">
+          <p>Impossible de charger les données du profil. Veuillez réessayer plus tard.</p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-muted via-background to-primary/5">
@@ -55,40 +160,48 @@ const Profil = () => {
             <CardContent className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <Label htmlFor="firstName">Prénom</Label>
-                  <Input id="firstName" placeholder="Votre prénom" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="lastName">Nom</Label>
-                  <Input id="lastName" placeholder="Votre nom" />
+                  <Label htmlFor="full_name">Nom complet</Label>
+                  <Input id="full_name" placeholder="Votre nom complet" value={formData.full_name || ''} onChange={handleInputChange} />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="email">Email</Label>
-                  <Input id="email" type="email" placeholder="votre@email.com" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="role">Rôle</Label>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Sélectionnez votre rôle" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="employee">Salarié</SelectItem>
-                      <SelectItem value="manager">Manager</SelectItem>
-                      <SelectItem value="hr">RH</SelectItem>
-                      <SelectItem value="teen">Adolescent</SelectItem>
-                      <SelectItem value="parent">Parent</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <Input id="email" type="email" value={formData.email || ''} readOnly disabled className="bg-gray-100" />
                 </div>
               </div>
-
               <div className="space-y-2">
-                <Label htmlFor="department">Département / Établissement</Label>
-                <Input id="department" placeholder="Ex: IT, Marketing, Collège Jean Moulin..." />
+                  <Label htmlFor="account_type">Type de compte</Label>
+                  <Input id="account_type" value={formData.account_type || ''} readOnly disabled className="bg-gray-100" />
               </div>
             </CardContent>
           </Card>
+          
+          {/* Professional Information */}
+          {(formData.account_type === 'create_enterprise' || formData.account_type === 'join_with_code' || formData.enterprise_id) && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <Briefcase className="w-5 h-5" />
+                  <span>Informations Professionnelles</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="fonction">Fonction</Label>
+                    <Input id="fonction" value={formData.fonction || ''} onChange={handleInputChange} />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="type_poste">Type de poste</Label>
+                    <Input id="type_poste" value={formData.type_poste || ''} onChange={handleInputChange} />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="enterprise_role">Rôle dans l'entreprise</Label>
+                  <Input id="enterprise_role" value={formData.enterprise_role || ''} readOnly disabled className="bg-gray-100" />
+                </div>
+              </CardContent>
+            </Card>
+          )}
 
           {/* Privacy Settings */}
           <Card>
@@ -106,28 +219,41 @@ const Profil = () => {
                     Permettre l'utilisation anonyme de mes données pour les statistiques globales
                   </p>
                 </div>
-                <Switch defaultChecked />
+                <Switch 
+                  checked={!!formData.privacy_anonymized} 
+                  onCheckedChange={(checked) => handleSwitchChange('privacy_anonymized', checked)} 
+                />
               </div>
 
-              <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
-                  <Label>Partage avec l'équipe RH</Label>
-                  <p className="text-sm text-muted-foreground">
-                    Autoriser l'équipe RH à voir mes scores QVT (pour les salariés)
-                  </p>
+              {(formData.account_type === 'create_enterprise' || formData.account_type === 'join_with_code' || formData.enterprise_id) && (
+                <div className="flex items-center justify-between">
+                  <div className="space-y-0.5">
+                    <Label>Partage avec l'équipe RH</Label>
+                    <p className="text-sm text-muted-foreground">
+                      Autoriser l'équipe RH à voir mes scores QVT (pour les salariés)
+                    </p>
+                  </div>
+                   <Switch 
+                    checked={!!formData.hr_access} 
+                    onCheckedChange={(checked) => handleSwitchChange('hr_access', checked)} 
+                  />
                 </div>
-                <Switch defaultChecked />
-              </div>
+              )}
 
-              <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
-                  <Label>Accès parental (Ados uniquement)</Label>
-                  <p className="text-sm text-muted-foreground">
-                    Permettre aux parents de voir un aperçu général de mon bien-être
-                  </p>
+              {(formData.account_type === 'create_family' || formData.account_type === 'teen' || formData.family_id) && (
+                <div className="flex items-center justify-between">
+                  <div className="space-y-0.5">
+                    <Label>Accès parental (Ados uniquement)</Label>
+                    <p className="text-sm text-muted-foreground">
+                      Permettre aux parents de voir un aperçu général de mon bien-être
+                    </p>
+                  </div>
+                  <Switch 
+                    checked={!!formData.teen_access} 
+                    onCheckedChange={(checked) => handleSwitchChange('teen_access', checked)} 
+                  />
                 </div>
-                <Switch />
-              </div>
+              )}
             </CardContent>
           </Card>
 
@@ -142,47 +268,15 @@ const Profil = () => {
             <CardContent className="space-y-6">
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
-                  <Label>Rappels de questionnaire</Label>
+                  <Label>Activer les notifications par email</Label>
                   <p className="text-sm text-muted-foreground">
-                    Recevoir des rappels pour compléter les questionnaires QVT
+                    Recevoir des rappels, des nouveautés, et d'autres communications.
                   </p>
                 </div>
-                <Switch defaultChecked />
-              </div>
-
-              <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
-                  <Label>Nouvelles recommandations</Label>
-                  <p className="text-sm text-muted-foreground">
-                    Être notifié quand de nouvelles recommandations sont disponibles
-                  </p>
-                </div>
-                <Switch defaultChecked />
-              </div>
-
-              <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
-                  <Label>Box bien-être</Label>
-                  <p className="text-sm text-muted-foreground">
-                    Notifications liées à l'envoi et au suivi des box
-                  </p>
-                </div>
-                <Switch defaultChecked />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="frequency">Fréquence des notifications</Label>
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Choisir la fréquence" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="realtime">Temps réel</SelectItem>
-                    <SelectItem value="daily">Quotidienne</SelectItem>
-                    <SelectItem value="weekly">Hebdomadaire</SelectItem>
-                    <SelectItem value="none">Aucune</SelectItem>
-                  </SelectContent>
-                </Select>
+                <Switch 
+                  checked={!!formData.notifications_enabled}
+                  onCheckedChange={(checked) => handleSwitchChange('notifications_enabled', checked)}
+                />
               </div>
             </CardContent>
           </Card>
@@ -227,8 +321,8 @@ const Profil = () => {
 
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button onClick={handleSave} className="rounded-2xl bg-primary">
-              Sauvegarder les modifications
+            <Button onClick={handleSave} className="rounded-2xl bg-primary" disabled={isUpdating}>
+              {isUpdating ? 'Sauvegarde...' : 'Sauvegarder les modifications'}
             </Button>
             <Button variant="outline" className="rounded-2xl">
               Exporter mes données
