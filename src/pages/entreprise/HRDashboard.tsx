@@ -112,11 +112,11 @@ const HRDashboard = () => {
           *,
           team_managers(
             *,
-            profiles:manager_id(id, full_name, email)
+            profiles!team_managers_manager_id_fkey!left(id, full_name, email)
           ),
           team_members(
             *,
-            profiles:employee_id(id, full_name, email)
+            profiles!team_members_employee_id_fkey!left(id, full_name, email)
           )
         `)
         .eq('company_id', profile.enterprise_id);
@@ -131,11 +131,11 @@ const HRDashboard = () => {
         .select('*')
         .eq('enterprise_id', profile.enterprise_id);
 
-      setAllEmployees(employeesData || []);
+      setAllEmployees(employeesData as Employee[] || []);
 
       // Filtrer les managers
       const managersData = employeesData?.filter(emp => emp.enterprise_role === 'manager') || [];
-      setManagers(managersData);
+      setManagers(managersData as Employee[]);
 
       // Calculer les statistiques
       const totalEmployees = employeesData?.length || 0;
@@ -143,7 +143,7 @@ const HRDashboard = () => {
       const totalManagers = managersData.length;
       const unassignedEmployees = employeesData?.filter(emp => 
         !teamsData?.some(team => 
-          team.team_members.some(member => member.profiles.id === emp.id)
+          team.team_members.some(member => member.profiles?.id === emp.id)
         )
       ).length || 0;
 
