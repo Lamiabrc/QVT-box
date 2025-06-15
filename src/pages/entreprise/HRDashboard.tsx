@@ -111,18 +111,18 @@ const HRDashboard = () => {
           *,
           team_managers(
             *,
-            profiles!team_managers_manager_id_fkey(id, full_name, email)
+            profiles!manager_id(id, full_name, email)
           ),
           team_members(
             *,
-            profiles!team_members_employee_id_fkey(id, full_name, email)
+            profiles!employee_id(id, full_name, email)
           )
         `)
         .eq('company_id', profile.enterprise_id);
       
       if (teamsError) throw teamsError;
 
-      setTeams((teamsData as Team[]) || []);
+      setTeams((teamsData as unknown as Team[]) || []);
 
       // Récupérer tous les employés de l'entreprise
       const { data: employeesData } = await supabase
