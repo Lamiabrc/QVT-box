@@ -19,20 +19,29 @@ interface MonthlyDataItem {
   date: string;
 }
 
+export interface TeamMemberOrManager {
+  profiles: {
+    id: string;
+    full_name: string;
+    email: string;
+  };
+  [key: string]: any; // Allow other properties from team_members/team_managers
+}
+
 export interface Team {
   id: string;
   name: string;
   description: string;
   company_id: string;
-  team_managers: { profiles: { id: string; full_name: string; email: string; } }[];
-  team_members: { profiles: { id: string; full_name: string; email: string; } }[];
+  team_managers: TeamMemberOrManager[];
+  team_members: TeamMemberOrManager[];
 }
 
 export interface Employee {
   id: string;
   full_name: string;
   email: string;
-  enterprise_role: 'employee' | 'manager' | 'hr';
+  enterprise_role: 'employee' | 'manager' | 'hr' | 'admin';
   enterprise_id: string;
 }
 
@@ -96,18 +105,22 @@ const HRDashboard = () => {
       }
 
       // Récupérer toutes les équipes de l'entreprise
-      const { data: teamsData } = await supabase
+      const { data: teamsData, error: teamsError } = await supabase
         .from('teams')
         .select(`
           *,
           team_managers(
+            *,
             profiles!inner(id, full_name, email)
           ),
           team_members(
+            *,
             profiles!inner(id, full_name, email)
           )
         `)
         .eq('company_id', profile.enterprise_id);
+      
+      if (teamsError) throw teamsError;
 
       setTeams(teamsData || []);
 
