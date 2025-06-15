@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -104,7 +105,7 @@ function App() {
             {/* Enterprise routes */}
             <Route path="/entreprise" element={<EntrepriseHome />} />
             <Route path="/entreprise/login" element={<Login />} />
-            {/* <Route path="/entreprise/register" element={<Register />} /> DELETED */}
+            <Route path="/entreprise/register" element={<Navigate to="/auth/register" replace />} />
             <Route path="/entreprise/forgot-password" element={<ForgotPassword />} />
             <Route path="/entreprise/reset-password" element={<ResetPassword />} />
             <Route path="/entreprise/dashboard" element={<Dashboard />} />
@@ -122,7 +123,7 @@ function App() {
             {/* Teens routes */}
             <Route path="/teens" element={<Teens />} />
             <Route path="/teens/login" element={<TeensLogin />} />
-            {/* <Route path="/teens/register" element={<TeensRegister />} /> DELETED */}
+            <Route path="/teens/register" element={<Navigate to="/auth/register" replace />} />
             <Route path="/teens/questionnaire" element={<TeensQuestionnaire />} />
             <Route path="/teens/personal-space" element={<TeensPersonalSpace />} />
             <Route path="/teens/journal" element={<TeensJournal />} />
@@ -148,7 +149,7 @@ function App() {
             {/* Family routes */}
             <Route path="/famille" element={<Navigate to="/teens" replace />} />
             <Route path="/famille/simulator" element={<FamilySimulator />} />
-            {/* <Route path="/famille/register" element={<FamilyRegister />} /> DELETED */}
+            <Route path="/famille/register" element={<Navigate to="/auth/register" replace />} />
 
             {/* Legacy redirects */}
             <Route path="/entreprise-dashboard" element={<Navigate to="/entreprise/dashboard" replace />} />
