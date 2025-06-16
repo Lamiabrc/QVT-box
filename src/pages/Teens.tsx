@@ -1,89 +1,72 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Heart, Shield, MessageCircle, Calendar, User, Users, Home, Sparkles, Star } from "lucide-react";
-
 const Teens = () => {
   const navigate = useNavigate();
-
-  const mainFeatures = [
-    {
-      icon: Home,
-      title: "Espace Famille",
-      subtitle: "Connectez-vous avec vos parents",
-      description: "Partagez vos moments, communiquez et renforcez vos liens familiaux",
-      gradient: "from-purple-400 to-pink-400",
-      path: "/teens/family-space"
-    },
-    {
-      icon: User,
-      title: "Mon Espace Personnel",
-      subtitle: "Votre développement personnel",
-      description: "Journal, suivi de votre évolution et outils d'accompagnement personnalisés",
-      gradient: "from-blue-400 to-indigo-400",
-      path: "/teens/personal-space"
-    },
-    {
-      icon: Shield,
-      title: "Espace Confidentiel",
-      subtitle: "Safe space 100% sécurisé",
-      description: "Conseils sur les relations, le corps, les études dans un espace ultra-sécurisé",
-      gradient: "from-emerald-400 to-teal-400",
-      path: "/teens/intimacy-space"
-    },
-    {
-      icon: Heart,
-      title: "Solutions Bien-être",
-      subtitle: "Activités et exercices",
-      description: "Outils et activités pour votre bien-être mental et émotionnel",
-      gradient: "from-rose-400 to-pink-400",
-      path: "/teens/fun-solutions"
-    },
-    {
-      icon: Sparkles,
-      title: "Accompagnement Virtuel",
-      subtitle: "Explorez, apprenez, grandissez",
-      description: "Espaces virtuels pour vous connecter et grandir avec d'autres jeunes",
-      gradient: "from-violet-400 to-purple-400",
-      path: "/teens/metaverse"
-    },
-    {
-      icon: Star,
-      title: "Boutique Bien-être",
-      subtitle: "Personnalisez votre expérience",
-      description: "Découvrez des produits et solutions adaptés à vos besoins",
-      gradient: "from-amber-400 to-orange-400",
-      path: "/teens/shop"
-    }
-  ];
-
-  const quickActions = [
-    {
-      icon: Heart,
-      title: "Check-in Quotidien",
-      description: "Comment vous sentez-vous aujourd'hui ?",
-      gradient: "from-green-400 to-emerald-500",
-      path: "/teens/check-in"
-    },
-    {
-      icon: MessageCircle,
-      title: "Message Rapide",
-      description: "Communiquez avec vos parents",
-      gradient: "from-blue-400 to-cyan-500",
-      path: "/teens/quick-alert"
-    },
-    {
-      icon: Calendar,
-      title: "Mon Agenda",
-      description: "Organisez vos activités familiales",
-      gradient: "from-purple-400 to-indigo-500",
-      path: "/teens/calendar"
-    }
-  ];
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50 relative overflow-hidden">
+  const mainFeatures = [{
+    icon: Home,
+    title: "Espace Famille",
+    subtitle: "Connectez-vous avec vos parents",
+    description: "Partagez vos moments, communiquez et renforcez vos liens familiaux",
+    gradient: "from-purple-400 to-pink-400",
+    path: "/teens/family-space"
+  }, {
+    icon: User,
+    title: "Mon Espace Personnel",
+    subtitle: "Votre développement personnel",
+    description: "Journal, suivi de votre évolution et outils d'accompagnement personnalisés",
+    gradient: "from-blue-400 to-indigo-400",
+    path: "/teens/personal-space"
+  }, {
+    icon: Shield,
+    title: "Espace Confidentiel",
+    subtitle: "Safe space 100% sécurisé",
+    description: "Conseils sur les relations, le corps, les études dans un espace ultra-sécurisé",
+    gradient: "from-emerald-400 to-teal-400",
+    path: "/teens/intimacy-space"
+  }, {
+    icon: Heart,
+    title: "Solutions Bien-être",
+    subtitle: "Activités et exercices",
+    description: "Outils et activités pour votre bien-être mental et émotionnel",
+    gradient: "from-rose-400 to-pink-400",
+    path: "/teens/fun-solutions"
+  }, {
+    icon: Sparkles,
+    title: "Accompagnement Virtuel",
+    subtitle: "Explorez, apprenez, grandissez",
+    description: "Espaces virtuels pour vous connecter et grandir avec d'autres jeunes",
+    gradient: "from-violet-400 to-purple-400",
+    path: "/teens/metaverse"
+  }, {
+    icon: Star,
+    title: "Boutique Bien-être",
+    subtitle: "Personnalisez votre expérience",
+    description: "Découvrez des produits et solutions adaptés à vos besoins",
+    gradient: "from-amber-400 to-orange-400",
+    path: "/teens/shop"
+  }];
+  const quickActions = [{
+    icon: Heart,
+    title: "Check-in Quotidien",
+    description: "Comment vous sentez-vous aujourd'hui ?",
+    gradient: "from-green-400 to-emerald-500",
+    path: "/teens/check-in"
+  }, {
+    icon: MessageCircle,
+    title: "Message Rapide",
+    description: "Communiquez avec vos parents",
+    gradient: "from-blue-400 to-cyan-500",
+    path: "/teens/quick-alert"
+  }, {
+    icon: Calendar,
+    title: "Mon Agenda",
+    description: "Organisez vos activités familiales",
+    gradient: "from-purple-400 to-indigo-500",
+    path: "/teens/calendar"
+  }];
+  return <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50 relative overflow-hidden">
       {/* Kawaii floating elements */}
       <div className="absolute inset-0 opacity-15">
         <div className="absolute top-20 left-10 w-16 h-16 bg-pink-300 rounded-full transform rotate-12 animate-bounce"></div>
@@ -101,11 +84,7 @@ const Teens = () => {
       <header className="relative z-10 border-b border-pink-200 bg-white/90 backdrop-blur-sm shadow-lg">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <Button 
-              variant="ghost" 
-              onClick={() => navigate('/')}
-              className="flex items-center space-x-2 text-purple-700 hover:bg-pink-100 font-semibold rounded-full px-6"
-            >
+            <Button variant="ghost" onClick={() => navigate('/')} className="flex items-center space-x-2 text-purple-700 hover:bg-pink-100 font-semibold rounded-full px-6">
               <ArrowLeft className="w-4 h-4" />
               <span>Retour</span>
             </Button>
@@ -130,7 +109,7 @@ const Teens = () => {
         <div className="text-center mb-16 animate-fade-in">
           <div className="relative inline-block mb-8">
             <h1 className="text-5xl md:text-6xl font-bold text-purple-800 mb-4 font-serif">
-              Votre Espace <span className="text-pink-600">Kawaii</span> 🌸
+              Votre Espace <span className="text-pink-600"></span> 🌸
             </h1>
             <div className="absolute -top-4 -right-8 text-4xl animate-bounce">🏠</div>
             <div className="absolute -bottom-4 -left-6 text-4xl animate-pulse">👨‍👩‍👧‍👦</div>
@@ -156,13 +135,8 @@ const Teens = () => {
         {/* Main Features Grid with kawaii style */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {mainFeatures.map((feature, index) => {
-            const IconComponent = feature.icon;
-            return (
-              <Card 
-                key={index} 
-                className={`group bg-gradient-to-br ${feature.gradient} border-4 border-white hover:border-pink-200 transition-all duration-300 transform hover:-translate-y-2 hover:scale-105 cursor-pointer shadow-xl rounded-3xl text-white`}
-                onClick={() => navigate(feature.path)}
-              >
+          const IconComponent = feature.icon;
+          return <Card key={index} className={`group bg-gradient-to-br ${feature.gradient} border-4 border-white hover:border-pink-200 transition-all duration-300 transform hover:-translate-y-2 hover:scale-105 cursor-pointer shadow-xl rounded-3xl text-white`} onClick={() => navigate(feature.path)}>
                 <CardHeader>
                   <div className="w-20 h-20 bg-white/30 rounded-full mx-auto mb-4 flex items-center justify-center group-hover:bg-white/40 transition-colors shadow-lg">
                     <IconComponent className="w-10 h-10 text-white" />
@@ -178,9 +152,8 @@ const Teens = () => {
                     Découvrir ✨
                   </Button>
                 </CardContent>
-              </Card>
-            );
-          })}
+              </Card>;
+        })}
         </div>
 
         {/* Quick Actions with kawaii style */}
@@ -188,13 +161,8 @@ const Teens = () => {
           <h2 className="text-3xl font-bold text-purple-800 text-center mb-8 font-serif">Actions Rapides 🚀</h2>
           <div className="grid md:grid-cols-3 gap-6">
             {quickActions.map((action, index) => {
-              const IconComponent = action.icon;
-              return (
-                <Card 
-                  key={index} 
-                  className={`group bg-gradient-to-br ${action.gradient} border-4 border-white hover:border-pink-200 transition-all duration-300 cursor-pointer shadow-xl rounded-3xl text-white hover:scale-105`}
-                  onClick={() => navigate(action.path)}
-                >
+            const IconComponent = action.icon;
+            return <Card key={index} className={`group bg-gradient-to-br ${action.gradient} border-4 border-white hover:border-pink-200 transition-all duration-300 cursor-pointer shadow-xl rounded-3xl text-white hover:scale-105`} onClick={() => navigate(action.path)}>
                   <CardContent className="p-6 text-center">
                     <div className="w-20 h-20 bg-white/30 rounded-full mx-auto mb-4 flex items-center justify-center group-hover:bg-white/40 transition-colors shadow-lg">
                       <IconComponent className="w-10 h-10 text-white" />
@@ -205,16 +173,14 @@ const Teens = () => {
                       Accéder 💫
                     </Button>
                   </CardContent>
-                </Card>
-              );
-            })}
+                </Card>;
+          })}
           </div>
         </div>
 
         {/* Parent Access Section with lovely style */}
         <div className="grid md:grid-cols-2 gap-8 mb-16">
-          <Card className="group bg-gradient-to-br from-violet-400 to-purple-500 border-4 border-white hover:border-pink-200 transition-all duration-300 cursor-pointer transform hover:-translate-y-1 hover:scale-105 shadow-xl rounded-3xl text-white"
-                onClick={() => navigate('/teens/parental-access')}>
+          <Card className="group bg-gradient-to-br from-violet-400 to-purple-500 border-4 border-white hover:border-pink-200 transition-all duration-300 cursor-pointer transform hover:-translate-y-1 hover:scale-105 shadow-xl rounded-3xl text-white" onClick={() => navigate('/teens/parental-access')}>
             <CardHeader className="text-center pb-4">
               <div className="w-28 h-28 bg-white/30 rounded-full mx-auto mb-4 flex items-center justify-center group-hover:rotate-3 transition-transform shadow-xl">
                 <Shield className="w-14 h-14 text-white" />
@@ -231,8 +197,7 @@ const Teens = () => {
             </CardContent>
           </Card>
 
-          <Card className="group bg-gradient-to-br from-emerald-400 to-teal-500 border-4 border-white hover:border-pink-200 transition-all duration-300 cursor-pointer transform hover:-translate-y-1 hover:scale-105 shadow-xl rounded-3xl text-white"
-                onClick={() => navigate('/teens/parental-access-dashboard')}>
+          <Card className="group bg-gradient-to-br from-emerald-400 to-teal-500 border-4 border-white hover:border-pink-200 transition-all duration-300 cursor-pointer transform hover:-translate-y-1 hover:scale-105 shadow-xl rounded-3xl text-white" onClick={() => navigate('/teens/parental-access-dashboard')}>
             <CardHeader className="text-center pb-4">
               <div className="w-28 h-28 bg-white/30 rounded-full mx-auto mb-4 flex items-center justify-center group-hover:rotate-3 transition-transform shadow-xl">
                 <Users className="w-14 h-14 text-white" />
@@ -281,16 +246,11 @@ const Teens = () => {
 
       {/* Floating action button for quick message with kawaii style */}
       <div className="fixed bottom-8 right-8 z-20">
-        <Button 
-          className="w-20 h-20 bg-gradient-to-br from-pink-400 to-purple-500 hover:from-pink-500 hover:to-purple-600 rounded-full shadow-2xl text-white border-4 border-white/80 animate-bounce"
-          onClick={() => navigate('/teens/quick-alert')}
-        >
+        <Button className="w-20 h-20 bg-gradient-to-br from-pink-400 to-purple-500 hover:from-pink-500 hover:to-purple-600 rounded-full shadow-2xl text-white border-4 border-white/80 animate-bounce" onClick={() => navigate('/teens/quick-alert')}>
           <MessageCircle className="w-8 h-8" />
         </Button>
         <div className="absolute -top-2 -right-2 text-2xl animate-pulse">💌</div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Teens;
