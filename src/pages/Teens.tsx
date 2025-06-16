@@ -13,7 +13,7 @@ const Teens = () => {
       title: "Espace Famille",
       subtitle: "Connectez-vous avec vos parents",
       description: "Partagez vos moments, communiquez et renforcez vos liens familiaux",
-      gradient: "from-slate-600 to-slate-800",
+      gradient: "from-purple-400 to-pink-400",
       path: "/teens/family-space"
     },
     {
@@ -21,7 +21,7 @@ const Teens = () => {
       title: "Mon Espace Personnel",
       subtitle: "Votre développement personnel",
       description: "Journal, suivi de votre évolution et outils d'accompagnement personnalisés",
-      gradient: "from-blue-600 to-blue-800",
+      gradient: "from-blue-400 to-indigo-400",
       path: "/teens/personal-space"
     },
     {
@@ -29,7 +29,7 @@ const Teens = () => {
       title: "Espace Confidentiel",
       subtitle: "Safe space 100% sécurisé",
       description: "Conseils sur les relations, le corps, les études dans un espace ultra-sécurisé",
-      gradient: "from-gray-600 to-gray-800",
+      gradient: "from-emerald-400 to-teal-400",
       path: "/teens/intimacy-space"
     },
     {
@@ -37,7 +37,7 @@ const Teens = () => {
       title: "Solutions Bien-être",
       subtitle: "Activités et exercices",
       description: "Outils et activités pour votre bien-être mental et émotionnel",
-      gradient: "from-teal-600 to-teal-800",
+      gradient: "from-rose-400 to-pink-400",
       path: "/teens/fun-solutions"
     },
     {
@@ -45,7 +45,7 @@ const Teens = () => {
       title: "Accompagnement Virtuel",
       subtitle: "Explorez, apprenez, grandissez",
       description: "Espaces virtuels pour vous connecter et grandir avec d'autres jeunes",
-      gradient: "from-indigo-600 to-indigo-800",
+      gradient: "from-violet-400 to-purple-400",
       path: "/teens/metaverse"
     },
     {
@@ -53,7 +53,7 @@ const Teens = () => {
       title: "Boutique Bien-être",
       subtitle: "Personnalisez votre expérience",
       description: "Découvrez des produits et solutions adaptés à vos besoins",
-      gradient: "from-amber-600 to-amber-800",
+      gradient: "from-amber-400 to-orange-400",
       path: "/teens/shop"
     }
   ];
@@ -63,58 +63,62 @@ const Teens = () => {
       icon: Heart,
       title: "Check-in Quotidien",
       description: "Comment vous sentez-vous aujourd'hui ?",
-      gradient: "from-green-600 to-green-700",
+      gradient: "from-green-400 to-emerald-500",
       path: "/teens/check-in"
     },
     {
       icon: MessageCircle,
       title: "Message Rapide",
       description: "Communiquez avec vos parents",
-      gradient: "from-blue-600 to-blue-700",
+      gradient: "from-blue-400 to-cyan-500",
       path: "/teens/quick-alert"
     },
     {
       icon: Calendar,
       title: "Mon Agenda",
       description: "Organisez vos activités familiales",
-      gradient: "from-purple-600 to-purple-700",
+      gradient: "from-purple-400 to-indigo-500",
       path: "/teens/calendar"
     }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-gray-50 to-blue-50 relative overflow-hidden">
-      {/* Subtle floating elements */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-20 left-10 w-16 h-16 bg-slate-600 rounded-xl transform rotate-12 animate-pulse"></div>
-        <div className="absolute top-40 right-20 w-12 h-12 bg-gray-600 rounded-xl transform -rotate-45 animate-pulse"></div>
-        <div className="absolute bottom-32 left-1/4 w-20 h-20 bg-blue-600 rounded-xl transform rotate-45 animate-pulse"></div>
-        <div className="absolute top-60 left-1/2 w-14 h-14 bg-teal-600 rounded-xl transform rotate-12 animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-18 h-18 bg-indigo-600 rounded-xl transform -rotate-12 animate-pulse"></div>
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50 relative overflow-hidden">
+      {/* Kawaii floating elements */}
+      <div className="absolute inset-0 opacity-15">
+        <div className="absolute top-20 left-10 w-16 h-16 bg-pink-300 rounded-full transform rotate-12 animate-bounce"></div>
+        <div className="absolute top-40 right-20 w-12 h-12 bg-purple-300 rounded-full transform -rotate-45 animate-pulse"></div>
+        <div className="absolute bottom-32 left-1/4 w-20 h-20 bg-blue-300 rounded-full transform rotate-45 animate-bounce"></div>
+        <div className="absolute top-60 left-1/2 w-14 h-14 bg-emerald-300 rounded-full transform rotate-12 animate-pulse"></div>
+        <div className="absolute bottom-20 right-10 w-18 h-18 bg-rose-300 rounded-full transform -rotate-12 animate-bounce"></div>
+        {/* Cute stars */}
+        <div className="absolute top-32 left-1/3 text-2xl animate-pulse">⭐</div>
+        <div className="absolute bottom-40 right-1/3 text-3xl animate-bounce">💫</div>
+        <div className="absolute top-72 right-1/4 text-2xl animate-pulse">✨</div>
       </div>
 
-      {/* Professional header */}
-      <header className="relative z-10 border-b border-gray-200 bg-white/80 backdrop-blur-sm shadow-sm">
+      {/* Kawaii header */}
+      <header className="relative z-10 border-b border-pink-200 bg-white/90 backdrop-blur-sm shadow-lg">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <Button 
               variant="ghost" 
               onClick={() => navigate('/')}
-              className="flex items-center space-x-2 text-slate-700 hover:bg-slate-100 font-semibold"
+              className="flex items-center space-x-2 text-purple-700 hover:bg-pink-100 font-semibold rounded-full px-6"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Retour</span>
             </Button>
             <div className="flex items-center space-x-3">
               <div className="relative">
-                <div className="w-12 h-12 bg-gradient-to-r from-slate-600 to-blue-700 rounded-xl flex items-center justify-center shadow-lg">
+                <div className="w-12 h-12 bg-gradient-to-r from-pink-400 to-purple-500 rounded-full flex items-center justify-center shadow-lg">
                   <Users className="w-6 h-6 text-white" />
                 </div>
-                <div className="absolute -top-1 -right-1 w-4 h-4 bg-teal-500 rounded-full"></div>
+                <div className="absolute -top-1 -right-1 w-4 h-4 bg-emerald-400 rounded-full animate-pulse"></div>
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-slate-800 tracking-wide font-serif">QVT Famille</h1>
-                <p className="text-sm text-slate-600 font-medium">Espace Jeunes</p>
+                <h1 className="text-2xl font-bold text-purple-800 tracking-wide font-serif">QVT Famille</h1>
+                <p className="text-sm text-pink-600 font-medium">Espace Jeunes ✨</p>
               </div>
             </div>
           </div>
@@ -122,56 +126,56 @@ const Teens = () => {
       </header>
 
       <div className="container mx-auto px-4 py-8 relative z-10">
-        {/* Hero Section with mature design */}
+        {/* Hero Section with kawaii design */}
         <div className="text-center mb-16 animate-fade-in">
           <div className="relative inline-block mb-8">
-            <h1 className="text-5xl md:text-6xl font-bold text-slate-800 mb-4 font-serif">
-              Votre Espace <span className="text-teal-700">Famille</span>
+            <h1 className="text-5xl md:text-6xl font-bold text-purple-800 mb-4 font-serif">
+              Votre Espace <span className="text-pink-600">Kawaii</span> 🌸
             </h1>
-            <div className="absolute -top-2 -right-8 text-3xl">🏠</div>
-            <div className="absolute -bottom-4 -left-6 text-3xl">👨‍👩‍👧‍👦</div>
+            <div className="absolute -top-4 -right-8 text-4xl animate-bounce">🏠</div>
+            <div className="absolute -bottom-4 -left-6 text-4xl animate-pulse">👨‍👩‍👧‍👦</div>
           </div>
           
-          <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-8 border border-gray-200 max-w-4xl mx-auto shadow-lg">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-6 font-serif">
-              Un Espace <span className="text-blue-700">Sécurisé</span> & <span className="text-teal-700">Bienveillant</span>
+          <div className="bg-gradient-to-r from-pink-100 via-purple-100 to-indigo-100 rounded-3xl p-8 border-4 border-white shadow-2xl max-w-4xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-purple-800 mb-6 font-serif">
+              Un Espace <span className="text-blue-600">Sécurisé</span> & <span className="text-pink-600">Bienveillant</span> 💖
             </h2>
-            <p className="text-xl text-slate-700 font-medium mb-6 leading-relaxed">
+            <p className="text-xl text-purple-700 font-medium mb-6 leading-relaxed">
               Un environnement familial sécurisé où vous pouvez vous exprimer, communiquer avec vos parents, 
-              et recevoir un accompagnement adapté à vos besoins
+              et recevoir un accompagnement adapté à vos besoins avec une touche de douceur
             </p>
             <div className="flex flex-wrap justify-center gap-4 text-base">
-              <span className="bg-slate-100 text-slate-700 px-6 py-3 rounded-full border border-slate-300 font-semibold">#EspaceFamilial</span>
-              <span className="bg-blue-100 text-blue-700 px-6 py-3 rounded-full border border-blue-300 font-semibold">#Accompagnement</span>
-              <span className="bg-teal-100 text-teal-700 px-6 py-3 rounded-full border border-teal-300 font-semibold">#Bienveillance</span>
-              <span className="bg-gray-100 text-gray-700 px-6 py-3 rounded-full border border-gray-300 font-semibold">#Sécurisé</span>
+              <span className="bg-pink-200 text-pink-700 px-6 py-3 rounded-full border-2 border-pink-300 font-semibold shadow-lg">#EspaceFamilial 🏠</span>
+              <span className="bg-blue-200 text-blue-700 px-6 py-3 rounded-full border-2 border-blue-300 font-semibold shadow-lg">#Accompagnement 🤗</span>
+              <span className="bg-emerald-200 text-emerald-700 px-6 py-3 rounded-full border-2 border-emerald-300 font-semibold shadow-lg">#Bienveillance 💚</span>
+              <span className="bg-purple-200 text-purple-700 px-6 py-3 rounded-full border-2 border-purple-300 font-semibold shadow-lg">#Sécurisé 🛡️</span>
             </div>
           </div>
         </div>
 
-        {/* Main Features Grid */}
+        {/* Main Features Grid with kawaii style */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {mainFeatures.map((feature, index) => {
             const IconComponent = feature.icon;
             return (
               <Card 
                 key={index} 
-                className={`group bg-gradient-to-br ${feature.gradient} border border-white/50 hover:border-white/80 transition-all duration-300 transform hover:-translate-y-2 cursor-pointer shadow-lg rounded-2xl text-white`}
+                className={`group bg-gradient-to-br ${feature.gradient} border-4 border-white hover:border-pink-200 transition-all duration-300 transform hover:-translate-y-2 hover:scale-105 cursor-pointer shadow-xl rounded-3xl text-white`}
                 onClick={() => navigate(feature.path)}
               >
                 <CardHeader>
-                  <div className="w-16 h-16 bg-white/20 rounded-xl mx-auto mb-4 flex items-center justify-center group-hover:bg-white/30 transition-colors">
-                    <IconComponent className="w-8 h-8 text-white" />
+                  <div className="w-20 h-20 bg-white/30 rounded-full mx-auto mb-4 flex items-center justify-center group-hover:bg-white/40 transition-colors shadow-lg">
+                    <IconComponent className="w-10 h-10 text-white" />
                   </div>
                   <CardTitle className="text-xl font-bold text-white text-center font-serif">
                     {feature.title}
                   </CardTitle>
-                  <p className="text-sm text-white/90 font-medium text-center">{feature.subtitle}</p>
+                  <p className="text-sm text-white/95 font-medium text-center">{feature.subtitle}</p>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-white/90 font-medium mb-4 text-center">{feature.description}</p>
-                  <Button className="w-full bg-white/20 hover:bg-white/30 text-white border border-white/50 rounded-xl font-semibold">
-                    Découvrir
+                  <p className="text-white/95 font-medium mb-4 text-center">{feature.description}</p>
+                  <Button className="w-full bg-white/25 hover:bg-white/35 text-white border-2 border-white/50 rounded-2xl font-semibold shadow-lg">
+                    Découvrir ✨
                   </Button>
                 </CardContent>
               </Card>
@@ -179,26 +183,26 @@ const Teens = () => {
           })}
         </div>
 
-        {/* Quick Actions */}
+        {/* Quick Actions with kawaii style */}
         <div className="mb-16">
-          <h2 className="text-3xl font-bold text-slate-800 text-center mb-8 font-serif">Actions Rapides</h2>
+          <h2 className="text-3xl font-bold text-purple-800 text-center mb-8 font-serif">Actions Rapides 🚀</h2>
           <div className="grid md:grid-cols-3 gap-6">
             {quickActions.map((action, index) => {
               const IconComponent = action.icon;
               return (
                 <Card 
                   key={index} 
-                  className={`group bg-gradient-to-br ${action.gradient} border border-white/50 hover:border-white/80 transition-all duration-300 cursor-pointer shadow-lg rounded-2xl text-white`}
+                  className={`group bg-gradient-to-br ${action.gradient} border-4 border-white hover:border-pink-200 transition-all duration-300 cursor-pointer shadow-xl rounded-3xl text-white hover:scale-105`}
                   onClick={() => navigate(action.path)}
                 >
                   <CardContent className="p-6 text-center">
-                    <div className="w-16 h-16 bg-white/20 rounded-xl mx-auto mb-4 flex items-center justify-center group-hover:bg-white/30 transition-colors">
-                      <IconComponent className="w-8 h-8 text-white" />
+                    <div className="w-20 h-20 bg-white/30 rounded-full mx-auto mb-4 flex items-center justify-center group-hover:bg-white/40 transition-colors shadow-lg">
+                      <IconComponent className="w-10 h-10 text-white" />
                     </div>
                     <h3 className="text-lg font-bold text-white mb-2 font-serif">{action.title}</h3>
-                    <p className="text-white/90 font-medium text-sm mb-4">{action.description}</p>
-                    <Button className="w-full bg-white/20 hover:bg-white/30 text-white rounded-xl font-semibold">
-                      Accéder
+                    <p className="text-white/95 font-medium text-sm mb-4">{action.description}</p>
+                    <Button className="w-full bg-white/25 hover:bg-white/35 text-white rounded-2xl font-semibold shadow-lg">
+                      Accéder 💫
                     </Button>
                   </CardContent>
                 </Card>
@@ -207,82 +211,83 @@ const Teens = () => {
           </div>
         </div>
 
-        {/* Parent Access Section */}
+        {/* Parent Access Section with lovely style */}
         <div className="grid md:grid-cols-2 gap-8 mb-16">
-          <Card className="group bg-gradient-to-br from-indigo-600 to-purple-700 border border-white/50 hover:border-white/80 transition-all duration-300 cursor-pointer transform hover:-translate-y-1 shadow-lg rounded-2xl text-white"
+          <Card className="group bg-gradient-to-br from-violet-400 to-purple-500 border-4 border-white hover:border-pink-200 transition-all duration-300 cursor-pointer transform hover:-translate-y-1 hover:scale-105 shadow-xl rounded-3xl text-white"
                 onClick={() => navigate('/teens/parental-access')}>
             <CardHeader className="text-center pb-4">
-              <div className="w-24 h-24 bg-white/20 rounded-2xl mx-auto mb-4 flex items-center justify-center group-hover:rotate-3 transition-transform shadow-lg">
-                <Shield className="w-12 h-12 text-white" />
+              <div className="w-28 h-28 bg-white/30 rounded-full mx-auto mb-4 flex items-center justify-center group-hover:rotate-3 transition-transform shadow-xl">
+                <Shield className="w-14 h-14 text-white" />
               </div>
-              <CardTitle className="text-2xl text-white font-bold font-serif">Accès Parents</CardTitle>
+              <CardTitle className="text-2xl text-white font-bold font-serif">Accès Parents 👨‍👩‍👧‍👦</CardTitle>
             </CardHeader>
             <CardContent className="text-center pt-0">
-              <p className="text-white/90 font-medium text-lg mb-6">
+              <p className="text-white/95 font-medium text-lg mb-6">
                 Gérez la connexion avec vos parents de manière sécurisée et transparente
               </p>
-              <Button className="w-full bg-white text-indigo-600 hover:bg-gray-100 rounded-xl font-bold text-lg py-3">
-                Gérer l'accès
+              <Button className="w-full bg-white text-violet-600 hover:bg-pink-50 rounded-2xl font-bold text-lg py-3 shadow-lg">
+                Gérer l'accès 🔐
               </Button>
             </CardContent>
           </Card>
 
-          <Card className="group bg-gradient-to-br from-slate-600 to-gray-700 border border-white/50 hover:border-white/80 transition-all duration-300 cursor-pointer transform hover:-translate-y-1 shadow-lg rounded-2xl text-white"
+          <Card className="group bg-gradient-to-br from-emerald-400 to-teal-500 border-4 border-white hover:border-pink-200 transition-all duration-300 cursor-pointer transform hover:-translate-y-1 hover:scale-105 shadow-xl rounded-3xl text-white"
                 onClick={() => navigate('/teens/parental-access-dashboard')}>
             <CardHeader className="text-center pb-4">
-              <div className="w-24 h-24 bg-white/20 rounded-2xl mx-auto mb-4 flex items-center justify-center group-hover:rotate-3 transition-transform shadow-lg">
-                <Users className="w-12 h-12 text-white" />
+              <div className="w-28 h-28 bg-white/30 rounded-full mx-auto mb-4 flex items-center justify-center group-hover:rotate-3 transition-transform shadow-xl">
+                <Users className="w-14 h-14 text-white" />
               </div>
-              <CardTitle className="text-2xl text-white font-bold font-serif">Dashboard Parents</CardTitle>
+              <CardTitle className="text-2xl text-white font-bold font-serif">Dashboard Parents 📊</CardTitle>
             </CardHeader>
             <CardContent className="text-center pt-0">
-              <p className="text-white/90 font-medium text-lg mb-6">
+              <p className="text-white/95 font-medium text-lg mb-6">
                 Voir ce que vos parents peuvent accéder en toute transparence
               </p>
-              <Button className="w-full bg-white text-slate-600 hover:bg-gray-100 rounded-xl font-bold text-lg py-3">
-                Voir Dashboard
+              <Button className="w-full bg-white text-emerald-600 hover:bg-pink-50 rounded-2xl font-bold text-lg py-3 shadow-lg">
+                Voir Dashboard 👀
               </Button>
             </CardContent>
           </Card>
         </div>
 
-        {/* Safety & Privacy Notice */}
+        {/* Safety & Privacy Notice with kawaii touch */}
         <div className="relative">
-          <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-8 border border-gray-200 text-center shadow-lg">
-            <div className="absolute -top-4 left-8 bg-teal-600 text-white px-6 py-3 rounded-xl font-bold shadow-lg border-2 border-white">
-              SÉCURISÉ
+          <div className="bg-gradient-to-r from-pink-100 via-purple-100 to-indigo-100 rounded-3xl p-8 border-4 border-white text-center shadow-2xl">
+            <div className="absolute -top-6 left-8 bg-emerald-400 text-white px-8 py-4 rounded-2xl font-bold shadow-xl border-4 border-white transform rotate-3">
+              SÉCURISÉ 🛡️
             </div>
-            <div className="absolute -top-4 right-8 bg-blue-600 text-white px-6 py-3 rounded-xl font-bold shadow-lg border-2 border-white">
-              FAMILIAL
+            <div className="absolute -top-6 right-8 bg-pink-400 text-white px-8 py-4 rounded-2xl font-bold shadow-xl border-4 border-white transform -rotate-3">
+              FAMILIAL 💖
             </div>
             
-            <div className="w-20 h-20 bg-gradient-to-br from-slate-600 to-blue-700 rounded-2xl mx-auto mb-6 flex items-center justify-center shadow-lg">
-              <Shield className="w-10 h-10 text-white" />
+            <div className="w-24 h-24 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full mx-auto mb-6 flex items-center justify-center shadow-2xl mt-8">
+              <Shield className="w-12 h-12 text-white" />
             </div>
-            <h3 className="text-3xl font-bold text-slate-800 mb-6 font-serif">Votre Espace Famille Ultra-Sécurisé</h3>
-            <p className="text-slate-700 font-medium max-w-3xl mx-auto text-lg leading-relaxed">
+            <h3 className="text-3xl font-bold text-purple-800 mb-6 font-serif">Votre Espace Famille Ultra-Sécurisé 🌟</h3>
+            <p className="text-purple-700 font-medium max-w-3xl mx-auto text-lg leading-relaxed">
               QVT Famille respecte votre vie privée à 100% tout en permettant un accompagnement familial bienveillant. 
-              Vos données restent entre vous et vos parents dans un environnement sécurisé et confidentiel.
+              Vos données restent entre vous et vos parents dans un environnement sécurisé et confidentiel avec plein d'amour ! 💕
             </p>
             
             <div className="flex flex-wrap justify-center gap-4 mt-8">
-              <span className="bg-teal-100 text-teal-700 px-6 py-3 rounded-full border border-teal-300 font-semibold">#Confidentialité</span>
-              <span className="bg-blue-100 text-blue-700 px-6 py-3 rounded-full border border-blue-300 font-semibold">#FamilleSeulement</span>
-              <span className="bg-slate-100 text-slate-700 px-6 py-3 rounded-full border border-slate-300 font-semibold">#Bienveillance</span>
-              <span className="bg-gray-100 text-gray-700 px-6 py-3 rounded-full border border-gray-300 font-semibold">#RGPD</span>
+              <span className="bg-emerald-200 text-emerald-700 px-6 py-3 rounded-full border-2 border-emerald-300 font-semibold shadow-lg">#Confidentialité 🔒</span>
+              <span className="bg-blue-200 text-blue-700 px-6 py-3 rounded-full border-2 border-blue-300 font-semibold shadow-lg">#FamilleSeulement 👨‍👩‍👧‍👦</span>
+              <span className="bg-pink-200 text-pink-700 px-6 py-3 rounded-full border-2 border-pink-300 font-semibold shadow-lg">#Bienveillance 💖</span>
+              <span className="bg-purple-200 text-purple-700 px-6 py-3 rounded-full border-2 border-purple-300 font-semibold shadow-lg">#RGPD ⚖️</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Floating action button for quick message */}
+      {/* Floating action button for quick message with kawaii style */}
       <div className="fixed bottom-8 right-8 z-20">
         <Button 
-          className="w-16 h-16 bg-gradient-to-br from-blue-600 to-teal-600 hover:from-blue-700 hover:to-teal-700 rounded-full shadow-2xl text-white border-4 border-white/50"
+          className="w-20 h-20 bg-gradient-to-br from-pink-400 to-purple-500 hover:from-pink-500 hover:to-purple-600 rounded-full shadow-2xl text-white border-4 border-white/80 animate-bounce"
           onClick={() => navigate('/teens/quick-alert')}
         >
-          <MessageCircle className="w-6 h-6" />
+          <MessageCircle className="w-8 h-8" />
         </Button>
+        <div className="absolute -top-2 -right-2 text-2xl animate-pulse">💌</div>
       </div>
     </div>
   );
