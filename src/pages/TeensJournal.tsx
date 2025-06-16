@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -7,23 +6,33 @@ import { useNavigate } from "react-router-dom";
 import { ArrowLeft, BookOpen, Heart, Smile, Star } from "lucide-react";
 import TeensHeader from "@/components/teens/TeensHeader";
 import { useState } from "react";
-
 const TeensJournal = () => {
   const navigate = useNavigate();
   const [mood, setMood] = useState("");
   const [entry, setEntry] = useState("");
   const [gratitude, setGratitude] = useState("");
-
-  const moods = [
-    { emoji: "😄", label: "Super bien", value: "super" },
-    { emoji: "😊", label: "Bien", value: "good" },
-    { emoji: "😐", label: "Neutre", value: "neutral" },
-    { emoji: "😔", label: "Pas terrible", value: "sad" },
-    { emoji: "😢", label: "Difficile", value: "hard" }
-  ];
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-indigo-900 to-cyan-900">
+  const moods = [{
+    emoji: "😄",
+    label: "Super bien",
+    value: "super"
+  }, {
+    emoji: "😊",
+    label: "Bien",
+    value: "good"
+  }, {
+    emoji: "😐",
+    label: "Neutre",
+    value: "neutral"
+  }, {
+    emoji: "😔",
+    label: "Pas terrible",
+    value: "sad"
+  }, {
+    emoji: "😢",
+    label: "Difficile",
+    value: "hard"
+  }];
+  return <div className="min-h-screen bg-gradient-to-br from-purple-900 via-indigo-900 to-cyan-900">
       <TeensHeader />
       
       <div className="container mx-auto px-4 py-8 relative z-10 max-w-4xl">
@@ -45,20 +54,10 @@ const TeensJournal = () => {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-5 gap-4">
-              {moods.map((moodOption) => (
-                <button
-                  key={moodOption.value}
-                  onClick={() => setMood(moodOption.value)}
-                  className={`p-4 rounded-3xl text-center transition-all duration-300 ${
-                    mood === moodOption.value
-                      ? 'bg-pink-500 scale-110 shadow-lg'
-                      : 'bg-white/10 hover:bg-white/20'
-                  }`}
-                >
+              {moods.map(moodOption => <button key={moodOption.value} onClick={() => setMood(moodOption.value)} className={`p-4 rounded-3xl text-center transition-all duration-300 ${mood === moodOption.value ? 'bg-pink-500 scale-110 shadow-lg' : 'bg-white/10 hover:bg-white/20'}`}>
                   <div className="text-4xl mb-2">{moodOption.emoji}</div>
                   <p className="text-white text-sm font-semibold">{moodOption.label}</p>
-                </button>
-              ))}
+                </button>)}
             </div>
           </CardContent>
         </Card>
@@ -72,30 +71,20 @@ const TeensJournal = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <Textarea
-              placeholder="Qu'est-ce qui s'est passé aujourd'hui ? Comment tu t'es senti ? Qu'est-ce qui t'a marqué ? Écris tout ce qui te passe par la tête... 😊"
-              value={entry}
-              onChange={(e) => setEntry(e.target.value)}
-              className="min-h-[200px] bg-white/10 border-white/30 text-white placeholder:text-gray-400 rounded-2xl text-lg"
-            />
+            <Textarea placeholder="Qu'est-ce qui s'est passé aujourd'hui ? Comment tu t'es senti ? Qu'est-ce qui t'a marqué ? Écris tout ce qui te passe par la tête... 😊" value={entry} onChange={e => setEntry(e.target.value)} className="min-h-[200px] bg-white/10 border-white/30 text-white placeholder:text-gray-400 rounded-2xl text-lg" />
           </CardContent>
         </Card>
 
         {/* Gratitude Section */}
         <Card className="mb-8 bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border-2 border-yellow-400/30">
           <CardHeader>
-            <CardTitle className="text-2xl font-bold text-white flex items-center">
+            <CardTitle className="text-2xl font-bold flex items-center text-slate-700">
               <Star className="w-6 h-6 mr-3 text-yellow-400" />
               🙏 Gratitude du jour
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <Input
-              placeholder="Pour quoi es-tu reconnaissant aujourd'hui ? 💛"
-              value={gratitude}
-              onChange={(e) => setGratitude(e.target.value)}
-              className="bg-white/10 border-white/30 text-white placeholder:text-gray-400 rounded-2xl text-lg p-4"
-            />
+            <Input placeholder="Pour quoi es-tu reconnaissant aujourd'hui ? 💛" value={gratitude} onChange={e => setGratitude(e.target.value)} className="bg-white/10 border-white/30 text-white placeholder:text-gray-400 rounded-2xl text-lg p-4" />
           </CardContent>
         </Card>
 
@@ -139,8 +128,6 @@ const TeensJournal = () => {
           </CardContent>
         </Card>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default TeensJournal;
