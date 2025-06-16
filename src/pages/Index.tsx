@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -14,7 +13,7 @@ const Index = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 relative overflow-hidden">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-slate-50 via-white to-blue-50 relative overflow-hidden">
       <FloatingBubbles />
 
       <Header />
@@ -44,15 +43,15 @@ const Index = () => {
               </motion.div>
             </div>
 
-            <div className="bg-white/80 backdrop-blur-lg rounded-3xl p-8 max-w-4xl mx-auto shadow-2xl border border-white/50">
+            <div className="bg-white/90 backdrop-blur-lg rounded-3xl p-8 max-w-4xl mx-auto shadow-2xl border border-slate-200">
               <motion.h1 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="text-4xl md:text-6xl font-bold text-gray-900 mb-6"
+                className="text-4xl md:text-6xl font-bold text-slate-800 mb-6"
               >
                 🫧 Sortir de sa{' '}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-600 via-blue-700 to-teal-600">
                   bulle
                 </span>
               </motion.h1>
@@ -61,7 +60,7 @@ const Index = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
-                className="text-xl text-gray-600 max-w-3xl mx-auto mb-8 leading-relaxed"
+                className="text-xl text-slate-600 max-w-3xl mx-auto mb-8 leading-relaxed"
               >
                 QVT Box V2 : L'application phygitale révolutionnaire qui combine <strong>évaluations émotionnelles interactives</strong>, 
                 <strong> IA française</strong> et <strong>box bien-être personnalisées</strong>. 
@@ -147,11 +146,11 @@ const Index = () => {
             className="space-y-12"
           >
             <div className="text-center">
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">
-                🌐 Choisis ton univers QVT Box
+              <h2 className="text-3xl font-bold text-slate-800 mb-6">
+                🌐 Choisissez votre univers QVT Box
               </h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Chaque univers est pensé pour répondre à tes besoins spécifiques avec des bulles personnalisées
+              <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+                Chaque univers est pensé pour répondre à vos besoins spécifiques avec des outils personnalisés
               </p>
             </div>
 
@@ -161,11 +160,11 @@ const Index = () => {
                 whileHover={{ scale: 1.02, y: -5 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <Card className="group cursor-pointer transition-all duration-500 border-2 hover:border-pink-400 bg-gradient-to-br from-pink-50 to-purple-50 hover:shadow-2xl h-full">
+                <Card className="group cursor-pointer transition-all duration-500 border-2 hover:border-teal-400 bg-gradient-to-br from-slate-50 to-blue-50 hover:shadow-2xl h-full">
                   <CardContent className="p-8 h-full flex flex-col">
                     <div className="text-center flex-1">
                       <div className="relative mb-6">
-                        <div className="w-20 h-20 bg-gradient-to-br from-pink-500 to-purple-600 rounded-2xl mx-auto flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
+                        <div className="w-20 h-20 bg-gradient-to-br from-teal-600 to-blue-700 rounded-2xl mx-auto flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
                           <Heart className="w-10 h-10 text-white" />
                         </div>
                         <div className="absolute -top-2 -right-2">
@@ -174,7 +173,7 @@ const Index = () => {
                               id: 'family_bubble',
                               emotion: 'happy',
                               intensity: 8,
-                              color: '#E91E63',
+                              color: '#0F766E',
                               size: 'small',
                               animation: 'bounce',
                               timestamp: new Date()
@@ -183,40 +182,40 @@ const Index = () => {
                         </div>
                       </div>
                       
-                      <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                        👪 Univers Famille
+                      <h3 className="text-2xl font-bold text-slate-800 mb-4">
+                        👨‍👩‍👧‍👦 Univers Famille
                       </h3>
                       
-                      <p className="text-gray-600 mb-6 leading-relaxed">
-                        Santé mentale des jeunes avec évaluations émotionnelles ludiques, 
-                        FamilySpace partagé et 20 box bien-être personnalisées.
+                      <p className="text-slate-600 mb-6 leading-relaxed">
+                        Accompagnement bienveillant pour toute la famille avec des outils d'évaluation 
+                        et un espace sécurisé pour renforcer les liens familiaux.
                       </p>
 
                       <div className="space-y-3 mb-8 text-left">
                         <div className="flex items-center space-x-3">
-                          <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
-                          <span className="text-sm">🫧 Bulles émotionnelles animées</span>
+                          <CheckCircle className="w-5 h-5 text-teal-600 flex-shrink-0" />
+                          <span className="text-sm">🏠 Espace familial sécurisé</span>
                         </div>
                         <div className="flex items-center space-x-3">
-                          <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
-                          <span className="text-sm">👨‍👩‍👧‍👦 7 rôles familiaux</span>
+                          <CheckCircle className="w-5 h-5 text-teal-600 flex-shrink-0" />
+                          <span className="text-sm">👨‍👩‍👧‍👦 Accompagnement tous âges</span>
                         </div>
                         <div className="flex items-center space-x-3">
-                          <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
-                          <span className="text-sm">🎁 20 Box ados + parents</span>
+                          <CheckCircle className="w-5 h-5 text-teal-600 flex-shrink-0" />
+                          <span className="text-sm">🎁 Solutions bien-être adaptées</span>
                         </div>
                         <div className="flex items-center space-x-3">
-                          <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
-                          <span className="text-sm">🚨 Alertes précoces IA</span>
+                          <CheckCircle className="w-5 h-5 text-teal-600 flex-shrink-0" />
+                          <span className="text-sm">🛡️ Protection des données familiales</span>
                         </div>
                       </div>
                     </div>
 
                     <Button 
-                      className="w-full bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white py-3 rounded-xl shadow-lg group-hover:shadow-xl transition-all" 
+                      className="w-full bg-gradient-to-r from-teal-600 to-blue-700 hover:from-teal-700 hover:to-blue-800 text-white py-3 rounded-xl shadow-lg group-hover:shadow-xl transition-all" 
                       onClick={() => navigate('/famille')}
                     >
-                      Entrer dans l'univers Famille
+                      Découvrir l'univers Famille
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                   </CardContent>
@@ -250,13 +249,13 @@ const Index = () => {
                         </div>
                       </div>
                       
-                      <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                      <h3 className="text-2xl font-bold text-slate-800 mb-4">
                         🏢 Univers Entreprise
                       </h3>
                       
-                      <p className="text-gray-600 mb-6 leading-relaxed">
+                      <p className="text-slate-600 mb-6 leading-relaxed">
                         QVT nouvelle génération avec questionnaires enrichis, 
-                        dashboard RH intelligent et 10 box collaborateurs personnalisées.
+                        dashboard RH intelligent et solutions bien-être collaborateurs.
                       </p>
 
                       <div className="space-y-3 mb-8 text-left">
@@ -283,7 +282,7 @@ const Index = () => {
                       className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-3 rounded-xl shadow-lg group-hover:shadow-xl transition-all" 
                       onClick={() => navigate('/entreprise')}
                     >
-                      Entrer dans l'univers Entreprise
+                      Découvrir l'univers Entreprise
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                   </CardContent>
@@ -293,7 +292,7 @@ const Index = () => {
 
             {/* Univers Coach à venir */}
             <div className="text-center">
-              <Card className="max-w-2xl mx-auto bg-gradient-to-r from-yellow-50 to-orange-50 border-2 border-yellow-200/50">
+              <Card className="max-w-2xl mx-auto bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-amber-200/50">
                 <CardContent className="p-6">
                   <div className="flex items-center justify-center space-x-4">
                     <BubbleComponent
@@ -301,15 +300,15 @@ const Index = () => {
                         id: 'coach_bubble',
                         emotion: 'excited',
                         intensity: 6,
-                        color: '#FF9800',
+                        color: '#D97706',
                         size: 'medium',
                         animation: 'float',
                         timestamp: new Date()
                       }}
                     />
                     <div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">🎯 Univers Coach QVT</h3>
-                      <p className="text-gray-600">À venir prochainement - Outils pour les professionnels de l'accompagnement</p>
+                      <h3 className="text-xl font-bold text-slate-800 mb-2">🎯 Univers Coach QVT</h3>
+                      <p className="text-slate-600">À venir prochainement - Outils pour les professionnels de l'accompagnement</p>
                     </div>
                   </div>
                 </CardContent>
@@ -324,10 +323,10 @@ const Index = () => {
             transition={{ delay: 1.3 }}
             className="text-center mt-16"
           >
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">
+            <h3 className="text-2xl font-bold text-slate-800 mb-6">
               🚀 Prêt à transformer ton bien-être ?
             </h3>
-            <p className="text-gray-600 mb-8">
+            <p className="text-slate-600 mb-8">
               Rejoins des milliers d'utilisateurs qui ont déjà commencé leur voyage vers un meilleur équilibre
             </p>
             <div className="flex flex-wrap justify-center gap-4">

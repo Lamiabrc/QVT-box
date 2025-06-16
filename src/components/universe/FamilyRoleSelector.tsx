@@ -18,50 +18,50 @@ const FamilyRoleSelector: React.FC<FamilyRoleSelectorProps> = ({
     {
       id: 'parent_solo' as FamilyRole,
       title: '🦸 Parent Solo',
-      description: 'Je gère le quotidien de ma famille en solo',
-      color: '#FF7043',
+      description: 'Je gère le quotidien familial en autonomie',
+      color: '#0F766E',
       bubble: { emotion: 'happy' as const, intensity: 7 }
     },
     {
       id: 'parent_en_couple' as FamilyRole,
-      title: '👩‍❤️‍👨 Parents en couple',
-      description: 'Nous sommes deux pour élever nos enfants',
-      color: '#4CAF50',
+      title: '👨‍👩‍👧‍👦 Parents en couple',
+      description: 'Nous élevons nos enfants ensemble',
+      color: '#1E40AF',
       bubble: { emotion: 'happy' as const, intensity: 8 }
     },
     {
       id: 'parent_lgbt' as FamilyRole,
       title: '🌈 Parent(s) LGBT+',
-      description: 'Je suis un parent au sein d\'une famille arc-en-ciel',
-      color: '#9C27B0',
+      description: 'Notre famille arc-en-ciel a ses spécificités',
+      color: '#7C3AED',
       bubble: { emotion: 'happy' as const, intensity: 8 }
     },
     {
       id: 'enfant_ado' as FamilyRole,
-      title: '🧑‍🎓 Enfant / Ado',
-      description: 'Je suis un(e) enfant/ado et je veux exprimer mes émotions',
-      color: '#E91E63',
+      title: '🧑‍🎓 Enfant / Adolescent',
+      description: 'Je souhaite m\'exprimer et être accompagné(e)',
+      color: '#DC2626',
       bubble: { emotion: 'excited' as const, intensity: 7 }
     },
     {
       id: 'grand_parent' as FamilyRole,
       title: '👴👵 Grand-parent',
-      description: 'Je suis grand-parent et je veux accompagner ma famille',
-      color: '#607D8B',
+      description: 'J\'accompagne ma famille avec mon expérience',
+      color: '#475569',
       bubble: { emotion: 'neutral' as const, intensity: 6 }
     },
     {
       id: 'famille_recomposee' as FamilyRole,
-      title: '🧩 Famille Recomposée',
-      description: 'Nous formons une nouvelle famille avec des enfants de lits différents',
-      color: '#00BCD4',
+      title: '🏡 Famille Recomposée',
+      description: 'Notre famille s\'est reconstituée avec de nouveaux liens',
+      color: '#0891B2',
       bubble: { emotion: 'neutral' as const, intensity: 6 }
     },
     {
       id: 'autre_situation' as FamilyRole,
-      title: '👤 Autre situation',
-      description: 'Ma situation familiale est différente',
-      color: '#795548',
+      title: '👥 Autre situation',
+      description: 'Ma situation familiale est particulière',
+      color: '#78716C',
       bubble: { emotion: 'neutral' as const, intensity: 5 }
     },
   ];
@@ -69,11 +69,11 @@ const FamilyRoleSelector: React.FC<FamilyRoleSelectorProps> = ({
   return (
     <div className="max-w-6xl mx-auto space-y-8">
       <div className="text-center">
-        <h2 className="text-3xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent mb-4">
-          🫧 Bienvenue dans l'univers famille
+        <h2 className="text-3xl font-bold text-slate-800 mb-4">
+          🏠 Bienvenue dans l'univers famille
         </h2>
-        <p className="text-xl text-gray-600">
-          Choisis ton rôle pour une expérience personnalisée dans ta bulle familiale
+        <p className="text-xl text-slate-600">
+          Sélectionnez votre rôle pour une expérience personnalisée et des conseils adaptés à votre situation familiale
         </p>
       </div>
 
@@ -90,8 +90,8 @@ const FamilyRoleSelector: React.FC<FamilyRoleSelectorProps> = ({
               <Card
                 className={`cursor-pointer transition-all duration-300 hover:shadow-xl border-2 ${
                   isSelected 
-                    ? 'border-pink-500 shadow-lg bg-gradient-to-br from-pink-50 to-purple-50' 
-                    : 'border-gray-200 hover:border-pink-300 bg-white'
+                    ? 'border-teal-600 shadow-lg bg-gradient-to-br from-teal-50 to-blue-50' 
+                    : 'border-slate-200 hover:border-teal-300 bg-white'
                 }`}
                 onClick={() => onRoleSelect(role.id)}
               >
@@ -110,12 +110,12 @@ const FamilyRoleSelector: React.FC<FamilyRoleSelectorProps> = ({
                       interactive
                     />
                   </div>
-                  <CardTitle className="text-lg font-semibold text-gray-900">
+                  <CardTitle className="text-lg font-semibold text-slate-800">
                     {role.title}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="text-center pt-0">
-                  <p className="text-gray-600 text-sm leading-relaxed">
+                  <p className="text-slate-600 text-sm leading-relaxed">
                     {role.description}
                   </p>
                   
@@ -123,9 +123,9 @@ const FamilyRoleSelector: React.FC<FamilyRoleSelectorProps> = ({
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="mt-4 px-4 py-2 bg-pink-100 rounded-full"
+                      className="mt-4 px-4 py-2 bg-teal-100 rounded-full"
                     >
-                      <span className="text-pink-700 font-medium text-sm">✨ Rôle sélectionné</span>
+                      <span className="text-teal-800 font-medium text-sm">✨ Rôle sélectionné</span>
                     </motion.div>
                   )}
                 </CardContent>
@@ -141,8 +141,8 @@ const FamilyRoleSelector: React.FC<FamilyRoleSelectorProps> = ({
           animate={{ opacity: 1, y: 0 }}
           className="text-center"
         >
-          <p className="text-lg text-gray-700 mb-4">
-            Parfait ! Tu peux maintenant commencer ton évaluation émotionnelle
+          <p className="text-lg text-slate-700 mb-4">
+            Parfait ! Vous pouvez maintenant commencer votre évaluation personnalisée
           </p>
         </motion.div>
       )}
