@@ -2,7 +2,7 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Home, User, Settings, LogOut, ShoppingBag, CalendarDays, Globe } from 'lucide-react';
+import { Home, User, Settings, LogOut, ShoppingBag, CalendarDays } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
@@ -62,16 +62,6 @@ const TeensHeader = () => {
             >
               <User className="w-4 h-4 mr-2" />
               Mon Espace
-            </Button>
-            <Button
-              variant="ghost"
-              onClick={() => navigate('/teens/metaverse')}
-              className={`text-white hover:bg-white/20 rounded-xl ${
-                isActive('/teens/metaverse') ? 'bg-white/20' : ''
-              }`}
-            >
-              <Globe className="w-4 h-4 mr-2" />
-              🌌 Métaverse
             </Button>
             <Button
               variant="ghost"

@@ -30,7 +30,6 @@ import TeensParentalAccess from "./pages/TeensParentalAccess";
 import TeensParentalAccessDashboard from "./pages/TeensParentalAccessDashboard";
 import TeensDashboardParent from "./pages/TeensDashboardParent";
 import TeensCustomization from "./pages/TeensCustomization";
-import TeensMetaverse from "./pages/TeensMetaverse";
 import TeensPlaylist from "./pages/TeensPlaylist";
 import TeensShop from "./pages/TeensShop";
 import TeensIntimacySpace from "./pages/TeensIntimacySpace";
@@ -67,10 +66,6 @@ import AdminPanel from "./pages/AdminPanel";
 import FamilySimulator from "./pages/teens/FamilySimulator";
 import SimulatorHub from "./pages/simulator/SimulatorHub";
 import AdminDashboardMain from "./pages/admin/AdminDashboard";
-import ZenGarden from "./pages/teens/metaverse/ZenGarden";
-import CreativityStudio from "./pages/teens/metaverse/CreativityStudio";
-import AdventureIsland from "./pages/teens/metaverse/AdventureIsland";
-import SafeTalkCircle from "./pages/teens/metaverse/SafeTalkCircle";
 import SecureProtectedRoute from "./components/SecureProtectedRoute";
 
 const queryClient = new QueryClient();
@@ -135,11 +130,6 @@ function App() {
             <Route path="/teens/parental-dashboard" element={<TeensParentalAccessDashboard />} />
             <Route path="/teens/parent-dashboard" element={<TeensDashboardParent />} />
             <Route path="/teens/customization" element={<TeensCustomization />} />
-            <Route path="/teens/metaverse" element={<TeensMetaverse />} />
-            <Route path="/teens/metaverse/zen-garden" element={<ZenGarden />} />
-            <Route path="/teens/metaverse/creativity-studio" element={<CreativityStudio />} />
-            <Route path="/teens/metaverse/adventure-island" element={<AdventureIsland />} />
-            <Route path="/teens/metaverse/safe-talk" element={<SafeTalkCircle />} />
             <Route path="/teens/playlist" element={<TeensPlaylist />} />
             <Route path="/teens/shop" element={<TeensShop />} />
             <Route path="/teens/intimacy-space" element={<TeensIntimacySpace />} />

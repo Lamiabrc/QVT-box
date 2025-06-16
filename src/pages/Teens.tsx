@@ -1,9 +1,12 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Heart, Shield, MessageCircle, Calendar, User, Users, Home, Sparkles, Star } from "lucide-react";
+import { ArrowLeft, Heart, Shield, MessageCircle, Calendar, User, Users, Home, Star } from "lucide-react";
+
 const Teens = () => {
   const navigate = useNavigate();
+  
   const mainFeatures = [{
     icon: Home,
     title: "Espace Famille",
@@ -33,13 +36,6 @@ const Teens = () => {
     gradient: "from-rose-400 to-pink-400",
     path: "/teens/fun-solutions"
   }, {
-    icon: Sparkles,
-    title: "Accompagnement Virtuel",
-    subtitle: "Explorez, apprenez, grandissez",
-    description: "Espaces virtuels pour vous connecter et grandir avec d'autres jeunes",
-    gradient: "from-violet-400 to-purple-400",
-    path: "/teens/metaverse"
-  }, {
     icon: Star,
     title: "Boutique Bien-être",
     subtitle: "Personnalisez votre expérience",
@@ -47,6 +43,7 @@ const Teens = () => {
     gradient: "from-amber-400 to-orange-400",
     path: "/teens/shop"
   }];
+
   const quickActions = [{
     icon: Heart,
     title: "Check-in Quotidien",
@@ -66,7 +63,9 @@ const Teens = () => {
     gradient: "from-purple-400 to-indigo-500",
     path: "/teens/calendar"
   }];
-  return <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50 relative overflow-hidden">
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50 relative overflow-hidden">
       {/* Kawaii floating elements */}
       <div className="absolute inset-0 opacity-15">
         <div className="absolute top-20 left-10 w-16 h-16 bg-pink-300 rounded-full transform rotate-12 animate-bounce"></div>
@@ -135,8 +134,13 @@ const Teens = () => {
         {/* Main Features Grid with kawaii style */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {mainFeatures.map((feature, index) => {
-          const IconComponent = feature.icon;
-          return <Card key={index} className={`group bg-gradient-to-br ${feature.gradient} border-4 border-white hover:border-pink-200 transition-all duration-300 transform hover:-translate-y-2 hover:scale-105 cursor-pointer shadow-xl rounded-3xl text-white`} onClick={() => navigate(feature.path)}>
+            const IconComponent = feature.icon;
+            return (
+              <Card 
+                key={index} 
+                className={`group bg-gradient-to-br ${feature.gradient} border-4 border-white hover:border-pink-200 transition-all duration-300 transform hover:-translate-y-2 hover:scale-105 cursor-pointer shadow-xl rounded-3xl text-white`} 
+                onClick={() => navigate(feature.path)}
+              >
                 <CardHeader>
                   <div className="w-20 h-20 bg-white/30 rounded-full mx-auto mb-4 flex items-center justify-center group-hover:bg-white/40 transition-colors shadow-lg">
                     <IconComponent className="w-10 h-10 text-white" />
@@ -152,8 +156,9 @@ const Teens = () => {
                     Découvrir ✨
                   </Button>
                 </CardContent>
-              </Card>;
-        })}
+              </Card>
+            );
+          })}
         </div>
 
         {/* Quick Actions with kawaii style */}
@@ -161,8 +166,13 @@ const Teens = () => {
           <h2 className="text-3xl font-bold text-purple-800 text-center mb-8 font-serif">Actions Rapides 🚀</h2>
           <div className="grid md:grid-cols-3 gap-6">
             {quickActions.map((action, index) => {
-            const IconComponent = action.icon;
-            return <Card key={index} className={`group bg-gradient-to-br ${action.gradient} border-4 border-white hover:border-pink-200 transition-all duration-300 cursor-pointer shadow-xl rounded-3xl text-white hover:scale-105`} onClick={() => navigate(action.path)}>
+              const IconComponent = action.icon;
+              return (
+                <Card 
+                  key={index} 
+                  className={`group bg-gradient-to-br ${action.gradient} border-4 border-white hover:border-pink-200 transition-all duration-300 cursor-pointer shadow-xl rounded-3xl text-white hover:scale-105`} 
+                  onClick={() => navigate(action.path)}
+                >
                   <CardContent className="p-6 text-center">
                     <div className="w-20 h-20 bg-white/30 rounded-full mx-auto mb-4 flex items-center justify-center group-hover:bg-white/40 transition-colors shadow-lg">
                       <IconComponent className="w-10 h-10 text-white" />
@@ -173,8 +183,9 @@ const Teens = () => {
                       Accéder 💫
                     </Button>
                   </CardContent>
-                </Card>;
-          })}
+                </Card>
+              );
+            })}
           </div>
         </div>
 
@@ -251,6 +262,8 @@ const Teens = () => {
         </Button>
         <div className="absolute -top-2 -right-2 text-2xl animate-pulse">💌</div>
       </div>
-    </div>;
+    </div>
+  );
 };
+
 export default Teens;
