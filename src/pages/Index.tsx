@@ -38,7 +38,7 @@ const Index = () => {
                 <img 
                   alt="Lamia Brechet - Fondatrice QVT Box" 
                   className="w-32 h-32 rounded-full object-cover shadow-2xl border-4 border-white" 
-                  src="/lovable-uploads/1487ccee-42cd-40a6-8a14-c02384e891be.jpg" 
+                  src="/images/alerts/miss_you.png" 
                 />
               </motion.div>
             </div>
@@ -62,7 +62,7 @@ const Index = () => {
                 transition={{ delay: 0.5 }}
                 className="text-xl text-slate-600 max-w-3xl mx-auto mb-8 leading-relaxed"
               >
-                QVT Box V2 : L'application phygitale révolutionnaire qui combine <strong>évaluations émotionnelles interactives</strong>, 
+                QVT Box : L'application phygitale révolutionnaire qui combine <strong>évaluations émotionnelles interactives</strong>, 
                 <strong> IA française</strong> et <strong>box bien-être personnalisées</strong>. 
                 Chacun peut s'enfermer dans sa bulle, s'y protéger ou apprendre à en sortir.
               </motion.p>
@@ -103,7 +103,7 @@ const Index = () => {
                     <img 
                       alt="Lamia Brechet" 
                       className="w-20 h-20 rounded-full object-cover border-3 border-white shadow-lg flex-shrink-0" 
-                      src="/lovable-uploads/a4ecdc7a-c850-42e1-b650-f1c34a951345.png" 
+                      src="/images/a4ecdc7a-c850-42e1-b650-f1c34a951345.png" 
                     />
                     <div className="absolute -top-2 -right-2">
                       <BubbleComponent
@@ -125,7 +125,7 @@ const Index = () => {
                     </h3>
                     <p className="text-gray-700 leading-relaxed text-lg italic">
                       "Car chacun peut s'y enfermer, s'y protéger ou apprendre à en sortir. 
-                      QVT Box V2 transforme l'accompagnement émotionnel avec des bulles interactives, 
+                      QVT Box transforme l'accompagnement émotionnel, 
                       une IA bienveillante et des solutions concrètes. L'interface se veut douce, 
                       interactive et circulaire — une bulle d'air au cœur du quotidien."
                     </p>
