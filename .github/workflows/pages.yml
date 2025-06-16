@@ -1,7 +1,12 @@
+# .github/workflows/pages.yml
+
 name: Deploy Vite site to GitHub Pages
+
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+
 permissions:
   contents: read
   pages: write
@@ -10,16 +15,43 @@ permissions:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      # 1. Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Setup Node.js (v20) with npm cache
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: 'npm'
-      - run: npm ci
-      - run: npm run build
-      - run: echo > dist/.nojekyll
-      - uses: actions/upload-pages-artifact@v3
+          node-version: '20'
+          cache: npm
+
+      # 3. Remove the lockfile generated on Windows to avoid Rollup native module issues
+      - name: Remove npm lockfile
+        run: rm -f package-lock.json
+
+      # 4. Install dependencies (will include the optional Rollup Linux binary)
+      - name: Install dependencies
+        run: npm install
+
+      # 5. Build the static site with Vite
+      - name: Build site
+        run: npm run build
+
+      # 6. Disable Jekyll processing on GitHub Pages
+      - name: Disable Jekyll
+        run: echo > dist/.nojekyll
+
+      # 7. Upload the built site as the Pages artifact
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist
-      - uses: actions/deploy-pages@v4
+          path: dist
+
+      # 8. Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
