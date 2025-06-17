@@ -6,9 +6,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { EnterpriseSpeciality, EnterpriseStatus } from '@/types/qvtbox';
 import BubbleComponent from '@/components/bubble/BubbleComponent';
+import EnterpriseForm from './EnterpriseForm';
+import SpecialitySelector from './SpecialitySelector';
+import StatusSelector from './StatusSelector';
 
 interface EnterpriseRegistrationData {
   email: string;
@@ -39,21 +41,9 @@ const EnterpriseRegistration: React.FC<EnterpriseRegistrationProps> = ({
     promotionEnvisagee: false
   });
 
-  const specialityOptions = [
-    { id: 'itinerant', label: '🚗 Salarié itinérant', color: '#FF5722' },
-    { id: 'teletravail', label: '🏠 Télétravail', color: '#2196F3' },
-    { id: 'pénibilité', label: '⚠️ Pénibilité', color: '#FF9800' },
-    { id: 'retraite_proche', label: '👴 Départ retraite proche', color: '#9C27B0' },
-    { id: 'promotion_envisagee', label: '📈 Promotion envisagée', color: '#4CAF50' }
-  ];
-
-  const statusOptions = [
-    { id: 'vip', label: '⭐ VIP', color: '#FFD700' },
-    { id: 'pénible', label: '⚠️ Situation pénible', color: '#F44336' },
-    { id: 'sensible', label: '🔴 Profil sensible', color: '#FF5722' },
-    { id: 'itinerant', label: '🚗 Itinérant', color: '#9E9E9E' },
-    { id: 'talent_strategique', label: '💎 Talent stratégique', color: '#E91E63' }
-  ];
+  const handleFormFieldChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
 
   const handleSpecialityChange = (speciality: EnterpriseSpeciality, checked: boolean) => {
     setFormData(prev => ({
@@ -117,81 +107,20 @@ const EnterpriseRegistration: React.FC<EnterpriseRegistrationProps> = ({
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <Label htmlFor="fullName">Nom complet</Label>
-                <Input
-                  id="fullName"
-                  value={formData.fullName}
-                  onChange={(e) => setFormData(prev => ({ ...prev, fullName: e.target.value }))}
-                  required
-                />
-              </div>
-              <div>
-                <Label htmlFor="email">Email professionnel</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                  required
-                />
-              </div>
-            </div>
+            <EnterpriseForm
+              formData={{
+                email: formData.email,
+                fullName: formData.fullName,
+                fonction: formData.fonction,
+                typePoste: formData.typePoste
+              }}
+              onChange={handleFormFieldChange}
+            />
 
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <Label htmlFor="fonction">Fonction</Label>
-                <Input
-                  id="fonction"
-                  value={formData.fonction}
-                  onChange={(e) => setFormData(prev => ({ ...prev, fonction: e.target.value }))}
-                  placeholder="Ex: Développeur, Manager, RH..."
-                  required
-                />
-              </div>
-              <div>
-                <Label htmlFor="typePoste">Type de poste</Label>
-                <Select value={formData.typePoste} onValueChange={(value) => setFormData(prev => ({ ...prev, typePoste: value }))}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Sélectionnez votre type de poste" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="cadre">Cadre</SelectItem>
-                    <SelectItem value="employe">Employé</SelectItem>
-                    <SelectItem value="manager">Manager</SelectItem>
-                    <SelectItem value="direction">Direction</SelectItem>
-                    <SelectItem value="interim">Intérimaire</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-
-            <div>
-              <Label className="text-lg font-semibold text-gray-900 mb-4 block">
-                🎯 Spécificités professionnelles
-              </Label>
-              <div className="grid md:grid-cols-2 gap-4">
-                {specialityOptions.map((option) => (
-                  <div key={option.id} className="flex items-center space-x-3 p-4 border rounded-lg hover:bg-gray-50">
-                    <Checkbox
-                      id={option.id}
-                      checked={formData.specialities.includes(option.id as EnterpriseSpeciality)}
-                      onCheckedChange={(checked) => handleSpecialityChange(option.id as EnterpriseSpeciality, checked as boolean)}
-                    />
-                    <div className="flex items-center space-x-3">
-                      <div 
-                        className="w-4 h-4 rounded-full" 
-                        style={{ backgroundColor: option.color }}
-                      />
-                      <label htmlFor={option.id} className="text-sm font-medium cursor-pointer">
-                        {option.label}
-                      </label>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <SpecialitySelector
+              selectedSpecialities={formData.specialities}
+              onSpecialityChange={handleSpecialityChange}
+            />
 
             {formData.specialities.includes('retraite_proche') && (
               <motion.div
@@ -223,33 +152,11 @@ const EnterpriseRegistration: React.FC<EnterpriseRegistrationProps> = ({
               </label>
             </div>
 
-            {isHR && (
-              <div className="border-t pt-6">
-                <Label className="text-lg font-semibold text-gray-900 mb-4 block">
-                  👥 Statuts RH (réservé aux responsables QVT/RH)
-                </Label>
-                <div className="grid md:grid-cols-2 gap-4">
-                  {statusOptions.map((option) => (
-                    <div key={option.id} className="flex items-center space-x-3 p-4 border rounded-lg hover:bg-gray-50">
-                      <Checkbox
-                        id={`status_${option.id}`}
-                        checked={(formData.hrStatuses || []).includes(option.id as EnterpriseStatus)}
-                        onCheckedChange={(checked) => handleStatusChange(option.id as EnterpriseStatus, checked as boolean)}
-                      />
-                      <div className="flex items-center space-x-3">
-                        <div 
-                          className="w-4 h-4 rounded-full" 
-                          style={{ backgroundColor: option.color }}
-                        />
-                        <label htmlFor={`status_${option.id}`} className="text-sm font-medium cursor-pointer">
-                          {option.label}
-                        </label>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
+            <StatusSelector
+              selectedStatuses={formData.hrStatuses || []}
+              onStatusChange={handleStatusChange}
+              isHR={isHR}
+            />
 
             <Button 
               type="submit" 

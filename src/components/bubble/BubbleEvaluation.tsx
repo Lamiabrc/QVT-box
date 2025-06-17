@@ -1,10 +1,11 @@
-
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import BubbleComponent from './BubbleComponent';
+import EmotionSelector from './EmotionSelector';
+import IntensitySelector from './IntensitySelector';
 import { BubbleData, EmotionalEvaluation } from '@/types/qvtbox';
 
 interface BubbleEvaluationProps {
@@ -14,8 +15,9 @@ interface BubbleEvaluationProps {
 
 const BubbleEvaluation: React.FC<BubbleEvaluationProps> = ({ onComplete, userId }) => {
   const [selectedEmotion, setSelectedEmotion] = useState<string>('');
+  const [selectedEmotionColor, setSelectedEmotionColor] = useState<string>('');
   const [intensity, setIntensity] = useState<number>(5);
-  const [comments, setComments] = useState<string>('');
+  const [comment, setComment] = useState<string>('');
   const [currentStep, setCurrentStep] = useState<'emotion' | 'intensity' | 'comment'>('emotion');
 
   const emotions = [
@@ -28,10 +30,9 @@ const BubbleEvaluation: React.FC<BubbleEvaluationProps> = ({ onComplete, userId 
     { key: 'angry', label: 'En colère', color: '#E74C3C' }
   ];
 
-  const intensityBubbles = Array.from({ length: 10 }, (_, i) => i + 1);
-
   const handleEmotionSelect = (emotion: string, color: string) => {
     setSelectedEmotion(emotion);
+    setSelectedEmotionColor(color);
     setCurrentStep('intensity');
   };
 
@@ -41,13 +42,11 @@ const BubbleEvaluation: React.FC<BubbleEvaluationProps> = ({ onComplete, userId 
   };
 
   const handleComplete = () => {
-    const selectedEmotionData = emotions.find(e => e.key === selectedEmotion);
-    
     const bubbleData: BubbleData = {
       id: `bubble_${Date.now()}`,
       emotion: selectedEmotion as any,
       intensity,
-      color: selectedEmotionData?.color || '#95A5A6',
+      color: selectedEmotionColor,
       size: intensity <= 3 ? 'small' : intensity <= 7 ? 'medium' : 'large',
       animation: intensity >= 8 ? 'bounce' : intensity >= 5 ? 'pulse' : 'float',
       timestamp: new Date(),
@@ -60,8 +59,8 @@ const BubbleEvaluation: React.FC<BubbleEvaluationProps> = ({ onComplete, userId 
       userId,
       bubbleData,
       scores: { emotion_intensity: intensity },
-      comment: comments,
-      recommendations: [], // To be filled by AI
+      comment,
+      recommendations: [],
       timestamp: new Date()
     };
 
@@ -80,90 +79,21 @@ const BubbleEvaluation: React.FC<BubbleEvaluationProps> = ({ onComplete, userId 
 
         <CardContent className="space-y-8">
           <AnimatePresence mode="wait">
-            {/* Étape 1: Sélection de l'émotion */}
             {currentStep === 'emotion' && (
-              <motion.div
-                key="emotion"
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -50 }}
-                className="space-y-6"
-              >
-                <h3 className="text-xl font-semibold text-center">Quelle émotion ressens-tu ?</h3>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6 justify-items-center">
-                  {emotions.map((emotion) => (
-                    <motion.div
-                      key={emotion.key}
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="flex flex-col items-center space-y-2 cursor-pointer"
-                      onClick={() => handleEmotionSelect(emotion.key, emotion.color)}
-                    >
-                      <BubbleComponent
-                        bubble={{
-                          id: emotion.key,
-                          emotion: emotion.key as any,
-                          intensity: 5,
-                          color: emotion.color,
-                          size: 'medium',
-                          animation: 'float',
-                          timestamp: new Date(),
-                          emotionalState: 5,
-                          mood: 'neutral'
-                        }}
-                        interactive
-                      />
-                      <span className="text-sm font-medium text-gray-700">{emotion.label}</span>
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
+              <EmotionSelector 
+                emotions={emotions}
+                onEmotionSelect={handleEmotionSelect}
+              />
             )}
 
-            {/* Étape 2: Sélection de l'intensité */}
             {currentStep === 'intensity' && (
-              <motion.div
-                key="intensity"
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -50 }}
-                className="space-y-6"
-              >
-                <h3 className="text-xl font-semibold text-center">À quel point ressens-tu cette émotion ?</h3>
-                <div className="flex justify-center items-center space-x-4 flex-wrap gap-4">
-                  {intensityBubbles.map((value) => (
-                    <motion.div
-                      key={value}
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="cursor-pointer"
-                      onClick={() => handleIntensitySelect(value)}
-                    >
-                      <BubbleComponent
-                        bubble={{
-                          id: `intensity_${value}`,
-                          emotion: selectedEmotion as any,
-                          intensity: value,
-                          color: emotions.find(e => e.key === selectedEmotion)?.color || '#95A5A6',
-                          size: value <= 3 ? 'small' : value <= 7 ? 'medium' : 'large',
-                          animation: 'pulse',
-                          timestamp: new Date(),
-                          emotionalState: value,
-                          mood: value > 6 ? 'good' : value > 4 ? 'neutral' : 'bad'
-                        }}
-                        interactive
-                      />
-                      <div className="text-center mt-2 text-sm font-medium">{value}</div>
-                    </motion.div>
-                  ))}
-                </div>
-                <div className="text-center text-sm text-gray-600">
-                  1 = Très faible • 10 = Très intense
-                </div>
-              </motion.div>
+              <IntensitySelector
+                selectedEmotion={selectedEmotion}
+                emotionColor={selectedEmotionColor}
+                onIntensitySelect={handleIntensitySelect}
+              />
             )}
 
-            {/* Étape 3: Commentaires */}
             {currentStep === 'comment' && (
               <motion.div
                 key="comment"
@@ -180,7 +110,7 @@ const BubbleEvaluation: React.FC<BubbleEvaluationProps> = ({ onComplete, userId 
                         id: 'final',
                         emotion: selectedEmotion as any,
                         intensity,
-                        color: emotions.find(e => e.key === selectedEmotion)?.color || '#95A5A6',
+                        color: selectedEmotionColor,
                         size: intensity <= 3 ? 'small' : intensity <= 7 ? 'medium' : 'large',
                         animation: 'bounce',
                         timestamp: new Date(),
@@ -193,8 +123,8 @@ const BubbleEvaluation: React.FC<BubbleEvaluationProps> = ({ onComplete, userId 
                 
                 <Textarea
                   placeholder="Raconte-nous ce qui t'amène à te sentir ainsi... (optionnel)"
-                  value={comments}
-                  onChange={(e) => setComments(e.target.value)}
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
                   className="min-h-32 text-lg border-2 border-purple-200 focus:border-purple-400 rounded-xl"
                 />
 
