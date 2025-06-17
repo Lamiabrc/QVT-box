@@ -40,16 +40,16 @@ const EnterpriseRegistration: React.FC<EnterpriseRegistrationProps> = ({
   });
 
   const specialityOptions = [
-    { id: 'salarie_itinerant', label: '🚗 Salarié itinérant', color: '#FF5722' },
+    { id: 'itinerant', label: '🚗 Salarié itinérant', color: '#FF5722' },
     { id: 'teletravail', label: '🏠 Télétravail', color: '#2196F3' },
-    { id: 'penibilite', label: '⚠️ Pénibilité', color: '#FF9800' },
+    { id: 'pénibilité', label: '⚠️ Pénibilité', color: '#FF9800' },
     { id: 'retraite_proche', label: '👴 Départ retraite proche', color: '#9C27B0' },
     { id: 'promotion_envisagee', label: '📈 Promotion envisagée', color: '#4CAF50' }
   ];
 
   const statusOptions = [
     { id: 'vip', label: '⭐ VIP', color: '#FFD700' },
-    { id: 'penible', label: '⚠️ Situation pénible', color: '#F44336' },
+    { id: 'pénible', label: '⚠️ Situation pénible', color: '#F44336' },
     { id: 'sensible', label: '🔴 Profil sensible', color: '#FF5722' },
     { id: 'itinerant', label: '🚗 Itinérant', color: '#9E9E9E' },
     { id: 'talent_strategique', label: '💎 Talent stratégique', color: '#E91E63' }
@@ -96,7 +96,9 @@ const EnterpriseRegistration: React.FC<EnterpriseRegistrationProps> = ({
               color: '#2196F3',
               size: 'large',
               animation: 'pulse',
-              timestamp: new Date()
+              timestamp: new Date(),
+              emotionalState: 8,
+              mood: 'good'
             }}
             interactive
           />
