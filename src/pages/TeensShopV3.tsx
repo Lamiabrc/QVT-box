@@ -4,13 +4,14 @@ import { useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import UniversalBoxShop from "@/components/shop/UniversalBoxShop";
 import { useAIRecommendations } from "@/hooks/useAIRecommendations";
+import { UserProfile } from "@/types/qvtbox";
 
 const TeensShopV3 = () => {
   const navigate = useNavigate();
 
   // Simulation du profil utilisateur (à connecter avec Supabase)
-  const userProfile = {
-    role: 'enfant_ado',
+  const userProfile: UserProfile = {
+    role: 'enfant_ado' as const,
     universe: 'famille' as const,
     riskFactors: ['stress_scolaire', 'emotions_difficiles'],
     preferences: ['creativite', 'sport'],

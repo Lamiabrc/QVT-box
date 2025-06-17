@@ -7,41 +7,70 @@ export type EnterpriseRole = 'collaborateur' | 'manager' | 'rh' | 'admin' | 'sen
 
 export type UserRole = FamilyRole | EnterpriseRole;
 
-// Add missing enterprise types
-export type EnterpriseSpeciality = 'teletravail' | 'pénibilité' | 'itinerant' | 'manager' | 'senior';
+// Types spécialisés pour la famille
+export type FamilySpecialRole = 'parent_solo' | 'parent_en_couple' | 'parent_lgbt' | 'famille_recomposee' | 'autre_situation';
 
-export type EnterpriseStatus = 'vip' | 'sensible' | 'pénible' | 'itinerant' | 'retraite_proche' | 'promotion';
+// Types d'entreprise étendus
+export type EnterpriseSpeciality = 'teletravail' | 'pénibilité' | 'itinerant' | 'manager' | 'senior' | 'retraite_proche' | 'promotion_envisagee' | 'salarie_itinerant';
 
-// Add missing bubble and evaluation types
+export type EnterpriseStatus = 'vip' | 'sensible' | 'pénible' | 'itinerant' | 'retraite_proche' | 'promotion' | 'talent_strategique';
+
+// Types pour les émotions et bulles
+export type EmotionType = 'happy' | 'excited' | 'neutral' | 'confused' | 'stressed' | 'sad' | 'angry';
+export type BubbleSize = 'small' | 'medium' | 'large';
+export type BubbleAnimation = 'float' | 'pulse' | 'bounce' | 'static';
+export type MoodType = 'excellent' | 'good' | 'neutral' | 'bad' | 'critical';
+
 export interface BubbleData {
   id: string;
-  userId: string;
+  userId?: string;
   timestamp: Date;
   emotionalState: number;
   comment?: string;
   context?: string;
-  mood: 'excellent' | 'good' | 'neutral' | 'bad' | 'critical';
+  mood: MoodType;
+  // Propriétés visuelles pour les bulles
+  emotion: EmotionType;
+  intensity: number;
+  color: string;
+  size: BubbleSize;
+  animation: BubbleAnimation;
+  imageUrl?: string;
 }
 
 export interface EmotionalEvaluation {
   id: string;
   userId: string;
-  score: number;
+  score?: number;
   comment: string;
   timestamp: Date;
-  categories: {
+  categories?: {
     stress: number;
     mood: number;
     energy: number;
     relationships: number;
   };
+  // Nouvelles propriétés
+  bubbleData: BubbleData;
+  scores: Record<string, number>;
+  recommendations: string[];
+  aiAnalysis?: string;
 }
 
 export interface MLDataPoint {
   timestamp: Date;
-  features: number[];
+  features: {
+    emotionalScore: number;
+    textSentiment: number;
+    riskFactors: string[];
+    timeOfDay: number;
+    dayOfWeek: number;
+  };
   label: string;
   confidence: number;
+  userId: string;
+  evaluation: EmotionalEvaluation;
+  userContext: any;
 }
 
 export interface BoxRecommendation {
@@ -49,7 +78,7 @@ export interface BoxRecommendation {
   title: string;
   description: string;
   category: string;
-  targetRole: UserRole;
+  targetRole?: UserRole | FamilySpecialRole;
   targetUniverse: UniverseType;
   aiConfidence: number;
   urgency: 'low' | 'medium' | 'high' | 'urgent';
