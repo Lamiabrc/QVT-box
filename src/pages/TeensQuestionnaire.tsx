@@ -185,7 +185,5 @@ export default function TeensQuestionnaire() {
     </div>
   );
 }
-}
-
 export default TeensQuestionnaire;
 // End of TeensQuestionnaire
