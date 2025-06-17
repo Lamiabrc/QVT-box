@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -6,14 +5,14 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
-import { BoxRecommendation, UniverseType } from '@/types/qvtbox';
+import { BoxRecommendation, UniverseType, UserProfile } from '@/types/qvtbox';
 import { Gift, Star, Users, Sparkles, ShoppingCart, Info, Brain, Heart, Building2 } from 'lucide-react';
 import BubbleComponent from '@/components/bubble/BubbleComponent';
 
 interface UniversalBoxShopProps {
   universe: UniverseType;
   userRole?: string;
-  userProfile?: any;
+  userProfile?: UserProfile;
   aiRecommendations?: BoxRecommendation[];
   onOrderBox: (boxId: string) => void;
   onViewBoxDetails: (boxId: string) => void;
@@ -295,7 +294,7 @@ const UniversalBoxShop: React.FC<UniversalBoxShopProps> = ({
   ];
 
   return (
-    <div className={`min-h-screen bg-gradient-to-br ${theme.gradient} relative overflow-hidden`}>
+    <div className={`min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 relative overflow-hidden`}>
       {/* Bulles flottantes d'ambiance */}
       <div className="absolute inset-0 opacity-30 pointer-events-none">
         <BubbleComponent
@@ -330,8 +329,8 @@ const UniversalBoxShop: React.FC<UniversalBoxShopProps> = ({
           className="text-center mb-8"
         >
           <div className="flex items-center justify-center space-x-4 mb-4">
-            <ThemeIcon className={`w-12 h-12 text-${theme.primary}-600`} />
-            <h1 className={`text-4xl font-bold bg-gradient-to-r from-${theme.primary}-600 via-${theme.accent}-600 to-${theme.primary}-700 bg-clip-text text-transparent`}>
+            <Heart className="w-12 h-12 text-pink-600" />
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-pink-600 via-purple-600 to-pink-700 bg-clip-text text-transparent">
               🎁 Boutique Box Bien-être V3
             </h1>
           </div>

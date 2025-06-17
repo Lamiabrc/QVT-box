@@ -1,5 +1,4 @@
 
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import UniversalBoxShop from "@/components/shop/UniversalBoxShop";
@@ -10,7 +9,7 @@ const FamilyShopV3 = () => {
 
   // Simulation du profil parent
   const userProfile = {
-    role: 'parent',
+    role: 'parent' as const,
     universe: 'famille' as const,
     riskFactors: ['burnout_parental', 'communication_difficile'],
     preferences: ['bienveillance', 'activites_partage'],
@@ -29,7 +28,7 @@ const FamilyShopV3 = () => {
 
   return (
     <div className="min-h-screen">
-      <Navigation userType="family" onBack={() => navigate('/')} />
+      <Navigation userType="parent" onBack={() => navigate('/')} />
       
       <UniversalBoxShop
         universe="famille"

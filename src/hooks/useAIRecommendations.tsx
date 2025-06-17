@@ -1,15 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { BoxRecommendation, UniverseType } from '@/types/qvtbox';
-
-interface UserProfile {
-  role: string;
-  universe: UniverseType;
-  evaluationHistory?: any[];
-  preferences?: string[];
-  riskFactors?: string[];
-  specialStatus?: string[];
-}
+import { BoxRecommendation, UniverseType, UserProfile } from '@/types/qvtbox';
 
 interface AIRecommendationEngine {
   profile: UserProfile;
