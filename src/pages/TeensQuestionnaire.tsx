@@ -16,7 +16,7 @@ const supabase = createClient(
   process.env.REACT_APP_SUPABASE_ANON_KEY || ""
 );
 
-export default function TeensQuestionnaire() {
+function TeensQuestionnaire() {
   const navigate = useNavigate();
   const { toast } = useToast();
   const now = new Date();
