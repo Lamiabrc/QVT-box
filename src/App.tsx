@@ -19,7 +19,6 @@ import {
   TeensIntimacySpace,
   TeensFamilySpace,
   TeensParentalAccess,
-  TeensDashboardParent,
   TeensParentalAccessDashboard,
   TeensQuickAlert,
   TeensCheckIn,
