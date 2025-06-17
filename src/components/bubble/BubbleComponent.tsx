@@ -1,154 +1,89 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { BubbleData } from '@/types/qvtbox';
 
 interface BubbleComponentProps {
-  bubble: BubbleData & { imageUrl?: string; };
+  bubble: BubbleData;
   interactive?: boolean;
   onClick?: () => void;
-  className?: string;
 }
 
-const BubbleComponent: React.FC<BubbleComponentProps> = ({
-  bubble,
+const BubbleComponent: React.FC<BubbleComponentProps> = ({ 
+  bubble, 
   interactive = false,
-  onClick,
-  className = ""
+  onClick 
 }) => {
-  const [isHovered, setIsHovered] = useState(false);
-
-  const getEmotionEmoji = (emotion: string) => {
-    const emojis = {
-      happy: "😊",
-      neutral: "😐", 
-      sad: "😢",
-      stressed: "😰",
-      excited: "🤩",
-      angry: "😠",
-      confused: "😕"
-    };
-    return emojis[emotion as keyof typeof emojis] || "😐";
+  const getSizeClass = () => {
+    switch (bubble.size) {
+      case 'small': return 'w-12 h-12';
+      case 'medium': return 'w-16 h-16';
+      case 'large': return 'w-24 h-24';
+      default: return 'w-16 h-16';
+    }
   };
 
-  const getSizeClass = (size: string) => {
-    const sizes = {
-      small: "w-16 h-16",
-      medium: "w-24 h-24", 
-      large: "w-32 h-32"
+  const getEmotionImage = () => {
+    const emotionImages: Record<string, string> = {
+      happy: '/images/happy.png',
+      sad: '/images/sad.png',
+      excited: '/images/excited.png',
+      anxious: '/images/anxious.png',
+      neutral: '/images/neutral.png',
+      angry: '/images/angry.png',
+      stressed: '/images/stressed.png',
+      confused: '/images/confused.png'
     };
-    return sizes[size as keyof typeof sizes] || sizes.medium;
+    
+    return emotionImages[bubble.emotion] || '/images/neutral.png';
   };
 
   const getAnimationProps = () => {
-    if (bubble.imageUrl) {
-      return {}; // Disable self-animation for image bubbles (controlled externally)
-    }
-    
-    const baseProps = {
-      initial: { scale: 0.8, opacity: 0 },
-      animate: { scale: 1, opacity: 1 },
-      exit: { scale: 0.8, opacity: 0 }
-    };
-
     switch (bubble.animation) {
-      case 'float':
+      case 'bounce':
         return {
-          ...baseProps,
-          animate: {
-            ...baseProps.animate,
-            y: [-5, 5, -5],
-            transition: { 
-              duration: 3, 
-              repeat: Infinity, 
-              repeatType: "reverse" as const
-            }
-          }
+          animate: { y: [0, -10, 0] },
+          transition: { duration: 1, repeat: Infinity }
         };
       case 'pulse':
         return {
-          ...baseProps,
-          animate: {
-            ...baseProps.animate,
-            scale: [1, 1.1, 1],
-            transition: { 
-              duration: 2, 
-              repeat: Infinity, 
-              repeatType: "reverse" as const
-            }
-          }
+          animate: { scale: [1, 1.1, 1] },
+          transition: { duration: 2, repeat: Infinity }
         };
-      case 'bounce':
+      case 'float':
         return {
-          ...baseProps,
-          animate: {
-            ...baseProps.animate,
-            y: [0, -10, 0],
-            transition: { 
-              duration: 1.5, 
-              repeat: Infinity, 
-              repeatType: "loop" as const
-            }
-          }
+          animate: { y: [0, -5, 0] },
+          transition: { duration: 3, repeat: Infinity }
         };
       default:
-        return baseProps;
+        return {};
     }
   };
 
   return (
     <motion.div
-      className={`${bubble.imageUrl ? 'w-full h-full' : getSizeClass(bubble.size)} rounded-full flex items-center justify-center shadow-lg backdrop-blur-sm border-2 border-white/30 ${className} overflow-hidden`}
-      style={{ 
-        backgroundColor: bubble.color,
-        boxShadow: `0 0 20px ${bubble.color}40`,
-        cursor: interactive || onClick ? 'pointer' : 'default'
-      }}
-      {...getAnimationProps()}
-      whileHover={interactive || onClick ? { 
-        scale: 1.1,
-        boxShadow: `0 0 30px ${bubble.color}60`,
-        transition: { duration: 0.2 }
-      } : {}}
-      whileTap={interactive || onClick ? { scale: 0.95 } : {}}
-      onHoverStart={() => setIsHovered(true)}
-      onHoverEnd={() => setIsHovered(false)}
+      className={`${getSizeClass()} relative ${interactive ? 'cursor-pointer' : ''}`}
       onClick={onClick}
+      whileHover={interactive ? { scale: 1.1 } : {}}
+      {...getAnimationProps()}
     >
-      {bubble.imageUrl ? (
-        <img src={bubble.imageUrl} alt="" className="w-full h-full object-cover" />
-      ) : (
-        <div className="text-center">
-          <div className="text-2xl mb-1">
-            {getEmotionEmoji(bubble.emotion)}
-          </div>
-          {(interactive && isHovered) && (
-            <motion.div
-              initial={{ opacity: 0, y: 5 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-xs font-medium text-white/90"
-            >
-              {bubble.intensity}/10
-            </motion.div>
-          )}
-        </div>
-      )}
-      
-      {interactive && !bubble.imageUrl && (
-        <motion.div
-          className="absolute -inset-2 rounded-full border-2 border-white/50"
-          initial={{ scale: 0, opacity: 0 }}
-          animate={isHovered ? { 
-            scale: 1, 
-            opacity: 1,
-            rotate: 360
-          } : { 
-            scale: 0, 
-            opacity: 0 
-          }}
-          transition={{ duration: 0.3 }}
+      <div
+        className="w-full h-full rounded-full flex items-center justify-center shadow-lg"
+        style={{ 
+          backgroundColor: bubble.color,
+          opacity: 0.1 + (bubble.intensity / 10) * 0.9
+        }}
+      >
+        <img
+          src={getEmotionImage()}
+          alt={bubble.emotion}
+          className="w-2/3 h-2/3 object-contain"
         />
-      )}
+      </div>
+      <div 
+        className="absolute inset-0 rounded-full border-2"
+        style={{ borderColor: bubble.color }}
+      />
     </motion.div>
   );
 };

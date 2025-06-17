@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -36,10 +35,6 @@ const FamilySpace: React.FC<FamilySpaceProps> = ({
       parent: "👨‍👩‍👧‍👦",
       enfant_ado: "🧑‍🎓",
       grand_parent: "👴👵",
-      tuteur: "🎓",
-      parrain_marraine: "🤝",
-      institution: "🏫",
-      adulte_referent: "👥",
       parent_solo: '🦸',
       parent_en_couple: '👩‍❤️‍👨',
       parent_lgbt: '🌈',
@@ -49,19 +44,17 @@ const FamilySpace: React.FC<FamilySpaceProps> = ({
     return emojis[role as keyof typeof emojis] || "👤";
   };
 
-  const getMoodColor = (mood: BubbleData) => {
-    if (mood.intensity >= 8) return 'text-green-500';
-    if (mood.intensity >= 6) return 'text-yellow-500';
-    if (mood.intensity >= 4) return 'text-orange-500';
-    return 'text-red-500';
-  };
-
   const urgentAlerts = familyAlerts.filter(alert => alert.type === 'urgent');
 
   return (
     <div className="max-w-6xl mx-auto space-y-8 p-6">
       {/* Header */}
       <div className="text-center">
+        <img 
+          src="/images/bulle-famille.jpg" 
+          alt="Famille heureuse" 
+          className="w-24 h-24 mx-auto rounded-full object-cover mb-4 shadow-lg"
+        />
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
           🏠 FamilySpace
         </h1>
@@ -152,7 +145,7 @@ const FamilySpace: React.FC<FamilySpaceProps> = ({
                       {getRoleEmoji(member.role || '')}
                     </div>
                     <h3 className="font-medium text-sm">{member.role}</h3>
-                    <div className={`text-xs ${getMoodColor(member.currentMood)}`}>
+                    <div className="text-xs text-gray-600">
                       Intensité: {member.currentMood.intensity}/10
                     </div>
                   </motion.div>
@@ -160,72 +153,6 @@ const FamilySpace: React.FC<FamilySpaceProps> = ({
               </div>
             </CardContent>
           </Card>
-
-          {/* Détail membre sélectionné */}
-          <AnimatePresence>
-            {selectedMember && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-              >
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Détail du membre</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    {(() => {
-                      const member = familyMembers.find(m => m.id === selectedMember);
-                      if (!member) return null;
-                      
-                      return (
-                        <div className="space-y-4">
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <h3 className="text-lg font-semibold">
-                                {getRoleEmoji(member.role || '')} {member.role}
-                              </h3>
-                              <p className="text-gray-600">
-                                Dernière évaluation: {new Date(member.currentMood.timestamp).toLocaleDateString('fr-FR')}
-                              </p>
-                            </div>
-                            <BubbleComponent bubble={member.currentMood} />
-                          </div>
-                          
-                          {/* Historique récent */}
-                          <div>
-                            <h4 className="font-medium mb-3">Évolution récente</h4>
-                            <div className="flex space-x-2">
-                              {member.bubbleHistory.slice(-5).map((bubble, index) => (
-                                <BubbleComponent 
-                                  key={bubble.id}
-                                  bubble={{...bubble, size: 'small'}}
-                                />
-                              ))}
-                            </div>
-                          </div>
-
-                          <div className="flex space-x-3">
-                            <Button 
-                              onClick={() => onSendSupport(member.id)}
-                              className="flex-1"
-                            >
-                              <Heart className="w-4 h-4 mr-2" />
-                              Envoyer du soutien
-                            </Button>
-                            <Button variant="outline" className="flex-1">
-                              <MessageCircle className="w-4 h-4 mr-2" />
-                              Démarrer conversation
-                            </Button>
-                          </div>
-                        </div>
-                      );
-                    })()}
-                  </CardContent>
-                </Card>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </TabsContent>
 
         <TabsContent value="moods">
@@ -234,9 +161,19 @@ const FamilySpace: React.FC<FamilySpaceProps> = ({
               <CardTitle>Évolution des humeurs familiales</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-500">
-                Graphiques d'évolution des humeurs à implémenter
-              </p>
+              <div className="text-center py-8">
+                <img 
+                  src="/images/mood-tracker.png" 
+                  alt="Suivi des humeurs" 
+                  className="w-32 h-32 mx-auto mb-4 opacity-50"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                  }}
+                />
+                <p className="text-gray-500">
+                  Graphiques d'évolution des humeurs à venir
+                </p>
+              </div>
             </CardContent>
           </Card>
         </TabsContent>
@@ -253,9 +190,19 @@ const FamilySpace: React.FC<FamilySpaceProps> = ({
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-500">
-                Système de planification d'activités familiales à implémenter
-              </p>
+              <div className="text-center py-8">
+                <img 
+                  src="/images/activities.png" 
+                  alt="Activités familiales" 
+                  className="w-32 h-32 mx-auto mb-4 opacity-50"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                  }}
+                />
+                <p className="text-gray-500">
+                  Système de planification d'activités familiales à venir
+                </p>
+              </div>
             </CardContent>
           </Card>
         </TabsContent>
@@ -269,9 +216,12 @@ const FamilySpace: React.FC<FamilySpaceProps> = ({
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-500">
-                Gestion des permissions et paramètres RGPD à implémenter
-              </p>
+              <div className="text-center py-8">
+                <Settings className="w-16 h-16 mx-auto mb-4 text-gray-400" />
+                <p className="text-gray-500">
+                  Gestion des permissions et paramètres RGPD à venir
+                </p>
+              </div>
             </CardContent>
           </Card>
         </TabsContent>

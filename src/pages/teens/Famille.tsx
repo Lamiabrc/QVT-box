@@ -31,6 +31,11 @@ const Famille = () => {
 
       <div className="container mx-auto px-4 py-16">
         <div className="text-center mb-12">
+          <img 
+            src="/images/bulle-famille.jpg" 
+            alt="Famille unie" 
+            className="w-32 h-32 mx-auto rounded-full object-cover mb-6 shadow-2xl"
+          />
           <h1 className="text-5xl font-bold text-white mb-6">
             Univers Famille
           </h1>
@@ -48,11 +53,16 @@ const Famille = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
+              <img 
+                src="/images/bulle-ado.jpg" 
+                alt="Ado souriant" 
+                className="w-full h-32 object-cover rounded-lg mb-4"
+              />
               <p className="text-gray-300 mb-6">
                 Un espace dédié aux adolescents pour exprimer leurs émotions et accéder à des ressources adaptées.
               </p>
               <Button 
-                onClick={() => navigate('/teens')}
+                onClick={() => navigate('/teens/dashboard')}
                 className="w-full bg-pink-600 hover:bg-pink-700 text-white"
               >
                 Accéder à l'espace Teens
@@ -68,11 +78,16 @@ const Famille = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
+              <img 
+                src="/images/box famille.png" 
+                alt="Box famille" 
+                className="w-full h-32 object-cover rounded-lg mb-4"
+              />
               <p className="text-gray-300 mb-6">
                 Des outils et ressources pour accompagner votre rôle de parent dans le bien-être familial.
               </p>
               <Button 
-                onClick={() => navigate('/family/shop-v3')}
+                onClick={() => navigate('/famille/dashboard')}
                 className="w-full bg-purple-600 hover:bg-purple-700 text-white"
               >
                 Accéder à l'espace Parents
