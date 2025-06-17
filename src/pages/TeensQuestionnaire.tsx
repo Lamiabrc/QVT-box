@@ -12,8 +12,8 @@ import { createClient } from "@supabase/supabase-js";
 
 // init Supabase client
 const supabase = createClient(
-  process.env.REACT_APP_SUPABASE_URL || "",
-  process.env.REACT_APP_SUPABASE_ANON_KEY || ""
+  process.env.REACT_APP_SUPABASE_URL || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1haG1ha21mb255Y2NraXJndHdtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ5OTMwNjQsImV4cCI6MjA2MDU2OTA2NH0.axby_j9XQkOwVBZ3T4l89WzxW8X5Nr-p127j2yJjiAQ",
+  process.env.REACT_APP_SUPABASE_ANON_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1haG1ha21mb255Y2NraXJndHdtIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0NDk5MzA2NCwiZXhwIjoyMDYwNTY5MDY0fQ.x-4mtHzqevWHwC1cIcOD9mAxp4MGKw_wUEUs-dC1T_I"
 );
 
 function TeensQuestionnaire() {
