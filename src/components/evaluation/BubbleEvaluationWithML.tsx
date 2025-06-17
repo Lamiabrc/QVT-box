@@ -29,7 +29,9 @@ const BubbleEvaluationWithML: React.FC<BubbleEvaluationWithMLProps> = ({
     color: '#2196F3',
     size: 'large',
     animation: 'pulse',
-    timestamp: new Date()
+    timestamp: new Date(),
+    emotionalState: 5,
+    mood: 'neutral'
   });
   
   const [scores, setScores] = useState<Record<string, number>>({
@@ -84,7 +86,9 @@ const BubbleEvaluationWithML: React.FC<BubbleEvaluationWithMLProps> = ({
   const handleIntensityChange = (value: number[]) => {
     setBubbleData(prev => ({
       ...prev,
-      intensity: value[0]
+      intensity: value[0],
+      emotionalState: value[0],
+      mood: value[0] > 6 ? 'good' : value[0] > 4 ? 'neutral' : 'bad'
     }));
   };
 
@@ -108,24 +112,27 @@ const BubbleEvaluationWithML: React.FC<BubbleEvaluationWithMLProps> = ({
     if (scores.relations < 4) riskFactors.push('poor_relationships');
 
     return {
-      userId,
-      evaluation: {
-        id: bubbleData.id,
-        userId,
-        bubbleData,
-        scores,
-        comments,
-        timestamp: now,
-        recommendations: []
-      },
-      userContext,
+      timestamp: now,
       features: {
         emotionalScore: avgScore,
         textSentiment: comments.length > 0 ? Math.random() * 2 - 1 : 0, // Simulation NLP
         riskFactors,
         timeOfDay: now.getHours(),
         dayOfWeek: now.getDay()
-      }
+      },
+      label: avgScore > 6 ? 'positive' : avgScore > 4 ? 'neutral' : 'negative',
+      confidence: 0.8,
+      userId,
+      evaluation: {
+        id: bubbleData.id,
+        userId,
+        bubbleData,
+        scores,
+        comment: comments,
+        timestamp: now,
+        recommendations: []
+      },
+      userContext
     };
   };
 

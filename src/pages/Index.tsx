@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -114,7 +115,9 @@ const Index = () => {
                           color: '#4CAF50',
                           size: 'small',
                           animation: 'pulse',
-                          timestamp: new Date()
+                          timestamp: new Date(),
+                          emotionalState: 9,
+                          mood: 'excellent'
                         }}
                       />
                     </div>
@@ -176,7 +179,9 @@ const Index = () => {
                               color: '#0F766E',
                               size: 'small',
                               animation: 'bounce',
-                              timestamp: new Date()
+                              timestamp: new Date(),
+                              emotionalState: 8,
+                              mood: 'good'
                             }}
                           />
                         </div>
@@ -243,7 +248,9 @@ const Index = () => {
                               color: '#2196F3',
                               size: 'small',
                               animation: 'pulse',
-                              timestamp: new Date()
+                              timestamp: new Date(),
+                              emotionalState: 7,
+                              mood: 'good'
                             }}
                           />
                         </div>
@@ -303,7 +310,9 @@ const Index = () => {
                         color: '#D97706',
                         size: 'medium',
                         animation: 'float',
-                        timestamp: new Date()
+                        timestamp: new Date(),
+                        emotionalState: 6,
+                        mood: 'neutral'
                       }}
                     />
                     <div>

@@ -16,21 +16,21 @@ const FamilyRoleSelector: React.FC<FamilyRoleSelectorProps> = ({
 }) => {
   const roles = [
     {
-      id: 'parent_solo' as FamilyRole,
+      id: 'parent' as FamilyRole,
       title: '🦸 Parent Solo',
       description: 'Je gère le quotidien familial en autonomie',
       color: '#0F766E',
       bubble: { emotion: 'happy' as const, intensity: 7 }
     },
     {
-      id: 'parent_en_couple' as FamilyRole,
+      id: 'parent' as FamilyRole,
       title: '👨‍👩‍👧‍👦 Parents en couple',
       description: 'Nous élevons nos enfants ensemble',
       color: '#1E40AF',
       bubble: { emotion: 'happy' as const, intensity: 8 }
     },
     {
-      id: 'parent_lgbt' as FamilyRole,
+      id: 'parent' as FamilyRole,
       title: '🌈 Parent(s) LGBT+',
       description: 'Notre famille arc-en-ciel a ses spécificités',
       color: '#7C3AED',
@@ -51,14 +51,14 @@ const FamilyRoleSelector: React.FC<FamilyRoleSelectorProps> = ({
       bubble: { emotion: 'neutral' as const, intensity: 6 }
     },
     {
-      id: 'famille_recomposee' as FamilyRole,
+      id: 'parent' as FamilyRole,
       title: '🏡 Famille Recomposée',
       description: 'Notre famille s\'est reconstituée avec de nouveaux liens',
       color: '#0891B2',
       bubble: { emotion: 'neutral' as const, intensity: 6 }
     },
     {
-      id: 'autre_situation' as FamilyRole,
+      id: 'autre_referent' as FamilyRole,
       title: '👥 Autre situation',
       description: 'Ma situation familiale est particulière',
       color: '#78716C',
@@ -105,7 +105,9 @@ const FamilyRoleSelector: React.FC<FamilyRoleSelectorProps> = ({
                         color: role.color,
                         size: 'medium',
                         animation: isSelected ? 'bounce' : 'float',
-                        timestamp: new Date()
+                        timestamp: new Date(),
+                        emotionalState: role.bubble.intensity,
+                        mood: role.bubble.intensity > 6 ? 'good' : role.bubble.intensity > 4 ? 'neutral' : 'bad'
                       }}
                       interactive
                     />

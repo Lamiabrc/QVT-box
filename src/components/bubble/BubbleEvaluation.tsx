@@ -50,7 +50,9 @@ const BubbleEvaluation: React.FC<BubbleEvaluationProps> = ({ onComplete, userId 
       color: selectedEmotionData?.color || '#95A5A6',
       size: intensity <= 3 ? 'small' : intensity <= 7 ? 'medium' : 'large',
       animation: intensity >= 8 ? 'bounce' : intensity >= 5 ? 'pulse' : 'float',
-      timestamp: new Date()
+      timestamp: new Date(),
+      emotionalState: intensity,
+      mood: intensity > 6 ? 'good' : intensity > 4 ? 'neutral' : 'bad'
     };
 
     const evaluation: EmotionalEvaluation = {
@@ -58,7 +60,7 @@ const BubbleEvaluation: React.FC<BubbleEvaluationProps> = ({ onComplete, userId 
       userId,
       bubbleData,
       scores: { emotion_intensity: intensity },
-      comments,
+      comment: comments,
       recommendations: [], // To be filled by AI
       timestamp: new Date()
     };
@@ -105,7 +107,9 @@ const BubbleEvaluation: React.FC<BubbleEvaluationProps> = ({ onComplete, userId 
                           color: emotion.color,
                           size: 'medium',
                           animation: 'float',
-                          timestamp: new Date()
+                          timestamp: new Date(),
+                          emotionalState: 5,
+                          mood: 'neutral'
                         }}
                         interactive
                       />
@@ -143,7 +147,9 @@ const BubbleEvaluation: React.FC<BubbleEvaluationProps> = ({ onComplete, userId 
                           color: emotions.find(e => e.key === selectedEmotion)?.color || '#95A5A6',
                           size: value <= 3 ? 'small' : value <= 7 ? 'medium' : 'large',
                           animation: 'pulse',
-                          timestamp: new Date()
+                          timestamp: new Date(),
+                          emotionalState: value,
+                          mood: value > 6 ? 'good' : value > 4 ? 'neutral' : 'bad'
                         }}
                         interactive
                       />
@@ -177,7 +183,9 @@ const BubbleEvaluation: React.FC<BubbleEvaluationProps> = ({ onComplete, userId 
                         color: emotions.find(e => e.key === selectedEmotion)?.color || '#95A5A6',
                         size: intensity <= 3 ? 'small' : intensity <= 7 ? 'medium' : 'large',
                         animation: 'bounce',
-                        timestamp: new Date()
+                        timestamp: new Date(),
+                        emotionalState: intensity,
+                        mood: intensity > 6 ? 'good' : intensity > 4 ? 'neutral' : 'bad'
                       }}
                     />
                   </div>
