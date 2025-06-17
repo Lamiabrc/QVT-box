@@ -60,6 +60,8 @@ import {
 import TeensShopV3 from './pages/TeensShopV3';
 import FamilyShopV3 from './pages/FamilyShopV3';
 import EnterpriseShopV3 from './pages/EnterpriseShopV3';
+import TeensDashboard from './pages/TeensDashboard';
+import FamilyDashboard from './pages/FamilyDashboard';
 
 const queryClient = new QueryClient();
 
@@ -75,14 +77,17 @@ function App() {
           <Route path="/qui-sommes-nous" element={<QuiSommesNous />} />
           <Route path="/nos-valeurs" element={<NosValeurs />} />
           
-          {/* Famille & Teens */}
+          {/* Famille & Teens - Routes corrigées */}
           <Route path="/famille" element={<Famille />} />
+          <Route path="/famille/dashboard" element={<FamilyDashboard />} />
+          <Route path="/famille/shop-v3" element={<FamilyShopV3 />} />
+          
           <Route path="/teens" element={<Teens />} />
+          <Route path="/teens/dashboard" element={<TeensDashboard />} />
           <Route path="/teens/login" element={<TeensLogin />} />
           <Route path="/teens/home" element={<TeensHome />} />
           <Route path="/teens/shop" element={<TeensShop />} />
           <Route path="/teens/shop-v3" element={<TeensShopV3 />} />
-          <Route path="/family/shop-v3" element={<FamilyShopV3 />} />
           
           {/* Routes teens existantes */}
           <Route path="/teens/questionnaire" element={<TeensQuestionnaire />} />
