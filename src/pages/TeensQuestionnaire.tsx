@@ -51,14 +51,16 @@ function TeensQuestionnaire() {
         return;
       }
 
-      // Get last entry for user from Supabase using raw query to avoid type issues
+      // Get last entry for user from Supabase
       const { data: lastEntry, error: fetchError } = await supabase
-        .rpc('custom_query', { 
-          query_text: `SELECT responses FROM teen_assessments WHERE user_id = '${user.id}' ORDER BY date DESC LIMIT 1`
-        })
-        .single();
+        .from('teen_assessments')
+        .select('responses')
+        .eq('user_id', user.id)
+        .order('date', { ascending: false })
+        .limit(1)
+        .maybeSingle();
 
-      if (fetchError && fetchError.code !== 'PGRST116') {
+      if (fetchError) {
         console.log('Error fetching last responses:', fetchError);
       }
 
@@ -129,19 +131,15 @@ function TeensQuestionnaire() {
         return;
       }
 
-      // Save assessment using raw insert to avoid type issues
-      const payload = { 
-        user_id: user.id,
-        frequency, 
-        date: now.toISOString(), 
-        responses, 
-        comments 
-      };
-
+      // Save assessment using standard Supabase insert
       const { error } = await supabase
-        .rpc('custom_insert', {
-          table_name: 'teen_assessments',
-          data: payload
+        .from('teen_assessments')
+        .insert({
+          user_id: user.id,
+          frequency, 
+          date: now.toISOString(), 
+          responses, 
+          comments 
         });
 
       if (error) {
@@ -173,16 +171,12 @@ function TeensQuestionnaire() {
       };
 
       // Save recommendations
-      const recPayload = { 
-        user_id: user.id,
-        assessment_date: now.toISOString(), 
-        recommendations: mockRecommendations 
-      };
-
       await supabase
-        .rpc('custom_insert', {
-          table_name: 'teen_recommendations',
-          data: recPayload
+        .from('teen_recommendations')
+        .insert({
+          user_id: user.id,
+          assessment_date: now.toISOString(), 
+          recommendations: mockRecommendations 
         });
 
       navigate('/recommandations', { state: { recommendations: mockRecommendations } });
