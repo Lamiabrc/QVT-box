@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -18,7 +19,7 @@ import {
   TeensIntimacySpace,
   TeensFamilySpace,
   TeensParentalAccess,
-  TeensDashboardParent,
+  TeensDashboard,
   TeensParentalAccessDashboard,
   TeensQuickAlert,
   TeensCheckIn,
@@ -59,7 +60,6 @@ import {
 import TeensShopV3 from './pages/TeensShopV3';
 import FamilyShopV3 from './pages/FamilyShopV3';
 import EnterpriseShopV3 from './pages/EnterpriseShopV3';
-import TeensDashboard from './pages/TeensDashboard';
 import FamilyDashboard from './pages/FamilyDashboard';
 import { PlatformProvider } from '@/hooks/usePlatform';
 
@@ -97,7 +97,6 @@ function App() {
             <Route path="/teens/intimacy-space" element={<TeensIntimacySpace />} />
             <Route path="/teens/family-space" element={<TeensFamilySpace />} />
             <Route path="/teens/parental-access" element={<TeensParentalAccess />} />
-            <Route path="/teens/dashboard-parent" element={<TeensDashboardParent />} />
             <Route path="/teens/parental-access-dashboard" element={<TeensParentalAccessDashboard />} />
             <Route path="/teens/quick-alert" element={<TeensQuickAlert />} />
             <Route path="/teens/check-in" element={<TeensCheckIn />} />

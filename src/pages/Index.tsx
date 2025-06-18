@@ -1,5 +1,6 @@
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
+
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import PlatformSelector from "@/components/platform/PlatformSelector";
 import { PlatformProvider } from "@/hooks/usePlatform";
 
