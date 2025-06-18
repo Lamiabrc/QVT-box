@@ -25,7 +25,7 @@ const Header = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3">
             <img 
-              src="/lovable-uploads/1398cdff-61cf-4c6c-a073-6f67536dd04b.png" 
+              src="/images/logo-qvt.png" 
               alt="QVT Box Logo" 
               className="h-12 w-auto"
             />
