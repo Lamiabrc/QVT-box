@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'sonner';
 import {
   Index,
+  ConceptQVT,
   Contact,
   QuiSommesNous,
   NosValeurs,
@@ -74,6 +75,7 @@ function App() {
           <Routes>
             {/* Routes principales */}
             <Route path="/" element={<Index />} />
+            <Route path="/concept-qvt" element={<ConceptQVT />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/qui-sommes-nous" element={<QuiSommesNous />} />
             <Route path="/nos-valeurs" element={<NosValeurs />} />

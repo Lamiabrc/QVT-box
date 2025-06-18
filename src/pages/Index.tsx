@@ -23,11 +23,25 @@ const Index = () => {
         {/* Hero Section Enhanced */}
         <section className="relative py-32 bg-gradient-to-br from-primary/10 via-secondary/5 to-accent/10">
           <div className="container mx-auto px-4 text-center relative z-10">
+            {/* Hero Image */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8 }}
+              className="mb-8"
+            >
+              <img 
+                src="/images/logo-qvt.png" 
+                alt="QVT Platform Logo" 
+                className="w-32 h-32 mx-auto mb-6 rounded-full shadow-2xl"
+              />
+            </motion.div>
+
             {/* Animated Title */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
               className="mb-8"
             >
               <h1 className="text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 mb-6 leading-tight">
@@ -38,7 +52,7 @@ const Index = () => {
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, delay: 0.3 }}
+                transition={{ duration: 0.8, delay: 0.5 }}
                 className="relative"
               >
                 <p className="text-2xl md:text-3xl text-gray-700 max-w-4xl mx-auto mb-8 font-semibold leading-relaxed">
@@ -51,11 +65,44 @@ const Index = () => {
               </motion.div>
             </motion.div>
 
+            {/* Feature Images Grid */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+              className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12 max-w-4xl mx-auto"
+            >
+              <motion.img 
+                whileHover={{ scale: 1.1, rotate: 5 }}
+                src="/images/team qvt.jpg" 
+                alt="Équipe QVT" 
+                className="w-full h-24 object-cover rounded-2xl shadow-lg"
+              />
+              <motion.img 
+                whileHover={{ scale: 1.1, rotate: -5 }}
+                src="/images/qvt spirit.jpg" 
+                alt="Esprit QVT" 
+                className="w-full h-24 object-cover rounded-2xl shadow-lg"
+              />
+              <motion.img 
+                whileHover={{ scale: 1.1, rotate: 5 }}
+                src="/images/famille-connectee.png" 
+                alt="Famille connectée" 
+                className="w-full h-24 object-cover rounded-2xl shadow-lg"
+              />
+              <motion.img 
+                whileHover={{ scale: 1.1, rotate: -5 }}
+                src="/images/equipe-bien-etre.png" 
+                alt="Équipe bien-être" 
+                className="w-full h-24 object-cover rounded-2xl shadow-lg"
+              />
+            </motion.div>
+
             {/* Animated Feature Tags */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
+              transition={{ duration: 0.8, delay: 1.0 }}
               className="flex flex-wrap justify-center gap-6 mb-12"
             >
               {[
@@ -79,12 +126,12 @@ const Index = () => {
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.9 }}
+              transition={{ duration: 0.8, delay: 1.2 }}
               className="mb-16"
             >
               <Button
                 size="lg"
-                onClick={() => navigate('/entreprise/simulator')}
+                onClick={() => navigate('/concept-qvt')}
                 className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white text-xl font-bold px-12 py-6 rounded-2xl shadow-2xl transform transition-all duration-300 hover:scale-110 hover:shadow-3xl group"
               >
                 <Sparkles className="w-6 h-6 mr-3 group-hover:animate-spin" />
@@ -111,7 +158,7 @@ const Index = () => {
           <PlatformSelector />
         </motion.section>
 
-        {/* Features Section Enhanced */}
+        {/* Features Section Enhanced with Images */}
         <motion.section
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -144,19 +191,22 @@ const Index = () => {
                   icon: "🎯",
                   title: "Personnalisé",
                   description: "Chaque univers propose une expérience sur-mesure selon votre contexte",
-                  gradient: "from-blue-500 to-cyan-500"
+                  gradient: "from-blue-500 to-cyan-500",
+                  image: "/images/capable.jpg"
                 },
                 {
                   icon: "🔄",
                   title: "Évolutif",
                   description: "Activation et désactivation des fonctionnalités selon vos besoins",
-                  gradient: "from-green-500 to-emerald-500"
+                  gradient: "from-green-500 to-emerald-500",
+                  image: "/images/leadership femme.jpg"
                 },
                 {
                   icon: "🚀",
                   title: "Performant",
                   description: "Une seule infrastructure pour deux expériences utilisateur optimales",
-                  gradient: "from-purple-500 to-pink-500"
+                  gradient: "from-purple-500 to-pink-500",
+                  image: "/images/manager-rh.png"
                 }
               ].map((feature, index) => (
                 <motion.div
@@ -166,12 +216,19 @@ const Index = () => {
                   transition={{ duration: 0.6, delay: index * 0.2 }}
                   viewport={{ once: true }}
                   whileHover={{ scale: 1.05, y: -10 }}
-                  className="text-center p-8 bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl border border-white/50 hover:shadow-2xl transition-all duration-300"
+                  className="text-center p-8 bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl border border-white/50 hover:shadow-2xl transition-all duration-300 overflow-hidden"
                 >
-                  <div className={`w-24 h-24 bg-gradient-to-br ${feature.gradient} rounded-3xl mx-auto mb-6 flex items-center justify-center text-4xl transform hover:rotate-12 transition-transform duration-300`}>
-                    {feature.icon}
+                  <div className="relative mb-6">
+                    <img 
+                      src={feature.image} 
+                      alt={feature.title}
+                      className="w-full h-32 object-cover rounded-2xl mb-4"
+                    />
+                    <div className={`w-16 h-16 bg-gradient-to-br ${feature.gradient} rounded-2xl mx-auto flex items-center justify-center text-2xl transform hover:rotate-12 transition-transform duration-300 absolute -bottom-2 left-1/2 transform -translate-x-1/2 border-4 border-white shadow-lg`}>
+                      {feature.icon}
+                    </div>
                   </div>
-                  <h3 className="text-2xl font-bold mb-4 text-gray-800">{feature.title}</h3>
+                  <h3 className="text-2xl font-bold mb-4 text-gray-800 mt-4">{feature.title}</h3>
                   <p className="text-gray-600 text-lg leading-relaxed">
                     {feature.description}
                   </p>

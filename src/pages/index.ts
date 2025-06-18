@@ -1,5 +1,6 @@
 // Main pages exports
 export { default as Index } from './Index';
+export { default as ConceptQVT } from './ConceptQVT';
 export { default as Contact } from './Contact';
 export { default as QuiSommesNous } from './QuiSommesNous';
 export { default as NosValeurs } from './NosValeurs';
