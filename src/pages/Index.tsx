@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -7,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import BubbleComponent from '@/components/bubble/BubbleComponent';
+import SignupPopup from '@/components/SignupPopup';
 import { Building2, Heart, ArrowRight, CheckCircle, Sparkles, Package, Brain, Shield } from 'lucide-react';
 import FloatingBubbles from '@/components/bubble/FloatingBubbles';
 
@@ -16,6 +16,7 @@ const Index = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-slate-50 via-white to-blue-50 relative overflow-hidden">
       <FloatingBubbles />
+      <SignupPopup />
 
       <Header />
       
@@ -317,7 +318,14 @@ const Index = () => {
                     />
                     <div>
                       <h3 className="text-xl font-bold text-slate-800 mb-2">🎯 Univers Coach QVT</h3>
-                      <p className="text-slate-600">À venir prochainement - Outils pour les professionnels de l'accompagnement</p>
+                      <p className="text-slate-600 mb-4">Outils professionnels pour les coaches de vie - Bientôt disponible</p>
+                      <Button 
+                        variant="outline" 
+                        onClick={() => navigate('/coach-qvt')}
+                        className="hover:bg-amber-50"
+                      >
+                        Découvrir
+                      </Button>
                     </div>
                   </div>
                 </CardContent>
@@ -325,7 +333,7 @@ const Index = () => {
             </div>
           </motion.div>
 
-          {/* CTA Final */}
+          {/* CTA Final avec choix de simulateurs */}
           <motion.div 
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
@@ -341,11 +349,19 @@ const Index = () => {
             <div className="flex flex-wrap justify-center gap-4">
               <Button 
                 size="lg" 
-                className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white px-8 py-4 rounded-xl shadow-lg" 
-                onClick={() => navigate('/simulators')}
+                className="bg-gradient-to-r from-teal-600 to-blue-700 hover:from-teal-700 hover:to-blue-800 text-white px-8 py-4 rounded-xl shadow-lg" 
+                onClick={() => navigate('/famille')}
               >
-                <Sparkles className="w-5 h-5 mr-2" />
-                Découvrir les simulateurs
+                <Heart className="w-5 h-5 mr-2" />
+                Simulateur Famille
+              </Button>
+              <Button 
+                size="lg" 
+                className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-4 rounded-xl shadow-lg" 
+                onClick={() => navigate('/entreprise/simulator')}
+              >
+                <Building2 className="w-5 h-5 mr-2" />
+                Simulateur Entreprise
               </Button>
             </div>
           </motion.div>

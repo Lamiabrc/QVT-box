@@ -1,10 +1,8 @@
-// Main pages exports
+
 export { default as Index } from './Index';
 export { default as Contact } from './Contact';
 export { default as QuiSommesNous } from './QuiSommesNous';
 export { default as NosValeurs } from './NosValeurs';
-
-// Family & Teens
 export { default as Famille } from './teens/Famille';
 export { default as Teens } from './Teens';
 export { default as TeensLogin } from './teens/Login';
@@ -16,8 +14,6 @@ export { default as TeensPersonalSpace } from './TeensPersonalSpace';
 export { default as TeensIntimacySpace } from './TeensIntimacySpace';
 export { default as TeensFamilySpace } from './TeensFamilySpace';
 export { default as TeensParentalAccess } from './TeensParentalAccess';
-export { default as TeensDashboard } from './TeensDashboard';
-export { default as FamilyDashboard } from './FamilyDashboard';
 export { default as TeensParentalAccessDashboard } from './TeensParentalAccessDashboard';
 export { default as TeensQuickAlert } from './TeensQuickAlert';
 export { default as TeensCheckIn } from './TeensCheckIn';
@@ -27,11 +23,10 @@ export { default as TeensPlaylist } from './TeensPlaylist';
 export { default as TeensCustomization } from './TeensCustomization';
 export { default as TeensFunSolutions } from './TeensFunSolutions';
 export { default as FamilySimulator } from './teens/FamilySimulator';
-
-// Enterprise
 export { default as Entreprise } from './Entreprise';
 export { default as EntrepriseHome } from './entreprise/EntrepriseHome';
 export { default as EntrepriseLogin } from './entreprise/Login';
+export { default as EntrepriseRegister } from './entreprise/Register';
 export { default as EntrepriseForgotPassword } from './entreprise/ForgotPassword';
 export { default as EntrepriseResetPassword } from './entreprise/ResetPassword';
 export { default as EntrepriseQuestionnaire } from './EntrepriseQuestionnaire';
@@ -45,14 +40,10 @@ export { default as EntrepriseOrders } from './entreprise/Orders';
 export { default as EntrepriseUnboxing } from './entreprise/Unboxing';
 export { default as EntrepriseSimulator } from './entreprise/Simulator';
 export { default as AdminContentManager } from './entreprise/AdminContentManager';
-
-// Auth
 export { default as Auth } from './Auth';
 export { default as Login } from './auth/Login';
 export { default as Register } from './auth/Register';
 export { default as ForgotPassword } from './auth/ForgotPassword';
-
-// Other
 export { default as SimulatorHome } from './simulator/SimulatorHome';
 export { default as SimulatorHub } from './simulator/SimulatorHub';
 export { default as Recommandations } from './Recommandations';
@@ -60,3 +51,5 @@ export { default as Historique } from './Historique';
 export { default as Profil } from './Profil';
 export { default as AdminPanel } from './AdminPanel';
 export { default as NotFound } from './NotFound';
+export { default as ConceptQVT } from './ConceptQVT';
+export { default as CoachQVT } from './CoachQVT';

@@ -1,15 +1,18 @@
+
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import BubbleComponent from '@/components/bubble/BubbleComponent';
 import { useNavigate } from 'react-router-dom';
 
-const bubbleContent = [
-  { imageUrl: '/lovable-uploads/1487ccee-42cd-40a6-8a14-c02384e891be.jpg', link: '/auth' },
-  { imageUrl: '/lovable-uploads/a4ecdc7a-c850-42e1-b650-f1c34a951345.png', link: '/entreprise/simulator' },
-  { imageUrl: '/lovable-uploads/1398cdff-61cf-4c6c-a073-6f67536dd04b.png', link: '/famille' },
-  { imageUrl: '/lovable-uploads/1487ccee-42cd-40a6-8a14-c02384e891be.jpg', link: '/auth/login' },
-  { imageUrl: '/lovable-uploads/a4ecdc7a-c850-42e1-b650-f1c34a951345.png', link: '/qui-sommes-nous' },
-  { imageUrl: '/lovable-uploads/1398cdff-61cf-4c6c-a073-6f67536dd04b.png', link: '/contact' },
+// Images uniques pour éviter les doublons
+const uniqueBubbleContent = [
+  { imageUrl: '/images/logo-qvt.png', link: '/concept-qvt', id: 'logo' },
+  { imageUrl: '/images/bulle-collaborateur.png', link: '/entreprise/simulator', id: 'collaborateur' },
+  { imageUrl: '/images/bulle-famille.jpg', link: '/famille', id: 'famille' },
+  { imageUrl: '/images/qvteens-bubble.png', link: '/teens', id: 'teens' },
+  { imageUrl: '/images/bulle-eval.png', link: '/simulators', id: 'eval' },
+  { imageUrl: '/images/bulle-shop.png', link: '/teens/shop', id: 'shop' },
+  { imageUrl: '/images/bulle-dashboard.jpg', link: '/entreprise/dashboard', id: 'dashboard' },
+  { imageUrl: '/images/bulle-equipe.jpg', link: '/entreprise/simulator', id: 'equipe' },
 ];
 
 const FloatingBubbles = () => {
@@ -17,24 +20,24 @@ const FloatingBubbles = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const bubbles = Array.from({ length: 20 }, (_, i) => {
-      const content = bubbleContent[i % bubbleContent.length];
-      const size = Math.random() * 60 + 40; // 40px to 100px
-      const amplitude = Math.random() * 30 + 20; // Sideways wave amplitude from 20 to 50px
+    // Créer des bulles uniques avec des contenus différents
+    const bubbles = Array.from({ length: 12 }, (_, i) => {
+      const content = uniqueBubbleContent[i % uniqueBubbleContent.length];
+      const size = Math.random() * 60 + 50; // 50px to 110px pour éviter qu'elles soient trop grosses
+      const amplitude = Math.random() * 30 + 20; // Amplitude réduite pour plus de fluidité
       return {
-        id: `floating_${i}`,
+        id: `floating_${content.id}_${i}`, // ID unique basé sur le contenu
         size: size,
-        left: `${Math.random() * 95}%`,
-        delay: Math.random() * 20,
-        duration: Math.random() * 15 + 15, // 15s to 30s
+        left: `${Math.random() * 85 + 7.5}%`, // 7.5% to 92.5% pour éviter les bords
+        delay: Math.random() * 30, // Délai étalé sur 30s
+        duration: Math.random() * 25 + 25, // 25s to 50s pour plus de variété
         ...content,
         emotion: 'neutral',
         intensity: 5,
-        color: 'rgba(255, 255, 255, 0.1)',
+        color: 'rgba(255, 255, 255, 0.12)',
         animation: 'float',
         timestamp: new Date(),
-        // Adding more points to the x-axis animation to create a wave-like motion
-        xKeyframes: [0, amplitude, -amplitude, 0], 
+        xKeyframes: [0, amplitude, -amplitude/2, amplitude/3, 0], // Mouvement plus naturel
       };
     });
     setAnimatedBubbles(bubbles);
@@ -57,20 +60,42 @@ const FloatingBubbles = () => {
             animate={{
               y: `-${window.innerHeight + bubble.size * 2}px`,
               x: bubble.xKeyframes,
-              opacity: [0, 0.9, 0.9, 0],
+              opacity: [0, 0.6, 0.8, 0.6, 0],
+              scale: [0.8, 1, 1.1, 1, 0.9],
               transition: {
                 duration: bubble.duration,
                 delay: bubble.delay,
                 repeat: Infinity,
                 ease: 'linear',
-                times: [0, 0.15, 0.85, 1],
+                times: [0, 0.1, 0.5, 0.9, 1],
               },
             }}
-            whileHover={{ scale: 1.15, transition: { duration: 0.2 } }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ 
+              scale: 1.3, 
+              transition: { duration: 0.3 },
+              opacity: 1
+            }}
+            whileTap={{ scale: 0.8 }}
             onClick={() => bubble.link && navigate(bubble.link)}
           >
-            <BubbleComponent bubble={bubble} />
+            <div 
+              className="w-full h-full rounded-full shadow-2xl backdrop-blur-sm border-2 border-white/20 flex items-center justify-center overflow-hidden relative group"
+              style={{ 
+                background: `linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1))`,
+              }}
+            >
+              <img
+                src={bubble.imageUrl}
+                alt={`Bubble ${bubble.id}`}
+                className="w-3/4 h-3/4 object-cover rounded-full group-hover:scale-110 transition-transform duration-300"
+                style={{
+                  filter: 'brightness(1.1) contrast(1.05) saturate(1.1)',
+                }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-br from-white/15 to-transparent rounded-full pointer-events-none"></div>
+              {/* Effet de brillance au survol */}
+              <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse"></div>
+            </div>
           </motion.div>
         ))}
       </AnimatePresence>

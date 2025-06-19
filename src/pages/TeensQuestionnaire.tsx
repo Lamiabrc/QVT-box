@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -8,13 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Star, Heart } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { AnimatePresence, motion } from "framer-motion";
-import { createClient } from "@supabase/supabase-js";
-
-// init Supabase client
-const supabase = createClient(
-  process.env.REACT_APP_SUPABASE_URL || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1haG1ha21mb255Y2NraXJndHdtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ5OTMwNjQsImV4cCI6MjA2MDU2OTA2NH0.axby_j9XQkOwVBZ3T4l89WzxW8X5Nr-p127j2yJjiAQ",
-  process.env.REACT_APP_SUPABASE_ANON_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1haG1ha21mb255Y2NraXJndHdtIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0NDk5MzA2NCwiZXhwIjoyMDYwNTY5MDY0fQ.x-4mtHzqevWHwC1cIcOD9mAxp4MGKw_wUEUs-dC1T_I"
-);
+import { supabase } from "@/integrations/supabase/client";
 
 function TeensQuestionnaire() {
   const navigate = useNavigate();
@@ -43,28 +38,80 @@ function TeensQuestionnaire() {
   // Fetch dynamic questions from backend ChatGPT endpoint
   async function fetchDynamicQuestions() {
     setLoadingQuestions(true);
-    // Get last entry for user from Supabase
-    const { data: lastEntry } = await supabase
-      .from('teen_assessments')
-      .select('responses')
-      .order('date', { ascending: false })
-      .limit(1)
-      .single();
-    const lastResponses = lastEntry?.responses || {};
+    try {
+      // Get last entry for user from Supabase
+      const { data: lastEntry } = await supabase
+        .from('teen_assessments')
+        .select('responses')
+        .order('date', { ascending: false })
+        .limit(1)
+        .single();
+      const lastResponses = lastEntry?.responses || {};
 
-    // Call backend to generate next questions
-    const res = await fetch('/api/dynamic-questions', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ frequency, lastResponses })
-    });
-    if (!res.ok) {
-      toast({ title: 'Erreur chargement', description: 'Impossible de charger les questions dynamiques.', variant: 'destructive' });
-      setLoadingQuestions(false);
-      return;
+      // Call backend to generate next questions - fallback to static questions if API fails
+      try {
+        const res = await fetch('/api/dynamic-questions', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ frequency, lastResponses })
+        });
+        
+        if (res.ok) {
+          const { questions } = await res.json();
+          setQuestionsConfig(questions);
+        } else {
+          throw new Error('API not available');
+        }
+      } catch (apiError) {
+        // Fallback to static questions
+        const staticQuestions = [
+          {
+            id: 'mood_today',
+            question: 'Comment te sens-tu aujourd\'hui ?',
+            emoji: '😊',
+            options: [
+              { value: '5', label: 'Super bien', emoji: '😄' },
+              { value: '4', label: 'Plutôt bien', emoji: '😊' },
+              { value: '3', label: 'Moyen', emoji: '😐' },
+              { value: '2', label: 'Pas terrible', emoji: '😕' },
+              { value: '1', label: 'Très mal', emoji: '😢' }
+            ]
+          },
+          {
+            id: 'energy_level',
+            question: 'Quel est ton niveau d\'énergie ?',
+            emoji: '⚡',
+            options: [
+              { value: '5', label: 'Plein d\'énergie', emoji: '⚡' },
+              { value: '4', label: 'Bien énergique', emoji: '💪' },
+              { value: '3', label: 'Niveau normal', emoji: '😌' },
+              { value: '2', label: 'Un peu fatigué', emoji: '😴' },
+              { value: '1', label: 'Épuisé', emoji: '🥱' }
+            ]
+          },
+          {
+            id: 'stress_level',
+            question: 'Comment gères-tu le stress cette semaine ?',
+            emoji: '😰',
+            options: [
+              { value: '5', label: 'Très bien', emoji: '😌' },
+              { value: '4', label: 'Bien', emoji: '🙂' },
+              { value: '3', label: 'Moyennement', emoji: '😐' },
+              { value: '2', label: 'Difficilement', emoji: '😟' },
+              { value: '1', label: 'Très mal', emoji: '😰' }
+            ]
+          }
+        ];
+        setQuestionsConfig(staticQuestions);
+      }
+    } catch (error) {
+      console.error('Error fetching questions:', error);
+      toast({ 
+        title: 'Erreur chargement', 
+        description: 'Impossible de charger les questions.', 
+        variant: 'destructive' 
+      });
     }
-    const { questions } = await res.json();
-    setQuestionsConfig(questions);
     setLoadingQuestions(false);
   }
 
@@ -80,27 +127,43 @@ function TeensQuestionnaire() {
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
-    const payload = { frequency, date: now.toISOString(), responses, comments };
-    const { error } = await supabase.from('teen_assessments').insert([payload]);
-    if (error) {
-      toast({ title: 'Erreur sauvegarde', description: error.message, variant: 'destructive' });
-      setIsSubmitting(false);
-      return;
+    try {
+      const payload = { frequency, date: now.toISOString(), responses, comments };
+      const { error } = await supabase.from('teen_assessments').insert([payload]);
+      
+      if (error) {
+        toast({ title: 'Erreur sauvegarde', description: error.message, variant: 'destructive' });
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Try to generate personalized recommendations, but don't block if it fails
+      try {
+        const recRes = await fetch('/api/recommendations', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ responses, comments, frequency })
+        });
+        
+        if (recRes.ok) {
+          const { recommendations } = await recRes.json();
+          await supabase.from('teen_recommendations').insert([{ 
+            assessment_date: now.toISOString(), 
+            recommendations 
+          }]);
+          navigate('/recommandations', { state: { recommendations } });
+        } else {
+          // Fallback: navigate without AI recommendations
+          navigate('/recommandations');
+        }
+      } catch (apiError) {
+        console.log('API recommendations not available, using fallback');
+        navigate('/recommandations');
+      }
+    } catch (error) {
+      console.error('Error submitting assessment:', error);
+      toast({ title: 'Erreur', description: 'Une erreur est survenue.', variant: 'destructive' });
     }
-    // On submit, generate personalized recommendations
-    const recRes = await fetch('/api/recommendations', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ responses, comments, frequency })
-    });
-    if (!recRes.ok) {
-      toast({ title: 'Erreur IA', description: 'Recommandations indisponibles.', variant: 'destructive' });
-      setIsSubmitting(false);
-      return;
-    }
-    const { recommendations } = await recRes.json();
-    await supabase.from('teen_recommendations').insert([{ assessment_date: now.toISOString(), recommendations }]);
-    navigate('/recommandations', { state: { recommendations } });
     setIsSubmitting(false);
   };
 
@@ -186,4 +249,3 @@ function TeensQuestionnaire() {
   );
 }
 export default TeensQuestionnaire;
-// End of TeensQuestionnaire
