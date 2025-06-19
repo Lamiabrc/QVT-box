@@ -71,19 +71,21 @@ const FloatingBubbles = () => {
             onClick={() => bubble.link && navigate(bubble.link)}
           >
             <div 
-              className="w-full h-full rounded-full shadow-2xl backdrop-blur-sm border-2 border-white/30 flex items-center justify-center overflow-hidden"
+              className="w-full h-full rounded-full shadow-2xl backdrop-blur-sm border-2 border-white/30 flex items-center justify-center overflow-hidden relative"
               style={{ 
-                background: `linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1))`,
+                background: `linear-gradient(135deg, rgba(255,255,255,0.25), rgba(255,255,255,0.15))`,
               }}
             >
               <img
                 src={bubble.imageUrl}
                 alt="Bubble content"
-                className="w-3/4 h-3/4 object-contain rounded-full"
+                className="w-4/5 h-4/5 object-contain rounded-full"
                 style={{
                   filter: 'brightness(1.1) contrast(1.1)',
+                  objectFit: 'cover',
                 }}
               />
+              <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent rounded-full pointer-events-none"></div>
             </div>
           </motion.div>
         ))}
