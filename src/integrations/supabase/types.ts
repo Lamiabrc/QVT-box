@@ -621,6 +621,36 @@ export type Database = {
         }
         Relationships: []
       }
+      teen_assessments: {
+        Row: {
+          comments: Json
+          created_at: string
+          date: string
+          frequency: string
+          id: string
+          responses: Json
+          user_id: string | null
+        }
+        Insert: {
+          comments?: Json
+          created_at?: string
+          date?: string
+          frequency?: string
+          id?: string
+          responses?: Json
+          user_id?: string | null
+        }
+        Update: {
+          comments?: Json
+          created_at?: string
+          date?: string
+          frequency?: string
+          id?: string
+          responses?: Json
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       teen_checkins: {
         Row: {
           academic_pressure: number | null
@@ -687,6 +717,30 @@ export type Database = {
           message?: string
           type?: string
           urgent?: boolean | null
+        }
+        Relationships: []
+      }
+      teen_recommendations: {
+        Row: {
+          assessment_date: string
+          created_at: string
+          id: string
+          recommendations: Json
+          user_id: string | null
+        }
+        Insert: {
+          assessment_date: string
+          created_at?: string
+          id?: string
+          recommendations?: Json
+          user_id?: string | null
+        }
+        Update: {
+          assessment_date?: string
+          created_at?: string
+          id?: string
+          recommendations?: Json
+          user_id?: string | null
         }
         Relationships: []
       }

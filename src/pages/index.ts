@@ -3,6 +3,7 @@ export { default as Index } from './Index';
 export { default as Contact } from './Contact';
 export { default as QuiSommesNous } from './QuiSommesNous';
 export { default as NosValeurs } from './NosValeurs';
+export { default as ConceptQVT } from './ConceptQVT';
 
 // Family & Teens
 export { default as Famille } from './teens/Famille';

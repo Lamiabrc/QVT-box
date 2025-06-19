@@ -55,6 +55,7 @@ import {
   Profil,
   AdminPanel,
   NotFound,
+  ConceptQVT,
 } from '@/pages';
 import TeensShopV3 from './pages/TeensShopV3';
 import FamilyShopV3 from './pages/FamilyShopV3';
@@ -75,6 +76,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/qui-sommes-nous" element={<QuiSommesNous />} />
           <Route path="/nos-valeurs" element={<NosValeurs />} />
+          <Route path="/concept-qvt" element={<ConceptQVT />} />
           
           {/* Famille & Teens - Routes corrigées */}
           <Route path="/famille" element={<Famille />} />
@@ -95,7 +97,6 @@ function App() {
           <Route path="/teens/intimacy-space" element={<TeensIntimacySpace />} />
           <Route path="/teens/family-space" element={<TeensFamilySpace />} />
           <Route path="/teens/parental-access" element={<TeensParentalAccess />} />
-          <Route path="/teens/dashboard-parent" element={<TeensDashboardParent />} />
           <Route path="/teens/parental-access-dashboard" element={<TeensParentalAccessDashboard />} />
           <Route path="/teens/quick-alert" element={<TeensQuickAlert />} />
           <Route path="/teens/check-in" element={<TeensCheckIn />} />
