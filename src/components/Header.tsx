@@ -142,7 +142,7 @@ const Header = () => {
                     <BubbleComponent
                       bubble={{
                         id: 'family_nav_bubble',
-                        emotion: 'love',
+                        emotion: 'happy',
                         intensity: 7,
                         color: '#0F766E',
                         size: 'small',
@@ -156,6 +156,21 @@ const Header = () => {
                 </div>
                 <span className="font-semibold group-hover:underline decoration-teal-500 decoration-2 underline-offset-4">
                   👨‍👩‍👧‍👦 Famille
+                </span>
+              </Link>
+            </motion.div>
+
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Link 
+                to="/coach-qvt" 
+                className="group flex items-center space-x-2 text-slate-700 hover:text-amber-600 transition-all duration-300"
+              >
+                <Users className="h-5 w-5 group-hover:rotate-12 transition-transform duration-300" />
+                <span className="font-semibold group-hover:underline decoration-amber-500 decoration-2 underline-offset-4">
+                  🎯 Coach QVT
                 </span>
               </Link>
             </motion.div>

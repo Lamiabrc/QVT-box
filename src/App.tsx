@@ -12,7 +12,6 @@ import {
   Teens,
   TeensLogin,
   TeensHome,
-  TeensShop,
   TeensQuestionnaire,
   TeensAIEvaluation,
   TeensPersonalSpace,
@@ -39,7 +38,6 @@ import {
   ManagerDashboard,
   HRDashboard,
   AdminDashboard,
-  EntrepriseShop,
   EntrepriseOrders,
   EntrepriseUnboxing,
   EntrepriseSimulator,
@@ -62,6 +60,7 @@ import FamilyShopV3 from './pages/FamilyShopV3';
 import EnterpriseShopV3 from './pages/EnterpriseShopV3';
 import TeensDashboard from './pages/TeensDashboard';
 import FamilyDashboard from './pages/FamilyDashboard';
+import CoachQVT from './pages/CoachQVT';
 
 const queryClient = new QueryClient();
 
@@ -77,18 +76,18 @@ function App() {
           <Route path="/qui-sommes-nous" element={<QuiSommesNous />} />
           <Route path="/nos-valeurs" element={<NosValeurs />} />
           <Route path="/concept-qvt" element={<ConceptQVT />} />
+          <Route path="/coach-qvt" element={<CoachQVT />} />
           
-          {/* Famille & Teens - Routes corrigées */}
+          {/* Famille & Teens - Routes unifiées */}
           <Route path="/famille" element={<Famille />} />
           <Route path="/famille/dashboard" element={<FamilyDashboard />} />
-          <Route path="/famille/shop-v3" element={<FamilyShopV3 />} />
+          <Route path="/famille/shop" element={<FamilyShopV3 />} />
           
           <Route path="/teens" element={<Teens />} />
           <Route path="/teens/dashboard" element={<TeensDashboard />} />
           <Route path="/teens/login" element={<TeensLogin />} />
           <Route path="/teens/home" element={<TeensHome />} />
-          <Route path="/teens/shop" element={<TeensShop />} />
-          <Route path="/teens/shop-v3" element={<TeensShopV3 />} />
+          <Route path="/teens/shop" element={<TeensShopV3 />} />
           
           {/* Routes teens existantes */}
           <Route path="/teens/questionnaire" element={<TeensQuestionnaire />} />
@@ -107,9 +106,9 @@ function App() {
           <Route path="/teens/fun-solutions" element={<TeensFunSolutions />} />
           <Route path="/teens/family-simulator" element={<FamilySimulator />} />
 
-          {/* Entreprise */}
+          {/* Entreprise - Routes unifiées */}
           <Route path="/entreprise" element={<Entreprise />} />
-          <Route path="/entreprise/shop-v3" element={<EnterpriseShopV3 />} />
+          <Route path="/entreprise/shop" element={<EnterpriseShopV3 />} />
           
           {/* Routes entreprise existantes */}
           <Route path="/entreprise/home" element={<EntrepriseHome />} />
@@ -122,7 +121,6 @@ function App() {
           <Route path="/entreprise/manager-dashboard" element={<ManagerDashboard />} />
           <Route path="/entreprise/hr-dashboard" element={<HRDashboard />} />
           <Route path="/entreprise/admin-dashboard" element={<AdminDashboard />} />
-          <Route path="/entreprise/shop" element={<EntrepriseShop />} />
           <Route path="/entreprise/orders" element={<EntrepriseOrders />} />
           <Route path="/entreprise/unboxing" element={<EntrepriseUnboxing />} />
           <Route path="/entreprise/simulator" element={<EntrepriseSimulator />} />
