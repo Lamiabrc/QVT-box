@@ -29,10 +29,10 @@ const BubbleComponent: React.FC<BubbleComponentProps> = ({
       sad: '/images/sad.png',
       excited: '/images/excited.png',
       anxious: '/images/anxious.png',
-      neutral: '/images/neutral.png',
-      angry: '/images/angry.png',
-      stressed: '/images/stressed.png',
-      confused: '/images/confused.png'
+      neutral: '/images/qvtspirit.jpg',
+      angry: '/images/anxious.png',
+      stressed: '/images/anxious.png',
+      confused: '/images/mentalhealth.png'
     };
     
     return emotionImages[bubble.emotion] || '/images/neutral.png';
