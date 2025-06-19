@@ -1,12 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 
 const ConceptQVT: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-white flex flex-col">
 
-      {/* Hero */}
+      {/* Hero Section */}
       <section className="relative overflow-hidden">
         <motion.div
           initial={{ scale: 1.2 }}
@@ -14,12 +13,10 @@ const ConceptQVT: React.FC = () => {
           transition={{ duration: 1, ease: 'easeOut' }}
           className="absolute inset-0"
         >
-          <Image
+          <img
             src="/images/concept-hero.jpg"
             alt="Illustration phygitale QVT Box"
-            layout="fill"
-            objectFit="cover"
-            className="opacity-20"
+            className="w-full h-full object-cover opacity-20"
           />
         </motion.div>
         <div className="relative z-10 container mx-auto px-6 py-32 text-center">
@@ -29,8 +26,7 @@ const ConceptQVT: React.FC = () => {
             transition={{ duration: 0.8 }}
             className="text-5xl md:text-7xl font-extrabold text-slate-800 leading-tight"
           >
-            Réinventer le bien-être,
-            <br />du bureau au foyer
+            Réinventer le bien-être,<br />du bureau au foyer
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -44,7 +40,7 @@ const ConceptQVT: React.FC = () => {
         </div>
       </section>
 
-      {/* Innovations */}
+      {/* Innovations Section */}
       <section className="container mx-auto px-6 py-20">
         <h2 className="text-3xl font-bold text-slate-800 text-center mb-12">
           Nos piliers d’innovation
@@ -89,8 +85,8 @@ const ConceptQVT: React.FC = () => {
               transition={{ delay: 0.2 * i }}
               className="flex flex-col items-center text-center"
             >
-              <div className="mb-6 w-20 h-20 relative">
-                <Image src={f.icon} alt={f.title} layout="fill" objectFit="contain" />
+              <div className="mb-6 w-20 h-20">
+                <img src={f.icon} alt={f.title} className="w-full h-full object-contain" />
               </div>
               <h3 className="text-2xl font-semibold text-slate-800 mb-2">{f.title}</h3>
               <p className="text-slate-600 max-w-xs">{f.desc}</p>
@@ -99,7 +95,7 @@ const ConceptQVT: React.FC = () => {
         </div>
       </section>
 
-      {/* Fonctionnement */}
+      {/* How It Works Section */}
       <section className="bg-white py-20">
         <div className="container mx-auto px-6">
           <h2 className="text-3xl font-bold text-slate-800 text-center mb-12">
@@ -128,7 +124,7 @@ const ConceptQVT: React.FC = () => {
         </div>
       </section>
 
-      {/* Témoignages */}
+      {/* Testimonials Section */}
       <section className="container mx-auto px-6 py-20">
         <h2 className="text-3xl font-bold text-slate-800 text-center mb-12">
           Ils parlent de nous
@@ -152,7 +148,7 @@ const ConceptQVT: React.FC = () => {
         </div>
       </section>
 
-      {/* CTA Final */}
+      {/* Final CTA Section */}
       <section className="bg-blue-50 py-20">
         <div className="container mx-auto px-6 text-center">
           <motion.h2
