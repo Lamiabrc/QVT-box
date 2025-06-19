@@ -31,7 +31,7 @@ const BubbleComponent: React.FC<BubbleComponentProps> = ({
       anxious: '/images/anxious.png',
       neutral: '/images/qvtspirit.jpg',
       angry: '/images/anxious.png',
-      stressed: '/images/anxious.png',
+      stressed: '/images/filledeprime.jpg',
       confused: '/images/mentalhealth.png'
     };
     
