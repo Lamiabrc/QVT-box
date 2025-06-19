@@ -35,7 +35,7 @@ const BubbleComponent: React.FC<BubbleComponentProps> = ({
       confused: '/images/mentalhealth.png'
     };
     
-    return emotionImages[bubble.emotion] || '/images/neutral.png';
+    return emotionImages[bubble.emotion] || '/images/breakup.png';
   };
 
   const getAnimationProps = () => {
