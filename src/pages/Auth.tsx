@@ -19,29 +19,17 @@ const Auth = () => {
         <div className="absolute bottom-40 right-10 w-20 h-20 bg-yellow-500 rounded-full animate-pulse"></div>
       </div>
 
-      {/* Header */}
-      <header className="relative z-10 border-b border-white/20 bg-black/30 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Button 
-              variant="ghost" 
-              onClick={() => navigate('/')}
-              className="flex items-center space-x-2 text-white hover:bg-white/20"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              <span>Retour à l'accueil</span>
-            </Button>
-            <div className="flex items-center space-x-3">
-              <Zap className="w-6 h-6 text-yellow-400" />
-              <h1 className="text-2xl font-black text-white">QVT BOX</h1>
-            </div>
-          </div>
-        </div>
-      </header>
-
       <div className="container mx-auto px-4 py-16 relative z-10">
         {/* Hero Section */}
         <div className="text-center mb-16">
+          <Button 
+            variant="ghost" 
+            onClick={() => navigate('/')}
+            className="mb-8 flex items-center space-x-2 text-white hover:bg-white/20 mx-auto"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span>Retour à l'accueil</span>
+          </Button>
           <h1 className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-400 mb-6">
             CONNEXION
           </h1>
@@ -72,7 +60,7 @@ const Auth = () => {
                 </Button>
                 <Button 
                   className="w-full bg-blue-600/80 hover:bg-blue-700/80 text-white py-3 text-lg rounded-xl"
-                  onClick={() => navigate('/auth/register')}
+                  onClick={() => navigate('/entreprise/register')}
                 >
                   <UserPlus className="w-5 h-5 mr-2" />
                   S'inscrire
@@ -102,7 +90,7 @@ const Auth = () => {
               <div className="grid grid-cols-1 gap-3">
                 <Button 
                   className="w-full bg-pink-600 hover:bg-pink-700 text-white py-3 text-lg rounded-xl"
-                  onClick={() => navigate('/famille/simulator')}
+                  onClick={() => navigate('/teens/family-simulator')}
                 >
                   🏠 Simulateur Famille (Gratuit)
                 </Button>

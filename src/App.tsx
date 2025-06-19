@@ -30,6 +30,7 @@ import {
   Entreprise,
   EntrepriseHome,
   EntrepriseLogin,
+  EntrepriseRegister,
   EntrepriseForgotPassword,
   EntrepriseResetPassword,
   EntrepriseQuestionnaire,
@@ -61,6 +62,8 @@ import EnterpriseShopV3 from './pages/EnterpriseShopV3';
 import TeensDashboard from './pages/TeensDashboard';
 import FamilyDashboard from './pages/FamilyDashboard';
 import CoachQVT from './pages/CoachQVT';
+import Header from './components/Header';
+import SignupPopup from './components/SignupPopup';
 
 const queryClient = new QueryClient();
 
@@ -68,6 +71,8 @@ function App() {
   return (
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
+        <Header />
+        <SignupPopup />
         <Toaster />
         <Routes>
           {/* Routes principales */}
@@ -109,6 +114,7 @@ function App() {
           {/* Entreprise - Routes unifiées */}
           <Route path="/entreprise" element={<Entreprise />} />
           <Route path="/entreprise/shop" element={<EnterpriseShopV3 />} />
+          <Route path="/entreprise/register" element={<EntrepriseRegister />} />
           
           {/* Routes entreprise existantes */}
           <Route path="/entreprise/home" element={<EntrepriseHome />} />

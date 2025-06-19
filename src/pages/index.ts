@@ -1,3 +1,4 @@
+
 export { default as Index } from './Index';
 export { default as Contact } from './Contact';
 export { default as QuiSommesNous } from './QuiSommesNous';
@@ -25,6 +26,7 @@ export { default as FamilySimulator } from './teens/FamilySimulator';
 export { default as Entreprise } from './Entreprise';
 export { default as EntrepriseHome } from './entreprise/EntrepriseHome';
 export { default as EntrepriseLogin } from './entreprise/Login';
+export { default as EntrepriseRegister } from './entreprise/Register';
 export { default as EntrepriseForgotPassword } from './entreprise/ForgotPassword';
 export { default as EntrepriseResetPassword } from './entreprise/ResetPassword';
 export { default as EntrepriseQuestionnaire } from './EntrepriseQuestionnaire';

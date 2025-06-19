@@ -247,7 +247,7 @@ const Header = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <Link to="/entreprise/login">
+                  <Link to="/auth">
                     <Button 
                       variant="outline" 
                       size="sm"
@@ -263,7 +263,7 @@ const Header = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <Link to="/entreprise/register">
+                  <Link to="/auth/register">
                     <Button 
                       size="sm"
                       className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all duration-300"
