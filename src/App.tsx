@@ -62,6 +62,8 @@ import EnterpriseShopV3 from "./pages/EnterpriseShopV3";
 import TeensDashboard from "./pages/TeensDashboard";
 import FamilyDashboard from "./pages/FamilyDashboard";
 import CoachQVT from "./pages/CoachQVT";
+import Unboxing from "./pages/Unboxing";
+import AdminLogin from "./pages/AdminLogin";
 import Header from "./components/Header";
 import SignupPopup from "./components/SignupPopup";
 
@@ -69,11 +71,14 @@ const queryClient = new QueryClient();
 
 function AppContent() {
   const { pathname } = useLocation();
+  
+  // Pages sans header
+  const pagesWithoutHeader = ["/", "/admin/login"];
 
   return (
     <>
-      {/* Masque Header et popup sur la racine */}
-      {pathname !== "/" && <Header />}
+      {/* Masque Header et popup sur certaines pages */}
+      {!pagesWithoutHeader.includes(pathname) && <Header />}
       {pathname !== "/" && <SignupPopup />}
 
       {/* Notifications */}
@@ -85,6 +90,8 @@ function AppContent() {
         <Route path="/nos-valeurs" element={<NosValeurs />} />
         <Route path="/concept-qvt" element={<ConceptQVT />} />
         <Route path="/coach-qvt" element={<CoachQVT />} />
+        <Route path="/unboxing" element={<Unboxing />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
 
         <Route path="/famille" element={<Famille />} />
         <Route path="/famille/dashboard" element={<FamilyDashboard />} />
