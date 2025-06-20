@@ -123,6 +123,17 @@ const Header = () => {
                 <span className="font-semibold group-hover:underline decoration-purple-500 decoration-2 underline-offset-4">Concept QVT</span>
               </Link>
             </motion.div>
+
+            {/* Accès admin discret - seulement visible au survol */}
+            <motion.div 
+              whileHover={{ scale: 1.05 }} 
+              whileTap={{ scale: 0.95 }}
+              className="opacity-30 hover:opacity-100 transition-opacity duration-300"
+            >
+              <Link to="/admin/login" className="text-xs text-slate-400 hover:text-slate-600 font-mono">
+                •••
+              </Link>
+            </motion.div>
           </nav>
 
           {/* Actions utilisateur avec effets */}
