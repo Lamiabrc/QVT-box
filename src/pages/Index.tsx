@@ -14,26 +14,18 @@ function Index() {
   useEffect(() => {
     // Animate logo on load
     if (logoRef.current) {
-      logoRef.current.style.transform = 'scale(1.2)';
+      logoRef.current.style.transform = 'scale(1.5)';
     }
   }, []);
 
   const universes = [
     {
-      title: "QVT FAMILLE",
-      description: "Solutions bien-être pour toute la famille",
+      title: "QVT FAMILLE & TEENS",
+      description: "Solutions bien-être pour toute la famille et accompagnement spécialisé pour adolescents",
       image: "/images/bulle-famille.jpg",
       route: "/famille",
       color: "from-pink-500 to-purple-500",
       icon: <Heart className="w-6 h-6" />
-    },
-    {
-      title: "QVT TEENS",
-      description: "Accompagnement spécialisé pour adolescents",
-      image: "/images/bulle-ado.jpg",
-      route: "/teens",
-      color: "from-purple-500 to-indigo-500",
-      icon: <Users className="w-6 h-6" />
     },
     {
       title: "QVT ENTREPRISE",
@@ -74,9 +66,9 @@ function Index() {
               ref={logoRef}
               src="/images/logo-qvt.png"
               alt="QVT Logo"
-              className="w-48 h-48 mx-auto mb-8 object-contain transition-transform duration-500"
+              className="w-64 h-64 mx-auto mb-8 object-contain transition-transform duration-500"
               initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1.2, opacity: 1 }}
+              animate={{ scale: 1.5, opacity: 1 }}
               transition={{ duration: 0.8 }}
             />
             
@@ -147,7 +139,7 @@ function Index() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {universes.map((universe, index) => (
               <motion.div
                 key={index}
