@@ -15,13 +15,3 @@ export { default as EntrepriseOrders }       from './Orders';
 export { default as EntrepriseUnboxing }     from './Unboxing';
 export { default as EntrepriseSimulator }    from './Simulator';
 export { default as AdminContentManager }    from './AdminContentManager';
-
-/* ------------------------------------------------------------------------------
-   pages/auth/index.js
-   Barrel pour l'authentification
------------------------------------------------------------------------------- */
-export { default as Auth }            from '../Auth';     // wrapper global
-export { default as Login }           from './Login';
-export { default as Register }        from './Register';
-export { default as ForgotPassword }  from './ForgotPassword';
-export { default as ResetPassword }   from './ResetPassword';
