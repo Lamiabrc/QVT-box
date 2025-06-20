@@ -6,7 +6,6 @@ import { Building2, Users, User, LogOut, Shield, Sparkles, Heart } from 'lucide-
 import { useSecureAuth } from '@/hooks/useSecureAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { motion } from 'framer-motion';
-import BubbleComponent from '@/components/bubble/BubbleComponent';
 
 const Header = () => {
   const {
@@ -60,20 +59,8 @@ const Header = () => {
                   <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent rounded-full"></div>
                 </motion.div>
                 
-                {/* Bulle émotionnelle du logo */}
-                <div className="absolute -top-1 -right-1">
-                  <BubbleComponent bubble={{
-                    id: 'logo_bubble',
-                    emotion: 'excited',
-                    intensity: 8,
-                    color: '#3B82F6',
-                    size: 'small',
-                    animation: 'pulse',
-                    timestamp: new Date(),
-                    emotionalState: 8,
-                    mood: 'excellent'
-                  }} />
-                </div>
+                {/* Petite bulle décorative */}
+                <div className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-br from-pink-400 to-purple-400 rounded-full animate-pulse"></div>
               </div>
               
               <div className="group-hover:translate-x-1 transition-transform duration-300">
@@ -89,7 +76,7 @@ const Header = () => {
                   animate={{ opacity: 1 }} 
                   transition={{ delay: 0.3 }}
                 >
-                  🫧 Sortir de sa bulle • Qualité de Vie
+                  Sortir de sa bulle • Qualité de Vie
                 </motion.p>
               </div>
             </Link>
@@ -101,22 +88,10 @@ const Header = () => {
               <Link to="/entreprise" className="group flex items-center space-x-2 text-slate-700 hover:text-blue-600 transition-all duration-300 relative">
                 <div className="relative">
                   <Building2 className="h-5 w-5 group-hover:rotate-6 transition-transform duration-300" />
-                  <div className="absolute -top-1 -right-1">
-                    <BubbleComponent bubble={{
-                      id: 'enterprise_nav_bubble',
-                      emotion: 'happy',
-                      intensity: 6,
-                      color: '#3B82F6',
-                      size: 'small',
-                      animation: 'float',
-                      timestamp: new Date(),
-                      emotionalState: 6,
-                      mood: 'good'
-                    }} />
-                  </div>
+                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                 </div>
                 <span className="font-semibold group-hover:underline decoration-blue-500 decoration-2 underline-offset-4">
-                  🏢 Entreprise
+                  Entreprise
                 </span>
               </Link>
             </motion.div>
@@ -125,22 +100,10 @@ const Header = () => {
               <Link to="/famille" className="group flex items-center space-x-2 text-slate-700 hover:text-teal-600 transition-all duration-300 relative">
                 <div className="relative">
                   <Heart className="h-5 w-5 group-hover:scale-110 transition-transform duration-300" />
-                  <div className="absolute -top-1 -right-1">
-                    <BubbleComponent bubble={{
-                      id: 'family_nav_bubble',
-                      emotion: 'happy',
-                      intensity: 7,
-                      color: '#0F766E',
-                      size: 'small',
-                      animation: 'bounce',
-                      timestamp: new Date(),
-                      emotionalState: 7,
-                      mood: 'excellent'
-                    }} />
-                  </div>
+                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-br from-pink-400 to-purple-400 rounded-full animate-pulse"></div>
                 </div>
                 <span className="font-semibold group-hover:underline decoration-teal-500 decoration-2 underline-offset-4">
-                  👨‍👩‍👧‍👦 Famille & Teens
+                  Famille & Teens
                 </span>
               </Link>
             </motion.div>
@@ -149,7 +112,7 @@ const Header = () => {
               <Link to="/coach-qvt" className="group flex items-center space-x-2 text-slate-700 hover:text-amber-600 transition-all duration-300">
                 <Users className="h-5 w-5 group-hover:rotate-12 transition-transform duration-300" />
                 <span className="font-semibold group-hover:underline decoration-amber-500 decoration-2 underline-offset-4">
-                  🎯 Coach QVT
+                  Coach QVT
                 </span>
               </Link>
             </motion.div>
@@ -157,7 +120,7 @@ const Header = () => {
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Link to="/concept-qvt" className="group flex items-center space-x-2 text-slate-700 hover:text-purple-600 transition-all duration-300">
                 <Sparkles className="h-5 w-5 group-hover:rotate-12 transition-transform duration-300" />
-                <span className="font-semibold group-hover:underline decoration-purple-500 decoration-2 underline-offset-4">✨ Concept QVT</span>
+                <span className="font-semibold group-hover:underline decoration-purple-500 decoration-2 underline-offset-4">Concept QVT</span>
               </Link>
             </motion.div>
           </nav>
@@ -171,7 +134,7 @@ const Header = () => {
                     <Link to="/admin">
                       <Button variant="outline" size="sm" className="bg-gradient-to-r from-purple-50 to-pink-50 text-purple-700 border-purple-200 hover:bg-gradient-to-r hover:from-purple-100 hover:to-pink-100 shadow-md">
                         <Shield className="h-4 w-4 mr-2" />
-                        👑 Admin Principal
+                        Admin Principal
                       </Button>
                     </Link>
                   </motion.div>
@@ -181,7 +144,7 @@ const Header = () => {
                     <Link to="/entreprise/admin-dashboard">
                       <Button variant="outline" size="sm" className="shadow-md">
                         <Shield className="h-4 w-4 mr-2" />
-                        🛡️ Admin
+                        Admin
                       </Button>
                     </Link>
                   </motion.div>
@@ -190,7 +153,7 @@ const Header = () => {
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                   <Button variant="ghost" size="sm" onClick={handleLogout} className="flex items-center space-x-2 hover:bg-red-50 hover:text-red-600 transition-all duration-300">
                     <LogOut className="h-4 w-4" />
-                    <span>🚪 Déconnexion</span>
+                    <span>Déconnexion</span>
                   </Button>
                 </motion.div>
               </div>
@@ -200,7 +163,7 @@ const Header = () => {
                   <Link to="/auth">
                     <Button variant="outline" size="sm" className="hover:bg-blue-50 hover:border-blue-300 transition-all duration-300 shadow-md">
                       <User className="h-4 w-4 mr-2" />
-                      🔐 Connexion
+                      Connexion
                     </Button>
                   </Link>
                 </motion.div>
@@ -209,7 +172,7 @@ const Header = () => {
                   <Link to="/auth/register">
                     <Button size="sm" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all duration-300">
                       <Sparkles className="h-4 w-4 mr-2" />
-                      🚀 S'inscrire
+                      S'inscrire
                     </Button>
                   </Link>
                 </motion.div>

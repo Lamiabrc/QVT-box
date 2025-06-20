@@ -91,7 +91,7 @@ function Index() {
             </motion.p>
 
             <motion.div 
-              className="flex justify-center space-x-4"
+              className="flex justify-center space-x-4 mb-8"
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.6 }}
@@ -101,6 +101,24 @@ function Index() {
               </Button>
               <Button variant="outline" size="lg">
                 En savoir plus
+              </Button>
+            </motion.div>
+
+            {/* Nouveau bouton pour accéder au dashboard famille */}
+            <motion.div 
+              className="flex justify-center"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.8 }}
+            >
+              <Button 
+                size="lg" 
+                className="bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white shadow-lg hover:shadow-xl transition-all duration-300"
+                onClick={() => navigate('/famille/dashboard')}
+              >
+                <Heart className="w-5 h-5 mr-2" />
+                Accéder à votre espace famille
+                <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
             </motion.div>
           </div>
