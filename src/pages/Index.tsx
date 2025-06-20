@@ -1,220 +1,57 @@
+Vous avez dit :
 
-import React, { useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Users, Building2, Heart, Star, CheckCircle, Zap, Shield } from "lucide-react";
-import { motion } from "framer-motion";
+export { default as Index } from './Index';
+export { default as Contact } from './Contact';
+export { default as QuiSommesNous } from './QuiSommesNous';
+export { default as NosValeurs } from './NosValeurs';
+export { default as Famille } from './teens/Famille';
+export { default as Teens } from './Teens';
+export { default as TeensQuestionnaire } from './TeensQuestionnaire';
+export { default as TeensAIEvaluation } from './TeensAIEvaluation';
+export { default as TeensPersonalSpace } from './TeensPersonalSpace';
+export { default as TeensIntimacySpace } from './TeensIntimacySpace';
+export { default as TeensFamilySpace } from './TeensFamilySpace';
+export { default as TeensParentalAccess } from './TeensParentalAccess';
+export { default as TeensParentalAccessDashboard } from './TeensParentalAccessDashboard';
+export { default as TeensQuickAlert } from './TeensQuickAlert';
+export { default as TeensCheckIn } from './TeensCheckIn';
+export { default as TeensCalendar } from './TeensCalendar';
+export { default as TeensJournal } from './TeensJournal';
+export { default as TeensPlaylist } from './TeensPlaylist';
+export { default as TeensCustomization } from './TeensCustomization';
+export { default as TeensFunSolutions } from './TeensFunSolutions';
+export { default as FamilySimulator } from './teens/FamilySimulator';
+export { default as Entreprise } from './Entreprise';
+export { default as EntrepriseHome } from './entreprise/EntrepriseHome';
+export { default as EntrepriseLogin } from './entreprise/Login';
+export { default as EntrepriseRegister } from './entreprise/Register';
+export { default as EntrepriseForgotPassword } from './entreprise/ForgotPassword';
+export { default as EntrepriseResetPassword } from './entreprise/ResetPassword';
+export { default as EntrepriseQuestionnaire } from './EntrepriseQuestionnaire';
+export { default as EntrepriseDashboard } from './EntrepriseDashboard';
+export { default as EmployeeDashboard } from './entreprise/EmployeeDashboard';
+export { default as ManagerDashboard } from './entreprise/ManagerDashboard';
+export { default as HRDashboard } from './entreprise/HRDashboard';
+export { default as AdminDashboard } from './entreprise/AdminDashboard';
+export { default as EntrepriseOrders } from './entreprise/Orders';
+export { default as EntrepriseUnboxing } from './entreprise/Unboxing';
+export { default as EntrepriseSimulator } from './entreprise/Simulator';
+export { default as AdminContentManager } from './entreprise/AdminContentManager';
+export { default as Auth } from './Auth';
+export { default as Login } from './auth/Login';
+export { default as Register } from './auth/Register';
+export { default as ForgotPassword } from './auth/ForgotPassword';
+export { default as SimulatorHome } from './simulator/SimulatorHome';
+export { default as SimulatorHub } from './simulator/SimulatorHub';
+export { default as Recommandations } from './Recommandations';
+export { default as Historique } from './Historique';
+export { default as Profil } from './Profil';
+export { default as AdminPanel } from './AdminPanel';
+export { default as NotFound } from './NotFound';
+export { default as ConceptQVT } from './ConceptQVT';
+export { default as Unboxing } from './Unboxing';
+export { default as AdminLogin } from './AdminLogin';
 
-function Index() {
-  const navigate = useNavigate();
-  const logoRef = useRef<HTMLImageElement>(null);
-
-  useEffect(() => {
-    // Animate logo on load
-    if (logoRef.current) {
-      logoRef.current.style.transform = 'scale(1.5)';
-    }
-  }, []);
-
-  const universes = [
-    {
-      title: "QVT FAMILLE & TEENS",
-      description: "Solutions bien-être pour toute la famille et accompagnement spécialisé pour adolescents",
-      image: "/images/bulle-famille.jpg",
-      route: "/famille",
-      color: "from-pink-500 to-purple-500",
-      icon: <Heart className="w-6 h-6" />
-    },
-    {
-      title: "QVT ENTREPRISE",
-      description: "Qualité de vie au travail pour vos équipes",
-      image: "/images/bulle-boutique-entreprise.jpg",
-      route: "/entreprise",
-      color: "from-blue-500 to-teal-500",
-      icon: <Building2 className="w-6 h-6" />
-    }
-  ];
-
-  const features = [
-    {
-      icon: <Zap className="w-8 h-8 text-yellow-500" />,
-      title: "Évaluation Intelligente",
-      description: "IA pour analyser le bien-être"
-    },
-    {
-      icon: <Shield className="w-8 h-8 text-green-500" />,
-      title: "Solutions Personnalisées",
-      description: "Recommandations adaptées"
-    },
-    {
-      icon: <CheckCircle className="w-8 h-8 text-blue-500" />,
-      title: "Accompagnement Expert",
-      description: "Suivi professionnel continu"
-    }
-  ];
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
-      {/* Hero Section */}
-      <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10" />
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-16">
-            <motion.img
-              ref={logoRef}
-              src="/images/logo-qvt.png"
-              alt="QVT Logo"
-              className="w-64 h-64 mx-auto mb-8 object-contain transition-transform duration-500"
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1.5, opacity: 1 }}
-              transition={{ duration: 0.8 }}
-            />
-            
-            <motion.h1 
-              className="text-6xl font-bold text-gray-900 mb-6"
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.2 }}
-            >
-              QVT <span className="text-blue-600">Solutions</span>
-            </motion.h1>
-            
-            <motion.p 
-              className="text-xl text-gray-600 max-w-3xl mx-auto mb-8"
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.4 }}
-            >
-              Plateforme innovante d'accompagnement pour le bien-être et la qualité de vie
-            </motion.p>
-
-            <motion.div 
-              className="flex justify-center space-x-4 mb-8"
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.6 }}
-            >
-              <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
-                Découvrir nos solutions
-              </Button>
-              <Button variant="outline" size="lg">
-                En savoir plus
-              </Button>
-            </motion.div>
-
-            {/* Nouveau bouton pour accéder au dashboard famille */}
-            <motion.div 
-              className="flex justify-center"
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.8 }}
-            >
-              <Button 
-                size="lg" 
-                className="bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white shadow-lg hover:shadow-xl transition-all duration-300"
-                onClick={() => navigate('/famille/dashboard')}
-              >
-                <Heart className="w-5 h-5 mr-2" />
-                Accéder à votre espace famille
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </Button>
-            </motion.div>
-          </div>
-
-          {/* Features Cards */}
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
-            {features.map((feature, index) => (
-              <motion.div
-                key={index}
-                initial={{ y: 50, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.8 + index * 0.2 }}
-              >
-                <Card className="text-center hover:shadow-lg transition-shadow">
-                  <CardContent className="p-6">
-                    <div className="mb-4 flex justify-center">{feature.icon}</div>
-                    <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-                    <p className="text-gray-600">{feature.description}</p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Universe Selection */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Choisissez votre univers
-            </h2>
-            <p className="text-xl text-gray-600">
-              Solutions personnalisées pour chaque contexte de vie
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {universes.map((universe, index) => (
-              <motion.div
-                key={index}
-                whileHover={{ scale: 1.05 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                <Card 
-                  className="overflow-hidden hover:shadow-xl transition-all cursor-pointer border-2 hover:border-blue-500"
-                  onClick={() => navigate(universe.route)}
-                >
-                  <div className={`h-2 bg-gradient-to-r ${universe.color}`} />
-                  <CardHeader>
-                    <div className="flex items-center space-x-3 mb-4">
-                      {universe.icon}
-                      <CardTitle className="text-2xl">{universe.title}</CardTitle>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <img 
-                      src={universe.image} 
-                      alt={universe.title}
-                      className="w-full h-48 object-cover rounded-lg mb-4"
-                    />
-                    <p className="text-gray-600 mb-6">{universe.description}</p>
-                    <Button className="w-full group">
-                      Accéder
-                      <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </Button>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-6">
-            Prêt à améliorer votre qualité de vie ?
-          </h2>
-          <p className="text-xl mb-8 opacity-90">
-            Rejoignez des milliers d'utilisateurs qui ont transformé leur bien-être
-          </p>
-          <div className="flex justify-center space-x-4">
-            <Button size="lg" variant="secondary">
-              Commencer maintenant
-            </Button>
-            <Button size="lg" variant="outline" className="text-white border-white hover:bg-white hover:text-blue-600">
-              Découvrir le concept
-            </Button>
-          </div>
-        </div>
-      </section>
-    </div>
-  );
-}
-
-export default Index;
+// New pages exports for missing components
+export { default as TeensLogin } from './teens/Login';
+export { default as TeensHome } from './teens/TeensHome';
