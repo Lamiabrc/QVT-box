@@ -1,194 +1,263 @@
-
-// App.tsx: Conditional Header and SignupPopup based on pathname
-import React from "react";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+// src/App.tsx
+import React, { Suspense } from "react";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useLocation,
+  Navigate,
+} from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "sonner";
-import {
-  Index,
-  Contact,
-  QuiSommesNous,
-  NosValeurs,
-  Famille,
-  Teens,
-  TeensLogin,
-  TeensHome,
-  TeensQuestionnaire,
-  TeensAIEvaluation,
-  TeensPersonalSpace,
-  TeensIntimacySpace,
-  TeensFamilySpace,
-  TeensParentalAccess,
-  TeensParentalAccessDashboard,
-  TeensQuickAlert,
-  TeensCheckIn,
-  TeensCalendar,
-  TeensJournal,
-  TeensPlaylist,
-  TeensCustomization,
-  TeensFunSolutions,
-  FamilySimulator,
-  Entreprise,
-  EntrepriseHome,
-  EntrepriseLogin,
-  EntrepriseRegister,
-  EntrepriseForgotPassword,
-  EntrepriseResetPassword,
-  EntrepriseQuestionnaire,
-  EntrepriseDashboard,
-  EmployeeDashboard,
-  ManagerDashboard,
-  HRDashboard,
-  AdminDashboard,
-  EntrepriseOrders,
-  EntrepriseUnboxing,
-  EntrepriseSimulator,
-  AdminContentManager,
-  Auth,
-  Login,
-  Register,
-  ForgotPassword,
-  SimulatorHome,
-  SimulatorHub,
-  Recommandations,
-  Historique,
-  Profil,
-  AdminPanel,
-  NotFound,
-  ConceptQVT,
-  Unboxing,
-  AdminLogin,
-} from "@/pages";
+
+// Components « lourds » importés dynamiquement si besoin
+// import { lazy } from "react";
+// const TeensQuestionnaire = lazy(() => import("./pages/TeensQuestionnaire"));
+// …
+
+// Import global depuis votre barrel
+import * as Pages from "@/pages";
+
+import TeensDashboard from "./pages/TeensDashboard";
+import FamilyDashboard from "./pages/FamilyDashboard";
 import TeensShopV3 from "./pages/TeensShopV3";
 import FamilyShopV3 from "./pages/FamilyShopV3";
 import EnterpriseShopV3 from "./pages/EnterpriseShopV3";
-import TeensDashboard from "./pages/TeensDashboard";
-import FamilyDashboard from "./pages/FamilyDashboard";
 import CoachQVT from "./pages/CoachQVT";
+
 import Header from "./components/Header";
 import SignupPopup from "./components/SignupPopup";
 
 const queryClient = new QueryClient();
 
+// Liste des chemins où l'on ne veut PAS afficher le Header ni le Signup
+const pagesWithoutHeader = new Set([
+  "/",
+  "/admin/login",
+  "/teens/login",
+  "/teens/home",
+  "/teens/dashboard",
+  "/famille/dashboard",
+  "/entreprise/login",
+  "/entreprise/home",
+  "/entreprise/dashboard",
+  "/unboxing",
+]);
+
 function AppContent() {
   const { pathname } = useLocation();
-  
-  // Pages sans header - including admin login and pages that already have their own headers
-  const pagesWithoutHeader = [
-    "/", 
-    "/admin/login",
-    "/teens/login",
-    "/teens/home",
-    "/teens/dashboard",
-    "/famille/dashboard",
-    "/entreprise/login",
-    "/entreprise/home",
-    "/entreprise/dashboard",
-    "/unboxing"
-  ];
+  const showHeader = !pagesWithoutHeader.has(pathname);
+  const showSignup = showHeader; // idem, ou affinez la condition si besoin
 
   return (
     <>
-      {/* Masque Header sur certaines pages */}
-      {!pagesWithoutHeader.includes(pathname) && <Header />}
-      {pathname !== "/" && pathname !== "/admin/login" && <SignupPopup />}
+      {showHeader && <Header />}
+      {showSignup && <SignupPopup />}
 
-      {/* Notifications */}
       <Toaster />
-      <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/qui-sommes-nous" element={<QuiSommesNous />} />
-        <Route path="/nos-valeurs" element={<NosValeurs />} />
-        <Route path="/concept-qvt" element={<ConceptQVT />} />
-        <Route path="/coach-qvt" element={<CoachQVT />} />
-        <Route path="/unboxing" element={<Unboxing />} />
-        <Route path="/admin/login" element={<AdminLogin />} />
 
-        <Route path="/famille" element={<Famille />} />
-        <Route path="/famille/dashboard" element={<FamilyDashboard />} />
-        <Route path="/famille/shop" element={<FamilyShopV3 />} />
+      {/* Pour supporter les composants lazy-loaded */}
+      <Suspense fallback={<div>Chargement…</div>}>
+        <Routes>
+          {/* Public */}
+          <Route path="/" element={<Pages.Index />} />
+          <Route path="/contact" element={<Pages.Contact />} />
+          <Route path="/qui-sommes-nous" element={<Pages.QuiSommesNous />} />
+          <Route path="/nos-valeurs" element={<Pages.NosValeurs />} />
+          <Route path="/concept-qvt" element={<Pages.ConceptQVT />} />
+          <Route path="/coach-qvt" element={<CoachQVT />} />
+          <Route path="/unboxing" element={<Pages.Unboxing />} />
+          <Route path="/admin/login" element={<Pages.AdminLogin />} />
 
-        <Route path="/teens" element={<Teens />} />
-        <Route path="/teens/dashboard" element={<TeensDashboard />} />
-        <Route path="/teens/login" element={<TeensLogin />} />
-        <Route path="/teens/home" element={<TeensHome />} />
-        <Route path="/teens/shop" element={<TeensShopV3 />} />
-        <Route path="/teens/questionnaire" element={<TeensQuestionnaire />} />
-        <Route path="/teens/ai-evaluation" element={<TeensAIEvaluation />} />
-        <Route path="/teens/personal-space" element={<TeensPersonalSpace />} />
-        <Route path="/teens/intimacy-space" element={<TeensIntimacySpace />} />
-        <Route path="/teens/family-space" element={<TeensFamilySpace />} />
-        <Route
-          path="/teens/parental-access"
-          element={<TeensParentalAccess />}
-        />
-        <Route
-          path="/teens/parental-access-dashboard"
-          element={<TeensParentalAccessDashboard />}
-        />
-        <Route path="/teens/quick-alert" element={<TeensQuickAlert />} />
-        <Route path="/teens/check-in" element={<TeensCheckIn />} />
-        <Route path="/teens/calendar" element={<TeensCalendar />} />
-        <Route path="/teens/journal" element={<TeensJournal />} />
-        <Route path="/teens/playlist" element={<TeensPlaylist />} />
-        <Route path="/teens/customization" element={<TeensCustomization />} />
-        <Route path="/teens/fun-solutions" element={<TeensFunSolutions />} />
-        <Route path="/teens/family-simulator" element={<FamilySimulator />} />
+          {/* Famille */}
+          <Route path="/famille" element={<Pages.Famille />} />
+          <Route
+            path="/famille/dashboard"
+            element={<FamilyDashboard />}
+          />
+          <Route path="/famille/shop" element={<FamilyShopV3 />} />
 
-        <Route path="/entreprise" element={<Entreprise />} />
-        <Route path="/entreprise/shop" element={<EnterpriseShopV3 />} />
-        <Route path="/entreprise/register" element={<EntrepriseRegister />} />
-        <Route path="/entreprise/home" element={<EntrepriseHome />} />
-        <Route path="/entreprise/login" element={<EntrepriseLogin />} />
-        <Route
-          path="/entreprise/forgot-password"
-          element={<EntrepriseForgotPassword />}
-        />
-        <Route
-          path="/entreprise/reset-password"
-          element={<EntrepriseResetPassword />}
-        />
-        <Route
-          path="/entreprise/questionnaire"
-          element={<EntrepriseQuestionnaire />}
-        />
-        <Route path="/entreprise/dashboard" element={<EntrepriseDashboard />} />
-        <Route
-          path="/entreprise/employee-dashboard"
-          element={<EmployeeDashboard />}
-        />
-        <Route
-          path="/entreprise/manager-dashboard"
-          element={<ManagerDashboard />}
-        />
-        <Route path="/entreprise/hr-dashboard" element={<HRDashboard />} />
-        <Route
-          path="/entreprise/admin-dashboard"
-          element={<AdminDashboard />}
-        />
-        <Route path="/entreprise/orders" element={<EntrepriseOrders />} />
-        <Route path="/entreprise/unboxing" element={<EntrepriseUnboxing />} />
-        <Route path="/entreprise/simulator" element={<EntrepriseSimulator />} />
-        <Route
-          path="/entreprise/admin-content"
-          element={<AdminContentManager />}
-        />
+          {/* Teens */}
+          <Route path="/teens" element={<Pages.Teens />} />
+          <Route
+            path="/teens/dashboard"
+            element={<TeensDashboard />}
+          />
+          <Route path="/teens/login" element={<Pages.TeensLogin />} />
+          <Route path="/teens/home" element={<Pages.TeensHome />} />
+          <Route path="/teens/shop" element={<TeensShopV3 />} />
+          <Route
+            path="/teens/questionnaire"
+            element={<Pages.TeensQuestionnaire />}
+          />
+          <Route
+            path="/teens/ai-evaluation"
+            element={<Pages.TeensAIEvaluation />}
+          />
+          <Route
+            path="/teens/personal-space"
+            element={<Pages.TeensPersonalSpace />}
+          />
+          <Route
+            path="/teens/intimacy-space"
+            element={<Pages.TeensIntimacySpace />}
+          />
+          <Route
+            path="/teens/family-space"
+            element={<Pages.TeensFamilySpace />}
+          />
+          <Route
+            path="/teens/parental-access"
+            element={<Pages.TeensParentalAccess />}
+          />
+          <Route
+            path="/teens/parental-access-dashboard"
+            element={<Pages.TeensParentalAccessDashboard />}
+          />
+          <Route
+            path="/teens/quick-alert"
+            element={<Pages.TeensQuickAlert />}
+          />
+          <Route
+            path="/teens/check-in"
+            element={<Pages.TeensCheckIn />}
+          />
+          <Route
+            path="/teens/calendar"
+            element={<Pages.TeensCalendar />}
+          />
+          <Route
+            path="/teens/journal"
+            element={<Pages.TeensJournal />}
+          />
+          <Route
+            path="/teens/playlist"
+            element={<Pages.TeensPlaylist />}
+          />
+          <Route
+            path="/teens/customization"
+            element={<Pages.TeensCustomization />}
+          />
+          <Route
+            path="/teens/fun-solutions"
+            element={<Pages.TeensFunSolutions />}
+          />
+          <Route
+            path="/teens/family-simulator"
+            element={<Pages.FamilySimulator />}
+          />
 
-        <Route path="/auth" element={<Auth />} />
-        <Route path="/auth/login" element={<Login />} />
-        <Route path="/auth/register" element={<Register />} />
-        <Route path="/auth/forgot-password" element={<ForgotPassword />} />
+          {/* Entreprise */}
+          <Route
+            path="/entreprise"
+            element={<Navigate to="/entreprise/home" replace />}
+          />
+          <Route
+            path="/entreprise/home"
+            element={<Pages.EntrepriseHome />}
+          />
+          <Route
+            path="/entreprise/shop"
+            element={<EnterpriseShopV3 />}
+          />
+          <Route
+            path="/entreprise/register"
+            element={<Pages.EntrepriseRegister />}
+          />
+          <Route
+            path="/entreprise/login"
+            element={<Pages.EntrepriseLogin />}
+          />
+          <Route
+            path="/entreprise/forgot-password"
+            element={<Pages.EntrepriseForgotPassword />}
+          />
+          <Route
+            path="/entreprise/reset-password"
+            element={<Pages.EntrepriseResetPassword />}
+          />
+          <Route
+            path="/entreprise/questionnaire"
+            element={<Pages.EntrepriseQuestionnaire />}
+          />
+          <Route
+            path="/entreprise/dashboard"
+            element={<Pages.EntrepriseDashboard />}
+          />
+          <Route
+            path="/entreprise/employee-dashboard"
+            element={<Pages.EmployeeDashboard />}
+          />
+          <Route
+            path="/entreprise/manager-dashboard"
+            element={<Pages.ManagerDashboard />}
+          />
+          <Route
+            path="/entreprise/hr-dashboard"
+            element={<Pages.HRDashboard />}
+          />
+          <Route
+            path="/entreprise/admin-dashboard"
+            element={<Pages.AdminDashboard />}
+          />
+          <Route
+            path="/entreprise/orders"
+            element={<Pages.EntrepriseOrders />}
+          />
+          <Route
+            path="/entreprise/unboxing"
+            element={<Pages.EntrepriseUnboxing />}
+          />
+          <Route
+            path="/entreprise/simulator"
+            element={<Pages.EntrepriseSimulator />}
+          />
+          <Route
+            path="/entreprise/admin-content"
+            element={<Pages.AdminContentManager />}
+          />
 
-        <Route path="/simulators" element={<SimulatorHome />} />
-        <Route path="/simulator-hub" element={<SimulatorHub />} />
-        <Route path="/recommandations" element={<Recommandations />} />
-        <Route path="/historique" element={<Historique />} />
-        <Route path="/profil" element={<Profil />} />
-        <Route path="/admin" element={<AdminPanel />} />
+          {/* Authentification */}
+          <Route path="/auth" element={<Pages.Auth />} />
+          <Route path="/auth/login" element={<Pages.Login />} />
+          <Route path="/auth/register" element={<Pages.Register />} />
+          <Route
+            path="/auth/forgot-password"
+            element={<Pages.ForgotPassword />}
+          />
+          <Route
+            path="/auth/reset-password"
+            element={<Pages.ResetPassword />}
+          />
 
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+          {/* Simulateur */}
+          <Route
+            path="/simulators"
+            element={<Pages.SimulatorHome />}
+          />
+          <Route
+            path="/simulator-hub"
+            element={<Pages.SimulatorHub />}
+          />
+
+          {/* Divers */}
+          <Route
+            path="/recommandations"
+            element={<Pages.Recommandations />}
+          />
+          <Route
+            path="/historique"
+            element={<Pages.Historique />}
+          />
+          <Route path="/profil" element={<Pages.Profil />} />
+
+          {/* Admin panel */}
+          <Route path="/admin" element={<Pages.AdminPanel />} />
+
+          {/* Catch-all */}
+          <Route path="*" element={<Pages.NotFound />} />
+        </Routes>
+      </Suspense>
     </>
   );
 }
