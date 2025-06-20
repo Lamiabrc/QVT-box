@@ -1,0 +1,27 @@
+export { default as EntrepriseHome }         from './EntrepriseHome';
+export { default as EntrepriseLogin }        from './Login';
+export { default as EntrepriseRegister }     from './Register';
+export { default as EntrepriseForgotPassword } from './ForgotPassword';
+export { default as EntrepriseResetPassword }  from './ResetPassword';
+
+export { default as EntrepriseQuestionnaire }   from './EntrepriseQuestionnaire';
+export { default as EntrepriseDashboard }       from './EntrepriseDashboard';
+export { default as EmployeeDashboard }         from './EmployeeDashboard';
+export { default as ManagerDashboard }          from './ManagerDashboard';
+export { default as HRDashboard }               from './HRDashboard';
+export { default as AdminDashboard }            from './AdminDashboard';
+
+export { default as EntrepriseOrders }       from './Orders';
+export { default as EntrepriseUnboxing }     from './Unboxing';
+export { default as EntrepriseSimulator }    from './Simulator';
+export { default as AdminContentManager }    from './AdminContentManager';
+
+/* ------------------------------------------------------------------------------
+   pages/auth/index.js
+   Barrel pour l'authentification
+------------------------------------------------------------------------------ */
+export { default as Auth }            from '../Auth';     // wrapper global
+export { default as Login }           from './Login';
+export { default as Register }        from './Register';
+export { default as ForgotPassword }  from './ForgotPassword';
+export { default as ResetPassword }   from './ResetPassword';
