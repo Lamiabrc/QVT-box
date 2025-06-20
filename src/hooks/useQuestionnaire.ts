@@ -1,5 +1,5 @@
+
 import { useMemo } from "react";
-import questionsData from "@/data/questions.json";
 
 export type Univers = "teens" | "entreprise" | "famille";
 
@@ -19,9 +19,79 @@ interface Question {
   source?: string;
 }
 
+// Questions intégrées directement dans le hook
+const questionsData: Question[] = [
+  {
+    "id": "stress_level",
+    "univers": "teens",
+    "category": "emotional",
+    "question": "Comment évaluez-vous votre niveau de stress actuellement ?",
+    "type": "radio",
+    "options": [
+      { "value": "1", "label": "Très faible" },
+      { "value": "2", "label": "Faible" },
+      { "value": "3", "label": "Modéré" },
+      { "value": "4", "label": "Élevé" },
+      { "value": "5", "label": "Très élevé" }
+    ]
+  },
+  {
+    "id": "family_support",
+    "univers": "famille",
+    "category": "family",
+    "question": "Comment évaluez-vous le soutien familial ?",
+    "type": "radio",
+    "options": [
+      { "value": "1", "label": "Très insuffisant" },
+      { "value": "2", "label": "Insuffisant" },
+      { "value": "3", "label": "Correct" },
+      { "value": "4", "label": "Bon" },
+      { "value": "5", "label": "Excellent" }
+    ]
+  },
+  {
+    "id": "work_satisfaction",
+    "univers": "entreprise",
+    "category": "professional",
+    "question": "Êtes-vous satisfait de votre environnement de travail ?",
+    "type": "radio",
+    "options": [
+      { "value": "1", "label": "Pas du tout" },
+      { "value": "2", "label": "Peu satisfait" },
+      { "value": "3", "label": "Moyennement" },
+      { "value": "4", "label": "Satisfait" },
+      { "value": "5", "label": "Très satisfait" }
+    ]
+  },
+  {
+    "id": "comments",
+    "univers": "teens",
+    "category": "general",
+    "question": "Avez-vous des commentaires supplémentaires ?",
+    "type": "textarea",
+    "placeholder": "Partagez vos réflexions..."
+  },
+  {
+    "id": "family_comments",
+    "univers": "famille",
+    "category": "general",
+    "question": "Commentaires sur la vie familiale",
+    "type": "textarea",
+    "placeholder": "Partagez votre expérience familiale..."
+  },
+  {
+    "id": "work_comments",
+    "univers": "entreprise",
+    "category": "general",
+    "question": "Commentaires sur votre environnement professionnel",
+    "type": "textarea",
+    "placeholder": "Partagez votre expérience professionnelle..."
+  }
+];
+
 export function useQuestionnaire(univers: Univers) {
   const questions = useMemo(() => {
-    return (questionsData as Question[]).filter(q => q.univers === univers);
+    return questionsData.filter(q => q.univers === univers);
   }, [univers]);
 
   const radioQuestions = questions.filter(q => q.type === "radio");
