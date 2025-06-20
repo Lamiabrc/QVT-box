@@ -1,3 +1,4 @@
+
 // App.tsx: Conditional Header and SignupPopup based on pathname
 import React from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
@@ -55,6 +56,8 @@ import {
   AdminPanel,
   NotFound,
   ConceptQVT,
+  Unboxing,
+  AdminLogin,
 } from "@/pages";
 import TeensShopV3 from "./pages/TeensShopV3";
 import FamilyShopV3 from "./pages/FamilyShopV3";
@@ -62,8 +65,6 @@ import EnterpriseShopV3 from "./pages/EnterpriseShopV3";
 import TeensDashboard from "./pages/TeensDashboard";
 import FamilyDashboard from "./pages/FamilyDashboard";
 import CoachQVT from "./pages/CoachQVT";
-import Unboxing from "./pages/Unboxing";
-import AdminLogin from "./pages/AdminLogin";
 import Header from "./components/Header";
 import SignupPopup from "./components/SignupPopup";
 
@@ -72,14 +73,25 @@ const queryClient = new QueryClient();
 function AppContent() {
   const { pathname } = useLocation();
   
-  // Pages sans header
-  const pagesWithoutHeader = ["/", "/admin/login"];
+  // Pages sans header - including admin login and pages that already have their own headers
+  const pagesWithoutHeader = [
+    "/", 
+    "/admin/login",
+    "/teens/login",
+    "/teens/home",
+    "/teens/dashboard",
+    "/famille/dashboard",
+    "/entreprise/login",
+    "/entreprise/home",
+    "/entreprise/dashboard",
+    "/unboxing"
+  ];
 
   return (
     <>
-      {/* Masque Header et popup sur certaines pages */}
+      {/* Masque Header sur certaines pages */}
       {!pagesWithoutHeader.includes(pathname) && <Header />}
-      {pathname !== "/" && <SignupPopup />}
+      {pathname !== "/" && pathname !== "/admin/login" && <SignupPopup />}
 
       {/* Notifications */}
       <Toaster />
