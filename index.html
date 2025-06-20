@@ -1,19 +1,81 @@
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
   <head>
+    <!-- Métadonnées de base -->
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>QVT Box - La santé mentale en entreprise et en famille </title>
-    <meta name="description" content="L'IA française au service de la santé mentale au travail et en famille, parce que la communication l'attention sont les clés du bonheur" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>QVT Box – La santé mentale en entreprise et en famille</title>
+    <meta
+      name="description"
+      content="L'IA française au service de la santé mentale au travail et en famille, parce que la communication et l'attention sont les clés du bonheur."
+    />
+    <meta name="theme-color" content="#FFFFFF" />
+
+    <!-- Open Graph / Twitter -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://qvtbox.com" />
+    <meta
+      property="og:title"
+      content="QVT Box – La santé mentale en entreprise et en famille"
+    />
+    <meta
+      property="og:description"
+      content="L'IA française au service de la santé mentale au travail et en famille, parce que la communication et l'attention sont les clés du bonheur."
+    />
+    <meta property="og:image" content="/social-preview.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://qvtbox.com" />
+    <meta
+      name="twitter:title"
+      content="QVT Box – La santé mentale en entreprise et en famille"
+    />
+    <meta
+      name="twitter:description"
+      content="L'IA française au service de la santé mentale au travail et en famille, parce que la communication et l'attention sont les clés du bonheur."
+    />
+    <meta name="twitter:image" content="/social-preview.png" />
+
+    <!-- Favicon et manifest -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CSS (sera réécrit en production par l’outil de build) -->
+    <link rel="stylesheet" href="/src/index.css" />
   </head>
+
   <body>
+    <!-- Message si JavaScript désactivé -->
+    <noscript>
+      Vous devez activer JavaScript pour voir cette application.
+    </noscript>
+
+    <!-- Point d’ancrage de React -->
     <div id="root"></div>
-    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+
+    <!-- Script externe (GPT Engineer) -->
+    <script
+      src="https://cdn.gpteng.co/gptengineer.js"
+      type="module"
+    ></script>
+
+    <!-- Entrée de l’app React (sera réécrit en production par l’outil de build) -->
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
